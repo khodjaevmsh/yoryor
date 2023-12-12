@@ -7,7 +7,6 @@ import logo from '../assets/images/logo.png'
 import Button from '../components/common/Button'
 import { COLOR } from '../utils/colors'
 import ButtonOutline from '../components/common/ButtonOutline'
-import { FONT_SIZE } from '../utils/fontSizes'
 
 export default function Splash() {
     const navigation = useNavigation()
@@ -22,9 +21,18 @@ export default function Splash() {
                     Maʼlumotlaringizni qanday qayta ishlashimizni Maxfiylik siyosatimiz va Cookie siyosatimizdan
                     bilib oling.
                 </Text>
-                <Button title="Ro'yxatdan o'tish" buttonStyle={styles.button} onPress={() => navigation.navigate('SignUp')} />
-                <ButtonOutline title="Kirish" buttonStyle={styles.button} />
+
+                <Button
+                    title="Ro'yxatdan o'tish"
+                    buttonStyle={styles.button}
+                    onPress={() => navigation.navigate('SignUp')} />
+
+                <ButtonOutline
+                    title="Kirish"
+                    buttonStyle={styles.button}
+                    onPress={() => navigation.navigate('SignIn')} />
             </View>
+
         </Container>
     )
 }
@@ -36,7 +44,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: 185,
+        width: 80,
         height: 100,
     },
     button: {
@@ -49,7 +57,7 @@ const styles = StyleSheet.create({
     policyAndTerms: {
         fontSize: normalize(11),
         lineHeight: 16,
-        fontWeight: '500',
+        fontWeight: '400',
         textAlign: 'center',
         color: COLOR.grey,
         marginBottom: 20,

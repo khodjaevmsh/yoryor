@@ -13,13 +13,14 @@ import SignUp from './screens/SignUp'
 import ConfirmCode from './screens/ConfirmCode'
 import { GlobalContext } from './context/GlobalContext'
 import SetPassword from './screens/SetPassword'
+import SignIn from './screens/SignIn'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
 export default function Navigation() {
     const { token } = useContext(GlobalContext)
-    const initial = token ? 'TabScreen' : 'SignUp'
+    const initial = token ? 'TabScreen' : 'SetPassword'
 
     const MyTheme = {
         ...DefaultTheme,
@@ -42,6 +43,7 @@ export default function Navigation() {
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: true }} />
                 <Stack.Screen name="ConfirmCode" component={ConfirmCode} options={{ headerShown: true }} />
                 <Stack.Screen name="SetPassword" component={SetPassword} options={{ headerShown: true }} />
+                <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: true }} />
             </Stack.Navigator>
         </NavigationContainer>
     )
