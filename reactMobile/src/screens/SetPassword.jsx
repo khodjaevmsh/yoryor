@@ -20,7 +20,7 @@ export default function SetPassword({ route }) {
     const [isModalVisible, setModalVisible] = useState(false)
     const setPassword = usePostRequest({ url: SET_PASSWORD })
     const navigation = useNavigation()
-    const { phoneNumber } = route.params
+    const { phoneNumber } = route.params || ''
 
     const validationSchema = Yup.object().shape({
         password: Yup.string()
