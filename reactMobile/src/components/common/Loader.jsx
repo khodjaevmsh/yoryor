@@ -2,7 +2,7 @@ import React from 'react'
 import { ActivityIndicator } from 'react-native'
 
 export default function Loader({
-    size = 'medium',
+    size = 'small',
     color = 'black',
     animating = true,
     hidesWhenStopped = true,

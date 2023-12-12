@@ -32,6 +32,7 @@ export default function Splash() {
                     buttonStyle={styles.button}
                     onPress={() => navigation.navigate('SignIn')} />
             </View>
+
         </Container>
     )
 }
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: 185,
+        width: 80,
         height: 100,
     },
     button: {

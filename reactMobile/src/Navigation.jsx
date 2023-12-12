@@ -20,7 +20,7 @@ const Tab = createBottomTabNavigator()
 
 export default function Navigation() {
     const { token } = useContext(GlobalContext)
-    const initial = token ? 'TabScreen' : 'Splash'
+    const initial = token ? 'TabScreen' : 'SetPassword'
 
     const MyTheme = {
         ...DefaultTheme,

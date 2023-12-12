@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigation } from '@react-navigation/native'
+import { X } from 'react-native-feather'
+import normalize from 'react-native-normalize'
 import Container from '../components/common/Container'
 import Input from '../components/common/Input'
 import ServerError from '../components/common/ServerError'
@@ -11,9 +13,11 @@ import { COLOR } from '../utils/colors'
 import { usePostRequest } from '../hooks/requests'
 import { SET_PASSWORD } from '../urls'
 import { fontSize } from '../utils/fontSizes'
+import Modal from '../components/Modal'
 
 export default function SetPassword({ route }) {
     const [serverError, setServerError] = useState()
+    const [isModalVisible, setModalVisible] = useState(false)
     const setPassword = usePostRequest({ url: SET_PASSWORD })
     const navigation = useNavigation()
     const { phoneNumber } = route.params
@@ -38,8 +42,8 @@ export default function SetPassword({ route }) {
         } })
 
         if (success) {
-            navigation.reset({ index: 0, routes: [{ name: 'SignIn' }] })
-            navigation.navigate('SignIn', { phone: phoneNumber })
+            // navigation.reset({ index: 0, routes: [{ name: 'SignIn' }] })
+            setModalVisible(true)
         }
 
         if (error) {
@@ -47,6 +51,9 @@ export default function SetPassword({ route }) {
         }
     }
 
+    function toggleModal() {
+        setModalVisible(!isModalVisible)
+    }
     return (
         <Container>
             <View style={{ flex: 1 }}>
@@ -82,6 +89,59 @@ export default function SetPassword({ route }) {
                         </>
                     )}
                 </Formik>
+
+                <Button onPress={toggleModal} />
+
+                <Modal
+                    style={{ backgroundColor: 'white', paddingTop: 42, paddingBottom: 25 }}
+                    isModalVisible={isModalVisible}
+                    animationIn="slideInUp"
+                    coverScreen
+                    hasBackdrop
+                    backdropColor="white"
+                    backdropOpacity={1}
+                    animationOut="slideOutDown">
+
+                    <View style={{ flex: 2 }}>
+                        <TouchableOpacity activeOpacity={0.7}>
+                            <X width={34} height={34} color={COLOR.grey} />
+                        </TouchableOpacity>
+                        <View>
+                            <Text style={styles.welcome}>Welcome to sovcHi.</Text>
+                            <Text style={styles.please}>Iltimos ushbu qoidalarga rioya qiling.</Text>
+                        </View>
+                    </View>
+
+                    <View style={{ flex: 5 }}>
+                        <View style={styles.rules}>
+                            <Text style={styles.modalTitle}>Be yourself.</Text>
+                            <Text style={styles.modalSubTitle}>
+                                Rasmlaringiz, yoshingiz hamda qolgan ma'lumotlaringiz to'g'ri ekanligiga ishonch hosil
+                                qiling.
+                            </Text>
+                        </View>
+
+                        <View style={styles.rules}>
+                            <Text style={styles.modalTitle}>Play cool.</Text>
+                            <Text style={styles.modalSubTitle}>
+                                Ishtirokchilarni hurmat qiling, barchasi hurmatdan boshlanadi.
+                            </Text>
+                        </View>
+
+                        <View style={styles.rules}>
+                            <Text style={styles.modalTitle}>Be proactive.</Text>
+                            <Text style={styles.modalSubTitle}>
+                                Shubxali xatti-harakatlar to'g'risida Bizga xabar bering.
+                            </Text>
+                        </View>
+
+                    </View>
+
+                    <View style={{ flex: 1 }}>
+                        <Button title="Roziman" onPress={toggleModal} />
+                    </View>
+
+                </Modal>
             </View>
         </Container>
     )
@@ -89,7 +149,7 @@ export default function SetPassword({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 38,
+        fontSize: fontSize.extraLarge,
         fontWeight: '500',
     },
     subTitle: {
@@ -100,5 +160,28 @@ const styles = StyleSheet.create({
     },
     button: {
         marginTop: 55,
+    },
+    welcome: {
+        fontSize: normalize(32),
+        fontWeight: '600',
+        marginTop: 22,
+    },
+    please: {
+        fontSize: fontSize.medium,
+        color: COLOR.grey,
+        marginTop: 7,
+    },
+    rules: {
+        marginBottom: 28,
+    },
+    modalTitle: {
+        fontSize: fontSize.large,
+        fontWeight: '500',
+    },
+    modalSubTitle: {
+        fontSize: fontSize.medium,
+        color: COLOR.grey,
+        marginTop: 5,
+        lineHeight: 21,
     },
 })
