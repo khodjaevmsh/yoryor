@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { CodeField, useBlurOnFulfill, useClearByFocusCell, Cursor } from 'react-native-confirmation-code-field'
 import normalize from 'react-native-normalize'
+import { useNavigation } from '@react-navigation/native'
 import Container from '../components/common/Container'
 import { COLOR } from '../utils/colors'
 import Button from '../components/common/Button'
@@ -17,14 +18,15 @@ export default function ConfirmCode({ route }) {
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({ value, setValue })
     const confirmCode = usePostRequest({ url: CONFIRM_CODE })
     const { phoneNumber } = route.params
+    const navigation = useNavigation()
 
     async function onSubmit() {
         setValidationError('')
 
         if (!value && value.length > 0) {
-            setValidationError('Обязательное поле')
+            setValidationError('Majburiy maydon')
         } else if (value.length !== 6) {
-            setValidationError('Код потдверждения должен состоять из 6 цифр')
+            setValidationError('Tasdiqlash kodi 6 ta raqamdan iborat bo\'lishi kerak')
         } else {
             const { success, error } = await confirmCode.request({ data: {
                 phoneNumber,
@@ -33,6 +35,7 @@ export default function ConfirmCode({ route }) {
 
             if (success) {
                 console.log('Success')
+                navigation.navigate('SetPassword', { phone: phoneNumber })
             }
 
             if (error) {
@@ -45,7 +48,7 @@ export default function ConfirmCode({ route }) {
         <Container>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Text style={styles.title}>
-                    Пожалуйста, введите код потдверждения, которую мы отправили на ваш номер телефон.
+                    Iltimos, telefon raqamingizga yuborilgan tasdiqlash kodini kiriting.
                 </Text>
                 <ServerError error={serverError} />
                 {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
@@ -74,7 +77,7 @@ export default function ConfirmCode({ route }) {
                         </View>
                     )}
                 />
-                <Button title="Продолжить" onPress={onSubmit} buttonStyle={styles.button} />
+                <Button title="Davom etish" onPress={onSubmit} buttonStyle={styles.button} />
             </View>
         </Container>
     )
@@ -111,7 +114,7 @@ const styles = StyleSheet.create({
     },
     validationError: {
         color: COLOR.primary,
-        marginTop: 6,
+        // marginTop: 3,
     },
     button: {
         marginTop: 55,
