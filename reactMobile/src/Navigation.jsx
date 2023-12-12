@@ -3,20 +3,23 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { MessageCircle, User, Heart } from 'react-native-feather'
 import { StyleSheet, Text } from 'react-native'
+import { useContext } from 'react'
 import Chats from './screens/Chats'
 import { COLOR } from './utils/colors'
 import Profile from './screens/Profile'
 import Discover from './screens/Discover'
 import Splash from './screens/Splash'
-import SignUpWith from './screens/SignUpWith'
 import SignUp from './screens/SignUp'
 import ConfirmCode from './screens/ConfirmCode'
+import { GlobalContext } from './context/GlobalContext'
+import SetPassword from './screens/SetPassword'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
 export default function Navigation() {
-    const initial = 'Splash'
+    const { token } = useContext(GlobalContext)
+    const initial = token ? 'TabScreen' : 'SignUp'
 
     const MyTheme = {
         ...DefaultTheme,
@@ -36,9 +39,9 @@ export default function Navigation() {
             }}>
                 <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
-                <Stack.Screen name="SignUpWith" component={SignUpWith} options={{ headerShown: true }} />
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: true }} />
                 <Stack.Screen name="ConfirmCode" component={ConfirmCode} options={{ headerShown: true }} />
+                <Stack.Screen name="SetPassword" component={SetPassword} options={{ headerShown: true }} />
             </Stack.Navigator>
         </NavigationContainer>
     )

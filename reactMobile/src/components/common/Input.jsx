@@ -7,6 +7,7 @@ import TextError from './TextError'
 export default function Input({
     safeArea,
     label,
+    labelStyle,
     name,
     inputStyle,
     keyboardType,
@@ -18,7 +19,7 @@ export default function Input({
 
     return (
         <Component>
-            {label ? <Text style={styles.label}>{label}</Text> : null}
+            {label ? <Text style={[styles.label, labelStyle]}>{label}</Text> : null}
             <Field name={name}>
                 {({ field, form }) => (
                     <TextInput

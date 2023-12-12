@@ -1,26 +1,25 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Text, StyleSheet, View } from 'react-native'
-import { Formik, ErrorMessage } from 'formik'
+import { Formik } from 'formik'
 import * as Yup from 'yup'
-import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import Container from '../components/common/Container'
 import Button from '../components/common/Button'
 import { COLOR } from '../utils/colors'
 import Input from '../components/common/Input'
 import { usePostRequest } from '../hooks/requests'
-import { SEND_VERIFICATION_CODE } from '../urls'
+import { SIGN_UP } from '../urls'
 import ServerError from '../components/common/ServerError'
 
 export default function SignUp() {
-    const sendVerificationCode = usePostRequest({ url: SEND_VERIFICATION_CODE })
+    const sendVerificationCode = usePostRequest({ url: SIGN_UP })
     const [serverError, setServerError] = useState()
     const navigation = useNavigation()
 
     const validationSchema = Yup.object().shape({
         phoneNumber: Yup.string()
-            .matches(/^\+?[0-9]{12}$/, 'Номер телефона должен состоять из 12 цифр')
-            .required('Обязательное поле'),
+            .matches(/^\+?[0-9]{12}$/, 'Telefon raqami 12 ta raqamdan iborat bo\'lishi kerak')
+            .required('Majburiy maydon'),
     })
 
     async function onSubmit(data) {
@@ -38,24 +37,24 @@ export default function SignUp() {
     return (
         <Container>
             <View style={{ flex: 1 }}>
-                <Text style={styles.title}>Номер телефона</Text>
+                <Text style={styles.title}>Telefon raqamingiz</Text>
                 <Text style={styles.subTitle}>
-                    Пожалуйста, введите свой действующий номер телефона.
-                    Мы вышлем вам 6-значный код для подтверждения вашей учетной записи.
+                    Iltimos, shaxsiy telefon raqamingizni kiriting.
+                    Akkauntingizni tasdiqlash uchun sizga 6 xonali kod yuboramiz.
                 </Text>
 
-                <Formik initialValues={{ phoneNumber: '' }} validationSchema={validationSchema} onSubmit={onSubmit}>
+                <Formik initialValues={{ phoneNumber: '+99890635102' }} validationSchema={validationSchema} onSubmit={onSubmit}>
                     {({ handleSubmit, setFieldValue, form, field }) => (
                         <>
                             <Input
-                                label="Номер телефон"
+                                label="Telefon raqam"
                                 name="phoneNumber"
                                 keyboardType="numeric"
                                 placeholder="+9989 90 635 10 01"
                             />
                             <ServerError error={serverError} />
 
-                            <Button title="Продолжить" onPress={handleSubmit} buttonStyle={styles.button} />
+                            <Button title="Davom etish" onPress={handleSubmit} buttonStyle={styles.button} />
                         </>
                     )}
                 </Formik>
@@ -66,7 +65,7 @@ export default function SignUp() {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 36,
+        fontSize: 38,
         fontWeight: '500',
     },
     subTitle: {

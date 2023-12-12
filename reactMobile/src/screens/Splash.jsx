@@ -1,47 +1,57 @@
 import React from 'react'
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, View, Image } from 'react-native'
+import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
+import Container from '../components/common/Container'
+import logo from '../assets/images/logo.png'
 import Button from '../components/common/Button'
 import { COLOR } from '../utils/colors'
-import SplashCarousel from '../components/SplashCarousel'
+import ButtonOutline from '../components/common/ButtonOutline'
+import { FONT_SIZE } from '../utils/fontSizes'
 
 export default function Splash() {
     const navigation = useNavigation()
     return (
-        <View style={styles.wrapper}>
-
-            <SplashCarousel />
-
-            <View style={{ flex: 1, justifyContent: 'flex-start', paddingHorizontal: 25 }}>
-                <Button title="Создать аккаунт" onPress={() => navigation.navigate('SignUpWith')} />
-                <View style={styles.haveAccountWrapper}>
-                    <Text style={styles.haveAccount}>У вас уже есть аккаунт?</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.signIn}>Войти</Text>
-                    </TouchableOpacity>
-                </View>
+        <Container containerStyle={{ paddingBottom: 45 }}>
+            <View style={styles.logoWrapper}>
+                <Image style={styles.logo} source={logo} />
             </View>
-        </View>
+            <View style={styles.policyAndTermsWrapper}>
+                <Text style={styles.policyAndTerms}>
+                    “Ro‘yxatdan o‘tish” tugmasini bosish orqali siz Shartlarimizga rozilik bildirasiz.
+                    Maʼlumotlaringizni qanday qayta ishlashimizni Maxfiylik siyosatimiz va Cookie siyosatimizdan
+                    bilib oling.
+                </Text>
+                <Button title="Ro'yxatdan o'tish" buttonStyle={styles.button} onPress={() => navigation.navigate('SignUp')} />
+                <ButtonOutline title="Kirish" buttonStyle={styles.button} />
+            </View>
+        </Container>
     )
 }
 
 const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-        marginTop: 45,
-        justifyContent: 'space-evenly',
-    },
-    haveAccountWrapper: {
-        flexDirection: 'row',
+    logoWrapper: {
+        flex: 2,
+        justifyContent: 'flex-end',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: 18,
     },
-    haveAccount: {
-        marginRight: 5,
+    logo: {
+        width: 185,
+        height: 100,
     },
-    signIn: {
-        color: COLOR.primary,
+    button: {
+        marginVertical: 6,
+    },
+    policyAndTermsWrapper: {
+        flex: 2,
+        justifyContent: 'flex-end',
+    },
+    policyAndTerms: {
+        fontSize: normalize(11),
+        lineHeight: 16,
         fontWeight: '500',
+        textAlign: 'center',
+        color: COLOR.grey,
+        marginBottom: 20,
     },
 })
