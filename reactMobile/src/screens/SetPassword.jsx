@@ -10,12 +10,13 @@ import Button from '../components/common/Button'
 import { COLOR } from '../utils/colors'
 import { usePostRequest } from '../hooks/requests'
 import { SET_PASSWORD } from '../urls'
+import { fontSize } from '../utils/fontSizes'
 
 export default function SetPassword({ route }) {
     const [serverError, setServerError] = useState()
     const setPassword = usePostRequest({ url: SET_PASSWORD })
     const navigation = useNavigation()
-    const { phone } = route.params
+    const { phoneNumber } = route.params
 
     const validationSchema = Yup.object().shape({
         password: Yup.string()
@@ -32,13 +33,13 @@ export default function SetPassword({ route }) {
 
     async function onSubmit(data) {
         const { success, error } = await setPassword.request({ data: {
-            phoneNumber: phone,
+            phoneNumber,
             ...data,
         } })
 
         if (success) {
-            navigation.reset({ index: 0, routes: [{ name: 'Splash' }] })
-            navigation.navigate('Splash', { phoneNumber: data.phoneNumber })
+            navigation.reset({ index: 0, routes: [{ name: 'SignIn' }] })
+            navigation.navigate('SignIn', { phone: phoneNumber })
         }
 
         if (error) {
@@ -55,26 +56,29 @@ export default function SetPassword({ route }) {
                     Parolingiz 8 tadan ortiq harflardan va sonlardan iborat bo'lishi lozim!
                 </Text>
 
-                <Formik initialValues={{ password: 'helloWorld1001$', password2: 'helloWorld1001$' }} validationSchema={validationSchema} onSubmit={onSubmit}>
+                <Formik
+                    initialValues={{ password: 'helloWorld1001$', password2: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}>
                     {({ handleSubmit, setFieldValue, form, field }) => (
                         <>
                             <Input
-                                label="Parol"
                                 name="password"
                                 keyboardType="default"
-                                placeholder="+9989 90 635 10 01"
-                            />
+                                placeholder="Parol" />
 
                             <Input
-                                label="Parolni tasdiqlang"
-                                labelStyle={{ marginTop: 22 }}
                                 name="password2"
                                 keyboardType="default"
-                                placeholder="+9989 90 635 10 01"
-                            />
+                                placeholder="Parolni tasdiqlang"
+                                inputStyle={{ marginTop: 18 }} />
+
                             <ServerError error={serverError} />
 
-                            <Button title="Davom etish" onPress={handleSubmit} buttonStyle={styles.button} />
+                            <Button title="Davom etish"
+                                onPress={handleSubmit}
+                                buttonStyle={styles.button}
+                                loading={setPassword.loading} />
                         </>
                     )}
                 </Formik>
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
         color: COLOR.grey,
         marginTop: 7,
         marginBottom: 30,
+        fontSize: fontSize.small,
     },
     button: {
         marginTop: 55,

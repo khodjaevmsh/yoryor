@@ -9,6 +9,7 @@ import Button from '../components/common/Button'
 import { usePostRequest } from '../hooks/requests'
 import { CONFIRM_CODE } from '../urls'
 import ServerError from '../components/common/ServerError'
+import { fontSize } from '../utils/fontSizes'
 
 export default function ConfirmCode({ route }) {
     const [value, setValue] = useState('')
@@ -35,7 +36,7 @@ export default function ConfirmCode({ route }) {
 
             if (success) {
                 console.log('Success')
-                navigation.navigate('SetPassword', { phone: phoneNumber })
+                navigation.navigate('SetPassword', { phoneNumber })
             }
 
             if (error) {
@@ -46,8 +47,9 @@ export default function ConfirmCode({ route }) {
 
     return (
         <Container>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <Text style={styles.title}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start' }}>
+                <Text style={styles.title}>Tasdiqlash kodi</Text>
+                <Text style={styles.subTitle}>
                     Iltimos, telefon raqamingizga yuborilgan tasdiqlash kodini kiriting.
                 </Text>
                 <ServerError error={serverError} />
@@ -77,7 +79,11 @@ export default function ConfirmCode({ route }) {
                         </View>
                     )}
                 />
-                <Button title="Davom etish" onPress={onSubmit} buttonStyle={styles.button} />
+                <Button
+                    title="Davom etish"
+                    onPress={onSubmit}
+                    buttonStyle={styles.button}
+                    loading={confirmCode.loading} />
             </View>
         </Container>
     )
@@ -85,9 +91,14 @@ export default function ConfirmCode({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        textAlign: 'center',
+        fontSize: 38,
+        fontWeight: '500',
+    },
+    subTitle: {
         color: COLOR.grey,
+        marginTop: 7,
         marginBottom: 8,
+        fontSize: fontSize.small,
     },
     codeFieldRoot: {
         marginTop: 20,
@@ -114,7 +125,6 @@ const styles = StyleSheet.create({
     },
     validationError: {
         color: COLOR.primary,
-        // marginTop: 3,
     },
     button: {
         marginTop: 55,

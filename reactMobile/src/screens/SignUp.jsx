@@ -10,6 +10,7 @@ import Input from '../components/common/Input'
 import { usePostRequest } from '../hooks/requests'
 import { SIGN_UP } from '../urls'
 import ServerError from '../components/common/ServerError'
+import { fontSize } from '../utils/fontSizes'
 
 export default function SignUp() {
     const sendVerificationCode = usePostRequest({ url: SIGN_UP })
@@ -43,18 +44,23 @@ export default function SignUp() {
                     Akkauntingizni tasdiqlash uchun sizga 6 xonali kod yuboramiz.
                 </Text>
 
-                <Formik initialValues={{ phoneNumber: '+99890635102' }} validationSchema={validationSchema} onSubmit={onSubmit}>
+                <Formik
+                    initialValues={{ phoneNumber: '+99890635102' }}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}>
                     {({ handleSubmit, setFieldValue, form, field }) => (
                         <>
                             <Input
-                                label="Telefon raqam"
                                 name="phoneNumber"
                                 keyboardType="numeric"
-                                placeholder="+9989 90 635 10 01"
-                            />
+                                placeholder="+9989 90 635 10 01" />
+
                             <ServerError error={serverError} />
 
-                            <Button title="Davom etish" onPress={handleSubmit} buttonStyle={styles.button} />
+                            <Button
+                                title="Davom etish"
+                                onPress={handleSubmit} buttonStyle={styles.button}
+                                loading={sendVerificationCode.loading} />
                         </>
                     )}
                 </Formik>
@@ -72,6 +78,7 @@ const styles = StyleSheet.create({
         color: COLOR.grey,
         marginTop: 7,
         marginBottom: 30,
+        fontSize: fontSize.small,
     },
     button: {
         marginTop: 55,

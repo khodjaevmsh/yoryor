@@ -3,6 +3,7 @@ import { Text, TextInput, View, StyleSheet, SafeAreaView } from 'react-native'
 import { Field, ErrorMessage } from 'formik'
 import { COLOR } from '../../utils/colors'
 import TextError from './TextError'
+import { fontSize } from '../../utils/fontSizes'
 
 export default function Input({
     safeArea,
@@ -40,6 +41,7 @@ export default function Input({
 const styles = StyleSheet.create({
     label: {
         marginBottom: 8,
+        fontSize: fontSize.medium,
     },
     input: {
         width: '100%',
@@ -48,5 +50,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: COLOR.lightGrey,
         borderRadius: 12,
+        fontSize: 16,
     },
 })
