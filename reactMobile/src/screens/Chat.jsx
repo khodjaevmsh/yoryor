@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
 import Container from '../components/common/Container'
 
-export default function Chats() {
+export default function Chat() {
     return (
         <Container style={{ flex: 1 }}>
             <Text>Chats</Text>
