@@ -1,38 +1,42 @@
-import React, { useState } from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { Formik } from 'formik'
-import * as Yup from 'yup'
+import React, { useContext, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import Container from '../components/common/Container'
-import Button from '../components/common/Button'
-import { COLOR } from '../utils/colors'
+import * as Yup from 'yup'
 import Input from '../components/common/Input'
-import { baseAxios } from '../hooks/requests'
-import { SEND_CODE } from '../urls'
 import ServerError from '../components/common/ServerError'
+import Button from '../components/common/Button'
+import Container from '../components/common/Container'
+import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
+import { baseAxios } from '../hooks/requests'
+import { SEND_CODE, SET_NAME } from '../urls'
+import { GlobalContext } from '../context/GlobalContext'
 
-export default function SignUp() {
+export default function SetName() {
     const [serverError, setServerError] = useState(null)
     const [loading, setLoading] = useState(false)
     const navigation = useNavigation()
+    const { user } = useContext(GlobalContext)
 
     const validationSchema = Yup.object().shape({
-        phoneNumber: Yup.string()
-            .matches(/^\+?[0-9]{12}$/, 'Telefon raqami 12 ta raqamdan iborat bo\'lishi kerak')
+        name: Yup.string()
+            // .matches(/^\+?[a-z]{5}$/, 'Ismingizni to\'liq bo\'lishi kerak')
             .required('Majburiy maydon'),
     })
 
     async function onSubmit(data) {
         try {
             // setLoading(true)
-            await baseAxios.post(SEND_CODE, {
-                phoneNumber: data.phoneNumber,
+            await baseAxios.post(SET_NAME, {
+                name: data.name,
+                user: user.id,
             })
-            navigation.navigate('CheckConfirmationCode', { phoneNumber: data.phoneNumber })
+            console.log('Success')
             setServerError(null)
         } catch (error) {
             setServerError(error.response)
+            console.log(error.response.data)
         } finally {
             setLoading(false)
         }
@@ -41,22 +45,22 @@ export default function SignUp() {
     return (
         <Container>
             <View style={{ flex: 1 }}>
-                <Text style={styles.title}>Telefon raqamingiz</Text>
+                <Text style={styles.title}>Ismingiz</Text>
                 <Text style={styles.subTitle}>
-                    Iltimos, shaxsiy telefon raqamingizni kiriting.
-                    Akkauntingizni tasdiqlash uchun sizga 6 xonali kod yuboramiz.
+                    Ismingizni kiriting. Familiyani kiritish xoxishiy!
+                    Keyinchalik ismingizni o'zgartirish imkoni bo'lmaydi!
                 </Text>
 
                 <Formik
-                    initialValues={{ phoneNumber: '+99890635101' }}
+                    initialValues={{ name: 'Timur' }}
                     validationSchema={validationSchema}
                     onSubmit={onSubmit}>
                     {({ handleSubmit, setFieldValue, form, field }) => (
                         <>
                             <Input
-                                name="phoneNumber"
-                                keyboardType="numeric"
-                                placeholder="+9989 90 635 10 01" />
+                                name="name"
+                                keyboardType="default"
+                                placeholder="Maksudbek" />
 
                             <ServerError error={serverError} style={{ marginTop: 6, position: 'absolute' }} />
 

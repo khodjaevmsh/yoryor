@@ -1,89 +1,80 @@
-import phonenumbers
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from users.models import User
-from users.utils import generate_verification_code
+from users.models import User, ConfirmationCode
+from users.utils import generate_verification_code, integers_only
 
 
-class SignUpSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ['phone_number']
+class SendConfirmationCodeSerializer(serializers.ModelSerializer):
+    def validate(self, attrs):
+        phone_number = integers_only(attrs.get('phone_number'))
+        user = User.objects.filter(phone_number=phone_number).first()
 
-    def validate_phone_number(self, phone_number):
+        if user:
+            raise ValidationError({'user': _('This phone number is already registered')})
 
-        if not phone_number:
-            raise ValidationError({'phone_number': _("Phone number is required")})
+        if len(phone_number) != 12:
+            raise ValidationError({'phone_number': _("The number is not valid")})
 
-        try:
-            parsed_phone_number = phonenumbers.parse(phone_number)
-            if not phonenumbers.is_valid_number(parsed_phone_number):
-                raise serializers.ValidationError(_('Invalid phone number'))
-        except phonenumbers.NumberParseException:
-            raise serializers.ValidationError(_('Invalid phone number format'))
-
-        return phone_number
+        return attrs
 
     def create(self, validated_data):
-        phone_number = validated_data.get('phone_number')
+        phone_number = integers_only(validated_data.get('phone_number'))
         confirmation_code = generate_verification_code()
 
-        user = User.objects.create_user(
+        confirmation_code = ConfirmationCode.objects.create(
             phone_number=phone_number,
             confirmation_code='000000',  # confirmation_code variable must be here
-            password=None
         )
 
         # send_verification_code(phone_number, verification_code)
 
-        return user
-
-
-class ConfirmCodeSerializer(serializers.ModelSerializer):
-    phone_number = serializers.CharField(max_length=22)
-    confirmation_code = serializers.CharField(max_length=6)
-
-    def validate(self, attrs):
-        user = User.objects.filter(
-            phone_number=attrs.get('phone_number'),
-            confirmation_code=attrs.get('confirmation_code')
-        ).first()
-
-        if not user:
-            raise ValidationError({'confirmation_code': _("Invalid confirmation code")})
-        return attrs
+        return confirmation_code
 
     class Meta:
-        model = User
+        model = ConfirmationCode
         fields = ['phone_number', 'confirmation_code']
 
 
-class SetPasswordSerializer(serializers.ModelSerializer):
-    phone_number = serializers.CharField(max_length=22)
-    password = serializers.CharField(write_only=True, style={'input_type': 'password'})
-    password2 = serializers.CharField(write_only=True, style={'input_type': 'password'})
+class CheckConfirmationCodeSerializer(serializers.ModelSerializer):
+    phone_number = serializers.CharField(max_length=20)
+    confirmation_code = serializers.CharField(max_length=6)
 
     def validate(self, attrs):
-        password = attrs.get('password')
-        password2 = attrs.get('password2')
+        phone_number = integers_only(attrs.get('phone_number'))
+        confirmation_code = attrs.get('confirmation_code')
 
-        if password != password2:
-            raise serializers.ValidationError({'password': 'Passwords do not match'})
+        confirmation_code = ConfirmationCode.objects.filter(
+            phone_number=phone_number,
+            confirmation_code=confirmation_code
+        ).first()
+
+        if not confirmation_code:
+            raise ValidationError({'confirmation_code': _("Incorrect validation code")})
+        return attrs
+
+    class Meta:
+        model = ConfirmationCode
+        fields = ['phone_number', 'confirmation_code']
+
+
+class SignUpSerializer(serializers.ModelSerializer):
+    def validate(self, attrs):
+        phone_number = integers_only(attrs.get('phone_number'))
+        password = attrs.get('password')
+
+        if not phone_number:
+            raise ValidationError({'phone_number': _("Phone number is required")})
+
+        user = User.objects.filter(phone_number=phone_number).first()
+
+        if not user:
+            user = User.objects.create_user(phone_number=phone_number, password=password)
+            user.set_password(password)
 
         return attrs
 
-    def create(self, validated_data):
-        phone_number = validated_data.get('phone_number')
-        password = validated_data.get('password')
-
-        # Set the password for the user
-        user = User.objects.get(phone_number=phone_number)
-        user.set_password(password)
-        user.save()
-        return user
-
     class Meta:
         model = User
-        fields = ['phone_number', 'password', 'password2']
+        fields = ['id', 'phone_number']
