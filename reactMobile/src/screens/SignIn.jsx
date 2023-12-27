@@ -54,7 +54,7 @@ export default function SignIn({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 38,
+        fontSize: fontSize.extraLarge,
         fontWeight: '500',
     },
     subTitle: {

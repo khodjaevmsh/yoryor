@@ -8,6 +8,7 @@ export default function TextError(props) {
 const styles = StyleSheet.create({
     error: {
         color: COLOR.primary,
-        marginTop: 6,
+        marginTop: 8,
+        marginLeft: 1,
     },
 })

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from users.models import User, ConfirmationCode, Profile
+from users.models import User, ConfirmationCode, Profile, Country, Region
 
 
 @admin.register(User)
@@ -22,5 +22,21 @@ class UserAdmin(UserAdmin):
     ordering = ('email',)
 
 
-admin.site.register(ConfirmationCode)
-admin.site.register(Profile)
+@admin.register(ConfirmationCode)
+class ConfirmationCodeAdmin(admin.ModelAdmin):
+    list_display = ('phone_number', 'confirmation_code',)
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+@admin.register(Country)
+class CountryAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
+
+@admin.register(Region)
+class RegionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'country',)

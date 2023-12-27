@@ -2,7 +2,8 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from users.models import User, ConfirmationCode
+from users.models import User, ConfirmationCode, Profile
+from users.serializers.profile import ProfileSerializer
 from users.utils import generate_verification_code, integers_only
 
 
@@ -60,21 +61,33 @@ class CheckConfirmationCodeSerializer(serializers.ModelSerializer):
 
 
 class SignUpSerializer(serializers.ModelSerializer):
+    profile = ProfileSerializer()
+
     def validate(self, attrs):
         phone_number = integers_only(attrs.get('phone_number'))
-        password = attrs.get('password')
-
-        if not phone_number:
-            raise ValidationError({'phone_number': _("Phone number is required")})
 
         user = User.objects.filter(phone_number=phone_number).first()
 
-        if not user:
-            user = User.objects.create_user(phone_number=phone_number, password=password)
-            user.set_password(password)
+        if user:
+            raise ValidationError({'user': 'User already exist'})
+
+        if not phone_number:
+            raise ValidationError({'phone_number': 'Phone number is required'})
 
         return attrs
 
+    def create(self, validated_data):
+        phone_number = integers_only(validated_data.get('phone_number'))
+        password = validated_data.get('password')
+
+        profile_data = validated_data.pop('profile')
+
+        user = User.objects.create_user(phone_number=phone_number, password=password)
+        user.set_password(password)
+
+        Profile.objects.create(user=user, **profile_data)
+        return user
+
     class Meta:
         model = User
-        fields = ['id', 'phone_number']
+        fields = ['id', 'phone_number', 'password', 'profile']

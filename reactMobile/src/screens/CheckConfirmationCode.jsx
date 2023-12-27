@@ -46,16 +46,18 @@ export default function CheckConfirmationCode({ route }) {
 
     return (
         <Container>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'flex-start' }}>
-                <Text style={styles.title}>Tasdiqlash kodi</Text>
-                <Text style={styles.subTitle}>
-                    Iltimos, telefon raqamingizga yuborilgan tasdiqlash kodini kiriting.
-                </Text>
-                <ServerError error={serverError} style={{ position: 'absolute' }} />
-                {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
+            <View style={{ flex: 1 }}>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.title}>Tasdiqlash kodi</Text>
+                    <Text style={styles.subTitle}>
+                        Iltimos, telefon raqamingizga yuborilgan tasdiqlash kodini kiriting.
+                    </Text>
+                    <ServerError error={serverError} />
+                    {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
+                </View>
             </View>
 
-            <View style={{ flex: 5 }}>
+            <View style={{ flex: 4 }}>
                 <CodeField
                     ref={ref}
                     {...props}
@@ -76,13 +78,14 @@ export default function CheckConfirmationCode({ route }) {
                                 {symbol || (isFocused ? <Cursor /> : null)}
                             </Text>
                         </View>
-                    )}
-                />
-                <Button
-                    title="Davom etish"
-                    onPress={onSubmit}
-                    buttonStyle={styles.button}
-                    loading={loading} />
+                    )} />
+                <View style={styles.buttonWrapper}>
+                    <Button
+                        title="Davom etish"
+                        onPress={onSubmit}
+                        buttonStyle={styles.button}
+                        loading={loading} />
+                </View>
             </View>
         </Container>
     )
@@ -90,7 +93,7 @@ export default function CheckConfirmationCode({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 38,
+        fontSize: fontSize.extraLarge,
         fontWeight: '500',
     },
     subTitle: {
@@ -98,6 +101,7 @@ const styles = StyleSheet.create({
         marginTop: 7,
         marginBottom: 8,
         fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
     codeFieldRoot: {
         marginTop: 48,
@@ -124,9 +128,10 @@ const styles = StyleSheet.create({
     },
     validationError: {
         color: COLOR.primary,
-        marginTop: 3,
+        marginTop: 4,
     },
-    button: {
-        marginTop: 55,
+    buttonWrapper: {
+        flex: 1,
+        justifyContent: 'flex-end',
     },
 })

@@ -1,15 +1,49 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { X } from 'react-native-feather'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import normalize from 'react-native-normalize'
+import { useFormikContext } from 'formik'
+import { useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
 import Button from './common/Button'
 import Modal from './Modal'
 import { fontSize } from '../utils/fontSizes'
+import { baseAxios } from '../hooks/requests'
+import { SIGN_UP } from '../urls'
+import { GlobalContext } from '../context/GlobalContext'
 
-export default function AgreementModal({ isModalVisible, handleSubmit }) {
+export default function AgreementModal({ isModalVisible, setModalVisible, phoneNumber, setServerError }) {
+    const [loading, setLoading] = useState(false)
+    const { auth } = useContext(GlobalContext)
+    const navigation = useNavigation()
+    const { values } = useFormikContext()
+    //
+    // async function onSubmit() {
+    //     try {
+    //         setLoading(true)
+    //         const response = await baseAxios.post(SIGN_UP, { phoneNumber, password: values.password2 })
+    //
+    //         setModalVisible(false)
+    //         await auth(response.data.token, response.data.user)
+    //         navigation.reset({ index: 0, routes: [{ name: 'SetPassword' }] })
+    //         navigation.navigate('SetName')
+    //         setLoading(false)
+    //     } catch (error) {
+    //         setServerError(error.response)
+    //     }
+    // }
+
+    async function onSubmit() {
+        if (values.password2) {
+            setModalVisible(false)
+
+            navigation.navigate('SetName', { phoneNumber, password: values.password2 })
+            setLoading(false)
+        }
+    }
+
     return (
-        <Modal style={{ backgroundColor: 'white', paddingTop: 42, paddingBottom: 25 }}
+        <Modal styleChildren={styles.styleChildren}
             isModalVisible={isModalVisible}
             animationIn="slideInUp"
             coverScreen
@@ -52,8 +86,8 @@ export default function AgreementModal({ isModalVisible, handleSubmit }) {
 
             </View>
 
-            <View style={{ flex: 1 }}>
-                <Button title="Roziman" onPress={handleSubmit} />
+            <View style={styles.buttonWrapper}>
+                <Button title="Roziman" loading={loading} onPress={onSubmit} />
             </View>
 
         </Modal>
@@ -61,6 +95,12 @@ export default function AgreementModal({ isModalVisible, handleSubmit }) {
 }
 
 const styles = StyleSheet.create({
+    styleChildren: {
+        flex: 1,
+        backgroundColor: 'white',
+        paddingTop: 42,
+        paddingBottom: 25,
+    },
     welcome: {
         fontSize: normalize(32),
         fontWeight: '600',
@@ -83,5 +123,9 @@ const styles = StyleSheet.create({
         color: COLOR.grey,
         marginTop: 5,
         lineHeight: 21,
+    },
+    buttonWrapper: {
+        flex: 1,
+        justifyContent: 'flex-end',
     },
 })

@@ -14,12 +14,12 @@ export default function ButtonOutline({ title = 'Text', onPress, buttonStyle, te
 const styles = StyleSheet.create({
     button: {
         width: '100%',
-        height: normalize(54),
+        height: normalize(48),
         justifyContent: 'center',
         backgroundColor: COLOR.white,
-        padding: 18,
-        borderRadius: 15,
-        borderWidth: 1,
+        padding: 8,
+        borderRadius: 18,
+        borderWidth: 2,
         borderColor: COLOR.lightGrey,
         alignItems: 'center',
     },

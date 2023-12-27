@@ -1,20 +1,24 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
 
 export default function Container({ children, scrollable, containerStyle }) {
     // Use ScrollView if scrollable prop is true, otherwise use a simple View
     const Component = scrollable ? ScrollView : View
 
     return (
-        <Component style={[styles.container, containerStyle]}>
-            {children}
-        </Component>
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <Component style={[styles.container, containerStyle]}>
+                {children}
+            </Component>
+        </TouchableWithoutFeedback>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 25,
+        paddingTop: 22,
+        paddingBottom: 36,
+        paddingHorizontal: 22,
     },
 })
