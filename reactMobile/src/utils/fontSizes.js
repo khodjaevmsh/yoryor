@@ -4,5 +4,5 @@ export const fontSize = {
     small: normalize(14),
     medium: normalize(16),
     large: normalize(18),
-    extraLarge: normalize(38),
+    extraLarge: normalize(36),
 }

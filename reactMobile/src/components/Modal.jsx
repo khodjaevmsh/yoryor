@@ -9,12 +9,14 @@ export default function Modal({
     hasBackdrop,
     backdropColor,
     backdropOpacity,
+    onBackdropPress,
     children,
-    style,
+    styleModal,
+    styleChildren,
     isModalVisible,
 }) {
     return (
-        <View style={{ flex: 1 }}>
+        <View>
             <RNModal
                 animationIn={animationIn}
                 animationOut={animationOut}
@@ -22,9 +24,11 @@ export default function Modal({
                 coverScreen={coverScreen}
                 backdropColor={backdropColor}
                 backdropOpacity={backdropOpacity}
+                onBackdropPress={onBackdropPress}
+                style={[styles.styleModal, styleModal]}
                 hasBackdrop={hasBackdrop}>
 
-                <View style={[styles.modal, style]}>
+                <View style={[styles.styleChildren, styleChildren]}>
                     {children}
                 </View>
 
@@ -34,7 +38,7 @@ export default function Modal({
 }
 
 const styles = StyleSheet.create({
-    modal: {
-        flex: 1,
+    styleChildren: {
+        backgroundColor: 'red',
     },
 })

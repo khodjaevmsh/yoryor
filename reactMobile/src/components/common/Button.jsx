@@ -14,11 +14,11 @@ export default function Button({ title = 'Enter own title', onPress, buttonStyle
 const styles = StyleSheet.create({
     button: {
         width: '100%',
-        height: normalize(54),
+        height: normalize(48),
         justifyContent: 'center',
         backgroundColor: COLOR.primary,
-        padding: 18,
-        borderRadius: 15,
+        padding: 8,
+        borderRadius: 18,
         alignItems: 'center',
     },
     text: {

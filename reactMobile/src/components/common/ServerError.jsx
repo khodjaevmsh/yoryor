@@ -15,6 +15,7 @@ export default function ServerError({ error, style }) {
 const styles = StyleSheet.create({
     error: {
         color: COLOR.primary,
-        marginTop: 2,
+        marginTop: 8,
+        marginLeft: 1,
     },
 })

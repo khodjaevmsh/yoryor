@@ -20,14 +20,37 @@ class ConfirmationCode(models.Model):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     confirmation_code = models.CharField(max_length=6, null=True, blank=True)
 
-    # def __str__(self):
-    #     return self.phone_number
+    def __str__(self):
+        return self.phone_number
 
 
 class Profile(models.Model):
+    GOAL_CHOICES = [
+        ('match', 'Juftlik topish'),
+        ('friendship', 'Do\'st ortirish'),
+        ('long_term_dating', 'Uzoq muddatli tanishuv'),
+        ('short_term_dating', 'Qisqa muddatli tanishuv'),
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=115)
     birthdate = models.DateField(null=True, blank=True)
+    region = models.ForeignKey('users.Region', on_delete=models.CASCADE)
+    goal = models.CharField(max_length=255, choices=GOAL_CHOICES)
 
     def __str__(self):
-        return self.user.phone_number
+        return self.name
+
+
+class Country(models.Model):
+    title = models.CharField(max_length=155)
+
+    def __str__(self):
+        return self.title
+
+
+class Region(models.Model):
+    country = models.ForeignKey('users.Country', on_delete=models.CASCADE)
+    title = models.CharField(max_length=155)
+
+    def __str__(self):
+        return self.title

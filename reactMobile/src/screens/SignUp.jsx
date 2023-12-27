@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import { Text, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigation } from '@react-navigation/native'
@@ -25,7 +25,7 @@ export default function SignUp() {
 
     async function onSubmit(data) {
         try {
-            // setLoading(true)
+            setLoading(true)
             await baseAxios.post(SEND_CODE, {
                 phoneNumber: data.phoneNumber,
             })
@@ -53,18 +53,22 @@ export default function SignUp() {
                     onSubmit={onSubmit}>
                     {({ handleSubmit, setFieldValue, form, field }) => (
                         <>
-                            <Input
-                                name="phoneNumber"
-                                keyboardType="numeric"
-                                placeholder="+9989 90 635 10 01" />
+                            <View style={{ flex: 1 }}>
+                                <Input
+                                    name="phoneNumber"
+                                    keyboardType="numeric"
+                                    placeholder="+9989 90 635 10 01" />
 
-                            <ServerError error={serverError} style={{ marginTop: 6, position: 'absolute' }} />
+                                <ServerError error={serverError} style={styles.serverError} />
+                            </View>
 
-                            <Button
-                                title="Davom etish"
-                                onPress={handleSubmit}
-                                buttonStyle={styles.button}
-                                loading={loading} />
+                            <View style={styles.buttonWrapper}>
+                                <Button
+                                    title="Davom etish"
+                                    onPress={handleSubmit}
+                                    buttonStyle={styles.button}
+                                    loading={loading} />
+                            </View>
                         </>
                     )}
                 </Formik>
@@ -75,14 +79,22 @@ export default function SignUp() {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: 38,
+        fontSize: fontSize.extraLarge,
         fontWeight: '500',
     },
     subTitle: {
         color: COLOR.grey,
         marginTop: 7,
         marginBottom: 30,
+        lineHeight: 19.5,
         fontSize: fontSize.small,
+    },
+    serverError: {
+        position: 'absolute',
+    },
+    buttonWrapper: {
+        flex: 1,
+        justifyContent: 'flex-end',
     },
     button: {
         marginTop: 55,

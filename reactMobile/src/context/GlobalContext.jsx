@@ -24,8 +24,15 @@ export default function GlobalProvider({ children }) {
         await AsyncStorage.setItem('user', JSON.stringify(newUser))
     }
 
+    async function signOut() {
+        setToken(null)
+        setUser({})
+        await AsyncStorage.removeItem('token')
+        await AsyncStorage.removeItem('user')
+    }
+
     return (
-        <GlobalContext.Provider value={{ token, user, auth }}>
+        <GlobalContext.Provider value={{ token, user, auth, signOut }}>
             {isLoaded ? children : null}
         </GlobalContext.Provider>
     )

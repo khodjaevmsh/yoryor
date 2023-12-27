@@ -1,6 +1,7 @@
 import React from 'react'
 import { Text, TextInput, View, StyleSheet, SafeAreaView } from 'react-native'
 import { Field, ErrorMessage } from 'formik'
+import normalize from 'react-native-normalize/src/index'
 import { COLOR } from '../../utils/colors'
 import TextError from './TextError'
 import { fontSize } from '../../utils/fontSizes'
@@ -30,6 +31,7 @@ export default function Input({
                         placeholderTextColor={placeholderTextColor}
                         onChangeText={(value) => form.setFieldValue(name, value)}
                         value={String(field.value)}
+                        returnKeyType="done"
                         {...attributes} />
                 )}
             </Field>
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '100%',
-        height: 55,
+        height: 52,
         paddingHorizontal: 15,
         borderWidth: 1,
         borderColor: COLOR.lightGrey,

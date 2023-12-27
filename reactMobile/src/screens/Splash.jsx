@@ -7,13 +7,14 @@ import logo from '../assets/images/logo.png'
 import Button from '../components/common/Button'
 import { COLOR } from '../utils/colors'
 import ButtonOutline from '../components/common/ButtonOutline'
+import { AppLogo } from '../components/common/Svgs'
 
 export default function Splash() {
     const navigation = useNavigation()
     return (
         <Container containerStyle={{ paddingBottom: 45 }}>
             <View style={styles.logoWrapper}>
-                <Image style={styles.logo} source={logo} />
+                <AppLogo />
             </View>
             <View style={styles.policyAndTermsWrapper}>
                 <Text style={styles.policyAndTerms}>
