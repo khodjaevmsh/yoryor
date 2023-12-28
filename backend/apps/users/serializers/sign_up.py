@@ -2,8 +2,9 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from users.models import User, ConfirmationCode, Profile
+from users.models import User, ConfirmationCode, Profile, ProfileImage
 from users.serializers.profile import ProfileSerializer
+from users.serializers.profile_image import ProfileImageSerializers
 from users.utils import generate_verification_code, integers_only
 
 
@@ -63,6 +64,12 @@ class CheckConfirmationCodeSerializer(serializers.ModelSerializer):
 class SignUpSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
 
+    images = ProfileImageSerializers(many=True, read_only=True)
+    uploaded_images = serializers.ListField(
+        child=serializers.ImageField(allow_empty_file=False, use_url=False),
+        write_only=True
+    )
+
     def validate(self, attrs):
         phone_number = integers_only(attrs.get('phone_number'))
 
@@ -81,13 +88,18 @@ class SignUpSerializer(serializers.ModelSerializer):
         password = validated_data.get('password')
 
         profile_data = validated_data.pop('profile')
+        uploaded_images = validated_data.pop("uploaded_images")
 
         user = User.objects.create_user(phone_number=phone_number, password=password)
         user.set_password(password)
 
-        Profile.objects.create(user=user, **profile_data)
+        profile = Profile.objects.create(user=user, **profile_data)
+
+        for image in uploaded_images:
+            ProfileImage.objects.create(profile=profile, image=image)
+
         return user
 
     class Meta:
         model = User
-        fields = ['id', 'phone_number', 'password', 'profile']
+        fields = ['id', 'phone_number', 'password', 'profile', 'images', 'uploaded_images']
