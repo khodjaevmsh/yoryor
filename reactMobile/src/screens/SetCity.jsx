@@ -36,8 +36,9 @@ export default function SetCity({ route }) {
             try {
                 const response = await baseAxios.get(COUNTRY)
                 setCountryData(response.data)
-            } catch (e) {
-                console.log(e)
+            } catch (error) {
+                setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
+                console.log(error)
             } finally {
                 setLoading(false)
             }
@@ -48,8 +49,9 @@ export default function SetCity({ route }) {
             try {
                 const response = await baseAxios.get(REGION, { params: { country } })
                 setRegionData(response.data)
-            } catch (e) {
-                console.log(e)
+            } catch (error) {
+                setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
+                console.log(error)
             } finally {
                 setLoading(false)
             }

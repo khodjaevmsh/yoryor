@@ -6,7 +6,6 @@ from rest_framework.views import APIView
 from users.models import User
 from users.serializers.sign_up import SignUpSerializer, SendConfirmationCodeSerializer, \
     CheckConfirmationCodeSerializer
-from users.utils import integers_only
 
 
 class SendConfirmationCodeView(APIView):

@@ -20,19 +20,20 @@ import SetBirthDate from './screens/SetBirthDate'
 import SetGender from './screens/SetGender'
 import SetGoal from './screens/SetGoal'
 import SetCity from './screens/SetCity'
+import SetProfileImage from './screens/SetProfileImage'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
 export default function Navigation() {
     const { token } = useContext(GlobalContext)
-    const initial = token ? 'TabScreen' : 'Splash'
+    const initial = token ? 'TabScreen' : 'SignUp'
 
-    // async function rmToken() {
-    //     await AsyncStorage.removeItem('token')
-    //     await AsyncStorage.removeItem('user')
-    // }
-    // rmToken()
+    async function rmToken() {
+        await AsyncStorage.removeItem('token')
+        await AsyncStorage.removeItem('user')
+    }
+    rmToken()
 
     const MyTheme = {
         ...DefaultTheme,
@@ -83,6 +84,7 @@ export default function Navigation() {
                 <Stack.Screen name="SetGender" component={SetGender} options={{ headerShown: true }} />
                 <Stack.Screen name="SetCity" component={SetCity} options={{ headerShown: true }} />
                 <Stack.Screen name="SetGoal" component={SetGoal} options={{ headerShown: true }} />
+                <Stack.Screen name="SetProfileImage" component={SetProfileImage} options={{ headerShown: true }} />
                 <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: true }} />
             </Stack.Navigator>
         </NavigationContainer>

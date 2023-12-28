@@ -41,6 +41,14 @@ class Profile(models.Model):
         return self.name
 
 
+class ProfileImage(models.Model):
+    profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="profile")
+
+    def __str__(self):
+        return self.profile.name
+
+
 class Country(models.Model):
     title = models.CharField(max_length=155)
 

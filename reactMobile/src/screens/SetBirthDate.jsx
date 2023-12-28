@@ -19,19 +19,20 @@ export default function SetBirthDate({ route }) {
     const navigation = useNavigation()
     const { phoneNumber, password, name } = route.params
 
-    console.log(birthdate.toISOString())
-
     // eslint-disable-next-line max-len
     const fullYear = `${birthdate.getDate()}.${(birthdate.getMonth() + 1).toString().padStart(2, '0')}.${birthdate.getFullYear()}`
     const ageCheck = new Date().getFullYear() - birthdate.getFullYear()
-
-    // console.log()
 
     async function onSubmit() {
         if (ageCheck >= 18) {
             await setLoading(true)
             setValidationError('')
-            navigation.navigate('SetGender', { phoneNumber, password, name, birthdate: moment(birthdate).format('YYYY-MM-DD') })
+            navigation.navigate('SetGender', {
+                phoneNumber,
+                password,
+                name,
+                birthdate: moment(birthdate).format('YYYY-MM-DD'),
+            })
         } else if (ageCheck <= 17) {
             setValidationError('Yoshingiz 18 dan katta bo\'lishi kerak')
         }

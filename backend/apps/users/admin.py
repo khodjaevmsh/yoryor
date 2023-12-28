@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from users.models import User, ConfirmationCode, Profile, Country, Region
+from users.models import User, ConfirmationCode, Profile, Country, Region, ProfileImage
 
 
 @admin.register(User)
@@ -30,6 +30,11 @@ class ConfirmationCodeAdmin(admin.ModelAdmin):
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+
+@admin.register(ProfileImage)
+class ProfileImageAdmin(admin.ModelAdmin):
+    list_display = ('profile', 'image',)
 
 
 @admin.register(Country)
