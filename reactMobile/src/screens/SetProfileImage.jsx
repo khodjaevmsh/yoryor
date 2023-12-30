@@ -2,7 +2,7 @@ import { Image, Text, StyleSheet, View, TouchableOpacity, ActivityIndicator } fr
 import React, { useContext, useState } from 'react'
 import { launchImageLibrary } from 'react-native-image-picker'
 import normalize from 'react-native-normalize'
-import { Plus, Minus } from 'react-native-feather'
+import { Plus, Edit2 } from 'react-native-feather'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
 import Container from '../components/common/Container'
@@ -19,7 +19,7 @@ export default function SetProfileImage({ route }) {
     const [serverError, setServerError] = useState('')
     const [validationError, setValidationError] = useState('')
 
-    const { phoneNumber, password, name, birthdate, region, goal } = route.params
+    const { phoneNumber, password, name, birthdate, gender, region, goal } = route.params
     const { auth } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -27,9 +27,9 @@ export default function SetProfileImage({ route }) {
         const options = {
             title: 'Select Image',
             mediaType: 'photo',
-            maxWidth: 1000,
-            maxHeight: 1000,
-            quality: 0.5,
+            maxWidth: 500,
+            maxHeight: 400,
+            quality: 0.1,
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
@@ -65,10 +65,11 @@ export default function SetProfileImage({ route }) {
         formData.append('profile.name', name)
         formData.append('profile.region', region)
         formData.append('profile.birthdate', birthdate)
+        formData.append('profile.gender', gender)
         formData.append('profile.goal', goal)
 
         if (images.filter((image) => image !== null).length < 2) {
-            setValidationError('Kamida 2 ta rasm qo\'shing')
+            setValidationError('* Kamida 2 ta rasm qo\'shing')
         }
 
         if (images.filter((image) => image !== null).length > 0) {
@@ -129,7 +130,7 @@ export default function SetProfileImage({ route }) {
                             {!image ? (
                                 <Plus width={16} height={16} color={COLOR.white} />
                             ) : (
-                                <Minus width={16} height={16} color={COLOR.white} />
+                                <Edit2 width={16} height={16} color={COLOR.white} />
                             )}
                         </View>
                     </TouchableOpacity>

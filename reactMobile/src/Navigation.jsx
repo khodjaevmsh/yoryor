@@ -2,7 +2,7 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { MessageCircle, User, Heart, ChevronLeft } from 'react-native-feather'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLOR } from './utils/colors'
@@ -27,7 +27,7 @@ const Tab = createBottomTabNavigator()
 
 export default function Navigation() {
     const { token } = useContext(GlobalContext)
-    const initial = token ? 'TabScreen' : 'SignUp'
+    const initial = token ? 'TabScreen' : 'Splash'
 
     async function rmToken() {
         await AsyncStorage.removeItem('token')
@@ -59,27 +59,12 @@ export default function Navigation() {
                 <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: true }} />
+                {/* eslint-disable-next-line max-len */}
                 <Stack.Screen name="CheckConfirmationCode" component={CheckConfirmationCode} options={{ headerShown: true }} />
-
-                <Stack.Screen name="SetPassword" component={SetPassword} options={({ navigation }) => ({
-                    headerShown: true,
-                    gestureEnabled: false,
-                    headerLeft: () => (
-                        <TouchableOpacity onPress={() => navigation.navigate('Splash')}>
-                            <ChevronLeft width={32} height={32} />
-                        </TouchableOpacity>
-                    ),
-                })} />
-
-                <Stack.Screen name="SetName" component={SetName} options={({ navigation }) => ({
-                    headerShown: true,
-                    gestureEnabled: false,
-                    headerLeft: () => (
-                        <TouchableOpacity onPress={() => navigation.navigate('Splash')}>
-                            <ChevronLeft width={32} height={32} />
-                        </TouchableOpacity>
-                    ),
-                })} />
+                {/* eslint-disable-next-line max-len */}
+                <Stack.Screen name="SetPassword" component={SetPassword} options={({ navigation }) => ({ headerShown: true, gestureEnabled: false })} />
+                {/* eslint-disable-next-line max-len */}
+                <Stack.Screen name="SetName" component={SetName} options={({ navigation }) => ({ headerShown: true, gestureEnabled: false })} />
                 <Stack.Screen name="SetBirthDate" component={SetBirthDate} options={{ headerShown: true }} />
                 <Stack.Screen name="SetGender" component={SetGender} options={{ headerShown: true }} />
                 <Stack.Screen name="SetCity" component={SetCity} options={{ headerShown: true }} />
@@ -105,6 +90,7 @@ function TabScreen() {
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
+                    /* eslint-disable-next-line max-len */
                     <MessageCircle color={focused ? COLOR.primary : COLOR.grey} width={28} height={28} strokeWidth={2.2} />
                 ),
             }} />

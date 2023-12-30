@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native'
 import RNDateTimePicker from '@react-native-community/datetimepicker'
 import normalize from 'react-native-normalize'
 import moment from 'moment'
+import RNModal from 'react-native-modal'
 import Button from '../components/common/Button'
 import Container from '../components/common/Container'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
-import Modal from '../components/Modal'
 import ButtonOutline from '../components/common/ButtonOutline'
 
 export default function SetBirthDate({ route }) {
@@ -17,7 +17,7 @@ export default function SetBirthDate({ route }) {
     const [showDatePicker, setShowDatePicker] = useState(false)
     const [validationError, setValidationError] = useState('')
     const navigation = useNavigation()
-    const { phoneNumber, password, name } = route.params
+    const { phoneNumber, password, name } = route.params || ''
 
     // eslint-disable-next-line max-len
     const fullYear = `${birthdate.getDate()}.${(birthdate.getMonth() + 1).toString().padStart(2, '0')}.${birthdate.getFullYear()}`
@@ -52,25 +52,29 @@ export default function SetBirthDate({ route }) {
                 </TouchableOpacity>
                 {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
 
-                <Modal
-                    isModalVisible={showDatePicker}
-                    styleModal={styles.styleModal}
-                    onBackdropPress={() => setShowDatePicker(false)}
-                    styleChildren={styles.styleChildren}>
-                    <View style={{ flex: 2 }}>
+                <RNModal
+                    isVisible={showDatePicker}
+                    style={styles.modal}
+                    animationOutTiming={350}
+                    backdropTransitionOutTiming={0}
+                    hasBackdrop
+                    onBackdropPress={() => setShowDatePicker(false)}>
+
+                    <View style={styles.datePicker}>
                         <RNDateTimePicker
                             value={birthdate}
                             mode="date"
                             display="spinner"
-                            onChange={(event, d) => setBirthDate(new Date(d))}
+                            style={{ flex: 3 }}
+                            onChange={async (event, d) => setBirthDate(new Date(d))}
                             maximumDate={new Date()}
                             minimumDate={new Date(1945, 1, 1)} />
-                    </View>
 
-                    <View style={{ flex: 1 }}>
-                        <ButtonOutline title="Tasdiqlash" onPress={() => setShowDatePicker(!showDatePicker)} />
+                        <View style={{ flex: 1 }}>
+                            <ButtonOutline title="Tasdiqlash" onPress={() => setShowDatePicker(!showDatePicker)} />
+                        </View>
                     </View>
-                </Modal>
+                </RNModal>
             </View>
 
             <View style={styles.buttonWrapper}>
@@ -116,17 +120,18 @@ const styles = StyleSheet.create({
         color: COLOR.primary,
         marginTop: 8,
     },
-    styleModal: {
+    modal: {
+        height: normalize(400),
         justifyContent: 'flex-end',
         margin: 0,
     },
-    styleChildren: {
-        height: '38%',
-        backgroundColor: COLOR.white,
-        paddingHorizontal: 24,
-    },
     datePicker: {
-        width: 300,
-        marginTop: 20,
+        height: normalize(325),
+        width: '100%',
+        backgroundColor: COLOR.white,
+        paddingHorizontal: 20,
+        paddingVertical: 0,
+        borderRadius: 15,
+        // marginTop: 20,
     },
 })

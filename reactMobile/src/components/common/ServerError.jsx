@@ -7,7 +7,7 @@ export default function ServerError({ error, style }) {
 
     return (
         <View>
-            <Text style={[styles.error, style]}>{err}</Text>
+            <Text style={[styles.error, style]}>{err ? `* ${err}` : null}</Text>
         </View>
     )
 }

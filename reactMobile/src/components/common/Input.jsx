@@ -1,10 +1,12 @@
 import React from 'react'
-import { Text, TextInput, View, StyleSheet, SafeAreaView } from 'react-native'
+import { Text, TextInput, View, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
 import { Field, ErrorMessage } from 'formik'
 import normalize from 'react-native-normalize/src/index'
+import { Eye } from 'react-native-feather'
 import { COLOR } from '../../utils/colors'
 import TextError from './TextError'
 import { fontSize } from '../../utils/fontSizes'
+import { MonkeySeeNo } from './Svgs'
 
 export default function Input({
     safeArea,
@@ -15,6 +17,10 @@ export default function Input({
     keyboardType,
     placeholder,
     placeholderTextColor = COLOR.lightGrey,
+    secureTextEntry,
+    textErrorStyle,
+    right,
+    rightStyle,
     ...attributes
 }) {
     const Component = safeArea ? SafeAreaView : View
@@ -24,18 +30,23 @@ export default function Input({
             {label ? <Text style={[styles.label, labelStyle]}>{label}</Text> : null}
             <Field name={name}>
                 {({ field, form }) => (
-                    <TextInput
-                        style={[styles.input, inputStyle]}
-                        keyboardType={keyboardType}
-                        placeholder={placeholder}
-                        placeholderTextColor={placeholderTextColor}
-                        onChangeText={(value) => form.setFieldValue(name, value)}
-                        value={String(field.value)}
-                        returnKeyType="done"
-                        {...attributes} />
+                    <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
+                        <TextInput
+                            style={[styles.input, inputStyle]}
+                            keyboardType={keyboardType}
+                            placeholder={placeholder}
+                            placeholderTextColor={placeholderTextColor}
+                            onChangeText={(value) => form.setFieldValue(name, value)}
+                            value={String(field.value)}
+                            secureTextEntry={secureTextEntry}
+                            {...attributes} />
+
+                        {right ? <View style={[styles.right, rightStyle]}>{right}</View> : null}
+
+                    </View>
                 )}
             </Field>
-            <ErrorMessage name={name} component={TextError} />
+            <ErrorMessage name={name} component={TextError} textErrorStyle={textErrorStyle} />
         </Component>
     )
 }
@@ -53,5 +64,9 @@ const styles = StyleSheet.create({
         borderColor: COLOR.lightGrey,
         borderRadius: 12,
         fontSize: 16,
+    },
+    right: {
+        position: 'absolute',
+        right: 10,
     },
 })

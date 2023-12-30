@@ -1,18 +1,32 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Formik } from 'formik'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import * as Yup from 'yup'
+import { ChevronLeft } from 'react-native-feather'
 import Input from '../components/common/Input'
 import Button from '../components/common/Button'
 import Container from '../components/common/Container'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
+import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
+import ConfirmModal from '../components/ConfirmModal'
 
 export default function SetName({ route }) {
     const [loading, setLoading] = useState(false)
+    const [isModalConfirm, setModalConfirm] = useState(false)
     const navigation = useNavigation()
     const { phoneNumber, password } = route.params
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <TouchableOpacity onPress={() => setModalConfirm(true)}>
+                    <ChevronLeft width={32} height={32} />
+                </TouchableOpacity>
+            ),
+        })
+    }, [navigation])
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
@@ -30,34 +44,40 @@ export default function SetName({ route }) {
     }
 
     return (
-        <Container>
-            <View style={{ flex: 1 }}>
-                <Text style={styles.title}>Ismingiz</Text>
-                <Text style={styles.subTitle}>
-                    Ismingizni kiriting. Familiyani kiritish xoxishiy!
-                    Keyinchalik ismingizni o'zgartirish imkoni bo'lmaydi!
-                </Text>
+        <KeyboardAvoiding>
+            <Container>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.title}>Ismingiz</Text>
+                    <Text style={styles.subTitle}>
+                        Ismingizni kiriting. Familiyani kiritish xoxishiy!
+                        Keyinchalik ismingizni o'zgartirish imkoni bo'lmaydi!
+                    </Text>
 
-                <Formik
-                    initialValues={{ name: 'Timur' }}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
-                    {({ handleSubmit }) => (
-                        <>
-                            <Input name="name" keyboardType="default" placeholder="Maksudbek" />
+                    <Formik
+                        initialValues={{ name: 'Timur' }}
+                        validationSchema={validationSchema}
+                        onSubmit={onSubmit}>
+                        {({ handleSubmit }) => (
+                            <>
+                                <Input name="name" keyboardType="default" placeholder="Maksudbek" />
 
-                            <View style={styles.buttonWrapper}>
-                                <Button
-                                    title="Davom etish"
-                                    onPress={handleSubmit}
-                                    buttonStyle={styles.button}
-                                    loading={loading} />
-                            </View>
-                        </>
-                    )}
-                </Formik>
-            </View>
-        </Container>
+                                <View style={styles.buttonWrapper}>
+                                    <Button
+                                        title="Davom etish"
+                                        onPress={handleSubmit}
+                                        buttonStyle={styles.button}
+                                        loading={loading} />
+                                </View>
+                            </>
+                        )}
+                    </Formik>
+                </View>
+                <ConfirmModal
+                    isModalConfirm={isModalConfirm}
+                    setModalConfirm={setModalConfirm}
+                    cancel={() => navigation.navigate('Splash')} />
+            </Container>
+        </KeyboardAvoiding>
     )
 }
 

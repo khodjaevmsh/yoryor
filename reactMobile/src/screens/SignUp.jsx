@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, StyleSheet, View, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { Text, StyleSheet, View, Keyboard } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigation } from '@react-navigation/native'
@@ -11,10 +11,12 @@ import { baseAxios } from '../hooks/requests'
 import { SEND_CODE } from '../urls'
 import ServerError from '../components/common/ServerError'
 import { fontSize } from '../utils/fontSizes'
+import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
 
 export default function SignUp() {
     const [serverError, setServerError] = useState(null)
     const [loading, setLoading] = useState(false)
+
     const navigation = useNavigation()
 
     const validationSchema = Yup.object().shape({
@@ -39,41 +41,47 @@ export default function SignUp() {
     }
 
     return (
-        <Container>
-            <View style={{ flex: 1 }}>
-                <Text style={styles.title}>Telefon raqamingiz</Text>
-                <Text style={styles.subTitle}>
-                    Iltimos, shaxsiy telefon raqamingizni kiriting.
-                    Akkauntingizni tasdiqlash uchun sizga 6 xonali kod yuboramiz.
-                </Text>
+        <KeyboardAvoiding>
+            <Container>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.title}>Telefon raqamingiz</Text>
+                    <Text style={styles.subTitle}>
+                        Iltimos, shaxsiy telefon raqamingizni kiriting.
+                        Akkauntingizni tasdiqlash uchun sizga 6 xonali kod yuboramiz.
+                    </Text>
 
-                <Formik
-                    initialValues={{ phoneNumber: '+99890635101' }}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
-                    {({ handleSubmit, setFieldValue, form, field }) => (
-                        <>
-                            <View style={{ flex: 1 }}>
-                                <Input
-                                    name="phoneNumber"
-                                    keyboardType="numeric"
-                                    placeholder="+9989 90 635 10 01" />
+                    <Formik
+                        initialValues={{ phoneNumber: '+998906351005' }}
+                        validationSchema={validationSchema}
+                        onSubmit={onSubmit}>
+                        {({ handleSubmit, errors }) => (
+                            <>
+                                <View style={{ flex: 1 }}>
+                                    <Input
+                                        name="phoneNumber"
+                                        keyboardType="numeric"
+                                        placeholder="+9989 90 635 10 01" />
+                                    <ServerError
+                                        error={serverError}
+                                        style={[styles.serverError, { marginTop: errors.phoneNumber ? 4 : 8 }]} />
+                                </View>
 
-                                <ServerError error={serverError} style={styles.serverError} />
-                            </View>
-
-                            <View style={styles.buttonWrapper}>
-                                <Button
-                                    title="Davom etish"
-                                    onPress={handleSubmit}
-                                    buttonStyle={styles.button}
-                                    loading={loading} />
-                            </View>
-                        </>
-                    )}
-                </Formik>
-            </View>
-        </Container>
+                                <View style={styles.buttonWrapper}>
+                                    <Button
+                                        title="Davom etish"
+                                        onPress={() => {
+                                            handleSubmit()
+                                            Keyboard.dismiss()
+                                        }}
+                                        buttonStyle={styles.button}
+                                        loading={loading} />
+                                </View>
+                            </>
+                        )}
+                    </Formik>
+                </View>
+            </Container>
+        </KeyboardAvoiding>
     )
 }
 

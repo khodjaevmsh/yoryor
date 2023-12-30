@@ -1,0 +1,31 @@
+2023-12-29 16:05:35.392 +05 [11565] LOG:  starting PostgreSQL 13.12 on arm-apple-darwin22.4.0, compiled by Apple clang version 14.0.3 (clang-1403.0.22.14.1), 64-bit
+2023-12-29 16:05:35.393 +05 [11565] LOG:  listening on IPv6 address "::1", port 5432
+2023-12-29 16:05:35.393 +05 [11565] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-12-29 16:05:35.393 +05 [11565] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-12-29 16:05:35.396 +05 [11566] LOG:  database system was shut down at 2023-12-29 16:05:10 +05
+2023-12-29 16:05:35.399 +05 [11565] LOG:  database system is ready to accept connections
+2023-12-29 16:05:50.409 +05 [11578] FATAL:  database "sovchi" does not exist
+2023-12-29 16:06:21.958 +05 [11590] LOG:  starting PostgreSQL 13.12 on arm-apple-darwin22.4.0, compiled by Apple clang version 14.0.3 (clang-1403.0.22.14.1), 64-bit
+2023-12-29 16:06:21.959 +05 [11590] LOG:  could not bind IPv6 address "::1": Address already in use
+2023-12-29 16:06:21.959 +05 [11590] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2023-12-29 16:06:21.959 +05 [11590] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2023-12-29 16:06:21.959 +05 [11590] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2023-12-29 16:06:21.959 +05 [11590] WARNING:  could not create listen socket for "localhost"
+2023-12-29 16:06:21.959 +05 [11590] FATAL:  could not create any TCP/IP sockets
+2023-12-29 16:06:21.959 +05 [11590] LOG:  database system is shut down
+2023-12-30 22:54:18.895 +05 [11565] LOG:  received smart shutdown request
+2023-12-30 22:54:18.900 +05 [11565] LOG:  background worker "logical replication launcher" (PID 11572) exited with exit code 1
+2023-12-30 22:54:18.901 +05 [11567] LOG:  shutting down
+2023-12-30 22:54:18.930 +05 [11565] LOG:  database system is shut down
+2023-12-30 23:03:16.104 +05 [3437] LOG:  starting PostgreSQL 13.12 on arm-apple-darwin22.4.0, compiled by Apple clang version 14.0.3 (clang-1403.0.22.14.1), 64-bit
+2023-12-30 23:03:16.105 +05 [3437] LOG:  listening on IPv6 address "::1", port 5432
+2023-12-30 23:03:16.105 +05 [3437] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2023-12-30 23:03:16.105 +05 [3437] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2023-12-30 23:03:16.115 +05 [3438] LOG:  database system was interrupted; last known up at 2023-12-28 22:24:07 +05
+2023-12-30 23:03:16.259 +05 [3438] LOG:  database system was not properly shut down; automatic recovery in progress
+2023-12-30 23:03:16.262 +05 [3438] LOG:  redo starts at 0/47C5710
+2023-12-30 23:03:16.262 +05 [3438] LOG:  invalid record length at 0/47C57F8: wanted 24, got 0
+2023-12-30 23:03:16.262 +05 [3438] LOG:  redo done at 0/47C57C0
+2023-12-30 23:03:16.267 +05 [3437] LOG:  database system is ready to accept connections
+2023-12-30 23:03:54.885 +05 [3455] FATAL:  database files are incompatible with server
+2023-12-30 23:03:54.885 +05 [3455] DETAIL:  The data directory was initialized by PostgreSQL version 14, which is not compatible with this version 13.12.

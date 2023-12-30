@@ -31,9 +31,14 @@ class Profile(models.Model):
         ('long_term_dating', 'Uzoq muddatli tanishuv'),
         ('short_term_dating', 'Qisqa muddatli tanishuv'),
     ]
+    GENDER = [
+        ('male', 'Erkak'),
+        ('female', 'Ayol'),
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=115)
     birthdate = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=255, choices=GENDER)
     region = models.ForeignKey('users.Region', on_delete=models.CASCADE)
     goal = models.CharField(max_length=255, choices=GOAL_CHOICES)
 

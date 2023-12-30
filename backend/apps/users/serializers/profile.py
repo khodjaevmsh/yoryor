@@ -8,7 +8,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ['user', 'name', 'birthdate', 'region', 'goal']
+        fields = ['user', 'name', 'birthdate', 'gender', 'region', 'goal']
         extra_kwargs = {
             'user': {'required': False}
         }
