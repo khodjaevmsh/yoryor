@@ -20,31 +20,7 @@ export default function SetGoal({ route }) {
     const [validationError, setValidationError] = useState('')
     const [goal, setGoal] = useState(null)
     const navigation = useNavigation()
-    const { phoneNumber, password, name, birthdate, region } = route.params
-
-    // async function onSubmit() {
-    //     if (!goal) {
-    //         setValidationError('Maqsadingizni tanlang')
-    //     } else {
-    //         try {
-    //             setLoading(true)
-    //             const response = await baseAxios.post(SIGN_UP, {
-    //                 phoneNumber,
-    //                 password,
-    //                 profile: { name, birthdate, region, goal },
-    //             })
-    //
-    //             await auth(response.data.token, response.data.user)
-    //
-    //             navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
-    //             navigation.navigate('TabScreen')
-    //         } catch (error) {
-    //             setServerError(error.response)
-    //         } finally {
-    //             setServerError(false)
-    //         }
-    //     }
-    // }
+    const { phoneNumber, password, name, birthdate, gender, region } = route.params
 
     function onSubmit() {
         if (goal) {
@@ -55,6 +31,7 @@ export default function SetGoal({ route }) {
                 password,
                 name,
                 birthdate,
+                gender,
                 region,
                 goal,
             })
@@ -95,7 +72,7 @@ export default function SetGoal({ route }) {
             </View>
 
             <View style={styles.buttonWrapper}>
-                {validationError && !goal ? <Text style={styles.validationError}>{validationError}</Text> : null}
+                {validationError && !goal ? <Text style={styles.validationError}>* {validationError}</Text> : null}
                 <Button
                     title="Davom etish"
                     onPress={onSubmit}

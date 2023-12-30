@@ -63,5 +63,7 @@
     <string>We need access to your photo library to select images.</string>
     <key>NSMicrophoneUsageDescription</key>
     <string>We need access to your microphone for recording audio (if applicable).</string>
+    <key>UIUserInterfaceStyle</key>
+    <string>Light</string>
 </dict>
 </plist>

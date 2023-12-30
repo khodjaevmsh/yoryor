@@ -11,7 +11,9 @@ export default function Modal({
     backdropOpacity,
     onBackdropPress,
     children,
-    styleModal,
+    parentalStyleModal,
+    animationInTiming,
+    animationOutTiming,
     styleChildren,
     isModalVisible,
 }) {
@@ -22,10 +24,12 @@ export default function Modal({
                 animationOut={animationOut}
                 isVisible={isModalVisible}
                 coverScreen={coverScreen}
+                animationInTiming={animationInTiming}
+                animationOutTiming={animationOutTiming}
                 backdropColor={backdropColor}
                 backdropOpacity={backdropOpacity}
                 onBackdropPress={onBackdropPress}
-                style={[styles.styleModal, styleModal]}
+                style={[styles.parentalStyleModal, parentalStyleModal]}
                 hasBackdrop={hasBackdrop}>
 
                 <View style={[styles.styleChildren, styleChildren]}>

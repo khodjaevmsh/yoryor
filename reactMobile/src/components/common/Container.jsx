@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native'
 
 export default function Container({ children, scrollable, containerStyle }) {
     // Use ScrollView if scrollable prop is true, otherwise use a simple View
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 22,
-        paddingBottom: 36,
+        paddingBottom: Platform.OS === 'ios' ? 32 : 24,
         paddingHorizontal: 22,
     },
 })

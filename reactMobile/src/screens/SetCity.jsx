@@ -18,16 +18,16 @@ export default function SetCity({ route }) {
     const [regionData, setRegionData] = useState([])
     const [region, setRegion] = useState('')
     const [validationError, setValidationError] = useState('')
-    const { phoneNumber, password, name, birthdate } = route.params
+    const { phoneNumber, password, name, birthdate, gender } = route.params
     const navigation = useNavigation()
 
     function onSubmit() {
         setValidationError(null)
 
         if (!country || !region) {
-            setValidationError('Majburiy maydon')
+            setValidationError('* Majburiy maydon')
         } else {
-            navigation.navigate('SetGoal', { phoneNumber, password, name, birthdate, region })
+            navigation.navigate('SetGoal', { phoneNumber, password, name, birthdate, gender, region })
         }
     }
 
@@ -38,7 +38,6 @@ export default function SetCity({ route }) {
                 setCountryData(response.data)
             } catch (error) {
                 setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
-                console.log(error)
             } finally {
                 setLoading(false)
             }
@@ -50,8 +49,7 @@ export default function SetCity({ route }) {
                 const response = await baseAxios.get(REGION, { params: { country } })
                 setRegionData(response.data)
             } catch (error) {
-                setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
-                console.log(error)
+                setValidationError('* Nomalum xatolik, qaytib urinib ko\'ring')
             } finally {
                 setLoading(false)
             }
@@ -83,7 +81,7 @@ export default function SetCity({ route }) {
                     style={pickerSelectStyles}
                     onValueChange={(value) => setRegion(value)} />
 
-                {!region ? <Text style={styles.validationError}>{validationError}</Text> : null}
+                {!country || !region ? <Text style={styles.validationError}>{validationError}</Text> : null}
 
             </View>
 

@@ -29,7 +29,7 @@ class ConfirmationCodeAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'region',)
 
 
 @admin.register(ProfileImage)

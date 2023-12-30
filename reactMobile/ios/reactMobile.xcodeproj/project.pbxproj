@@ -40,15 +40,15 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = reactMobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = reactMobile/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-reactMobile-reactMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reactMobile-reactMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		35CF701CEC1E4227A55D3787 /* Sk-Modernist-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Bold.otf"; path = "../src/assets/fonts/Sk-Modernist-Bold.otf"; sourceTree = "<group>"; };
+		35CF701CEC1E4227A55D3787 /* Sk-Modernist-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Bold.otf"; path = "../src/assets/fonts/Sk-Modernist-Bold.otf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-reactMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reactMobile.debug.xcconfig"; path = "Target Support Files/Pods-reactMobile/Pods-reactMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-reactMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reactMobile.release.xcconfig"; path = "Target Support Files/Pods-reactMobile/Pods-reactMobile.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-reactMobile-reactMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reactMobile-reactMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-reactMobile-reactMobileTests/Pods-reactMobile-reactMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-reactMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reactMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = reactMobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-reactMobile-reactMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reactMobile-reactMobileTests.release.xcconfig"; path = "Target Support Files/Pods-reactMobile-reactMobileTests/Pods-reactMobile-reactMobileTests.release.xcconfig"; sourceTree = "<group>"; };
-		998B44E24DC5460B9674DA6F /* Sk-Modernist-Mono.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Mono.otf"; path = "../src/assets/fonts/Sk-Modernist-Mono.otf"; sourceTree = "<group>"; };
-		A99F81C080984A328D460669 /* Sk-Modernist-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Regular.otf"; path = "../src/assets/fonts/Sk-Modernist-Regular.otf"; sourceTree = "<group>"; };
+		998B44E24DC5460B9674DA6F /* Sk-Modernist-Mono.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Mono.otf"; path = "../src/assets/fonts/Sk-Modernist-Mono.otf"; sourceTree = "<group>"; };
+		A99F81C080984A328D460669 /* Sk-Modernist-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Regular.otf"; path = "../src/assets/fonts/Sk-Modernist-Regular.otf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -163,7 +163,6 @@
 				A99F81C080984A328D460669 /* Sk-Modernist-Regular.otf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -454,6 +453,7 @@
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-reactMobile-reactMobileTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = KBMUQ39LRM;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -482,6 +482,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = KBMUQ39LRM;
 				INFOPLIST_FILE = reactMobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -507,6 +508,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KBMUQ39LRM;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = reactMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -534,6 +536,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = KBMUQ39LRM;
 				INFOPLIST_FILE = reactMobile/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -20,10 +20,10 @@ export default function SetGender({ route }) {
 
     async function onSubmit() {
         if (!gender) {
-            setValidationError('Jinsigzini tanlang')
+            setValidationError('* Jinsigzini tanlang')
         } else {
             setLoading(true)
-            navigation.navigate('SetCity', { phoneNumber, password, name, birthdate })
+            navigation.navigate('SetCity', { phoneNumber, password, name, birthdate, gender })
         }
         setLoading(false)
     }

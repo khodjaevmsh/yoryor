@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
+import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
 import { CodeField, useBlurOnFulfill, useClearByFocusCell, Cursor } from 'react-native-confirmation-code-field'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
+import { Formik } from 'formik'
 import Container from '../components/common/Container'
 import { COLOR } from '../utils/colors'
 import Button from '../components/common/Button'
@@ -10,6 +11,8 @@ import { baseAxios } from '../hooks/requests'
 import { CONFIRM_CODE } from '../urls'
 import ServerError from '../components/common/ServerError'
 import { fontSize } from '../utils/fontSizes'
+import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
+import Input from '../components/common/Input'
 
 export default function CheckConfirmationCode({ route }) {
     const [value, setValue] = useState('')
@@ -22,12 +25,10 @@ export default function CheckConfirmationCode({ route }) {
     const navigation = useNavigation()
 
     async function onSubmit() {
-        setValidationError('')
-
         if (!value && value.length > 0) {
-            setValidationError('Majburiy maydon')
+            setValidationError('* Majburiy maydon')
         } else if (value.length !== 6) {
-            setValidationError('Tasdiqlash kodi 6 ta raqamdan iborat bo\'lishi kerak')
+            setValidationError('* Tasdiqlash kodi 6 ta raqamdan iborat bo\'lishi kerak')
         } else {
             try {
                 setLoading(true)
@@ -35,6 +36,8 @@ export default function CheckConfirmationCode({ route }) {
                     phoneNumber,
                     confirmationCode: value,
                 })
+                setServerError('')
+                setValidationError('')
                 navigation.navigate('SetPassword', { phoneNumber })
             } catch (error) {
                 setServerError(error.response)
@@ -44,41 +47,45 @@ export default function CheckConfirmationCode({ route }) {
         }
     }
 
-    return (
-        <Container>
-            <View style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
-                    <Text style={styles.title}>Tasdiqlash kodi</Text>
-                    <Text style={styles.subTitle}>
-                        Iltimos, telefon raqamingizga yuborilgan tasdiqlash kodini kiriting.
-                    </Text>
-                    <ServerError error={serverError} />
-                    {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
-                </View>
-            </View>
+    useEffect(() => {
+        Keyboard.dismiss()
+    }, [])
 
-            <View style={{ flex: 4 }}>
-                <CodeField
-                    ref={ref}
-                    {...props}
-                    value={value}
-                    onChangeText={setValue}
-                    cellCount={6}
-                    rootStyle={styles.codeFieldRoot}
-                    keyboardType="number-pad"
-                    textContentType="oneTimeCode"
-                    renderCell={({ index, symbol, isFocused }) => (
-                        <View
-                            key={index}
-                            onLayout={getCellOnLayoutHandler(index)}
-                            style={[styles.cell, isFocused && styles.focusCell]}>
-                            <Text
-                                style={styles.cellText}
-                                onLayout={getCellOnLayoutHandler(index)}>
-                                {symbol || (isFocused ? <Cursor /> : null)}
-                            </Text>
-                        </View>
-                    )} />
+    return (
+        <KeyboardAvoiding>
+            <Container>
+                <Text style={styles.title}>Tasdiqlash kodi</Text>
+                <Text style={styles.subTitle}>
+                    Iltimos, telefon raqamingizga yuborilgan tasdiqlash kodini kiriting.
+                </Text>
+
+                <View style={{ flex: 2 }}>
+                    <CodeField
+                        ref={ref}
+                        {...props}
+                        value={value}
+                        onChangeText={setValue}
+                        rootStyle={{ paddingTop: 95 }}
+                        cellCount={6}
+                        keyboardType="numeric"
+                        textContentType="oneTimeCode"
+                        renderCell={({ index, symbol, isFocused }) => (
+                            <View
+                                key={index}
+                                onLayout={getCellOnLayoutHandler(index)}
+                                style={[styles.cell, isFocused && styles.focusCell]}>
+                                <Text
+                                    style={styles.cellText}
+                                    onLayout={getCellOnLayoutHandler(index)}>
+                                    {symbol || (isFocused ? <Cursor /> : null)}
+                                </Text>
+                            </View>
+                        )} />
+
+                    {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
+                    <ServerError error={serverError} style={styles.serverError} />
+                </View>
+
                 <View style={styles.buttonWrapper}>
                     <Button
                         title="Davom etish"
@@ -86,8 +93,8 @@ export default function CheckConfirmationCode({ route }) {
                         buttonStyle={styles.button}
                         loading={loading} />
                 </View>
-            </View>
-        </Container>
+            </Container>
+        </KeyboardAvoiding>
     )
 }
 
@@ -103,35 +110,35 @@ const styles = StyleSheet.create({
         fontSize: fontSize.small,
         lineHeight: 19.5,
     },
-    codeFieldRoot: {
-        marginTop: 48,
-        justifyContent: 'space-between',
-        paddingHorizontal: 2,
-    },
+
     cell: {
         width: 48,
         height: 42,
         borderBottomWidth: 2,
         borderBottomStyle: 'solid',
         borderBottomColor: COLOR.grey,
-
     },
     cellText: {
         lineHeight: 32,
         fontSize: normalize(32),
         textAlign: 'center',
     },
+
     focusCell: {
         borderBottomWidth: 2,
         borderBottomStyle: 'solid',
         borderBottomColor: COLOR.primary,
     },
-    validationError: {
+
+    serverError: {
         color: COLOR.primary,
-        marginTop: 4,
+    },
+    validationError: {
+        marginTop: 22,
+        color: COLOR.primary,
     },
     buttonWrapper: {
-        flex: 1,
+        flex: 0.5,
         justifyContent: 'flex-end',
     },
 })

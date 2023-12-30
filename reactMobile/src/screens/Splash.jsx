@@ -1,9 +1,8 @@
 import React from 'react'
-import { Text, StyleSheet, View, Image } from 'react-native'
+import { Text, StyleSheet, View } from 'react-native'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import Container from '../components/common/Container'
-import logo from '../assets/images/logo.png'
 import Button from '../components/common/Button'
 import { COLOR } from '../utils/colors'
 import ButtonOutline from '../components/common/ButtonOutline'
@@ -56,8 +55,8 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     policyAndTerms: {
-        fontSize: normalize(11),
-        lineHeight: 16,
+        fontSize: normalize(12),
+        lineHeight: 18,
         fontWeight: '400',
         textAlign: 'center',
         color: COLOR.grey,
