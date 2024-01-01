@@ -67,6 +67,6 @@ const styles = StyleSheet.create({
     },
     right: {
         position: 'absolute',
-        right: 10,
+        right: 15,
     },
 })

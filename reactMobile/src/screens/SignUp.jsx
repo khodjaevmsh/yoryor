@@ -21,7 +21,7 @@ export default function SignUp() {
 
     const validationSchema = Yup.object().shape({
         phoneNumber: Yup.string()
-            .matches(/^\+?[0-9]{12}$/, 'Telefon raqami 12 ta raqamdan iborat bo\'lishi kerak')
+            .matches(/^\+?[0-9]{12}$/, 'Raqamingiz 12 ta raqamdan iborat bo\'lishi kerak')
             .required('Majburiy maydon'),
     })
 

@@ -25,7 +25,7 @@ export default function KeyboardAvoiding({ children }) {
 
     return (
         <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={Platform.OS === 'ios' ? 'padding' : null}
             keyboardVerticalOffset={keyboardVerticalOffset}
             style={{ flex: 1 }}>
             {children}

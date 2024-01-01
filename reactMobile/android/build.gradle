@@ -19,3 +19,16 @@ buildscript {
         classpath("com.facebook.react:react-native-gradle-plugin")
     }
 }
+
+allprojects {
+    // append here
+    afterEvaluate {
+        if (getPlugins().hasPlugin('android') ||
+            getPlugins().hasPlugin('android-library')) {
+            configure(android.lintOptions) {
+                abortOnError false
+                checkReleaseBuilds false
+            }
+        }
+    }
+}

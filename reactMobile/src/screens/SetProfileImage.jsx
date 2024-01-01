@@ -123,7 +123,10 @@ export default function SetProfileImage({ route }) {
                         {imageLoading[index] ? (
                             <ActivityIndicator size="small" color={COLOR.primary} />
                         ) : (
-                            <Image source={image ? { uri: image[0].uri } : null} style={styles.imageButton} />
+                            image && image[0].uri !== '' ? (
+                                <Image source={{ uri: image[0].uri }} style={styles.imageButton} />
+                            ) : null
+
                         )}
 
                         <View style={styles.addIcon}>
