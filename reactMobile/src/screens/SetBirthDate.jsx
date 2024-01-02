@@ -17,7 +17,7 @@ export default function SetBirthDate({ route }) {
     const [showDatePicker, setShowDatePicker] = useState(false)
     const [validationError, setValidationError] = useState('')
     const navigation = useNavigation()
-    const { phoneNumber, password, name } = route.params || ''
+    const { phoneNumber, password, name } = route.params
 
     // eslint-disable-next-line max-len
     const fullYear = `${birthdate.getDate()}.${(birthdate.getMonth() + 1).toString().padStart(2, '0')}.${birthdate.getFullYear()}`
@@ -34,7 +34,7 @@ export default function SetBirthDate({ route }) {
                 birthdate: moment(birthdate).format('YYYY-MM-DD'),
             })
         } else if (ageCheck <= 17) {
-            setValidationError('Yoshingiz 18 dan katta bo\'lishi kerak')
+            setValidationError('* Yoshingiz 18 dan katta bo\'lishi kerak')
         }
         setLoading(false)
     }

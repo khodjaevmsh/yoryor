@@ -5,12 +5,15 @@ import normalize from 'react-native-normalize'
 import { Plus, Edit2 } from 'react-native-feather'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
+import Config from 'react-native-config'
 import Container from '../components/common/Container'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import Button from '../components/common/Button'
 import ServerError from '../components/common/ServerError'
 import { GlobalContext } from '../context/GlobalContext'
+import { SIGN_UP } from '../urls'
+import { domain } from '../hooks/requests'
 
 export default function SetProfileImage({ route }) {
     const [images, setImages] = useState(Array(6).fill(null))
@@ -88,7 +91,7 @@ export default function SetProfileImage({ route }) {
                 setValidationError('')
                 setLoading(true)
 
-                const response = await axios.post('http://127.0.0.1:8000/api/v1/users/sign-up', formData, {
+                const response = await axios.post(`${domain}/api/v1${SIGN_UP}`, formData, {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 })
 

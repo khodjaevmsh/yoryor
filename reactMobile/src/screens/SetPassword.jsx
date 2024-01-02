@@ -20,7 +20,7 @@ export default function CheckConfirmationCode({ route }) {
     const [isModalVisible, setModalVisible] = useState(false)
     const [secureTextEntry, setSecureTextEntry] = useState(false)
     const [secureTextEntrySecond, setSecureTextEntrySecond] = useState(false)
-    const { phoneNumber } = route.params || ''
+    const { phoneNumber } = route.params
 
     const validationSchema = Yup.object().shape({
         password: Yup.string()
