@@ -29,11 +29,11 @@ export default function Navigation() {
     const { token } = useContext(GlobalContext)
     const initial = token ? 'TabScreen' : 'Splash'
 
-    async function rmToken() {
-        await AsyncStorage.removeItem('token')
-        await AsyncStorage.removeItem('user')
-    }
-    rmToken()
+    // async function rmToken() {
+    //     await AsyncStorage.removeItem('token')
+    //     await AsyncStorage.removeItem('user')
+    // }
+    // rmToken()
 
     const MyTheme = {
         ...DefaultTheme,

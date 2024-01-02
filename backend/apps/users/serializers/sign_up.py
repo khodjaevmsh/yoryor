@@ -90,7 +90,7 @@ class SignUpSerializer(serializers.ModelSerializer):
         profile_data = validated_data.pop('profile')
         uploaded_images = validated_data.pop("uploaded_images")
 
-        user = User.objects.create_user(phone_number=phone_number, password=password)
+        user = User.objects.create_user(phone_number=phone_number, password=password, username=phone_number)
         user.set_password(password)
 
         profile = Profile.objects.create(user=user, **profile_data)

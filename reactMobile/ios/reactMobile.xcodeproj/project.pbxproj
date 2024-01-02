@@ -12,11 +12,8 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1C3323795BF24B29896DD6F1 /* Sk-Modernist-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 35CF701CEC1E4227A55D3787 /* Sk-Modernist-Bold.otf */; };
 		7699B88040F8A987B510C191 /* libPods-reactMobile-reactMobileTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-reactMobile-reactMobileTests.a */; };
-		7AE951DA8F6E4EEAB012DC2D /* Sk-Modernist-Mono.otf in Resources */ = {isa = PBXBuildFile; fileRef = 998B44E24DC5460B9674DA6F /* Sk-Modernist-Mono.otf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		CB9328FE23514ACEA5436F59 /* Sk-Modernist-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A99F81C080984A328D460669 /* Sk-Modernist-Regular.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,15 +37,29 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = reactMobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = reactMobile/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-reactMobile-reactMobileTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reactMobile-reactMobileTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		35CF701CEC1E4227A55D3787 /* Sk-Modernist-Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Bold.otf"; path = "../src/assets/fonts/Sk-Modernist-Bold.otf"; sourceTree = "<group>"; };
+		3658DC11A9FD4E21885D767F /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Bold.ttf"; path = "../src/assets/fonts/Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		381AC5FF2B442ED000C0BC8B /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		381AC6002B442ED000C0BC8B /* Gilroy-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-SemiBold.ttf"; sourceTree = "<group>"; };
+		381AC6012B442ED000C0BC8B /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		381AC6022B442ED000C0BC8B /* Gilroy-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Light.ttf"; sourceTree = "<group>"; };
+		381AC6032B442ED000C0BC8B /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
+		3841E5132B432B9700F288BB /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		3841E5142B432B9700F288BB /* Gilroy-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Light.ttf"; sourceTree = "<group>"; };
+		3841E5152B432B9700F288BB /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		3841E5162B432B9700F288BB /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
+		3841E51B2B432BC200F288BB /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Bold.ttf"; sourceTree = "<group>"; };
+		3841E51C2B432BC200F288BB /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		3841E51D2B432BC200F288BB /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Medium.ttf"; sourceTree = "<group>"; };
+		3841E51E2B432BC200F288BB /* Gilroy-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gilroy-Light.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-reactMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reactMobile.debug.xcconfig"; path = "Target Support Files/Pods-reactMobile/Pods-reactMobile.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-reactMobile.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reactMobile.release.xcconfig"; path = "Target Support Files/Pods-reactMobile/Pods-reactMobile.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-reactMobile-reactMobileTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reactMobile-reactMobileTests.debug.xcconfig"; path = "Target Support Files/Pods-reactMobile-reactMobileTests/Pods-reactMobile-reactMobileTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-reactMobile.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-reactMobile.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = reactMobile/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-reactMobile-reactMobileTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-reactMobile-reactMobileTests.release.xcconfig"; path = "Target Support Files/Pods-reactMobile-reactMobileTests/Pods-reactMobile-reactMobileTests.release.xcconfig"; sourceTree = "<group>"; };
-		998B44E24DC5460B9674DA6F /* Sk-Modernist-Mono.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Mono.otf"; path = "../src/assets/fonts/Sk-Modernist-Mono.otf"; sourceTree = "<group>"; };
-		A99F81C080984A328D460669 /* Sk-Modernist-Regular.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Sk-Modernist-Regular.otf"; path = "../src/assets/fonts/Sk-Modernist-Regular.otf"; sourceTree = "<group>"; };
+		97FDAF00B1104BA6BDE522A2 /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Regular.ttf"; path = "../src/assets/fonts/Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		B9562C55114B4AFF84C2A71F /* Gilroy-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Light.ttf"; path = "../src/assets/fonts/Gilroy-Light.ttf"; sourceTree = "<group>"; };
+		C573843C1BAB488099D2C77D /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Medium.ttf"; path = "../src/assets/fonts/Gilroy-Medium.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -122,6 +133,19 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3841E5132B432B9700F288BB /* Gilroy-Bold.ttf */,
+				3841E5142B432B9700F288BB /* Gilroy-Light.ttf */,
+				3841E51E2B432BC200F288BB /* Gilroy-Light.ttf */,
+				3841E5162B432B9700F288BB /* Gilroy-Medium.ttf */,
+				3841E51D2B432BC200F288BB /* Gilroy-Medium.ttf */,
+				381AC6012B442ED000C0BC8B /* Gilroy-Bold.ttf */,
+				381AC6022B442ED000C0BC8B /* Gilroy-Light.ttf */,
+				381AC6032B442ED000C0BC8B /* Gilroy-Medium.ttf */,
+				3841E5152B432B9700F288BB /* Gilroy-Regular.ttf */,
+				3841E51B2B432BC200F288BB /* Gilroy-Bold.ttf */,
+				3841E51C2B432BC200F288BB /* Gilroy-Regular.ttf */,
+				381AC5FF2B442ED000C0BC8B /* Gilroy-Regular.ttf */,
+				381AC6002B442ED000C0BC8B /* Gilroy-SemiBold.ttf */,
 				13B07FAE1A68108700A75B9A /* reactMobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* reactMobileTests */,
@@ -158,9 +182,10 @@
 		D4E3E39D758C48FCA8097C2C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				35CF701CEC1E4227A55D3787 /* Sk-Modernist-Bold.otf */,
-				998B44E24DC5460B9674DA6F /* Sk-Modernist-Mono.otf */,
-				A99F81C080984A328D460669 /* Sk-Modernist-Regular.otf */,
+				3658DC11A9FD4E21885D767F /* Gilroy-Bold.ttf */,
+				B9562C55114B4AFF84C2A71F /* Gilroy-Light.ttf */,
+				C573843C1BAB488099D2C77D /* Gilroy-Medium.ttf */,
+				97FDAF00B1104BA6BDE522A2 /* Gilroy-Regular.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -261,9 +286,6 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				1C3323795BF24B29896DD6F1 /* Sk-Modernist-Bold.otf in Resources */,
-				7AE951DA8F6E4EEAB012DC2D /* Sk-Modernist-Mono.otf in Resources */,
-				CB9328FE23514ACEA5436F59 /* Sk-Modernist-Regular.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

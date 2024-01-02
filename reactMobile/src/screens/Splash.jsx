@@ -6,14 +6,13 @@ import Container from '../components/common/Container'
 import Button from '../components/common/Button'
 import { COLOR } from '../utils/colors'
 import ButtonOutline from '../components/common/ButtonOutline'
-import { AppLogo } from '../components/common/Svgs'
 
 export default function Splash() {
     const navigation = useNavigation()
     return (
-        <Container containerStyle={{ paddingBottom: 45 }}>
+        <Container>
             <View style={styles.logoWrapper}>
-                <AppLogo />
+                <Text style={{ fontSize: 82, color: COLOR.primary, fontWeight: '400' }}>sovcHi</Text>
             </View>
             <View style={styles.policyAndTermsWrapper}>
                 <Text style={styles.policyAndTerms}>
@@ -24,7 +23,7 @@ export default function Splash() {
 
                 <Button
                     title="Ro'yxatdan o'tish"
-                    buttonStyle={styles.button}
+                    buttonStyle={[styles.button, { marginBottom: 6 }]}
                     onPress={() => navigation.navigate('SignUp')} />
 
                 <ButtonOutline
@@ -48,7 +47,7 @@ const styles = StyleSheet.create({
         height: 100,
     },
     button: {
-        marginVertical: 6,
+        marginTop: 6,
     },
     policyAndTermsWrapper: {
         flex: 2,

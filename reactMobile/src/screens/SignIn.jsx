@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import normalize from 'react-native-normalize'
+import * as Yup from 'yup'
+import Config from 'react-native-config'
 import Container from '../components/common/Container'
 import Input from '../components/common/Input'
 import ServerError from '../components/common/ServerError'
@@ -11,11 +13,41 @@ import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
 import SecureTextEntryIcon from '../components/common/SecureTextEntryIcon'
+import { baseAxios } from '../hooks/requests'
+import { SIGN_IN } from '../urls'
+import { GlobalContext } from '../context/GlobalContext'
 
 export default function SignIn({ route }) {
+    const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState()
-    const [secureTextEntry, setSecureTextEntry] = useState(false)
+    const [secureTextEntry, setSecureTextEntry] = useState(true)
+    const { auth } = useContext(GlobalContext)
     const navigation = useNavigation()
+
+    const validationSchema = Yup.object().shape({
+        phoneNumber: Yup.string()
+            .matches(/^\+?[0-9]{12}$/, 'Raqamingiz 12 ta raqamdan iborat bo\'lishi kerak')
+            .required('Majburiy maydon'),
+        password: Yup.string()
+            .required('Majburiy maydon'),
+    })
+
+    async function onSubmit(data) {
+        try {
+            setLoading(true)
+            const response = await baseAxios.post(SIGN_IN, {
+                phoneNumber: data.phoneNumber,
+                password: data.password,
+            })
+            auth(response.data.token, response.data.user)
+            navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
+            navigation.navigate('TabScreen')
+        } catch (error) {
+            setServerError(error.response)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <KeyboardAvoiding>
@@ -27,20 +59,21 @@ export default function SignIn({ route }) {
                     </Text>
 
                     <Formik
-                        initialValues={{ phoneNumber: '', password: '' }}
-                        validationSchema={null}
-                        onSubmit={null}>
+                        initialValues={{ phoneNumber: '998906351010', password: 'helloWorld1001$' }}
+                        validationSchema={validationSchema}
+                        onSubmit={onSubmit}>
                         {({ handleSubmit }) => (
                             <>
                                 <Input
                                     name="phoneNumber"
-                                    keyboardType="default"
+                                    keyboardType="numeric"
                                     placeholder="+9989 90 635 10 01" />
 
                                 <Input
                                     name="password"
                                     keyboardType="default"
                                     placeholder="Parol"
+                                    autoCapitalize="none"
                                     secureTextEntry={secureTextEntry}
                                     right={(
                                         <SecureTextEntryIcon
@@ -52,7 +85,7 @@ export default function SignIn({ route }) {
                                 <ServerError error={serverError} />
 
                                 <View style={styles.buttonWrapper}>
-                                    <Button title="Davom etish" onPress={handleSubmit} loading={null} />
+                                    <Button title="Davom etish" onPress={handleSubmit} loading={loading} />
                                 </View>
                             </>
                         )}
