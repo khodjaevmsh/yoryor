@@ -1,12 +1,10 @@
 import React from 'react'
-import { Text, TextInput, View, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native'
+import { Text, TextInput, View, StyleSheet, SafeAreaView } from 'react-native'
 import { Field, ErrorMessage } from 'formik'
-import normalize from 'react-native-normalize/src/index'
-import { Eye } from 'react-native-feather'
+import normalize from 'react-native-normalize'
 import { COLOR } from '../../utils/colors'
 import TextError from './TextError'
 import { fontSize } from '../../utils/fontSizes'
-import { MonkeySeeNo } from './Svgs'
 
 export default function Input({
     safeArea,
@@ -53,17 +51,18 @@ export default function Input({
 
 const styles = StyleSheet.create({
     label: {
-        marginBottom: 8,
+        marginBottom: 4,
+        marginLeft: 4,
         fontSize: fontSize.medium,
     },
     input: {
         width: '100%',
-        height: 52,
-        paddingHorizontal: 15,
-        borderWidth: 1,
+        height: normalize(50),
+        paddingHorizontal: 20,
+        borderWidth: 1.5,
         borderColor: COLOR.lightGrey,
-        borderRadius: 12,
-        fontSize: 16,
+        borderRadius: 15,
+        fontSize: normalize(16),
     },
     right: {
         position: 'absolute',

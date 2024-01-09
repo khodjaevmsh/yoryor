@@ -8,12 +8,15 @@ export default function useTrans() {
 
 const uz = {
     hello: 'Salom',
+    profileAbout: 'Profilingiz tavsifi',
 }
 const ru = {
     hello: 'Привет',
+    profileAbout: 'Описание вашего профиля',
 }
 const en = {
     hello: 'Hello',
+    profileAbout: 'About',
 }
 
 export const languages = { uz, ru, en }

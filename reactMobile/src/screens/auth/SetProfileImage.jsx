@@ -5,15 +5,14 @@ import normalize from 'react-native-normalize'
 import { Plus, Edit2 } from 'react-native-feather'
 import axios from 'axios'
 import { useNavigation } from '@react-navigation/native'
-import Config from 'react-native-config'
-import Container from '../components/common/Container'
-import { COLOR } from '../utils/colors'
-import { fontSize } from '../utils/fontSizes'
-import Button from '../components/common/Button'
-import ServerError from '../components/common/ServerError'
-import { GlobalContext } from '../context/GlobalContext'
-import { SIGN_UP } from '../urls'
-import { domain } from '../hooks/requests'
+import Container from '../../components/common/Container'
+import { COLOR } from '../../utils/colors'
+import { fontSize } from '../../utils/fontSizes'
+import Button from '../../components/common/Button'
+import ServerError from '../../components/common/ServerError'
+import { GlobalContext } from '../../context/GlobalContext'
+import { SIGN_UP } from '../../urls'
+import { domain } from '../../hooks/requests'
 
 export default function SetProfileImage({ route }) {
     const [images, setImages] = useState(Array(6).fill(null))
@@ -22,7 +21,7 @@ export default function SetProfileImage({ route }) {
     const [serverError, setServerError] = useState('')
     const [validationError, setValidationError] = useState('')
 
-    const { phoneNumber, password, name, birthdate, gender, region, goal } = route.params
+    const { phoneNumber, password, name, birthdate, gender, region, goal } = route.params || {}
     const { auth } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -95,7 +94,7 @@ export default function SetProfileImage({ route }) {
                     headers: { 'Content-Type': 'multipart/form-data' },
                 })
 
-                auth(response.data.token, response.data.user)
+                auth(response.data.token, response.data.user, response.data.profile)
                 navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
                 navigation.navigate('TabScreen')
             } catch (error) {

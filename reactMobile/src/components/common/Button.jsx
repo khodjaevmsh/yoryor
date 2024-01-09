@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: COLOR.primary,
         padding: 8,
-        borderRadius: 18,
+        borderRadius: 19,
         alignItems: 'center',
     },
     text: {
         color: '#ffffff',
         fontWeight: '500',
-        fontSize: 16,
+        fontSize: normalize(16),
     },
 })

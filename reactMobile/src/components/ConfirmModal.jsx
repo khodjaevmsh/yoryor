@@ -2,21 +2,16 @@ import React from 'react'
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { AlertCircle } from 'react-native-feather'
 import normalize from 'react-native-normalize'
-import { useNavigation } from '@react-navigation/native'
 import RNModal from 'react-native-modal'
 import { fontSize } from '../utils/fontSizes'
 import { COLOR } from '../utils/colors'
 
-export default function ConfirmModal({ isModalConfirm, setModalConfirm, cancel }) {
-    const navigation = useNavigation()
-
+export default function ConfirmModal({ title, subTitle, icon, isModalConfirm, setModalConfirm, cancel, cancelTitle }) {
     return (
         <RNModal
             isVisible={isModalConfirm}
             animationIn="zoomIn"
             animationOut="fadeOut"
-            animationInTiming={280}
-            animationOutTiming={380}
             backdropTransitionOutTiming={0}
             coverScreen
             onBackdropPress={() => setModalConfirm(false)}
@@ -28,16 +23,19 @@ export default function ConfirmModal({ isModalConfirm, setModalConfirm, cancel }
 
                 <View style={styles.content}>
                     <AlertCircle width={32} height={32} color={COLOR.primary} />
-                    <Text style={styles.title}>Bekor qilmoqchimisiz?</Text>
-                    <Text style={styles.subTitle}>Diqqat, siz kiritgan ma'lumotlarning barchasi bekor bo'ladi!</Text>
+                    <Text style={styles.title}>{title}</Text>
+                    <View style={styles.iconWrapper}>
+                        {icon || null}
+                        <Text style={styles.subTitle}>{subTitle || null}</Text>
+                    </View>
                 </View>
 
                 <View style={styles.buttonWrapper}>
                     <TouchableOpacity style={styles.button} onPress={cancel}>
-                        <Text style={styles.buttonTitle}>Bekor qilish</Text>
+                        <Text style={styles.buttonTitle}>{cancelTitle || 'Bekor qilish'}</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => setModalConfirm(false)} style={[styles.button, { backgroundColor: COLOR.lightGrey }]}>
+                    <TouchableOpacity onPress={() => setModalConfirm(false)} style={[styles.button, { backgroundColor: COLOR.white, borderWidth: 2, borderColor: COLOR.lightGrey }]}>
                         <Text style={[styles.buttonTitle, { color: COLOR.black }]}>Ortga</Text>
                     </TouchableOpacity>
                 </View>
@@ -74,6 +72,11 @@ const styles = StyleSheet.create({
         fontSize: fontSize.small,
         textAlign: 'center',
         lineHeight: 20,
+        marginLeft: 4,
+    },
+    iconWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     buttonWrapper: {
         flexDirection: 'row',
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
         height: normalize(38),
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 12,
+        borderRadius: 10,
         backgroundColor: COLOR.primary,
     },
     buttonTitle: {

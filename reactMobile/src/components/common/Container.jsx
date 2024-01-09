@@ -7,7 +7,10 @@ export default function Container({ children, scrollable, containerStyle }) {
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <Component style={[styles.container, containerStyle]}>
+            <Component
+                style={!scrollable ? [styles.container, containerStyle] : null}
+                contentContainerStyle={scrollable ? styles.scrollContainer : null}
+                showsVerticalScrollIndicator={scrollable ? false : null}>
                 {children}
             </Component>
         </TouchableWithoutFeedback>
@@ -17,7 +20,13 @@ export default function Container({ children, scrollable, containerStyle }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 22,
+        marginTop: 14,
+        marginBottom: Platform.OS === 'ios' ? 32 : 24,
+        marginHorizontal: 22,
+    },
+    scrollContainer: {
+        flexGrow: 1,
+        paddingTop: 14,
         paddingBottom: Platform.OS === 'ios' ? 32 : 24,
         paddingHorizontal: 22,
     },
