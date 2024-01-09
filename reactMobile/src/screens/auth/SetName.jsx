@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import * as Yup from 'yup'
 import { ChevronLeft } from 'react-native-feather'
-import Input from '../components/common/Input'
-import Button from '../components/common/Button'
-import Container from '../components/common/Container'
-import { COLOR } from '../utils/colors'
-import { fontSize } from '../utils/fontSizes'
-import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
-import ConfirmModal from '../components/ConfirmModal'
+import Input from '../../components/common/Input'
+import Button from '../../components/common/Button'
+import Container from '../../components/common/Container'
+import { COLOR } from '../../utils/colors'
+import { fontSize } from '../../utils/fontSizes'
+import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
+import ConfirmModal from '../../components/ConfirmModal'
 
 export default function SetName({ route }) {
     const [loading, setLoading] = useState(false)
@@ -22,7 +22,7 @@ export default function SetName({ route }) {
         navigation.setOptions({
             headerLeft: () => (
                 <TouchableOpacity onPress={() => setModalConfirm(true)}>
-                    <ChevronLeft width={32} height={32} />
+                    <ChevronLeft width={32} height={32} color={COLOR.primary} />
                 </TouchableOpacity>
             ),
         })
@@ -73,6 +73,9 @@ export default function SetName({ route }) {
                     </Formik>
                 </View>
                 <ConfirmModal
+                    title="Bekor qilmoqchimisiz?"
+                    subTitle="Diqqat, siz kiritgan ma'lumotlarning barchasi bekor bo'ladi!"
+                    cancelTitle="Bekor qilish"
                     isModalConfirm={isModalConfirm}
                     setModalConfirm={setModalConfirm}
                     cancel={() => navigation.navigate('Splash')} />

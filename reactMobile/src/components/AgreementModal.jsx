@@ -9,6 +9,7 @@ import { COLOR } from '../utils/colors'
 import Button from './common/Button'
 import { fontSize } from '../utils/fontSizes'
 import ConfirmModal from './ConfirmModal'
+import Container from './common/Container'
 
 export default function AgreementModal({ isModalVisible, setModalVisible, phoneNumber }) {
     const [loading, setLoading] = useState(false)
@@ -43,6 +44,9 @@ export default function AgreementModal({ isModalVisible, setModalVisible, phoneN
                 <View style={{ flex: 1 }}>
                     <TouchableOpacity activeOpacity={0.7} onPress={() => setModalConfirm(true)}>
                         <ConfirmModal
+                            title="Bekor qilmoqchimisiz?"
+                            subTitle="Diqqat, siz kiritgan ma'lumotlarning barchasi bekor bo'ladi!"
+                            cancelTitle="Bekor qilish"
                             isModalConfirm={isModalConfirm}
                             setModalConfirm={setModalConfirm}
                             cancel={() => navigation.navigate('Splash')} />

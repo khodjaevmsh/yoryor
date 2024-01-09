@@ -14,7 +14,8 @@ import Config from 'react-native-config'
 //   })
 // }
 
-const backendUrl = Config.BASE_URL
+// const backendUrl = Config.BASE_URL
+const backendUrl = 'http://127.0.0.1:8000/'
 export const domain = backendUrl.endsWith('/') ? backendUrl.substr(0, backendUrl.length - 1) : backendUrl
 
 export const baseAxios = axios.create({

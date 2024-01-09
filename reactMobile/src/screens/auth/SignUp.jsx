@@ -3,15 +3,15 @@ import { Text, StyleSheet, View, Keyboard } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigation } from '@react-navigation/native'
-import Container from '../components/common/Container'
-import Button from '../components/common/Button'
-import { COLOR } from '../utils/colors'
-import Input from '../components/common/Input'
-import { baseAxios } from '../hooks/requests'
-import { SEND_CODE } from '../urls'
-import ServerError from '../components/common/ServerError'
-import { fontSize } from '../utils/fontSizes'
-import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
+import Container from '../../components/common/Container'
+import Button from '../../components/common/Button'
+import { COLOR } from '../../utils/colors'
+import Input from '../../components/common/Input'
+import { baseAxios } from '../../hooks/requests'
+import { SEND_CODE } from '../../urls'
+import ServerError from '../../components/common/ServerError'
+import { fontSize } from '../../utils/fontSizes'
+import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 
 export default function SignUp() {
     const [serverError, setServerError] = useState(null)
@@ -61,6 +61,7 @@ export default function SignUp() {
                                         name="phoneNumber"
                                         keyboardType="numeric"
                                         placeholder="+9989 90 635 10 01" />
+
                                     <ServerError
                                         error={serverError}
                                         style={[styles.serverError, { marginTop: errors.phoneNumber ? 4 : 8 }]} />

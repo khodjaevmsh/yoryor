@@ -4,18 +4,17 @@ import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import normalize from 'react-native-normalize'
 import * as Yup from 'yup'
-import Config from 'react-native-config'
-import Container from '../components/common/Container'
-import Input from '../components/common/Input'
-import ServerError from '../components/common/ServerError'
-import Button from '../components/common/Button'
-import { COLOR } from '../utils/colors'
-import { fontSize } from '../utils/fontSizes'
-import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
-import SecureTextEntryIcon from '../components/common/SecureTextEntryIcon'
-import { baseAxios } from '../hooks/requests'
-import { SIGN_IN } from '../urls'
-import { GlobalContext } from '../context/GlobalContext'
+import Container from '../../components/common/Container'
+import Input from '../../components/common/Input'
+import ServerError from '../../components/common/ServerError'
+import Button from '../../components/common/Button'
+import { COLOR } from '../../utils/colors'
+import { fontSize } from '../../utils/fontSizes'
+import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
+import SecureTextEntryIcon from '../../components/common/SecureTextEntryIcon'
+import { baseAxios } from '../../hooks/requests'
+import { SIGN_IN } from '../../urls'
+import { GlobalContext } from '../../context/GlobalContext'
 
 export default function SignIn({ route }) {
     const [loading, setLoading] = useState(false)
@@ -39,7 +38,7 @@ export default function SignIn({ route }) {
                 phoneNumber: data.phoneNumber,
                 password: data.password,
             })
-            auth(response.data.token, response.data.user)
+            auth(response.data.token, response.data.user, response.data.profile)
             navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
             navigation.navigate('TabScreen')
         } catch (error) {

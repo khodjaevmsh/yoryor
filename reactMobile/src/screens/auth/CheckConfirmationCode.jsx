@@ -1,18 +1,16 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { Keyboard, KeyboardAvoidingView, Platform, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Keyboard, StyleSheet, Text, View } from 'react-native'
 import { CodeField, useBlurOnFulfill, useClearByFocusCell, Cursor } from 'react-native-confirmation-code-field'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
-import { Formik } from 'formik'
-import Container from '../components/common/Container'
-import { COLOR } from '../utils/colors'
-import Button from '../components/common/Button'
-import { baseAxios } from '../hooks/requests'
-import { CONFIRM_CODE } from '../urls'
-import ServerError from '../components/common/ServerError'
-import { fontSize } from '../utils/fontSizes'
-import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
-import Input from '../components/common/Input'
+import Container from '../../components/common/Container'
+import { COLOR } from '../../utils/colors'
+import Button from '../../components/common/Button'
+import { baseAxios } from '../../hooks/requests'
+import { CONFIRM_CODE } from '../../urls'
+import ServerError from '../../components/common/ServerError'
+import { fontSize } from '../../utils/fontSizes'
+import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 
 export default function CheckConfirmationCode({ route }) {
     const [value, setValue] = useState('')
@@ -129,7 +127,6 @@ const styles = StyleSheet.create({
         borderBottomStyle: 'solid',
         borderBottomColor: COLOR.primary,
     },
-
     serverError: {
         color: COLOR.primary,
     },

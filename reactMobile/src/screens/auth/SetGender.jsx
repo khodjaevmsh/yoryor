@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import normalize from 'react-native-normalize'
-import Container from '../components/common/Container'
-import Button from '../components/common/Button'
-import { fontSize } from '../utils/fontSizes'
-import { COLOR } from '../utils/colors'
+import Container from '../../components/common/Container'
+import Button from '../../components/common/Button'
+import { fontSize } from '../../utils/fontSizes'
+import { COLOR } from '../../utils/colors'
 
 export default function SetGender({ route }) {
     const [loading, setLoading] = useState(false)

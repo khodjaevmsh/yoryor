@@ -24,10 +24,13 @@ class SignInSerializer(serializers.ModelSerializer):
         if token:
             raise ValidationError({'token': _('Please try clearing the application cache')})
 
+        if not user:
+            raise ValidationError({'user': _('This user is not registered')})
+
         if not sign_in:
             raise ValidationError({'user': _('Incorrect username or password specified')}, code='authorization')
 
-        attrs['user'] = sign_in
+        # attrs['user']
         return attrs
 
     class Meta:

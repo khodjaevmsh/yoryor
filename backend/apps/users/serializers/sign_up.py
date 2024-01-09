@@ -3,8 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from users.models import User, ConfirmationCode, Profile, ProfileImage
-from users.serializers.profile import ProfileSerializer
-from users.serializers.profile_image import ProfileImageSerializers
+from users.serializers.profile import ProfileSerializer, ProfileImageSerializers
 from users.utils import generate_verification_code, integers_only
 
 
@@ -63,7 +62,6 @@ class CheckConfirmationCodeSerializer(serializers.ModelSerializer):
 
 class SignUpSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
-
     images = ProfileImageSerializers(many=True, read_only=True)
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(allow_empty_file=False, use_url=False),
@@ -103,3 +101,4 @@ class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'phone_number', 'password', 'profile', 'images', 'uploaded_images']
+        extra_kwargs = {'password': {'write_only': True}}

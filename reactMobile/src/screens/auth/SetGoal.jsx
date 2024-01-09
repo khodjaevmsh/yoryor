@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import normalize from 'react-native-normalize'
-import Container from '../components/common/Container'
-import Button from '../components/common/Button'
-import { fontSize } from '../utils/fontSizes'
-import { COLOR } from '../utils/colors'
-import { ClinkingGlasses, FaceWithHeart, HeartWithArrow, WavingHand } from '../components/common/Svgs'
+import Container from '../../components/common/Container'
+import Button from '../../components/common/Button'
+import { fontSize } from '../../utils/fontSizes'
+import { COLOR } from '../../utils/colors'
+import { ClinkingGlasses, FaceWithHeart, HeartWithArrow, WavingHand } from '../../components/common/Svgs'
 
 const goals = [
     { id: 1, type: 'match', title: 'Juftlik topish', icon: <HeartWithArrow /> },

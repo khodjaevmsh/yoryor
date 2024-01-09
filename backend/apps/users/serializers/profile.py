@@ -1,14 +1,39 @@
 from rest_framework import serializers
 
-from users.models import Profile
+from users.models import Profile, ProfileImage
+from users.serializers.region import RegionSerializer
 
 
 class ProfileSerializer(serializers.ModelSerializer):
     birthdate = serializers.DateField(format='%Y-%m-%d')
 
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['region'] = RegionSerializer(instance.region).data
+        data['goal'] = {'label': instance.get_goal_display(), 'value': instance.goal}
+        data['gender'] = {'label': instance.get_gender_display(), 'value': instance.gender}
+        data['education_level'] = {'label': instance.get_education_level_display(), 'value': instance.education_level}
+        data['marital_status'] = {'label': instance.get_marital_status_display(), 'value': instance.marital_status}
+        data['income_level'] = {'label': instance.get_income_level_display(), 'value': instance.income_level}
+        data['zodiac'] = {'label': instance.get_zodiac_display(), 'value': instance.zodiac}
+        return data
+
     class Meta:
         model = Profile
-        fields = ['user', 'name', 'birthdate', 'gender', 'region', 'goal']
+        fields = '__all__'
         extra_kwargs = {
-            'user': {'required': False}
+            'user': {'required': False},
+            # 'name': {'required': True}
         }
+
+
+class SimpleProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+
+class ProfileImageSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ProfileImage
+        fields = ['id', 'profile', 'image']
