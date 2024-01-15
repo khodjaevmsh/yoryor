@@ -25,8 +25,8 @@ export default function ConfirmModal({ title, subTitle, icon, isModalConfirm, se
                     <AlertCircle width={32} height={32} color={COLOR.primary} />
                     <Text style={styles.title}>{title}</Text>
                     <View style={styles.iconWrapper}>
-                        {icon || null}
                         <Text style={styles.subTitle}>{subTitle || null}</Text>
+                        {icon || null}
                     </View>
                 </View>
 
@@ -65,14 +65,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: fontSize.medium,
         fontWeight: '500',
-        marginTop: 7,
-        marginBottom: 10,
+        marginTop: 14,
+        marginBottom: 6,
     },
     subTitle: {
         fontSize: fontSize.small,
         textAlign: 'center',
         lineHeight: 20,
-        marginLeft: 4,
+        marginRight: 4,
     },
     iconWrapper: {
         flexDirection: 'row',

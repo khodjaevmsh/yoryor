@@ -11,6 +11,7 @@ import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
 import PickerSelect from '../../components/common/PickerSelect'
 import ServerError from '../../components/common/ServerError'
+import { showToast } from '../../components/common/Toast'
 
 export default function City({ route }) {
     const { props } = route.params
@@ -32,7 +33,10 @@ export default function City({ route }) {
                 setLoading(true)
                 await baseAxios.put(PROFILE.replace('{id}', profile.id), { region })
                 navigation.goBack()
-                setRender(true)
+                if (props.region.country.toString() !== country || props.region.id.toString() !== region) {
+                    setRender(true)
+                    showToast('success', 'Muvaffaqiyatli', 'Yashash joyingiz o\'zgartirildi.')
+                }
             } catch (error) {
                 setServerError(error.response)
             } finally {

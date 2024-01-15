@@ -1,12 +1,12 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { MessageCircle, User, Heart, ChevronLeft, Search, Settings as SettingsI } from 'react-native-feather'
+import { MessageCircle, User, ChevronLeft, Search, Settings as SettingsI } from 'react-native-feather'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLOR } from './utils/colors'
-import Profile from './screens/profile/Profile'
+import ProfileDetai from './screens/Profile'
 import Likes from './screens/Likes'
 import Splash from './screens/Splash'
 import SignUp from './screens/auth/SignUp'
@@ -23,7 +23,7 @@ import SetCity from './screens/auth/SetCity'
 import SetProfileImage from './screens/auth/SetProfileImage'
 import Discover from './screens/Discover'
 
-import Settings from './screens/profile/Settings'
+import Settings from './screens/settings/Settings'
 import MaritalStatus from './screens/profile/MaritalStatus'
 import Goal from './screens/profile/Goal'
 import FinancialStatus from './screens/profile/FinancialStatus'
@@ -36,11 +36,14 @@ import Education from './screens/profile/Education'
 import Height from './screens/profile/Height'
 import Job from './screens/profile/Job'
 import City from './screens/profile/City'
-import ConfirmEmail from './screens/ConfirmEmail'
-import ChangePassword from './screens/ChangePassword'
-import ChangeLanguage from './screens/ChangeLanguage'
-import AboutApp from './screens/AboutApp'
-import Help from './screens/Help'
+import ConfirmEmail from './screens/settings/ConfirmEmail'
+import ChangePassword from './screens/settings/ChangePassword'
+import ChangeLanguage from './screens/settings/ChangeLanguage'
+import AboutApp from './screens/settings/AboutApp'
+import Help from './screens/settings/Help'
+import AddProfileImage from './screens/profile/AddProfileImage'
+import ProfileDetail from './screens/profile/ProfileDetail'
+import { ChatRounded, Heart, UserRounded, Widget4 } from './components/common/Svgs'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -80,13 +83,15 @@ export default function Navigation() {
                 <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
                 {/* eslint-disable-next-line max-len */}
                 <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false, gestureEnabled: false }} />
+
+                {/*  AUTH  */}
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: true }} />
                 {/* eslint-disable-next-line max-len */}
                 <Stack.Screen name="CheckConfirmationCode" component={CheckConfirmationCode} options={{ headerShown: true }} />
                 {/* eslint-disable-next-line max-len */}
-                <Stack.Screen name="SetPassword" component={SetPassword} options={({ }) => ({ headerShown: true, gestureEnabled: false })} />
+                <Stack.Screen name="SetPassword" component={SetPassword} options={() => ({ headerShown: true, gestureEnabled: false })} />
                 {/* eslint-disable-next-line max-len */}
-                <Stack.Screen name="SetName" component={SetName} options={({ }) => ({ headerShown: true, gestureEnabled: false })} />
+                <Stack.Screen name="SetName" component={SetName} options={() => ({ headerShown: true, gestureEnabled: false })} />
                 <Stack.Screen name="SetBirthDate" component={SetBirthDate} options={{ headerShown: true }} />
                 <Stack.Screen name="SetGender" component={SetGender} options={{ headerShown: true }} />
                 <Stack.Screen name="SetCity" component={SetCity} options={{ headerShown: true }} />
@@ -96,6 +101,8 @@ export default function Navigation() {
 
                 {/*  PROFILE  */}
                 <Stack.Screen name="Settings" component={Settings} options={{ headerShown: true }} />
+                <Stack.Screen name="ProfileDetail" component={ProfileDetail} options={{ headerShown: true }} />
+                <Stack.Screen name="AddProfileImage" component={AddProfileImage} options={{ headerShown: true }} />
                 <Stack.Screen name="Bio" component={Bio} options={{ headerShown: true }} />
                 <Stack.Screen name="BirthDate" component={BirthDate} options={{ headerShown: true }} />
                 <Stack.Screen name="Gender" component={Gender} options={{ headerShown: true }} />
@@ -108,7 +115,6 @@ export default function Navigation() {
                 <Stack.Screen name="Height" component={Height} options={{ headerShown: true }} />
                 <Stack.Screen name="Weight" component={Weight} options={{ headerShown: true }} />
                 <Stack.Screen name="Zodiac" component={Zodiac} options={{ headerShown: true }} />
-                {/*  PROFILE  */}
 
                 {/*  SETTINGS  */}
                 <Stack.Screen name="ConfirmEmail" component={ConfirmEmail} options={{ headerShown: true }} />
@@ -116,7 +122,7 @@ export default function Navigation() {
                 <Stack.Screen name="ChangeLanguage" component={ChangeLanguage} options={{ headerShown: true }} />
                 <Stack.Screen name="AboutApp" component={AboutApp} options={{ headerShown: true }} />
                 <Stack.Screen name="Help" component={Help} options={{ headerShown: true }} />
-                {/*  SETTINGS  */}
+
             </Stack.Navigator>
         </NavigationContainer>
     )
@@ -134,28 +140,23 @@ function TabScreen() {
         }}>
             <Tab.Screen name="Discover" component={Discover} options={{
                 tabBarIcon: ({ focused }) => (
-                    <Search color={focused ? COLOR.primary : COLOR.black} width={28} height={28} strokeWidth={2.2} />
+                    <Widget4 color={focused ? COLOR.primary : COLOR.grey} width={26} height={26} strokeWidth={2.2} />
                 ),
             }} />
             <Tab.Screen name="Likes" component={Likes} options={{
                 tabBarIcon: ({ focused }) => (
-                    <Heart color={focused ? COLOR.primary : COLOR.black} width={28} height={28} strokeWidth={2.2} />
+                    <Heart color={focused ? COLOR.primary : COLOR.grey} width={28} height={28} strokeWidth={2.2} />
                 ),
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     /* eslint-disable-next-line max-len */
-                    <MessageCircle color={focused ? COLOR.primary : COLOR.black} width={28} height={28} strokeWidth={2.2} />
+                    <ChatRounded width={28} height={28} color={focused ? COLOR.primary : COLOR.grey} />
                 ),
             }} />
-            <Tab.Screen name="Profile" component={Profile} options={({ navigation }) => ({
+            <Tab.Screen name="Profile" component={ProfileDetai} options={({ navigation }) => ({
                 tabBarIcon: ({ focused }) => (
-                    <User color={focused ? COLOR.primary : COLOR.black} width={28} height={28} strokeWidth={2.2} />
-                ),
-                headerRight: () => (
-                    <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
-                        <SettingsI width={26} height={26} color={COLOR.black} strokeWidth={2.2} />
-                    </TouchableOpacity>
+                    <UserRounded width={29} height={29} color={focused ? COLOR.primary : COLOR.grey} />
                 ),
             })} />
         </Tab.Navigator>

@@ -260,7 +260,7 @@ export function CalendarMark({ width = 32, height = 32, props }) {
     )
 }
 
-export function UserRounded({ width = 32, height = 32, props }) {
+export function UserRounded({ width = 32, height = 32, color = '#000', props }) {
     return (
         <Svg
             {...props}
@@ -270,8 +270,70 @@ export function UserRounded({ width = 32, height = 32, props }) {
             fill="none"
             viewBox="0 0 24 24"
         >
-            <Circle cx={12} cy={6} r={4} fill="#000" />
-            <Ellipse cx={12} cy={17} fill="#000" rx={7} ry={4} />
+            <Path
+                fill={color}
+                fillRule="evenodd"
+                d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10Zm-7-3a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-3 11.5a8.46 8.46 0 0 0 4.807-1.489c.604-.415.862-1.205.51-1.848C16.59 15.83 15.09 15 12 15c-3.09 0-4.59.83-5.318 2.163-.351.643-.093 1.433.511 1.848A8.46 8.46 0 0 0 12 20.5Z"
+                clipRule="evenodd"
+            />
+        </Svg>
+    )
+}
+
+export function ChatRounded({ width = 32, height = 32, color = '#000', props }) {
+    return (
+        <Svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width={normalize(width)}
+            height={normalize(height)}
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <Path
+                fill={color}
+                d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.591l2.226-.595a1.634 1.634 0 0 1 1.149.133A9.958 9.958 0 0 0 12 22Z"
+            />
+            <Path
+                fill="#fff"
+                d="M15 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0ZM11 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0ZM7 12a1 1 0 1 0 2 0 1 1 0 0 0-2 0Z"
+            />
+        </Svg>
+    )
+}
+
+export function Heart({ width = 32, height = 32, color = '#000', props }) {
+    return (
+        <Svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width={normalize(width)}
+            height={normalize(height)}
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <Path
+                fill={color}
+                d="M2 9.137C2 14 6.02 16.592 8.962 18.911 10 19.73 11 20.501 12 20.501s2-.771 3.038-1.59C17.981 16.591 22 14.001 22 9.137c0-4.863-5.5-8.311-10-3.636C7.5.826 2 4.274 2 9.137Z"
+            />
+        </Svg>
+    )
+}
+
+export function Widget4({ width = 32, height = 32, color = '#000', props }) {
+    return (
+        <Svg
+            {...props}
+            xmlns="http://www.w3.org/2000/svg"
+            width={normalize(width)}
+            height={normalize(height)}
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <Path
+                fill={color}
+                d="M2 6.21c0-1.984 0-2.977.659-3.593C3.318 2 4.379 2 6.5 2c2.121 0 3.182 0 3.841.617C11 3.233 11 4.226 11 6.21V17.79c0 1.984 0 2.977-.659 3.593C9.682 22 8.621 22 6.5 22c-2.121 0-3.182 0-3.841-.617C2 20.767 2 19.774 2 17.79V6.21ZM13 15.4c0-2.074 0-3.111.659-3.756C14.318 11 15.379 11 17.5 11c2.121 0 3.182 0 3.841.644C22 12.29 22 13.326 22 15.4v2.2c0 2.074 0 3.111-.659 3.756-.659.644-1.72.644-3.841.644-2.121 0-3.182 0-3.841-.644C13 20.71 13 19.674 13 17.6v-2.2ZM13 5.5c0-1.087 0-1.63.171-2.06a2.293 2.293 0 0 1 1.218-1.262C14.802 2 15.327 2 16.375 2h2.25c1.048 0 1.573 0 1.986.178.551.236.99.69 1.218 1.262.171.43.171.973.171 2.06 0 1.087 0 1.63-.171 2.06a2.293 2.293 0 0 1-1.218 1.262C20.198 9 19.673 9 18.625 9h-2.25c-1.048 0-1.573 0-1.986-.178a2.293 2.293 0 0 1-1.218-1.262C13 7.13 13 6.587 13 5.5Z"
+            />
         </Svg>
     )
 }

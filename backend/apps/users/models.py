@@ -117,6 +117,7 @@ class Profile(models.Model):
 class ProfileImage(models.Model):
     profile = models.ForeignKey('users.Profile', on_delete=models.CASCADE)
     image = models.ImageField(upload_to="profile")
+    button_number = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.profile.name

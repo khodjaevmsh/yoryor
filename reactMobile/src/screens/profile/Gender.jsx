@@ -10,6 +10,7 @@ import { PROFILE } from '../../urls'
 import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
 import ServerError from '../../components/common/ServerError'
+import { showToast } from '../../components/common/Toast'
 
 const genders = [
     { id: 'male', title: 'Erkak' },
@@ -38,7 +39,10 @@ export default function Gender({ route }) {
                 setLoading(true)
                 await baseAxios.put(PROFILE.replace('{id}', profile.id), { gender })
                 navigation.goBack()
-                setRender(true)
+                if (gender !== props.gender.value) {
+                    setRender(true)
+                    showToast('success', 'Muvaffaqiyatli', 'Jinsingiz o\'zgartirildi.')
+                }
             } catch (error) {
                 setServerError(error.response)
             } finally {

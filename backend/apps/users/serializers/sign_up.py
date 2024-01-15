@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from users.models import User, ConfirmationCode, Profile, ProfileImage
-from users.serializers.profile import ProfileSerializer, ProfileImageSerializers
+from users.serializers.profile import ProfileSerializer, ProfileImageSerializer
 from users.utils import generate_verification_code, integers_only
 
 
@@ -62,11 +62,12 @@ class CheckConfirmationCodeSerializer(serializers.ModelSerializer):
 
 class SignUpSerializer(serializers.ModelSerializer):
     profile = ProfileSerializer()
-    images = ProfileImageSerializers(many=True, read_only=True)
+    images = ProfileImageSerializer(many=True, read_only=True)
     uploaded_images = serializers.ListField(
         child=serializers.ImageField(allow_empty_file=False, use_url=False),
         write_only=True
     )
+    button_numbers = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
 
     def validate(self, attrs):
         phone_number = integers_only(attrs.get('phone_number'))
@@ -87,18 +88,19 @@ class SignUpSerializer(serializers.ModelSerializer):
 
         profile_data = validated_data.pop('profile')
         uploaded_images = validated_data.pop("uploaded_images")
+        button_numbers = validated_data.pop("button_numbers")
 
         user = User.objects.create_user(phone_number=phone_number, password=password, username=phone_number)
         user.set_password(password)
 
         profile = Profile.objects.create(user=user, **profile_data)
 
-        for image in uploaded_images:
-            ProfileImage.objects.create(profile=profile, image=image)
+        for image, button_number in zip(uploaded_images, button_numbers):
+            ProfileImage.objects.create(profile=profile, image=image, button_number=button_number)
 
         return user
 
     class Meta:
         model = User
-        fields = ['id', 'phone_number', 'password', 'profile', 'images', 'uploaded_images']
+        fields = ['id', 'phone_number', 'password', 'profile', 'images', 'uploaded_images', 'button_numbers']
         extra_kwargs = {'password': {'write_only': True}}

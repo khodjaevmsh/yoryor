@@ -10,6 +10,7 @@ import { PROFILE } from '../../urls'
 import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
 import ServerError from '../../components/common/ServerError'
+import { showToast } from '../../components/common/Toast'
 
 const statuses = [
     { id: 'single', title: 'Yolg\'iz' },
@@ -35,7 +36,10 @@ export default function MaritalStatus({ route }) {
             setLoading(true)
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { maritalStatus: status })
             navigation.goBack()
-            setRender(true)
+            if (props.status.value !== status) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Oilaviy ahvolingiz o\'zgartirildi.')
+            }
         } catch (error) {
             setServerError(error.response)
         } finally {

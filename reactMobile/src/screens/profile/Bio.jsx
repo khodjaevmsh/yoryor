@@ -12,19 +12,23 @@ import { baseAxios } from '../../hooks/requests'
 import { PROFILE } from '../../urls'
 import { GlobalContext } from '../../context/GlobalContext'
 import Button from '../../components/common/Button'
+import { showToast } from '../../components/common/Toast'
 
 export default function Bio({ route }) {
     const [loading, setLoading] = useState(false)
-    const { profile, fetchedProfile } = route.params
+    const { fetchedProfile } = route.params
     const { setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit(data) {
         try {
             setLoading(true)
-            await baseAxios.put(PROFILE.replace('{id}', profile.id), { bio: data.bio })
+            await baseAxios.put(PROFILE.replace('{id}', fetchedProfile?.id), { bio: data.bio })
             navigation.goBack()
-            setRender(true)
+            if ((fetchedProfile && fetchedProfile.bio) !== data.bio) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Bio o\'zgartirildi.')
+            }
         } catch (error) {
             console.log(error.response.data)
         } finally {

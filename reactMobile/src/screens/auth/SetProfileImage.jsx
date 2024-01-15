@@ -20,6 +20,7 @@ export default function SetProfileImage({ route }) {
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState('')
     const [validationError, setValidationError] = useState('')
+    const [buttonNumbers, setButtonNumbers] = useState([])
 
     const { phoneNumber, password, name, birthdate, gender, region, goal } = route.params || {}
     const { auth } = useContext(GlobalContext)
@@ -29,9 +30,9 @@ export default function SetProfileImage({ route }) {
         const options = {
             title: 'Select Image',
             mediaType: 'photo',
-            maxWidth: 500,
-            maxHeight: 400,
-            quality: 0.1,
+            maxWidth: 840,
+            maxHeight: 640,
+            quality: 0.8,
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
@@ -57,6 +58,7 @@ export default function SetProfileImage({ route }) {
                 setImages(newImages)
             }
         })
+        setButtonNumbers([...buttonNumbers, index + 1])
     }
 
     async function onSubmit() {
@@ -69,6 +71,9 @@ export default function SetProfileImage({ route }) {
         formData.append('profile.birthdate', birthdate)
         formData.append('profile.gender', gender)
         formData.append('profile.goal', goal)
+        buttonNumbers.forEach((number) => {
+            formData.append('button_numbers', number)
+        })
 
         if (images.filter((image) => image !== null).length < 2) {
             setValidationError('* Kamida 2 ta rasm qo\'shing')
@@ -140,9 +145,9 @@ export default function SetProfileImage({ route }) {
                         </View>
                     </TouchableOpacity>
                 ))}
-                {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
             </View>
 
+            {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
             <ServerError error={serverError} style={styles.serverError} />
 
             <View style={styles.buttonWrapper}>
@@ -186,7 +191,7 @@ const styles = StyleSheet.create({
     },
     addIcon: {
         backgroundColor: COLOR.primary,
-        padding: 4,
+        padding: 7,
         borderRadius: 20,
         position: 'absolute',
         bottom: -5,
