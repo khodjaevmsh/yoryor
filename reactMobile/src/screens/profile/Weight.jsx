@@ -12,6 +12,7 @@ import Button from '../../components/common/Button'
 import PickerSelect from '../../components/common/PickerSelect'
 import ServerError from '../../components/common/ServerError'
 import { GlobalContext } from '../../context/GlobalContext'
+import { showToast } from '../../components/common/Toast'
 
 export default function Weight({ route }) {
     const { props } = route.params
@@ -32,7 +33,10 @@ export default function Weight({ route }) {
             setLoading(true)
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { weight })
             navigation.goBack()
-            setRender(true)
+            if (props.value !== weight) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Vazningiz o\'zgartirildi.')
+            }
         } catch (error) {
             setServerError(error.response)
         } finally {

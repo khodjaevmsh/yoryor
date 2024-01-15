@@ -2,20 +2,22 @@ import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import normalize from 'react-native-normalize'
-import Container from '../components/common/Container'
-import Button from '../components/common/Button'
-import { COLOR } from '../utils/colors'
-import { fontSize } from '../utils/fontSizes'
+import Container from '../../components/common/Container'
+import Button from '../../components/common/Button'
+import { COLOR } from '../../utils/colors'
+import { fontSize } from '../../utils/fontSizes'
 
-export default function Help() {
+export default function AboutApp() {
     const [loading, setLoading] = useState(false)
     const navigation = useNavigation()
 
     return (
         <Container>
+            {/* <Text style={styles.title}>Ilova haqida</Text> */}
+
             <View style={{ flex: 1 }}>
-                <Text style={{ fontWeight: '500', marginBottom: 2 }}>+998 90 6351001</Text>
-                <Text style={{ fontWeight: '500' }}>@sovchisupport</Text>
+                <Text style={{ fontWeight: '500', marginBottom: 2 }}>Ilova haqida</Text>
+                <Text style={{ fontWeight: '500' }}>2024</Text>
             </View>
 
             <View style={styles.buttonWrapper}>

@@ -2,13 +2,13 @@ import React from 'react'
 import { Keyboard, View, StyleSheet, Text } from 'react-native'
 import { Formik } from 'formik'
 import normalize from 'react-native-normalize'
-import Container from '../components/common/Container'
-import Input from '../components/common/Input'
-import ServerError from '../components/common/ServerError'
-import Button from '../components/common/Button'
-import KeyboardAvoiding from '../components/common/KeyboardAvoiding'
-import { COLOR } from '../utils/colors'
-import { fontSize } from '../utils/fontSizes'
+import Container from '../../components/common/Container'
+import Input from '../../components/common/Input'
+import ServerError from '../../components/common/ServerError'
+import Button from '../../components/common/Button'
+import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
+import { COLOR } from '../../utils/colors'
+import { fontSize } from '../../utils/fontSizes'
 
 export default function ConfirmEmail() {
     return (
@@ -16,7 +16,7 @@ export default function ConfirmEmail() {
             <Container>
                 <Text style={styles.title}>Email</Text>
                 <Text style={styles.subTitle}>
-                    Tasdiqlangan elektron pochta akkauntingizni himoyalashga yordam beradi.
+                    Tasdiqlangan elektron pochta, akkauntingizni himoyalashga yordam beradi.
                 </Text>
                 <Formik initialValues={{ email: '' }} validationSchema={null} onSubmit={null}>
                     {({ handleSubmit }) => (

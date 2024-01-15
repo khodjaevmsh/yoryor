@@ -10,6 +10,7 @@ import { PROFILE } from '../../urls'
 import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
 import ServerError from '../../components/common/ServerError'
+import { showToast } from '../../components/common/Toast'
 
 const zodiacList = [
     { id: 'aries', title: 'Qo\'y' },
@@ -43,7 +44,10 @@ export default function Zodiac({ route }) {
                 setLoading(true)
                 await baseAxios.put(PROFILE.replace('{id}', profile.id), { zodiac })
                 navigation.goBack()
-                setRender(true)
+                if (props.zodiac.value !== zodiac) {
+                    setRender(true)
+                    showToast('success', 'Muvaffaqiyatli', 'Burjingiz o\'zgartirildi.')
+                }
             } catch (error) {
                 setServerError(error.response)
             } finally {

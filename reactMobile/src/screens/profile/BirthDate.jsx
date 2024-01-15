@@ -13,9 +13,10 @@ import { baseAxios } from '../../hooks/requests'
 import { PROFILE } from '../../urls'
 import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
+import { showToast } from '../../components/common/Toast'
 
 export default function BirthDate({ route }) {
-    const { value } = route.params
+    const { props } = route.params
     const [loading, setLoading] = useState(false)
     const [, setServerError] = useState('')
     const [validationError, setValidationError] = useState('')
@@ -38,10 +39,12 @@ export default function BirthDate({ route }) {
                     birthdate: moment(date).format('YYYY-MM-DD'),
                 })
                 navigation.goBack()
-                setRender(true)
+                if (props.value !== birthdate) {
+                    setRender(true)
+                    showToast('success', 'Muvaffaqiyatli', 'Tug\'ilgan yil o\'zgartirildi.')
+                }
             } catch (error) {
                 setServerError(error.response)
-                console.log(error.response.data)
             } finally {
                 setLoading(false)
             }

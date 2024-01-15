@@ -4,10 +4,9 @@ import { ChevronRight } from 'react-native-feather'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
-import { fontSize } from '../utils/fontSizes'
 import useTrans from '../translate'
 
-export default function ProfileDescription({ profile, fetchedProfile }) {
+export default function ProfileDescription({ fetchedProfile }) {
     const navigation = useNavigation()
 
     const t = useTrans()
@@ -30,7 +29,7 @@ export default function ProfileDescription({ profile, fetchedProfile }) {
                 <TouchableOpacity
                     activeOpacity={0.7}
                     style={styles.buttonAdd}
-                    onPress={() => navigation.navigate('Bio', { profile, fetchedProfile })}>
+                    onPress={() => navigation.navigate('Bio', { fetchedProfile })}>
 
                     <View style={styles.iconWithAdd}>
                         <Text style={styles.add}>

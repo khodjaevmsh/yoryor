@@ -11,6 +11,7 @@ import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
 import Input from '../../components/common/Input'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
+import { showToast } from '../../components/common/Toast'
 
 export default function Job({ route }) {
     const { props } = route.params
@@ -28,7 +29,10 @@ export default function Job({ route }) {
                 jobCompany: data.jobCompany,
             })
             navigation.goBack()
-            setRender(true)
+            if (props.job?.jobTitle !== data.jobTitle || props.job?.jobCompany !== data.jobCompany) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Ish joyingiz o\'zgartirildi.')
+            }
         } catch (error) {
             setServerError(error.response)
         } finally {

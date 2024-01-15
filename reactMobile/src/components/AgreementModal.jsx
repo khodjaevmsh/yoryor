@@ -32,8 +32,8 @@ export default function AgreementModal({ isModalVisible, setModalVisible, phoneN
                 isVisible={isModalVisible}
                 animationIn="slideInUp"
                 animationOut="slideOutDown"
-                animationInTiming={350}
-                animationOutTiming={400}
+                // animationInTiming={350}
+                // animationOutTiming={400}
                 backdropTransitionOutTiming={0}
                 coverScreen
                 hasBackdrop

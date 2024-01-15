@@ -11,6 +11,7 @@ import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
 import { ClinkingGlasses, FaceWithHeart, HeartWithArrow, WavingHand } from '../../components/common/Svgs'
 import ServerError from '../../components/common/ServerError'
+import { showToast } from '../../components/common/Toast'
 
 const goals = [
     { id: 1, type: 'match', title: 'Juftlik topish', icon: <HeartWithArrow /> },
@@ -40,7 +41,10 @@ export default function Goal({ route }) {
                 setLoading(true)
                 await baseAxios.put(PROFILE.replace('{id}', profile.id), { goal })
                 navigation.goBack()
-                setRender(true)
+                if (props.goal.value !== goal) {
+                    setRender(true)
+                    showToast('success', 'Muvaffaqiyatli', 'Maqsadingiz o\'zgartirildi.')
+                }
             } catch (error) {
                 setServerError(error.response)
             } finally {

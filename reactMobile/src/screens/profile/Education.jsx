@@ -14,6 +14,7 @@ import PickerSelect from '../../components/common/PickerSelect'
 import Input from '../../components/common/Input'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import ServerError from '../../components/common/ServerError'
+import { showToast } from '../../components/common/Toast'
 
 const levels = [
     { value: 'high_school', label: 'O\'rta maxsus' },
@@ -40,7 +41,10 @@ export default function Education({ route }) {
                 educationSchool: data.school,
             })
             navigation.goBack()
-            setRender(true)
+            if (props.education.value !== level || props.value !== data.school) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Ma\'lumotingiz o\'zgartirildi.')
+            }
         } catch (error) {
             setServerError(error.response)
         } finally {

@@ -12,6 +12,7 @@ import Button from '../../components/common/Button'
 import PickerSelect from '../../components/common/PickerSelect'
 import ServerError from '../../components/common/ServerError'
 import { GlobalContext } from '../../context/GlobalContext'
+import { showToast } from '../../components/common/Toast'
 
 export default function Height({ route }) {
     const { props } = route.params
@@ -33,7 +34,10 @@ export default function Height({ route }) {
             setLoading(true)
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { height })
             navigation.goBack()
-            setRender(true)
+            if (props.value !== height) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Bo\'yingiz o\'zgartirildi.')
+            }
         } catch (error) {
             setServerError(error.response)
         } finally {

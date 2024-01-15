@@ -23,7 +23,7 @@ const cardData = [
 
 export default function Settings() {
     const [loading, setLoading] = useState(false)
-    const [serverError, setServerError] = useState(false)
+    const [, setServerError] = useState(false)
     const [isModalConfirm, setModalConfirm] = useState(false)
     const { signOut } = useContext(GlobalContext) || {}
     const navigation = useNavigation()
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     },
     cardTitle: {
         marginLeft: 12,
-        fontWeight: '500',
+        fontWeight: '400',
         fontSize: fontSize.medium,
     },
     value: {

@@ -1,22 +1,38 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ScrollView, Text, View, StyleSheet, ActivityIndicator } from 'react-native'
+import { ScrollView, Text, View, StyleSheet } from 'react-native'
 import moment from 'moment'
 import normalize from 'react-native-normalize'
-import { baseAxios } from '../../hooks/requests'
-import { PROFILE } from '../../urls'
-import { GlobalContext } from '../../context/GlobalContext'
 import { COLOR } from '../../utils/colors'
-import ProfileHeader from '../../components/ProfileHeader'
+import ProfileDetailHeader from '../../components/ProfileDetailHeader'
 // eslint-disable-next-line max-len
 import { AcademicCap, CalendarMark, CaseRound, Dollar, Goal, ListHeart, MapPoint, Ruler, Stars, UserRounded, Weigher } from '../../components/common/Svgs'
 import ProfileDescription from '../../components/ProfileDescription'
 import ProfileInfo from '../../components/ProfileInfo'
+import { GlobalContext } from '../../context/GlobalContext'
+import { baseAxios } from '../../hooks/requests'
+import { PROFILE } from '../../urls'
 
-export default function Profile() {
+export default function ProfileDetail() {
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState(false)
     const [fetchedProfile, setFetchedData] = useState(null)
     const { profile, render, setRender } = useContext(GlobalContext)
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                setLoading(true)
+                const response = await baseAxios.get(PROFILE.replace('{id}', profile.id))
+                setFetchedData(response.data)
+                setRender(false)
+            } catch (error) {
+                setServerError(error.response)
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchData()
+    }, [render])
 
     const info = [
         { id: 1, title: 'Yoshingiz', icon: <CalendarMark width={26} height={26} />, screen: 'BirthDate', props: { value: moment(fetchedProfile?.birthdate).format('D MMMM, YYYY') } },
@@ -34,35 +50,14 @@ export default function Profile() {
         { id: 5, title: 'Burj', icon: <Stars width={28} height={28} />, screen: 'Zodiac', props: { value: fetchedProfile?.zodiac.label, zodiac: fetchedProfile?.zodiac } },
     ]
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                setLoading(true)
-                const response = await baseAxios.get(PROFILE.replace('{id}', profile.id))
-                setFetchedData(response.data)
-            } catch (error) {
-                setServerError(error.response)
-            } finally {
-                setRender(false)
-                setLoading(false)
-            }
-        }
-
-        fetchData()
-    }, [render])
-
-    if (loading) {
-        return <ActivityIndicator size="small" color={COLOR.primary} />
-    }
-
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 0, paddingBottom: 26 }}>
             <View style={styles.profileHead}>
-                <ProfileHeader />
+                <ProfileDetailHeader fetchedProfile={fetchedProfile} />
             </View>
 
             <View style={styles.profileDesc}>
-                <ProfileDescription profile={profile} fetchedProfile={fetchedProfile} />
+                <ProfileDescription fetchedProfile={fetchedProfile} />
             </View>
 
             <View style={[styles.profileInfo]}>
