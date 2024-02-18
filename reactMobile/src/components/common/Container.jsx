@@ -9,7 +9,7 @@ export default function Container({ children, scrollable, containerStyle }) {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <Component
                 style={!scrollable ? [styles.container, containerStyle] : null}
-                contentContainerStyle={scrollable ? styles.scrollContainer : null}
+                contentContainerStyle={scrollable ? [styles.scrollContainer, containerStyle] : null}
                 showsVerticalScrollIndicator={scrollable ? false : null}>
                 {children}
             </Component>

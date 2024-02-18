@@ -15,12 +15,10 @@ class SignInView(APIView):
     def post(self, request):
         serializer = SignInSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-
         user = User.objects.filter(phone_number=serializer.data.get('phone_number')).first()
-        profile = Profile.objects.filter(user=user).first()
 
         token = Token.objects.create(user=user)
-
+        profile = Profile.objects.filter(user=user).first()
         user_data = UserSerializer(user).data
         profile_data = ProfileSerializer(profile).data
 

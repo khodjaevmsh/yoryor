@@ -21,8 +21,9 @@ class SignInSerializer(serializers.ModelSerializer):
         user = User.objects.filter(phone_number=attrs.get('phone_number')).first()
         token = Token.objects.filter(user=user).first()
 
-        if token:
-            raise ValidationError({'token': _('Please try clearing the application cache')})
+        # Check if the user has an existing token and revoke it
+        if hasattr(user, 'auth_token') and user.auth_token and token:
+            user.auth_token.delete()
 
         if not user:
             raise ValidationError({'user': _('This user is not registered')})

@@ -16,15 +16,16 @@ class ProfileSerializer(serializers.ModelSerializer):
         data['marital_status'] = {'label': instance.get_marital_status_display(), 'value': instance.marital_status}
         data['income_level'] = {'label': instance.get_income_level_display(), 'value': instance.income_level}
         data['zodiac'] = {'label': instance.get_zodiac_display(), 'value': instance.zodiac}
+        data['images'] = ProfileImageSerializer(
+            ProfileImage.objects.filter(profile=instance).order_by('button_number'), many=True
+        ).data
+
         return data
 
     class Meta:
         model = Profile
         fields = '__all__'
-        extra_kwargs = {
-            'user': {'required': False},
-            # 'name': {'required': True}
-        }
+        extra_kwargs = {'user': {'required': False}}
 
 
 class SimpleProfileSerializer(serializers.ModelSerializer):

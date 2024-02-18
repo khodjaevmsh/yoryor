@@ -13,10 +13,11 @@ export default function PickerSelect({
     items,
     props,
     style,
+    labelStyle,
 }) {
     return (
         <View>
-            {label ? <Text style={styles.label}>{label}</Text> : null}
+            {label ? <Text style={[styles.label, labelStyle]}>{label}</Text> : null}
             <RNPickerSelect
                 placeholder={{ ...placeholder }}
                 value={value}
@@ -32,8 +33,8 @@ export default function PickerSelect({
 
 const styles = StyleSheet.create({
     label: {
-        fontSize: normalize(16),
-        fontWeight: '600',
+        fontSize: normalize(15),
+        fontWeight: '500',
         marginBottom: normalize(10),
         marginHorizontal: normalize(5),
     },

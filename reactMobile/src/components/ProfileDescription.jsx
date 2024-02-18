@@ -5,6 +5,7 @@ import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
 import useTrans from '../translate'
+import { shortenText } from '../utils/string'
 
 export default function ProfileDescription({ fetchedProfile }) {
     const navigation = useNavigation()
@@ -21,7 +22,7 @@ export default function ProfileDescription({ fetchedProfile }) {
             <View style={styles.textArea}>
                 {/* eslint-disable-next-line max-len */}
                 <Text style={[styles.placeholder, { color: fetchedProfile && fetchedProfile.bio ? COLOR.black : COLOR.grey }]}>
-                    {fetchedProfile && fetchedProfile.bio ? fetchedProfile.bio : (
+                    {fetchedProfile && fetchedProfile.bio ? shortenText(fetchedProfile.bio, 100) : (
                         "O'zingiz haqingizda ma'lumot qo'shing: sevimli mashg'ulotlar, odatlar..."
                     )}
                 </Text>

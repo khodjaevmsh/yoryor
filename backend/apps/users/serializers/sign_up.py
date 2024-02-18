@@ -69,6 +69,7 @@ class SignUpSerializer(serializers.ModelSerializer):
     )
     button_numbers = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
 
+
     def validate(self, attrs):
         phone_number = integers_only(attrs.get('phone_number'))
 

@@ -4,13 +4,22 @@ import moment from 'moment'
 import normalize from 'react-native-normalize'
 import { COLOR } from '../../utils/colors'
 import ProfileDetailHeader from '../../components/ProfileDetailHeader'
-// eslint-disable-next-line max-len
-import { AcademicCap, CalendarMark, CaseRound, Dollar, Goal, ListHeart, MapPoint, Ruler, Stars, UserRounded, Weigher } from '../../components/common/Svgs'
 import ProfileDescription from '../../components/ProfileDescription'
 import ProfileInfo from '../../components/ProfileInfo'
 import { GlobalContext } from '../../context/GlobalContext'
 import { baseAxios } from '../../hooks/requests'
 import { PROFILE } from '../../urls'
+import { AcademicCap,
+    CalendarMark,
+    CaseRound,
+    Dollar,
+    Goal,
+    ListHeart,
+    MapPoint,
+    Ruler,
+    Stars,
+    UserRounded,
+    Weigher } from '../../components/common/Svgs'
 
 export default function ProfileDetail() {
     const [loading, setLoading] = useState(false)

@@ -11,6 +11,8 @@ from users.serializers.users import UserSerializer
 
 
 class SendConfirmationCodeView(APIView):
+    permission_classes = (AllowAny,)
+
     def post(self, request):
         serializer = SendConfirmationCodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -19,6 +21,8 @@ class SendConfirmationCodeView(APIView):
 
 
 class CheckConfirmationCodeView(APIView):
+    permission_classes = (AllowAny,)
+
     def post(self, request):
         serializer = CheckConfirmationCodeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
