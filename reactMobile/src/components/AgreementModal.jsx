@@ -9,7 +9,6 @@ import { COLOR } from '../utils/colors'
 import Button from './common/Button'
 import { fontSize } from '../utils/fontSizes'
 import ConfirmModal from './ConfirmModal'
-import Container from './common/Container'
 
 export default function AgreementModal({ isModalVisible, setModalVisible, phoneNumber }) {
     const [loading, setLoading] = useState(false)

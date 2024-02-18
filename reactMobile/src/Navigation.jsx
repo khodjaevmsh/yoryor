@@ -1,12 +1,11 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { MessageCircle, User, ChevronLeft, Search, Settings as SettingsI } from 'react-native-feather'
-import { StyleSheet, TouchableOpacity } from 'react-native'
+import { ChevronLeft, Sliders } from 'react-native-feather'
+import { Platform, StyleSheet, TouchableOpacity } from 'react-native'
 import { useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { COLOR } from './utils/colors'
-import ProfileDetai from './screens/Profile'
 import Likes from './screens/Likes'
 import Splash from './screens/Splash'
 import SignUp from './screens/auth/SignUp'
@@ -43,7 +42,9 @@ import AboutApp from './screens/settings/AboutApp'
 import Help from './screens/settings/Help'
 import AddProfileImage from './screens/profile/AddProfileImage'
 import ProfileDetail from './screens/profile/ProfileDetail'
-import { ChatRounded, Heart, UserRounded, Widget4 } from './components/common/Svgs'
+import { ChatRounded, Heart, Tuning2, UserRounded, Widget4 } from './components/common/Svgs'
+import Profile from './screens/Profile'
+import ProfileCardDetail from './screens/discover/ProfileCardDetail'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -73,12 +74,11 @@ export default function Navigation() {
                 headerTitle: () => false,
                 headerShadowVisible: false,
                 headerBackTitleVisible: false,
-                // headerTintColor: COLOR.primary,
-                headerLeft: () => (
+                headerLeft: () => (Platform.OS === 'ios' ? (
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <ChevronLeft width={32} height={32} color={COLOR.primary} />
                     </TouchableOpacity>
-                ),
+                ) : null),
             })}>
                 <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
                 {/* eslint-disable-next-line max-len */}
@@ -123,6 +123,9 @@ export default function Navigation() {
                 <Stack.Screen name="AboutApp" component={AboutApp} options={{ headerShown: true }} />
                 <Stack.Screen name="Help" component={Help} options={{ headerShown: true }} />
 
+                {/*  DISCOVER  */}
+                <Stack.Screen name="ProfileCardDetail" component={ProfileCardDetail} options={{ headerShown: true }} />
+
             </Stack.Navigator>
         </NavigationContainer>
     )
@@ -145,7 +148,7 @@ function TabScreen() {
             }} />
             <Tab.Screen name="Likes" component={Likes} options={{
                 tabBarIcon: ({ focused }) => (
-                    <Heart color={focused ? COLOR.primary : COLOR.grey} width={28} height={28} strokeWidth={2.2} />
+                    <Heart color={focused ? COLOR.primary : COLOR.grey} width={29} height={29} strokeWidth={2.2} />
                 ),
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
@@ -154,11 +157,11 @@ function TabScreen() {
                     <ChatRounded width={28} height={28} color={focused ? COLOR.primary : COLOR.grey} />
                 ),
             }} />
-            <Tab.Screen name="Profile" component={ProfileDetai} options={({ navigation }) => ({
+            <Tab.Screen name="Profile" component={Profile} options={{
                 tabBarIcon: ({ focused }) => (
                     <UserRounded width={29} height={29} color={focused ? COLOR.primary : COLOR.grey} />
                 ),
-            })} />
+            }} />
         </Tab.Navigator>
     )
 }

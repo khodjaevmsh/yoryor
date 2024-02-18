@@ -66,13 +66,22 @@ export default function Profile() {
     const renderItem = ({ item }) => (
         <TouchableOpacity
             activeOpacity={1}>
-            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={item?.background || []} style={styles.carouselItem}>
+            <LinearGradient
+                start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+                colors={item?.background || []}
+                style={styles.carouselItem}>
                 <View>
                     <View style={styles.subscriptionHeader}>
-                        <Text style={[styles.subscriptionTitle, { color: item.id === 3 && COLOR.white }]}>{item.title}</Text>
-                        <Text style={[styles.subscriptionPrice, { color: item.id === 3 && COLOR.white }]}>{item.price}</Text>
+                        <Text style={[styles.subscriptionTitle, { color: item.id === 3 && COLOR.white }]}>
+                            {item.title}
+                        </Text>
+                        <Text style={[styles.subscriptionPrice, { color: item.id === 3 && COLOR.white }]}>
+                            {item.price}
+                        </Text>
                     </View>
-                    <Text style={[styles.subscriptionDescription, { color: item.id === 3 && COLOR.white }]}>{item.description}</Text>
+                    <Text style={[styles.subscriptionDescription, { color: item.id === 3 && COLOR.white }]}>
+                        {item.description}
+                    </Text>
                 </View>
                 <TouchableOpacity style={styles.activateButton}>
                     <Text style={styles.activateTitle}>Aktivlashtirish</Text>
@@ -80,10 +89,6 @@ export default function Profile() {
             </LinearGradient>
         </TouchableOpacity>
     )
-
-    // if (loading) {
-    //     return <ActivityIndicator size="small" color={COLOR.primary} />
-    // }
 
     return (
         <Container>

@@ -10,7 +10,8 @@ export const COUNTRY = '/users/country'
 export const REGION = '/users/region'
 
 // PROFILE
+export const PROFILES = '/users/profiles'
 export const PROFILE = '/users/profile/{id}'
-export const PROFILE_IMAGES = '/users/profile/{id}/images'
+export const PROFILE_IMAGES = '/users/profile/images'
 export const PROFILE_IMAGE = '/users/profile/image/{id}'
 export const CHANGE_PROFILE_IMAGES = '/users/profile/change_images'

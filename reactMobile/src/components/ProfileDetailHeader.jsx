@@ -1,10 +1,11 @@
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react'
 import normalize from 'react-native-normalize'
 import Carousel from 'react-native-snap-carousel'
 import { Edit2 } from 'react-native-feather'
 import { useNavigation } from '@react-navigation/native'
 import FastImage from 'react-native-fast-image'
+import moment from 'moment'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import { CheckMarkBlue } from './common/Svgs'
@@ -26,7 +27,7 @@ export default function ProfileDetailHeader({ fetchedProfile }) {
         async function fetchProfileImages() {
             try {
                 setLoading(true)
-                const response = await baseAxios.get(PROFILE_IMAGES.replace('{id}', profile.id))
+                const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
                 setImages(response.data)
                 setRender(false)
             } catch (error) {
@@ -68,7 +69,7 @@ export default function ProfileDetailHeader({ fetchedProfile }) {
             <View style={styles.nameWrapper}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={[styles.name, { fontSize: determineFontSize(profile.name, 26) }]}>
-                        {profile.name}, 28
+                        {profile.name}, {new Date().getFullYear() - moment(fetchedProfile?.birthdate).format('YYYY')}
                     </Text>
                     <CheckMarkBlue width={22} height={22} />
                 </View>

@@ -157,17 +157,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'files/uploads')
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 6,
 }
-
-# Email Backend Configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Replace with your preferred backend
-
-EMAIL_HOST = 'smtp.gmail.com'  # Replace with your email host
-EMAIL_PORT = 587  # Replace with your email port
-EMAIL_USE_TLS = True  # Set to False if your email server doesn't use TLS
-EMAIL_HOST_USER = 'buxshaharhokimligi@gmail.com'  # Replace with your email username
-EMAIL_HOST_PASSWORD = 'helloWorld1001$'  # Replace with your email password
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

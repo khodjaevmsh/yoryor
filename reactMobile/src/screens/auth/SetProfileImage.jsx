@@ -77,9 +77,7 @@ export default function SetProfileImage({ route }) {
 
         if (images.filter((image) => image !== null).length < 2) {
             setValidationError('* Kamida 2 ta rasm qo\'shing')
-        }
-
-        if (images.filter((image) => image !== null).length > 0) {
+        } else {
             images.forEach((image) => {
                 if (image) {
                     formData.append('uploaded_images', {
@@ -89,24 +87,25 @@ export default function SetProfileImage({ route }) {
                     })
                 }
             })
+        }
 
-            try {
-                setServerError('')
-                setValidationError('')
-                setLoading(true)
+        try {
+            setServerError('')
+            setValidationError('')
+            setLoading(true)
 
-                const response = await axios.post(`${domain}/api/v1${SIGN_UP}`, formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' },
-                })
+            const response = await axios.post(`${domain}/api/v1${SIGN_UP}`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            })
 
-                auth(response.data.token, response.data.user, response.data.profile)
-                navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
-                navigation.navigate('TabScreen')
-            } catch (error) {
-                setServerError(error.response)
-            } finally {
-                setLoading(false)
-            }
+            auth(response.data.token, response.data.user, response.data.profile)
+            navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
+            navigation.navigate('TabScreen')
+        } catch (error) {
+            console.log(error.response.data)
+            setServerError(error.response)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -121,12 +120,14 @@ export default function SetProfileImage({ route }) {
 
                 {images.map((image, index) => (
                     <TouchableOpacity
+                        /* eslint-disable-next-line react/no-array-index-key */
                         key={index}
                         activeOpacity={0.3}
                         onPress={() => pickImage(index)}
                         disabled={index > 0 && images[index - 1] === null}
                         style={styles.imageButton}>
 
+                        {/* eslint-disable-next-line no-nested-ternary */}
                         {imageLoading[index] ? (
                             <ActivityIndicator size="small" color={COLOR.primary} />
                         ) : (

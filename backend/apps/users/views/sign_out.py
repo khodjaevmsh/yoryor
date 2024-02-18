@@ -5,6 +5,5 @@ from rest_framework.views import APIView
 
 class SignOutView(APIView):
     def delete(self, request):
-        if request.auth.key:
-            Token.objects.filter(key=request.auth.key, user=request.user).delete()
+        Token.objects.filter(key=request.auth.key, user=request.user).delete()
         return Response({})

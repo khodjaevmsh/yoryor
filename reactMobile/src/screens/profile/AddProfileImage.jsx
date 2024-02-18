@@ -31,7 +31,7 @@ export default function AddProfileImage({ route }) {
         try {
             setLoading(true)
 
-            const response = await baseAxios.get(PROFILE_IMAGES.replace('{id}', fetchedProfile))
+            const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: fetchedProfile } })
             setFetchedImages(response.data)
         } catch (error) {
             setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
@@ -104,38 +104,34 @@ export default function AddProfileImage({ route }) {
     async function onSubmit() {
         const formData = new FormData()
 
-        if (fetchedImages.length < 2) {
-            setValidationError('* Kamida 2 ta rasm qo\'shing')
-        } else if (images.filter((image) => image !== null).length >= 1) {
-            images.forEach((image) => {
-                if (image) {
-                    formData.append('uploaded_images', {
-                        uri: image ? image[0].uri : '',
-                        name: `${image[0].fileName}`,
-                        type: image[0].type,
-                    })
-                }
-            })
-            buttonNumbers.forEach((number) => {
-                formData.append('button_numbers', number)
-            })
-            formData.append('profile', fetchedProfile)
-
-            try {
-                setServerError('')
-                setValidationError('')
-                setLoading(true)
-
-                await axios.post(`${domain}/api/v1${CHANGE_PROFILE_IMAGES}`, formData, {
-                    headers: { 'Content-Type': 'multipart/form-data', Authorization: `Token ${token}` },
+        images.forEach((image) => {
+            if (image) {
+                formData.append('uploaded_images', {
+                    uri: image ? image[0].uri : '',
+                    name: `${image[0].fileName}`,
+                    type: image[0].type,
                 })
-                setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Rasmlar o\'zgartirildi.')
-            } catch (error) {
-                setServerError(error.response)
-            } finally {
-                setLoading(false)
             }
+        })
+        buttonNumbers.forEach((number) => {
+            formData.append('button_numbers', number)
+        })
+        formData.append('profile', fetchedProfile)
+
+        try {
+            setServerError('')
+            setValidationError('')
+            setLoading(true)
+
+            await axios.post(`${domain}/api/v1${CHANGE_PROFILE_IMAGES}`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data', Authorization: `Token ${token}` },
+            })
+            setRender(true)
+            showToast('success', 'Muvaffaqiyatli', 'Rasmlar o\'zgartirildi.')
+        } catch (error) {
+            setServerError(error.response)
+        } finally {
+            setLoading(false)
         }
     }
 

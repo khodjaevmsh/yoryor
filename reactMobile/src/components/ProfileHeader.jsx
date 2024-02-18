@@ -1,9 +1,10 @@
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import React, { useContext, useEffect, useState } from 'react'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { Edit } from 'react-native-feather'
+import moment from 'moment'
 import { baseAxios, domain } from '../hooks/requests'
 import { determineFontSize } from '../utils/string'
 import { CheckMarkBlue } from './common/Svgs'
@@ -23,7 +24,7 @@ export default function ProfileHeader({ fetchedProfile }) {
         async function fetchProfileImages() {
             try {
                 setLoading(true)
-                const response = await baseAxios.get(PROFILE_IMAGES.replace('{id}', profile.id))
+                const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
                 if (response.data.length > 0) {
                     setFetchedImages(response.data[0])
                 }
@@ -41,24 +42,18 @@ export default function ProfileHeader({ fetchedProfile }) {
             activeOpacity={1}
             onPress={() => navigation.navigate('ProfileDetail')}
             style={styles.profileDetail}>
-            {fetchedImages ? (
-                <FastImage
-                    style={styles.imageButton}
-                    source={{
-                        uri: `${domain + fetchedImages.image}`,
-                        priority: FastImage.priority.normal,
-                        cache: FastImage.cacheControl.cacheOnly,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover} />
-            ) : (
-                <View style={styles.emptyImage}>
-                    <ActivityIndicator />
-                </View>
-            )}
+            <FastImage
+                style={styles.imageButton}
+                source={{
+                    uri: `${domain + fetchedImages.image}`,
+                    priority: FastImage.priority.normal,
+                }}
+                resizeMode={FastImage.resizeMode.cover} />
             <View style={styles.nameWrapper}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={[styles.name, { fontSize: determineFontSize(fetchedProfile?.name, 18) }]}>
-                        {fetchedProfile?.name}, 28
+                        {/* eslint-disable-next-line max-len */}
+                        {fetchedProfile?.name}, {new Date().getFullYear() - moment(fetchedProfile?.birthdate).format('YYYY')}
                     </Text>
                     <CheckMarkBlue width={18} height={18} />
                 </View>
