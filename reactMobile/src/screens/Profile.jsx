@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, ActivityIndicator } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import { Settings } from 'react-native-feather'
 import normalize from 'react-native-normalize'
@@ -12,6 +12,7 @@ import ProfileHeader from '../components/ProfileHeader'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import ProfileButton from '../components/ProfileButton'
+import { showToast } from '../components/common/Toast'
 
 const itemWidth = Dimensions.get('window').width * 0.84
 
@@ -44,24 +45,29 @@ const subscriptionPlans = [
 export default function Profile() {
     const [loading, setLoading] = useState(false)
     const [, setServerError] = useState('')
-    const [fetchedProfile, setFetchedData] = useState([])
+    const [fetchedProfile, setFetchedProfile] = useState([])
     const { profile, render, setRender } = useContext(GlobalContext)
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchProfile() {
             try {
                 setLoading(true)
                 const response = await baseAxios.get(PROFILE.replace('{id}', profile.id))
-                setFetchedData(response.data)
+                setFetchedProfile(response.data)
             } catch (error) {
                 setServerError(error.response)
+                showToast('error', 'Oops!', 'Nomalum xatolik')
             } finally {
                 setRender(false)
                 setLoading(false)
             }
         }
-        fetchData()
-    }, [render])
+        fetchProfile()
+    }, [profile.id, render])
+
+    if (loading) {
+        return <ActivityIndicator />
+    }
 
     const renderItem = ({ item }) => (
         <TouchableOpacity
@@ -93,7 +99,7 @@ export default function Profile() {
     return (
         <Container>
             <View>
-                <ProfileHeader fetchedProfile={fetchedProfile} setLoading={setLoading} />
+                <ProfileHeader fetchedProfile={fetchedProfile} />
             </View>
 
             <View style={styles.carouselWrapper}>

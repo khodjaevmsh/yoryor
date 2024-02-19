@@ -1,6 +1,7 @@
+from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from users.models import Profile, ProfileImage
+from users.models import Profile, ProfileImage, Like
 from users.serializers.region import RegionSerializer
 
 
@@ -70,3 +71,25 @@ class ChangeProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileImage
         fields = ['profile', 'uploaded_images', 'button_numbers']
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['receiver'] = ProfileSerializer(instance.receiver).data
+        data['sender'] = ProfileSerializer(instance.sender).data
+        return data
+
+    class Meta:
+        model = Like
+        fields = '__all__'
+
+    def validate(self, attrs):
+        sender = attrs.get('sender')
+        receiver = attrs.get('receiver')
+
+        # Check if sender and receiver are the same
+        if sender == receiver:
+            raise serializers.ValidationError(_("Sender and receiver cannot be the same."))
+
+        return attrs

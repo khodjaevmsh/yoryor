@@ -1,15 +1,34 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import moment from 'moment'
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { fontSize } from '../utils/fontSizes'
 import { COLOR } from '../utils/colors'
-import { domain } from '../hooks/requests'
+import { baseAxios, domain } from '../hooks/requests'
+import { Heart } from './common/Svgs'
+import { LIKE_PROFILE } from '../urls'
+import { showToast } from './common/Toast'
+import { GlobalContext } from '../context/GlobalContext'
 
 export default function RenderProfileCard({ item }) {
     const navigation = useNavigation()
+    const [like, setLike] = useState(null)
+    const { render, setRender } = useContext(GlobalContext)
+
+    useEffect(() => {
+        async function fetchLikes() {
+            try {
+                const response = await baseAxios.get(LIKE_PROFILE.replace('{id}', item.id))
+                setLike(response.data)
+                setRender(false)
+            } catch (error) {
+                showToast('error', 'Oops!', 'Nomalum xatolik')
+            }
+        }
+        fetchLikes()
+    }, [item.id, render])
 
     return (
         <TouchableOpacity
@@ -20,7 +39,6 @@ export default function RenderProfileCard({ item }) {
                 style={styles.profileImage}
                 source={{
                     uri: `${domain + item.images[0].image}`,
-                    // uri: '',
                     priority: FastImage.priority.normal,
                 }}
                 resizeMode={FastImage.resizeMode.cover} />
@@ -30,6 +48,10 @@ export default function RenderProfileCard({ item }) {
                     {item.name}, {new Date().getFullYear() - moment(item.birthdate).format('YYYY')}
                 </Text>
                 <Text style={styles.city}>{item.region.title}</Text>
+            </View>
+
+            <View style={styles.iconContainer}>
+                {like && like.id ? <Heart color={COLOR.red} width={27} height={27} /> : null}
             </View>
         </TouchableOpacity>
     )
@@ -60,5 +82,11 @@ const styles = StyleSheet.create({
         color: COLOR.lightGrey,
         fontWeight: '500',
         marginTop: 3,
+    },
+    iconContainer: {
+        position: 'absolute',
+        top: 10,
+        right: 10,
+        zIndex: 999, // Adjust z-index as needed to ensure the icon appears above other content
     },
 })

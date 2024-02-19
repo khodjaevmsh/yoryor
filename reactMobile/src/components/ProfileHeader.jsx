@@ -14,7 +14,7 @@ import { PROFILE_IMAGES } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 
 export default function ProfileHeader({ fetchedProfile }) {
-    const [loading, setLoading] = useState(false)
+    const [, setLoading] = useState(false)
     const [fetchedImages, setFetchedImages] = useState([])
     const [, setValidationError] = useState('')
     const { profile } = useContext(GlobalContext)
@@ -35,7 +35,7 @@ export default function ProfileHeader({ fetchedProfile }) {
             }
         }
         fetchProfileImages()
-    }, [])
+    }, [profile.id])
 
     return (
         <TouchableOpacity

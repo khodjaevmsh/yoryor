@@ -143,23 +143,23 @@ function TabScreen() {
         }}>
             <Tab.Screen name="Discover" component={Discover} options={{
                 tabBarIcon: ({ focused }) => (
-                    <Widget4 color={focused ? COLOR.primary : COLOR.grey} width={26} height={26} strokeWidth={2.2} />
+                    <Widget4 color={focused ? COLOR.primary : COLOR.grey} width={27} height={27} strokeWidth={2.2} />
                 ),
             }} />
             <Tab.Screen name="Likes" component={Likes} options={{
                 tabBarIcon: ({ focused }) => (
-                    <Heart color={focused ? COLOR.primary : COLOR.grey} width={29} height={29} strokeWidth={2.2} />
+                    <Heart color={focused ? COLOR.primary : COLOR.grey} width={30} height={30} strokeWidth={2.2} />
                 ),
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     /* eslint-disable-next-line max-len */
-                    <ChatRounded width={28} height={28} color={focused ? COLOR.primary : COLOR.grey} />
+                    <ChatRounded width={29} height={29} color={focused ? COLOR.primary : COLOR.grey} />
                 ),
             }} />
             <Tab.Screen name="Profile" component={Profile} options={{
                 tabBarIcon: ({ focused }) => (
-                    <UserRounded width={29} height={29} color={focused ? COLOR.primary : COLOR.grey} />
+                    <UserRounded width={30} height={30} color={focused ? COLOR.primary : COLOR.grey} />
                 ),
             }} />
         </Tab.Navigator>
