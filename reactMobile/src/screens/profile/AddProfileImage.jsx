@@ -34,6 +34,7 @@ export default function AddProfileImage({ route }) {
             const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: fetchedProfile } })
             setFetchedImages(response.data)
         } catch (error) {
+            showToast('error', 'Oops!', 'Nomalum xatolik')
             setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
         } finally {
             setLoading(false)
@@ -62,6 +63,7 @@ export default function AddProfileImage({ route }) {
             fetchProfileImages()
         } catch (error) {
             setServerError(error.response)
+            showToast('error', 'Oops!', 'Nomalum xatolik')
         } finally {
             setLoading(false)
         }
@@ -129,7 +131,7 @@ export default function AddProfileImage({ route }) {
             setRender(true)
             showToast('success', 'Muvaffaqiyatli', 'Rasmlar o\'zgartirildi.')
         } catch (error) {
-            setServerError(error.response)
+            showToast('error', 'Oops!', `${error.response.data.uploaded_images}`)
         } finally {
             setLoading(false)
         }
@@ -152,6 +154,7 @@ export default function AddProfileImage({ route }) {
             <View style={styles.imageButtonWrapper}>
                 {images.map((image, index) => (
                     <RenderImageButton
+                        /* eslint-disable-next-line react/no-array-index-key */
                         key={index}
                         images={images}
                         fetchedImages={fetchedImages}
@@ -162,7 +165,6 @@ export default function AddProfileImage({ route }) {
                         token={token} />
                 ))}
                 {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
-                <ServerError error={serverError} style={styles.serverError} />
             </View>
 
             <View style={styles.buttonWrapper}>

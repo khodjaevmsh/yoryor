@@ -1,7 +1,13 @@
 import React from 'react'
-import { View, StyleSheet, ScrollView, TouchableWithoutFeedback, Keyboard, Platform } from 'react-native'
+import { View,
+    StyleSheet,
+    ScrollView,
+    TouchableWithoutFeedback,
+    Keyboard,
+    Platform,
+    RefreshControl } from 'react-native'
 
-export default function Container({ children, scrollable, containerStyle }) {
+export default function Container({ children, scrollable, containerStyle, refreshControl, refreshing, setRefreshing }) {
     // Use ScrollView if scrollable prop is true, otherwise use a simple View
     const Component = scrollable ? ScrollView : View
 
@@ -10,7 +16,10 @@ export default function Container({ children, scrollable, containerStyle }) {
             <Component
                 style={!scrollable ? [styles.container, containerStyle] : null}
                 contentContainerStyle={scrollable ? [styles.scrollContainer, containerStyle] : null}
-                showsVerticalScrollIndicator={scrollable ? false : null}>
+                showsVerticalScrollIndicator={scrollable ? false : null}
+                refreshControl={scrollable && refreshControl ? (
+                    <RefreshControl refreshing={refreshing} onRefresh={() => setRefreshing(true)} />
+                ) : null}>
                 {children}
             </Component>
         </TouchableWithoutFeedback>

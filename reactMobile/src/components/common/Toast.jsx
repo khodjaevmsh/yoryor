@@ -1,5 +1,5 @@
 import Toast from 'react-native-toast-message'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Platform } from 'react-native'
 import normalize from 'react-native-normalize'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
@@ -41,7 +41,7 @@ export function showToast(type, text1, text2) {
         type,
         text1,
         text2,
-        topOffset: normalize(50),
+        topOffset: Platform.OS === 'ios' ? normalize(50) : null,
         autoHide: true,
     })
 }

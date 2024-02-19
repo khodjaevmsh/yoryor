@@ -1,25 +1,61 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import FastImage from 'react-native-fast-image'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import moment from 'moment'
 import normalize from 'react-native-normalize'
-import { domain } from '../hooks/requests'
+import { baseAxios, domain } from '../hooks/requests'
 import { ChatRounded, Heart } from './common/Svgs'
 import ProfileImagesPreview from './ProfileImagesPreview'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
+import { LIKE_PROFILE } from '../urls'
+import { showToast } from './common/Toast'
+import { GlobalContext } from '../context/GlobalContext'
 
 export default function ProfileCardHeader({ profileImage, profile }) {
     const [previewModal, setPreviewModal] = useState(false)
+    const [like, setLike] = useState(null)
+    const { setRender } = useContext(GlobalContext)
+
+    useEffect(() => {
+        async function fetchLikes() {
+            try {
+                const response = await baseAxios.get(LIKE_PROFILE.replace('{id}', profile.id))
+                setLike(response.data)
+            } catch (error) {
+                showToast('error', 'Oops!', 'Nomalum xatolik')
+            }
+        }
+
+        fetchLikes()
+    }, [profile])
+
+    async function onLike() {
+        try {
+            await baseAxios.post(LIKE_PROFILE.replace('{id}', profile.id))
+            setLike({ id: profile.id })
+            setRender(true)
+        } catch (error) {
+            showToast('error', 'Oops!', 'Nomalum xatolik')
+        }
+    }
+
+    async function onDislike() {
+        try {
+            await baseAxios.delete(LIKE_PROFILE.replace('{id}', profile.id))
+            setLike(null)
+            setRender(true)
+        } catch (error) {
+            showToast('error', 'Oops!', 'Nomalum xatolik')
+        }
+    }
 
     return (
         <TouchableOpacity onPress={() => setPreviewModal(true)} activeOpacity={1}>
             <View style={styles.top}>
                 <Text style={styles.name}>
-                    {/* eslint-disable-next-line max-len */}
                     {profile?.name}, {new Date().getFullYear() - moment(profile?.birthdate).format('YYYY')}
                 </Text>
-
                 <Text style={styles.city}>{profile?.region.title}</Text>
             </View>
 
@@ -36,9 +72,9 @@ export default function ProfileCardHeader({ profileImage, profile }) {
                     <ChatRounded />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.heart}>
+                <TouchableOpacity style={styles.heart} onPress={like && like.id ? onDislike : onLike}>
                     <View style={{ marginTop: 3 }}>
-                        <Heart />
+                        <Heart color={like && like.id ? COLOR.red : COLOR.black} />
                     </View>
                 </TouchableOpacity>
             </View>
@@ -63,9 +99,9 @@ const styles = StyleSheet.create({
     city: {
         fontSize: fontSize.small,
         color: COLOR.grey,
-        fontWeight: '500',
+        fontWeight: '400',
         lineHeight: 19.5,
-        marginTop: 4,
+        marginTop: 3,
     },
     image: {
         width: '100%',

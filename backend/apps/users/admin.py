@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from users.models import User, ConfirmationCode, Profile, Country, Region, ProfileImage
+from users.models import User, ConfirmationCode, Profile, Country, Region, ProfileImage, Like
 
 
 @admin.register(User)
@@ -45,3 +45,8 @@ class CountryAdmin(admin.ModelAdmin):
 @admin.register(Region)
 class RegionAdmin(admin.ModelAdmin):
     list_display = ('title', 'country',)
+
+
+@admin.register(Like)
+class LikeAdmin(admin.ModelAdmin):
+    pass
