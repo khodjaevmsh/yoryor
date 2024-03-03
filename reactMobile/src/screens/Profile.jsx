@@ -6,13 +6,12 @@ import normalize from 'react-native-normalize'
 import LinearGradient from 'react-native-linear-gradient'
 import Container from '../components/common/Container'
 import { baseAxios } from '../hooks/requests'
-import { PROFILE } from '../urls'
+import { PROFILE, PROFILE_IMAGES } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 import ProfileHeader from '../components/ProfileHeader'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import ProfileButton from '../components/ProfileButton'
-import { showToast } from '../components/common/Toast'
 
 const itemWidth = Dimensions.get('window').width * 0.84
 
@@ -45,18 +44,21 @@ const subscriptionPlans = [
 export default function Profile() {
     const [loading, setLoading] = useState(false)
     const [, setServerError] = useState('')
-    const [fetchedProfile, setFetchedProfile] = useState([])
+    const [, setFetchedProfile] = useState([])
+    const [fetchImages, setFetchedImages] = useState([])
     const { profile, render, setRender } = useContext(GlobalContext)
 
     useEffect(() => {
         async function fetchProfile() {
             try {
                 setLoading(true)
-                const response = await baseAxios.get(PROFILE.replace('{id}', profile.id))
-                setFetchedProfile(response.data)
+                const profileResponse = await baseAxios.get(PROFILE.replace('{id}', profile.id))
+                setFetchedProfile(profileResponse.data)
+
+                const imagesResponse = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
+                setFetchedImages(imagesResponse.data[0])
             } catch (error) {
                 setServerError(error.response)
-                showToast('error', 'Oops!', 'Nomalum xatolik')
             } finally {
                 setRender(false)
                 setLoading(false)
@@ -99,7 +101,7 @@ export default function Profile() {
     return (
         <Container>
             <View>
-                <ProfileHeader fetchedProfile={fetchedProfile} />
+                <ProfileHeader fetchImages={fetchImages} />
             </View>
 
             <View style={styles.carouselWrapper}>

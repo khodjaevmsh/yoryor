@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import normalize from 'react-native-normalize'
 import Carousel from 'react-native-snap-carousel'
 import { Edit2 } from 'react-native-feather'
@@ -9,54 +9,33 @@ import moment from 'moment'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import { CheckMarkBlue } from './common/Svgs'
-import { baseAxios, domain } from '../hooks/requests'
-import { PROFILE_IMAGES } from '../urls'
+import { domain } from '../hooks/requests'
 import { GlobalContext } from '../context/GlobalContext'
 import { determineFontSize } from '../utils/string'
 
 const itemWidth = Dimensions.get('window').width * 0.84
 
-export default function ProfileDetailHeader({ fetchedProfile }) {
-    const [images, setImages] = useState([])
-    const [, setValidationError] = useState('')
-    const [loading, setLoading] = useState(false)
-    const { profile, setRender, render } = useContext(GlobalContext)
+export default function ProfileDetailHeader({ profileImages }) {
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
-
-    useEffect(() => {
-        async function fetchProfileImages() {
-            try {
-                setLoading(true)
-                const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
-                setImages(response.data)
-                setRender(false)
-            } catch (error) {
-                setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchProfileImages()
-    }, [render])
 
     const renderItem = ({ item, index }) => (
         <TouchableOpacity
             activeOpacity={1}
             style={styles.carouselItem}
-            onPress={() => navigation.navigate('AddProfileImage', { fetchedProfile: profile.id })}>
+            onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id })}>
             <FastImage
                 style={styles.carouselImage}
                 source={{
                     uri: `${domain + item.image}`,
                     priority: FastImage.priority.normal,
-                    // cache: FastImage.cacheControl.cacheOnly,
                 }}
                 resizeMode={FastImage.resizeMode.cover} />
             {index === 0 && (
                 <TouchableOpacity
                     activeOpacity={0.5}
                     style={styles.updateButton}
-                    onPress={() => navigation.navigate('AddProfileImage', { fetchedProfile: fetchedProfile?.id })}>
+                    onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id })}>
                     <Edit2 width={16} height={16} color={COLOR.white} />
                     <Text style={styles.updateText}>O'zgartirish</Text>
                 </TouchableOpacity>
@@ -69,7 +48,7 @@ export default function ProfileDetailHeader({ fetchedProfile }) {
             <View style={styles.nameWrapper}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={[styles.name, { fontSize: determineFontSize(profile.name, 26) }]}>
-                        {profile.name}, {new Date().getFullYear() - moment(fetchedProfile?.birthdate).format('YYYY')}
+                        {profile.name}, {new Date().getFullYear() - moment(profile.birthdate).format('YYYY')}
                     </Text>
                     <CheckMarkBlue width={22} height={22} />
                 </View>
@@ -79,7 +58,7 @@ export default function ProfileDetailHeader({ fetchedProfile }) {
             <View style={styles.sliderWrapper}>
                 <Carousel
                     layout="default"
-                    data={images && images}
+                    data={profileImages && profileImages}
                     renderItem={renderItem}
                     sliderWidth={Dimensions.get('window').width}
                     itemWidth={itemWidth}

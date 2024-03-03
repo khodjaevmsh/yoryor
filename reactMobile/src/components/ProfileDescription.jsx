@@ -9,7 +9,6 @@ import { shortenText } from '../utils/string'
 
 export default function ProfileDescription({ fetchedProfile }) {
     const navigation = useNavigation()
-
     const t = useTrans()
 
     return (
@@ -20,8 +19,9 @@ export default function ProfileDescription({ fetchedProfile }) {
             </View>
 
             <View style={styles.textArea}>
-                {/* eslint-disable-next-line max-len */}
-                <Text style={[styles.placeholder, { color: fetchedProfile && fetchedProfile.bio ? COLOR.black : COLOR.grey }]}>
+                <Text style={
+                    [styles.placeholder, { color: fetchedProfile && fetchedProfile.bio ? COLOR.black : COLOR.grey }]
+                }>
                     {fetchedProfile && fetchedProfile.bio ? shortenText(fetchedProfile.bio, 100) : (
                         "O'zingiz haqingizda ma'lumot qo'shing: sevimli mashg'ulotlar, odatlar..."
                     )}
@@ -31,7 +31,6 @@ export default function ProfileDescription({ fetchedProfile }) {
                     activeOpacity={0.7}
                     style={styles.buttonAdd}
                     onPress={() => navigation.navigate('Bio', { fetchedProfile })}>
-
                     <View style={styles.iconWithAdd}>
                         <Text style={styles.add}>
                             {fetchedProfile && fetchedProfile.bio ? "O'zgartirish" : "Qo'shish"}
@@ -43,7 +42,6 @@ export default function ProfileDescription({ fetchedProfile }) {
                             color={COLOR.black}
                             style={styles.icon} />
                     </View>
-
                 </TouchableOpacity>
             </View>
         </View>

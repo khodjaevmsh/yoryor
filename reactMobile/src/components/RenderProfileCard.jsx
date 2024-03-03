@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     city: {
-        color: COLOR.lightGrey,
+        color: COLOR.grey,
         fontWeight: '500',
         marginTop: 3,
     },

@@ -8,7 +8,7 @@ import ProfileDescription from '../../components/ProfileDescription'
 import ProfileInfo from '../../components/ProfileInfo'
 import { GlobalContext } from '../../context/GlobalContext'
 import { baseAxios } from '../../hooks/requests'
-import { PROFILE } from '../../urls'
+import { PROFILE, PROFILE_IMAGES } from '../../urls'
 import { AcademicCap,
     CalendarMark,
     CaseRound,
@@ -24,23 +24,27 @@ import { AcademicCap,
 export default function ProfileDetail() {
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState(false)
-    const [fetchedProfile, setFetchedData] = useState(null)
+    const [fetchedProfile, setFetchedProfile] = useState(null)
+    const [profileImages, setProfileImages] = useState([])
     const { profile, render, setRender } = useContext(GlobalContext)
 
     useEffect(() => {
-        async function fetchData() {
+        async function fetchProfile() {
             try {
                 setLoading(true)
-                const response = await baseAxios.get(PROFILE.replace('{id}', profile.id))
-                setFetchedData(response.data)
-                setRender(false)
+                const profileResponse = await baseAxios.get(PROFILE.replace('{id}', profile.id))
+                setFetchedProfile(profileResponse.data)
+
+                const imagesResponse = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
+                setProfileImages(imagesResponse.data)
             } catch (error) {
                 setServerError(error.response)
             } finally {
                 setLoading(false)
+                setRender(false)
             }
         }
-        fetchData()
+        fetchProfile()
     }, [render])
 
     const info = [
@@ -62,7 +66,7 @@ export default function ProfileDetail() {
     return (
         <ScrollView contentContainerStyle={{ flexGrow: 1, paddingTop: 0, paddingBottom: 26 }}>
             <View style={styles.profileHead}>
-                <ProfileDetailHeader fetchedProfile={fetchedProfile} />
+                <ProfileDetailHeader profileImages={profileImages} />
             </View>
 
             <View style={styles.profileDesc}>

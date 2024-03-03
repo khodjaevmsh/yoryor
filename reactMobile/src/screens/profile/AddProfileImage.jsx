@@ -4,7 +4,6 @@ import { launchImageLibrary } from 'react-native-image-picker'
 import axios from 'axios'
 import Container from '../../components/common/Container'
 import { COLOR } from '../../utils/colors'
-import ServerError from '../../components/common/ServerError'
 import Button from '../../components/common/Button'
 import { fontSize } from '../../utils/fontSizes'
 import { baseAxios, domain } from '../../hooks/requests'
@@ -15,7 +14,7 @@ import ImageButtonModal from '../../components/ImageButtonModal'
 import RenderImageButton from '../../components/RenderImageButton'
 
 export default function AddProfileImage({ route }) {
-    const { fetchedProfile } = route.params
+    const { profile } = route.params
     const [images, setImages] = useState(Array(6).fill(null))
     const [imageLoading, setImageLoading] = useState(Array(6).fill(false))
     const [loading, setLoading] = useState(false)
@@ -30,8 +29,7 @@ export default function AddProfileImage({ route }) {
     async function fetchProfileImages() {
         try {
             setLoading(true)
-
-            const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: fetchedProfile } })
+            const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile } })
             setFetchedImages(response.data)
         } catch (error) {
             showToast('error', 'Oops!', 'Nomalum xatolik')
@@ -58,7 +56,7 @@ export default function AddProfileImage({ route }) {
 
             setModalVisible(false)
             setRender(true)
-            showToast('error', 'Muvaffaqiyatli', 'Rasm o\'chirildi.')
+            showToast('error', 'Muvaffaqiyatli', "Rasm o'chirildi.")
 
             fetchProfileImages()
         } catch (error) {
@@ -75,7 +73,7 @@ export default function AddProfileImage({ route }) {
             mediaType: 'photo',
             maxWidth: 740,
             maxHeight: 740,
-            quality: 0.7,
+            quality: 0.6,
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
@@ -118,13 +116,12 @@ export default function AddProfileImage({ route }) {
         buttonNumbers.forEach((number) => {
             formData.append('button_numbers', number)
         })
-        formData.append('profile', fetchedProfile)
+        formData.append('profile', profile)
 
         try {
             setServerError('')
             setValidationError('')
             setLoading(true)
-
             await axios.post(`${domain}/api/v1${CHANGE_PROFILE_IMAGES}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data', Authorization: `Token ${token}` },
             })

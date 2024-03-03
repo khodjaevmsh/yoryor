@@ -19,11 +19,14 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from chat import routing
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/v1/', include([
         path('users/', include(('users.urls', 'users'), namespace='users')),
+        path('chat/', include(('chat.urls', 'chat'), namespace='chat')),
     ])),
 ]
 
