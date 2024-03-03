@@ -4,25 +4,31 @@ import { View,
     ScrollView,
     TouchableWithoutFeedback,
     Keyboard,
-    Platform,
-    RefreshControl } from 'react-native'
+    Platform } from 'react-native'
 
-export default function Container({ children, scrollable, containerStyle, refreshControl, refreshing, setRefreshing }) {
+export default function Container({ children, scrollable, containerStyle, keyboardDismiss = true }) {
     // Use ScrollView if scrollable prop is true, otherwise use a simple View
     const Component = scrollable ? ScrollView : View
 
     return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    // Conditionally render TouchableWithoutFeedback
+        keyboardDismiss ? (
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                <Component
+                    style={!scrollable ? [styles.container, containerStyle] : null}
+                    contentContainerStyle={scrollable ? [styles.scrollContainer, containerStyle] : null}
+                    showsVerticalScrollIndicator={scrollable ? false : null}>
+                    {children}
+                </Component>
+            </TouchableWithoutFeedback>
+        ) : (
             <Component
                 style={!scrollable ? [styles.container, containerStyle] : null}
                 contentContainerStyle={scrollable ? [styles.scrollContainer, containerStyle] : null}
-                showsVerticalScrollIndicator={scrollable ? false : null}
-                refreshControl={scrollable && refreshControl ? (
-                    <RefreshControl refreshing={refreshing} onRefresh={() => setRefreshing(true)} />
-                ) : null}>
+                showsVerticalScrollIndicator={scrollable ? false : null}>
                 {children}
             </Component>
-        </TouchableWithoutFeedback>
+        )
     )
 }
 

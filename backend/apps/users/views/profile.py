@@ -13,8 +13,8 @@ from users.serializers.profile import ProfileSerializer, SimpleProfileSerializer
 
 class ProfileListView(APIView, PageNumPagination):
     def get(self, request):
-        # profiles = Profile.objects.exclude(user=request.user).order_by('id')
-        profiles = Profile.objects.all().order_by('id')
+        profiles = Profile.objects.exclude(user=request.user).order_by('id')
+        # profiles = Profile.objects.all().order_by('id')
 
         results = self.paginate_queryset(profiles, request, view=self)
         serializer = ProfileSerializer(results, many=True)
@@ -84,12 +84,16 @@ class ChangeProfileImageView(APIView):
 class LikeListView(APIView):
     def get(self, request):
         receiver = request.query_params.get('receiver', None)
+        chat = request.query_params.get('chat', None)
         profile = get_object_or_404(Profile, id=receiver)
 
-        # Calculate the timestamp one day ago
-        one_day_ago = timezone.now() - timedelta(days=1)
-        # Filter likes created within the last 24 hours
-        likes = Like.objects.filter(receiver=profile, created_at__gte=one_day_ago)
+        if chat:
+            likes = Like.objects.filter(receiver=profile)
+        else:
+            # Calculate the timestamp one day ago
+            one_day_ago = timezone.now() - timedelta(days=1)
+            # Filter likes created within the last 24 hours
+            likes = Like.objects.filter(receiver=profile, created_at__gte=one_day_ago)
 
         serializer = LikeSerializer(likes, many=True)
         return Response(serializer.data)

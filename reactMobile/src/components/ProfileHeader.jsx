@@ -1,41 +1,20 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { Edit } from 'react-native-feather'
 import moment from 'moment'
-import { baseAxios, domain } from '../hooks/requests'
+import { domain } from '../hooks/requests'
 import { determineFontSize } from '../utils/string'
 import { CheckMarkBlue } from './common/Svgs'
 import { fontSize } from '../utils/fontSizes'
 import { COLOR } from '../utils/colors'
-import { PROFILE_IMAGES } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 
-export default function ProfileHeader({ fetchedProfile }) {
-    const [, setLoading] = useState(false)
-    const [fetchedImages, setFetchedImages] = useState([])
-    const [, setValidationError] = useState('')
+export default function ProfileHeader({ fetchImages }) {
     const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
-
-    useEffect(() => {
-        async function fetchProfileImages() {
-            try {
-                setLoading(true)
-                const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
-                if (response.data.length > 0) {
-                    setFetchedImages(response.data[0])
-                }
-            } catch (error) {
-                setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchProfileImages()
-    }, [profile.id])
 
     return (
         <TouchableOpacity
@@ -45,19 +24,19 @@ export default function ProfileHeader({ fetchedProfile }) {
             <FastImage
                 style={styles.imageButton}
                 source={{
-                    uri: `${domain + fetchedImages.image}`,
+                    uri: `${domain + fetchImages.image}`,
                     priority: FastImage.priority.normal,
                 }}
                 resizeMode={FastImage.resizeMode.cover} />
             <View style={styles.nameWrapper}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={[styles.name, { fontSize: determineFontSize(fetchedProfile?.name, 18) }]}>
+                    <Text style={[styles.name, { fontSize: determineFontSize(profile.name, 18) }]}>
                         {/* eslint-disable-next-line max-len */}
-                        {fetchedProfile?.name}, {new Date().getFullYear() - moment(fetchedProfile?.birthdate).format('YYYY')}
+                        {profile.name}, {new Date().getFullYear() - moment(profile.birthdate).format('YYYY')}
                     </Text>
                     <CheckMarkBlue width={18} height={18} />
                 </View>
-                <Text style={styles.region}>{fetchedProfile?.region?.title}</Text>
+                <Text style={styles.region}>{profile.region?.title}</Text>
             </View>
             <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.navigate('ProfileDetail')}>
                 <Edit width={24} height={24} color={COLOR.black} />

@@ -85,11 +85,8 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def validate(self, attrs):
-        sender = attrs.get('sender')
-        receiver = attrs.get('receiver')
-
         # Check if sender and receiver are the same
-        if sender == receiver:
+        if attrs.get('sender') == attrs.get('receiver'):
             raise serializers.ValidationError(_("Sender and receiver cannot be the same."))
 
         return attrs

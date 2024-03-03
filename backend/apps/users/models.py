@@ -9,6 +9,8 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(unique=True, null=True, blank=True)
     username = models.CharField(unique=True, null=True, blank=True)
+    online = models.BooleanField(default=False)
+    last_seen = models.DateTimeField(null=True, blank=True)
 
     objects = UserManager()
 

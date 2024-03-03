@@ -25,7 +25,7 @@ export default function Settings() {
     const [loading, setLoading] = useState(false)
     const [, setServerError] = useState(false)
     const [isModalConfirm, setModalConfirm] = useState(false)
-    const { signOut } = useContext(GlobalContext) || {}
+    const { signOut } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSingOut() {
@@ -36,6 +36,11 @@ export default function Settings() {
             setModalConfirm(false)
             navigation.navigate('Splash')
         } catch (error) {
+            if (error) {
+                await signOut()
+                setModalConfirm(false)
+                navigation.navigate('Splash')
+            }
             setServerError(error.response)
         } finally {
             setLoading(false)

@@ -28,6 +28,7 @@
     "react-native-fast-image": "^8.6.3",
     "react-native-feather": "^1.1.2",
     "react-native-gesture-handler": "^2.14.1",
+    "react-native-gifted-chat": "^2.4.0",
     "react-native-image-picker": "^7.1.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-modal": "^13.0.1",
@@ -39,6 +40,8 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^14.1.0",
     "react-native-toast-message": "^2.2.0",
+    "react-native-websocket": "^1.0.2",
+    "socket.io-client": "^4.7.4",
     "yup": "^1.2.0"
   },
   "devDependencies": {

@@ -2,9 +2,10 @@ import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { ChevronLeft, Sliders } from 'react-native-feather'
-import { Platform, StyleSheet, TouchableOpacity } from 'react-native'
-import { useContext } from 'react'
+import { Platform, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import React, { useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import normalize from 'react-native-normalize/src/index'
 import { COLOR } from './utils/colors'
 import Likes from './screens/Likes'
 import Splash from './screens/Splash'
@@ -42,16 +43,17 @@ import AboutApp from './screens/settings/AboutApp'
 import Help from './screens/settings/Help'
 import AddProfileImage from './screens/profile/AddProfileImage'
 import ProfileDetail from './screens/profile/ProfileDetail'
-import { ChatRounded, Heart, Tuning2, UserRounded, Widget4 } from './components/common/Svgs'
+import { ChatRounded, Heart, UserRounded, Widget4 } from './components/common/Svgs'
 import Profile from './screens/Profile'
 import ProfileCardDetail from './screens/discover/ProfileCardDetail'
+import ChatDetail from './screens/chat/ChatDetail'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
 
 export default function Navigation() {
     const { token } = useContext(GlobalContext)
-    const initial = token ? 'TabScreen' : 'Splash'
+    const initial = token ? 'Chats' : 'Splash'
 
     // async function rmToken() {
     //     await AsyncStorage.removeItem('token')
@@ -126,6 +128,9 @@ export default function Navigation() {
                 {/*  DISCOVER  */}
                 <Stack.Screen name="ProfileCardDetail" component={ProfileCardDetail} options={{ headerShown: true }} />
 
+                {/*  CHAT  */}
+                <Stack.Screen name="ChatDetail" component={ChatDetail} options={{ headerShown: false }} />
+
             </Stack.Navigator>
         </NavigationContainer>
     )
@@ -150,12 +155,14 @@ function TabScreen() {
                 tabBarIcon: ({ focused }) => (
                     <Heart color={focused ? COLOR.primary : COLOR.grey} width={30} height={30} strokeWidth={2.2} />
                 ),
+                headerLeft: () => <Text style={styles.title}>Layklar</Text>,
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     /* eslint-disable-next-line max-len */
                     <ChatRounded width={29} height={29} color={focused ? COLOR.primary : COLOR.grey} />
                 ),
+                headerLeft: () => <Text style={styles.title}>Chat</Text>,
             }} />
             <Tab.Screen name="Profile" component={Profile} options={{
                 tabBarIcon: ({ focused }) => (
@@ -183,5 +190,12 @@ const styles = StyleSheet.create({
     },
     headerRightContainerStyle: {
         paddingRight: 22,
+    },
+
+    title: {
+        fontSize: normalize(25),
+        fontWeight: '500',
+        marginTop: 10,
+        marginLeft: 22,
     },
 })
