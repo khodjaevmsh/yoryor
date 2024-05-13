@@ -128,6 +128,7 @@ class ProfileImage(models.Model):
 class Like(models.Model):
     sender = models.ForeignKey('users.Profile', related_name='sent_likes', on_delete=models.CASCADE)
     receiver = models.ForeignKey('users.Profile', related_name='received_likes', on_delete=models.CASCADE)
+    match = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

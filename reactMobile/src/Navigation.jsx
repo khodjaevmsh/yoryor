@@ -148,19 +148,19 @@ function TabScreen() {
         }}>
             <Tab.Screen name="Discover" component={Discover} options={{
                 tabBarIcon: ({ focused }) => (
-                    <Widget4 color={focused ? COLOR.primary : COLOR.grey} width={27} height={27} strokeWidth={2.2} />
+                    <Widget4 color={focused ? COLOR.primary : COLOR.grey} width={28} height={28} strokeWidth={2.2} />
                 ),
             }} />
             <Tab.Screen name="Likes" component={Likes} options={{
                 tabBarIcon: ({ focused }) => (
                     <Heart color={focused ? COLOR.primary : COLOR.grey} width={30} height={30} strokeWidth={2.2} />
                 ),
-                headerLeft: () => <Text style={styles.title}>Layklar</Text>,
+                headerLeft: () => <Text style={styles.title}>Like</Text>,
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     /* eslint-disable-next-line max-len */
-                    <ChatRounded width={29} height={29} color={focused ? COLOR.primary : COLOR.grey} />
+                    <ChatRounded width={30} height={30} color={focused ? COLOR.primary : COLOR.grey} />
                 ),
                 headerLeft: () => <Text style={styles.title}>Chat</Text>,
             }} />

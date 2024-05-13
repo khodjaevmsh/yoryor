@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     chatMessage: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         color: COLOR.darkGrey,
         marginLeft: 2,
     },

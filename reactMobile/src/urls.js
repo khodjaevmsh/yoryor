@@ -17,6 +17,7 @@ export const PROFILE_IMAGE = '/users/profile/image/{id}'
 export const CHANGE_PROFILE_IMAGES = '/users/profile/change_images'
 export const LIKES = '/users/likes'
 export const LIKE_PROFILE = '/users/like/{id}'
+export const LIKES_COUNT = '/users/likes-count'
 
 // CHAT
 export const ROOMS = '/chat/rooms'
