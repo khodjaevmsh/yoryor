@@ -2,8 +2,9 @@ from django.urls import path
 
 from users.views.change_password import ChangePasswordView
 from users.views.country import CountryListView
-from users.views.profile import ProfileDetailView, ProfileImageListView, ChangeProfileImageView, ProfileImageDetailView, \
-    ProfileListView, LikeDetailView, LikeListView
+from users.views.like import LikeListView, LikeDetailView
+from users.views.profile import ProfileListView, ProfileDetailView
+from users.views.profile_image import ProfileImageListView, ProfileImageDetailView, ChangeProfileImageView
 from users.views.region import RegionListView
 from users.views.sign_in import SignInView
 from users.views.sign_out import SignOutView

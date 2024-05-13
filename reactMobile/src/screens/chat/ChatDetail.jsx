@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, useCallback } from 'react'
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
 import { KeyboardAvoidingView, View, Platform, StyleSheet, ActivityIndicator } from 'react-native'
 import { ArrowUp } from 'react-native-feather'
+import { useFocusEffect } from '@react-navigation/core'
 import { GlobalContext } from '../../context/GlobalContext'
 import ChatDetailHeader from '../../components/ChatDetailHeader'
 import { COLOR } from '../../utils/colors'
@@ -12,8 +13,18 @@ export default function ChatScreen({ route }) {
     const [messages, setMessages] = useState([])
     const [socket, setSocket] = useState(null)
     const [isLoadingEarlier, setIsLoadingEarlier] = useState(false)
-    const { token, profile } = useContext(GlobalContext)
+    const { token, profile, setRender } = useContext(GlobalContext)
     const { room } = route.params
+
+    useFocusEffect(
+        useCallback(() => {
+            setRender(true)
+            return () => {
+                setRender(false)
+                // Cleanup if needed
+            }
+        }, [setRender]),
+    )
 
     const sender = room.participants.find((participant) => participant.id === profile.id)
     const receiver = room.participants.find((participant) => participant.id !== profile.id)

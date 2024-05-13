@@ -8,44 +8,57 @@ import { ChatRounded, Heart } from './common/Svgs'
 import ProfileImagesPreview from './ProfileImagesPreview'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
-import { LIKE_PROFILE } from '../urls'
+import { LIKE_PROFILE, LIKES } from '../urls'
 import { showToast } from './common/Toast'
 import { GlobalContext } from '../context/GlobalContext'
+import MatchModal from './MatchModal'
 
-export default function ProfileCardHeader({ profileImage, profile }) {
+export default function ProfileCardHeader({ profileImage, profile: receiverProfile }) {
     const [previewModal, setPreviewModal] = useState(false)
     const [like, setLike] = useState(null)
-    const { setRender } = useContext(GlobalContext)
+    const [room, setRoom] = useState(null)
+    const [isModalVisible, setModalVisible] = useState(false)
+    const { profile: senderProfile } = useContext(GlobalContext)
 
     useEffect(() => {
-        async function fetchLikes() {
+        async function fetchLike() {
             try {
-                const response = await baseAxios.get(LIKE_PROFILE.replace('{id}', profile.id))
+                const response = await baseAxios.get(LIKE_PROFILE.replace('{id}', receiverProfile.id))
                 setLike(response.data)
             } catch (error) {
-                showToast('error', 'Oops!', 'Nomalum xatolik')
+                console.log(error.response)
             }
         }
 
-        fetchLikes()
-    }, [profile])
+        fetchLike()
+    }, [receiverProfile])
 
     async function onLike() {
         try {
-            await baseAxios.post(LIKE_PROFILE.replace('{id}', profile.id))
-            setLike({ id: profile.id })
-            setRender(true)
+            if (receiverProfile.id) {
+                const response = await baseAxios.post(LIKES, {
+                    sender: senderProfile.id,
+                    receiver: receiverProfile.id,
+                })
+                setLike({ id: senderProfile.id })
+                setModalVisible(response.data.match)
+                setRoom(response.data.room)
+            }
         } catch (error) {
+            console.log(error.response.data)
             showToast('error', 'Oops!', 'Nomalum xatolik')
         }
     }
 
     async function onDislike() {
         try {
-            await baseAxios.delete(LIKE_PROFILE.replace('{id}', profile.id))
-            setLike(null)
-            setRender(true)
+        // Check if there is a like to delete
+            if (like && like.id) {
+                await baseAxios.delete(LIKE_PROFILE.replace('{id}', receiverProfile?.id))
+                setLike({})
+            }
         } catch (error) {
+            console.log(error.response.data)
             showToast('error', 'Oops!', 'Nomalum xatolik')
         }
     }
@@ -54,9 +67,10 @@ export default function ProfileCardHeader({ profileImage, profile }) {
         <TouchableOpacity onPress={() => setPreviewModal(true)} activeOpacity={1}>
             <View style={styles.top}>
                 <Text style={styles.name}>
-                    {profile?.name}, {new Date().getFullYear() - moment(profile?.birthdate).format('YYYY')}
+                    {/* eslint-disable-next-line max-len */}
+                    {receiverProfile?.name}, {new Date().getFullYear() - moment(receiverProfile?.birthdate).format('YYYY')}
                 </Text>
-                <Text style={styles.city}>{profile?.region.title}</Text>
+                <Text style={styles.city}>{receiverProfile?.region.title}</Text>
             </View>
 
             <FastImage
@@ -78,17 +92,25 @@ export default function ProfileCardHeader({ profileImage, profile }) {
                     </View>
                 </TouchableOpacity>
             </View>
+
             <ProfileImagesPreview
                 previewModal={previewModal}
                 setPreviewModal={setPreviewModal}
-                profile={profile} />
+                profile={receiverProfile} />
+
+            <MatchModal
+                isModalVisible={isModalVisible}
+                setModalVisible={setModalVisible}
+                room={room}
+                sender={senderProfile}
+                receiver={receiverProfile} />
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
     top: {
-        marginBottom: 22,
+        marginBottom: 18,
         marginLeft: 6,
     },
     name: {
@@ -99,9 +121,10 @@ const styles = StyleSheet.create({
     city: {
         fontSize: fontSize.small,
         color: COLOR.grey,
-        fontWeight: '400',
+        fontWeight: '500',
         lineHeight: 19.5,
-        marginTop: 3,
+        marginTop: 1,
+        marginLeft: 1,
     },
     image: {
         width: '100%',

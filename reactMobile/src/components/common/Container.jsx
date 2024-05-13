@@ -37,12 +37,12 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: 14,
         marginBottom: Platform.OS === 'ios' ? 32 : 24,
-        marginHorizontal: 22,
+        marginHorizontal: 16,
     },
     scrollContainer: {
         flexGrow: 1,
         paddingTop: 14,
         paddingBottom: Platform.OS === 'ios' ? 32 : 24,
-        paddingHorizontal: 22,
+        paddingHorizontal: 16,
     },
 })

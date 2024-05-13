@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import moment from 'moment'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { fontSize } from '../utils/fontSizes'
@@ -10,29 +10,27 @@ import { baseAxios, domain } from '../hooks/requests'
 import { Heart } from './common/Svgs'
 import { LIKE_PROFILE } from '../urls'
 import { showToast } from './common/Toast'
-import { GlobalContext } from '../context/GlobalContext'
 
 export default function RenderProfileCard({ item }) {
     const navigation = useNavigation()
     const [like, setLike] = useState(null)
-    const { render, setRender } = useContext(GlobalContext)
 
     useEffect(() => {
         async function fetchLikes() {
             try {
                 const response = await baseAxios.get(LIKE_PROFILE.replace('{id}', item.id))
                 setLike(response.data)
-                setRender(false)
             } catch (error) {
                 showToast('error', 'Oops!', 'Nomalum xatolik')
             }
         }
         fetchLikes()
-    }, [item.id, render])
+    }, [item.id])
 
     return (
         <TouchableOpacity
             style={styles.card}
+            activeOpacity={0.95}
             onPress={() => navigation.navigate('ProfileCardDetail', { profile: item })}>
 
             <FastImage
@@ -51,7 +49,7 @@ export default function RenderProfileCard({ item }) {
             </View>
 
             <View style={styles.iconContainer}>
-                {like && like.id ? <Heart color={COLOR.red} width={27} height={27} /> : null}
+                {like && like.id ? <Heart color={COLOR.red} width={22} height={22} /> : null}
             </View>
         </TouchableOpacity>
     )
@@ -60,22 +58,22 @@ export default function RenderProfileCard({ item }) {
 const styles = StyleSheet.create({
     card: {
         flex: 1,
-        height: normalize(255),
-        margin: 8,
+        height: normalize(180),
+        margin: 6,
         overflow: 'hidden',
-        borderRadius: 15,
+        borderRadius: 18,
     },
     profileInfo: {
         marginVertical: 10,
         paddingHorizontal: 5,
     },
     profileImage: {
-        width: '100%',
-        height: normalize(200),
+        flex: 1,
+        height: '100%',
         borderRadius: 15,
     },
     name: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         fontWeight: '500',
     },
     city: {

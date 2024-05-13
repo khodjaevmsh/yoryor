@@ -40,8 +40,7 @@ export default function RoomItem({ item }) {
                     uri: receiver ? `${domain + receiver.images?.[0]?.image}` : null,
                     priority: FastImage.priority.high,
                 }}
-                resizeMode={FastImage.resizeMode.cover}
-            />
+                resizeMode={FastImage.resizeMode.cover} />
 
             <View style={{ flex: 1 }}>
                 <View style={styles.chatTopSide}>
@@ -86,7 +85,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     chatMessage: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         color: COLOR.darkGrey,
         marginLeft: 2,
     },

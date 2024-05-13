@@ -48,64 +48,62 @@ export default function ChangePassword() {
     }
 
     return (
-        <KeyboardAvoiding>
-            <Container>
-                <Text style={styles.title}>Parolni yangilash</Text>
-                <Formik
-                    initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}>
-                    {({ handleSubmit }) => (
-                        <>
-                            <View style={{ flex: 1 }}>
+        <Container>
+            <Text style={styles.title}>Parolni yangilash</Text>
+            <Formik
+                initialValues={{ oldPassword: '', newPassword: '', confirmPassword: '' }}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}>
+                {({ handleSubmit }) => (
+                    <>
+                        <View style={{ flex: 1 }}>
+                            <Input
+                                name="oldPassword"
+                                keyboardType="default"
+                                placeholder="12345678"
+                                label="Eski parolingiz"
+                                inputStyle={styles.input}
+                                labelStyle={{
+                                    color: COLOR.black,
+                                    fontWeight: '500',
+                                }} />
+
+                            <View style={styles.newPasswords}>
                                 <Input
-                                    name="oldPassword"
+                                    name="newPassword"
                                     keyboardType="default"
-                                    placeholder="sovchi@gmail.com"
-                                    label="* Eski parolingiz"
-                                    inputStyle={styles.input}
+                                    label="Yangi parol o'ylab toping"
                                     labelStyle={{
-                                        color: COLOR.grey,
+                                        color: COLOR.black,
                                         fontWeight: '500',
-                                    }} />
+                                    }}
+                                    inputStyle={styles.input}
+                                    placeholder="********" />
 
-                                <View style={styles.newPasswords}>
-                                    <Input
-                                        name="newPassword"
-                                        keyboardType="default"
-                                        label="* Yangi parol o'ylab toping"
-                                        labelStyle={{
-                                            color: COLOR.grey,
-                                            fontWeight: '500',
-                                        }}
-                                        inputStyle={styles.input}
-                                        placeholder="sovchi@gmail.com" />
-
-                                    <Input
-                                        name="confirmPassword"
-                                        keyboardType="default"
-                                        inputStyle={styles.input}
-                                        placeholder="sovchi@gmail.com" />
-                                </View>
-
-                                <ServerError error={serverError} style={styles.serverError} />
+                                <Input
+                                    name="confirmPassword"
+                                    keyboardType="default"
+                                    inputStyle={styles.input}
+                                    placeholder="********" />
                             </View>
 
-                            <View style={styles.buttonWrapper}>
-                                <Button
-                                    title="Tasdiqlash"
-                                    buttonStyle={styles.button}
-                                    loading={loading}
-                                    onPress={() => {
-                                        handleSubmit()
-                                        Keyboard.dismiss()
-                                    }} />
-                            </View>
-                        </>
-                    )}
-                </Formik>
-            </Container>
-        </KeyboardAvoiding>
+                            <ServerError error={serverError} style={styles.serverError} />
+                        </View>
+
+                        <View style={styles.buttonWrapper}>
+                            <Button
+                                title="Tasdiqlash"
+                                buttonStyle={styles.button}
+                                loading={loading}
+                                onPress={() => {
+                                    handleSubmit()
+                                    Keyboard.dismiss()
+                                }} />
+                        </View>
+                    </>
+                )}
+            </Formik>
+        </Container>
     )
 }
 
