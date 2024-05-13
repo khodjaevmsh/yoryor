@@ -108,14 +108,14 @@ export default function ProfileDetail() {
 
 const styles = StyleSheet.create({
     profileHead: {
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
         marginBottom: 24,
     },
     profileDesc: {
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
     },
     profileInfo: {
-        paddingHorizontal: 20,
+        paddingHorizontal: 16,
     },
     titleWrapper: {
         flexDirection: 'row',

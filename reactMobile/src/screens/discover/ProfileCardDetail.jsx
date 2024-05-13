@@ -5,7 +5,7 @@ import ProfileCardInfo from '../../components/ProfileCardInfo'
 import ProfileCardHeader from '../../components/ProfileCardHeader'
 
 export default function ProfileCardDetail({ route }) {
-    const { profile } = route.params
+    const { profile, setRender } = route.params
 
     const fields = [
         { icon: <Heart width={20} height={20} />, text: profile?.maritalStatus?.label },
@@ -22,7 +22,7 @@ export default function ProfileCardDetail({ route }) {
 
     return (
         <Container scrollable containerStyle={{ paddingBottom: 52 }}>
-            <ProfileCardHeader profile={profile} profileImage={profile.images} />
+            <ProfileCardHeader profile={profile} profileImage={profile.images} setRender={setRender} />
             <ProfileCardInfo profile={profile} fields={fields} additionalFields={additionalFields} />
         </Container>
     )

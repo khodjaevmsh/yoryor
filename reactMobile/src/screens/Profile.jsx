@@ -72,8 +72,7 @@ export default function Profile() {
     }
 
     const renderItem = ({ item }) => (
-        <TouchableOpacity
-            activeOpacity={1}>
+        <TouchableOpacity activeOpacity={1}>
             <LinearGradient
                 start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
                 colors={item?.background || []}

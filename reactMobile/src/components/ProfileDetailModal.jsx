@@ -3,9 +3,9 @@ import RNModal from 'react-native-modal'
 import React from 'react'
 import normalize from 'react-native-normalize'
 import { COLOR } from '../utils/colors'
-import { AcademicCap, CaseRound, Dollar, Goal, Heart, Ruler, Stars, Weigher } from './common/Svgs'
+import { AcademicCap, CaseRound, Dollar, Heart, Ruler, Stars, Weigher } from './common/Svgs'
 
-export default function ProfileDetailModal({ isModalVisible, setModalVisible, profileImage, profile, loading }) {
+export default function ProfileDetailModal({ isModalVisible, setModalVisible, profile, loading }) {
     const fields = [
         { icon: <Heart width={20} height={20} />, text: profile?.maritalStatus?.label },
         { icon: <AcademicCap width={20} height={20} />, text: profile?.educationLevel?.label },

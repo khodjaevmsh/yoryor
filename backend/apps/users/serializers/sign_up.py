@@ -3,7 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 from users.models import User, ConfirmationCode, Profile, ProfileImage
-from users.serializers.profile import ProfileSerializer, ProfileImageSerializer
+from users.serializers.profile import ProfileSerializer
+from users.serializers.profile_image import ProfileImageSerializer
 from users.utils import generate_verification_code, integers_only
 
 
@@ -68,7 +69,6 @@ class SignUpSerializer(serializers.ModelSerializer):
         write_only=True
     )
     button_numbers = serializers.ListField(child=serializers.IntegerField(), write_only=True, required=False)
-
 
     def validate(self, attrs):
         phone_number = integers_only(attrs.get('phone_number'))
