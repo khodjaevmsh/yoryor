@@ -27,10 +27,10 @@ class SendConfirmationCodeSerializer(serializers.ModelSerializer):
 
         confirmation_code = ConfirmationCode.objects.create(
             phone_number=phone_number,
-            confirmation_code='0000',  # verification_code variable must be here
+            confirmation_code='000000',  # verification_code variable must be here
         )
 
-        send_verification_code(phone_number, verification_code)
+        # send_verification_code(phone_number, verification_code)
 
         return confirmation_code
 
