@@ -47,6 +47,7 @@ import { ChatRounded, Heart, UserRounded, Widget4 } from './components/common/Sv
 import Profile from './screens/Profile'
 import ProfileCardDetail from './screens/discover/ProfileCardDetail'
 import ChatDetail from './screens/chat/ChatDetail'
+import { fontSize } from './utils/fontSizes'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -150,6 +151,7 @@ function TabScreen() {
                 tabBarIcon: ({ focused }) => (
                     <Widget4 color={focused ? COLOR.primary : COLOR.grey} width={28} height={28} strokeWidth={2.2} />
                 ),
+                headerLeft: () => <Text style={[styles.title, { color: COLOR.primary }]}>Sovchi</Text>,
             }} />
             <Tab.Screen name="Likes" component={Likes} options={{
                 tabBarIcon: ({ focused }) => (

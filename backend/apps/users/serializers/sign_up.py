@@ -5,7 +5,7 @@ from rest_framework import serializers
 from users.models import User, ConfirmationCode, Profile, ProfileImage
 from users.serializers.profile import ProfileSerializer
 from users.serializers.profile_image import ProfileImageSerializer
-from users.utils import generate_verification_code, integers_only
+from users.utils import generate_verification_code, integers_only, send_verification_code
 
 
 class SendConfirmationCodeSerializer(serializers.ModelSerializer):
@@ -23,11 +23,11 @@ class SendConfirmationCodeSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         phone_number = integers_only(validated_data.get('phone_number'))
-        confirmation_code = generate_verification_code()
+        verification_code = generate_verification_code()
 
         confirmation_code = ConfirmationCode.objects.create(
             phone_number=phone_number,
-            confirmation_code='000000',  # confirmation_code variable must be here
+            confirmation_code='000000',  # verification_code variable must be here
         )
 
         # send_verification_code(phone_number, verification_code)

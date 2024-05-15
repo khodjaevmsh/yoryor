@@ -14,11 +14,21 @@ import ButtonOutline from './common/ButtonOutline'
 
 export default function MatchModal({ isModalVisible, setModalVisible, room, sender, receiver }) {
     const navigation = useNavigation()
+
+    async function onSendMessage() {
+        await setModalVisible(false)
+        setTimeout(() => {
+            navigation.navigate('ChatDetail', { room })
+        }, 300)
+    }
+
     return (
         <RNModal
             isVisible={isModalVisible}
             animationIn="slideInUp"
             animationOut="slideOutDown"
+            animationInTiming={400}
+            animationOutTiming={300}
             style={styles.modal}>
             <View style={styles.childrenModal}>
                 <ImageBackground source={confetti} resizeMode="cover" style={styles.background}>
@@ -61,10 +71,7 @@ export default function MatchModal({ isModalVisible, setModalVisible, room, send
 
                 <Container>
                     <View style={styles.footer}>
-                        <Button title="Xabar yuborish" buttonStyle={styles.button} onPress={() => {
-                            setModalVisible(false)
-                            navigation.navigate('ChatDetail', { room })
-                        }} />
+                        <Button title="Xabar yuborish" buttonStyle={styles.button} onPress={onSendMessage} />
                         <ButtonOutline title="Qidirishni davom ettirish" onPress={() => setModalVisible(false)} />
                     </View>
                 </Container>

@@ -183,6 +183,9 @@ REST_FRAMEWORK = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+ESKIZ_EMAIL = 'khodjaevmsh@gmail.com'
+ESKIZ_PASSWORD = '1aJP1s7Xm2kj4l1LRhP0WqgFGumt7YuO16TMefNE'
+
 try:
     from .settings_dev import *
 except ImportError:

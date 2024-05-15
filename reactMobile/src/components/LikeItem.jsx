@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: normalize(260),
-        borderRadius: 18,
+        height: normalize(220),
+        borderRadius: 22,
     },
     bottomText: {
         color: COLOR.white,

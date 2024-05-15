@@ -49,7 +49,7 @@ export default function RenderProfileCard({ item }) {
             </View>
 
             <View style={styles.iconContainer}>
-                {like && like.id ? <Heart color={COLOR.red} width={27} height={27} /> : null}
+                {like && like.id ? <Heart color={COLOR.red} width={22} height={22} /> : null}
             </View>
         </TouchableOpacity>
     )
@@ -58,10 +58,10 @@ export default function RenderProfileCard({ item }) {
 const styles = StyleSheet.create({
     card: {
         flex: 1,
-        height: normalize(285),
+        height: normalize(180),
         margin: 6,
         overflow: 'hidden',
-        borderRadius: 15,
+        borderRadius: 18,
     },
     profileInfo: {
         marginVertical: 10,
@@ -69,11 +69,11 @@ const styles = StyleSheet.create({
     },
     profileImage: {
         flex: 1,
-        height: normalize(220),
+        height: '100%',
         borderRadius: 15,
     },
     name: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         fontWeight: '500',
     },
     city: {
