@@ -32,6 +32,7 @@ export default function SetName({ route }) {
         name: Yup.string()
             .matches(/^[a-zA-Z\s]*$/, 'Faqat harflardan iborat bo\'lishi lozim')
             .min(4, 'Ismingiz kamida 4 ta harfdan iborat bo\'lishi kerak')
+            .max(28, 'Ismingiz 28 ta harfdan oshmasligi kerak')
             .required('Majburiy maydon'),
     })
 

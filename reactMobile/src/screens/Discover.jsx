@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, StyleSheet, ActivityIndicator, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { baseAxios } from '../hooks/requests'
@@ -6,17 +6,16 @@ import { PROFILES } from '../urls'
 import RenderProfileCard from '../components/RenderProfileCard'
 import { Tuning2 } from '../components/common/Svgs'
 import { COLOR } from '../utils/colors'
-import DiscoverySettingsModal from '../components/DiscoverySettingsModal'
-import { GlobalContext } from '../context/GlobalContext'
+import DiscoveryFilterModal from '../components/DiscoveryFilterModal'
 
 export default function Discover() {
-    const { profile } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState(null)
     const [fetchedProfiles, setFetchedProfile] = useState([])
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
     const [gender, setGender] = useState(null)
+    const [ageRange, setAgeRange] = useState([18, 80])
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
     const [isModalVisible, setModalVisible] = useState(false)
@@ -34,7 +33,7 @@ export default function Discover() {
         })
     }, [navigation])
 
-    const localGender = gender ? 'male' : 'female'
+    const localGender = gender === 'male' ? 'female' : 'male'
 
     useEffect(() => {
         async function fetchProfile() {
@@ -90,7 +89,7 @@ export default function Discover() {
                         tintColor={COLOR.lightGrey} />
                 )} />
 
-            <DiscoverySettingsModal
+            <DiscoveryFilterModal
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
                 country={country}
@@ -98,7 +97,9 @@ export default function Discover() {
                 region={region}
                 setRegion={setRegion}
                 gender={gender}
-                setGender={setGender} />
+                setGender={setGender}
+                ageRange={ageRange}
+                setAgeRange={setAgeRange} />
         </View>
     )
 }
@@ -106,6 +107,7 @@ export default function Discover() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginHorizontal: 6,
+        marginHorizontal: 5,
+        marginTop: 10,
     },
 })

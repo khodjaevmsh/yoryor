@@ -1,15 +1,15 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
-import { fontSize } from '../utils/fontSizes'
 import { COLOR } from '../utils/colors'
 import { baseAxios, domain } from '../hooks/requests'
 import { Heart } from './common/Svgs'
 import { LIKE_PROFILE } from '../urls'
 import { showToast } from './common/Toast'
+import { shortenText } from '../utils/string'
 
 export default function RenderProfileCard({ item }) {
     const navigation = useNavigation()
@@ -21,7 +21,7 @@ export default function RenderProfileCard({ item }) {
                 const response = await baseAxios.get(LIKE_PROFILE.replace('{id}', item.id))
                 setLike(response.data)
             } catch (error) {
-                showToast('error', 'Oops!', 'Nomalum xatolik')
+                showToast('error', 'Oops!', 'Nomalum xatolik.')
             }
         }
         fetchLikes()
@@ -43,7 +43,7 @@ export default function RenderProfileCard({ item }) {
 
             <View style={styles.profileInfo}>
                 <Text style={styles.name}>
-                    {item.name}, {new Date().getFullYear() - moment(item.birthdate).format('YYYY')}
+                    {shortenText(item.name, 15)}, {new Date().getFullYear() - moment(item.birthdate).format('YYYY')}
                 </Text>
                 <Text style={styles.city}>{item.region.title}</Text>
             </View>
@@ -73,13 +73,14 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     name: {
-        fontSize: fontSize.small,
+        fontSize: normalize(Platform.OS === 'ios' ? 12 : 14),
         fontWeight: '500',
     },
     city: {
         color: COLOR.grey,
         fontWeight: '500',
         marginTop: 3,
+        fontSize: normalize(12),
     },
     iconContainer: {
         position: 'absolute',

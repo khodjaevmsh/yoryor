@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     imageButton: {
         width: normalize(65),
         height: normalize(65),
-        borderRadius: 14,
+        borderRadius: 16,
         marginRight: 8,
     },
     emptyImage: {

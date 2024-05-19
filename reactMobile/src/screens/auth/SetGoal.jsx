@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
-        borderRadius: 9,
+        borderRadius: 22,
         marginVertical: 6,
     },
     goalText: {

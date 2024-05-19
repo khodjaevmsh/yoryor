@@ -149,27 +149,28 @@ function TabScreen() {
         }}>
             <Tab.Screen name="Discover" component={Discover} options={{
                 tabBarIcon: ({ focused }) => (
-                    <Widget4 color={focused ? COLOR.primary : COLOR.grey} width={28} height={28} strokeWidth={2.2} />
+                    <Widget4 color={focused ? COLOR.black : COLOR.grey} width={28} height={28} strokeWidth={2.2} />
                 ),
                 headerLeft: () => <Text style={[styles.title, { color: COLOR.primary }]}>Sovchi</Text>,
             }} />
             <Tab.Screen name="Likes" component={Likes} options={{
                 tabBarIcon: ({ focused }) => (
-                    <Heart color={focused ? COLOR.primary : COLOR.grey} width={30} height={30} strokeWidth={2.2} />
+                    <Heart color={focused ? COLOR.black : COLOR.grey} width={30} height={30} strokeWidth={2.2} />
                 ),
                 headerLeft: () => <Text style={styles.title}>Like</Text>,
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     /* eslint-disable-next-line max-len */
-                    <ChatRounded width={30} height={30} color={focused ? COLOR.primary : COLOR.grey} />
+                    <ChatRounded width={30} height={30} color={focused ? COLOR.black : COLOR.grey} />
                 ),
                 headerLeft: () => <Text style={styles.title}>Chat</Text>,
             }} />
             <Tab.Screen name="Profile" component={Profile} options={{
                 tabBarIcon: ({ focused }) => (
-                    <UserRounded width={30} height={30} color={focused ? COLOR.primary : COLOR.grey} />
+                    <UserRounded width={30} height={30} color={focused ? COLOR.black : COLOR.grey} />
                 ),
+                headerLeft: () => <Text style={styles.title}>Profil</Text>,
             }} />
         </Tab.Navigator>
     )
@@ -195,8 +196,8 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: normalize(25),
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
         marginTop: 10,
         marginLeft: 22,
     },

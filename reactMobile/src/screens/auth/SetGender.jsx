@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import normalize from 'react-native-normalize/src/index'
 import Container from '../../components/common/Container'
 import Button from '../../components/common/Button'
 import { fontSize } from '../../utils/fontSizes'
@@ -31,12 +32,14 @@ export default function SetGender({ route }) {
         <Container>
             <View style={{ flex: 1 }}>
                 <Text style={styles.title}>Jinsingiz?</Text>
+                <Text style={styles.subTitle}>Jinsingizni keyinchalik o'zgartirish imkoniyati bo'lmaydi!</Text>
 
                 <TouchableOpacity
                     activeOpacity={0.7}
                     onPress={() => setGender('male')}
                     style={[styles.gender, gender === 'male' && styles.activeGender]}>
                     <Text style={styles.genderText}>Erkar</Text>
+                    <View style={[styles.radio, gender === 'male' && styles.activeRadio]} />
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -44,6 +47,7 @@ export default function SetGender({ route }) {
                     onPress={() => setGender('female')}
                     style={[styles.gender, gender === 'female' && styles.activeGender]}>
                     <Text style={styles.genderText}>Ayol</Text>
+                    <View style={[styles.radio, gender === 'female' && styles.activeRadio]} />
                 </TouchableOpacity>
                 {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
             </View>
@@ -63,7 +67,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: fontSize.extraLarge,
         fontWeight: '500',
-        marginBottom: 18,
     },
     subTitle: {
         color: COLOR.grey,
@@ -74,21 +77,34 @@ const styles = StyleSheet.create({
     },
     gender: {
         width: '100%',
-        height: 52,
-        backgroundColor: COLOR.extraLightGrey,
-        justifyContent: 'center',
+        height: normalize(52),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        borderRadius: 12,
+        borderRadius: 25,
+        paddingHorizontal: 18,
         marginVertical: 7,
+        backgroundColor: COLOR.extraLightGrey,
     },
     genderText: {
         fontSize: fontSize.medium,
         color: COLOR.black,
         fontWeight: '500',
     },
+    radio: {
+        width: normalize(24),
+        height: normalize(24),
+        borderWidth: 2,
+        borderRadius: 100,
+    },
+    activeRadio: {
+        width: normalize(24),
+        height: normalize(24),
+        borderWidth: 6,
+        borderRadius: 100,
+    },
     activeGender: {
-        borderColor: COLOR.primary,
-        borderWidth: 1.2,
+        backgroundColor: COLOR.lightPrimary,
     },
     validationError: {
         color: COLOR.primary,

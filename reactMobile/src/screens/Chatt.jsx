@@ -74,7 +74,7 @@ export default function Chat() {
     const renderItem = useCallback(({ item }) => <RoomItem item={item} />, [])
 
     return (
-        <Container containerStyle={{ marginVertical: 0 }} keyboardDismiss={false}>
+        <Container containerStyle={{ marginTop: 0 }} keyboardDismiss={false}>
             <FlatList
                 data={rooms}
                 style={{ flexGrow: 1 }}
@@ -100,5 +100,3 @@ export default function Chat() {
         </Container>
     )
 }
-
-// const styles = StyleSheet.create({})
