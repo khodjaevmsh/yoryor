@@ -6,6 +6,7 @@ from channels.middleware import BaseMiddleware
 from django.contrib.auth.models import AnonymousUser
 from django.db.models import Count
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework.authtoken.models import Token
 
 from chat.models import Message, Room
@@ -103,6 +104,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def create_and_save_message(self, room, sender, content):
         sender_profile = get_object_or_404(Profile, id=sender)
+        room.updated_at = timezone.now()
+        room.save()
         return Message.objects.create(room=room, user=sender_profile, content=content, seen=False)
 
     @database_sync_to_async

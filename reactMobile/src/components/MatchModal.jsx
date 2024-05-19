@@ -60,9 +60,13 @@ export default function MatchModal({ isModalVisible, setModalVisible, room, send
                 </View>
 
                 <View style={styles.preFooterWrapper}>
-                    <Text style={styles.youAndText}>
-                        Siz va {receiver.name} like qoydingizlar!
-                    </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+                        <Text style={styles.youAndText}>Siz va</Text>
+                        <View style={styles.receiverNameWrapper}>
+                            <Text style={styles.receiverName}>{receiver.name}</Text>
+                        </View>
+                        <Text style={styles.youAndText}>like qoydingizlar!</Text>
+                    </View>
 
                     <Text style={styles.youAndSubText}>
                         Muloqotni hoziroq boshlang
@@ -140,10 +144,20 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     youAndText: {
-        fontSize: normalize(22),
-        textAlign: 'center',
+        fontSize: normalize(18),
         fontWeight: '500',
-        marginBottom: 14,
+    },
+    receiverNameWrapper: {
+        marginHorizontal: 5,
+        paddingVertical: 4,
+        paddingHorizontal: 6,
+        backgroundColor: COLOR.primary,
+        borderRadius: 10,
+    },
+    receiverName: {
+        color: COLOR.white,
+        fontSize: normalize(18),
+        fontWeight: '500',
     },
     youAndSubText: {
         fontSize: normalize(16),
@@ -157,6 +171,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     button: {
-        marginVertical: 14,
+        marginVertical: 12,
     },
 })

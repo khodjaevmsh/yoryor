@@ -1,4 +1,3 @@
-from django.db.models import Max
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -9,13 +8,11 @@ from core.utils.pagination import PageNumPagination
 
 
 class RoomListView(APIView, PageNumPagination):
+    page_size = 10
+
     def get(self, request):
         profile = request.user.profile.id
-
-        rooms = Room.objects.filter(participants__in=[profile]).annotate(
-            last_message_timestamp=Max('messages__timestamp')
-        ).order_by('-last_message_timestamp')
-
+        rooms = Room.objects.filter(participants__in=[profile]).order_by('-updated_at')
         results = self.paginate_queryset(rooms, request, view=self)
         serializer = RoomSerializer(results, many=True)
         return self.get_paginated_response(serializer.data)

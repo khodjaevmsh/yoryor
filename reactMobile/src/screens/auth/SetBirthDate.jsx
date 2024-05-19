@@ -19,10 +19,10 @@ export default function SetBirthDate({ route }) {
     const { phoneNumber, password, name } = route.params
 
     const birthdate = moment(date).format('D MMMM, YYYY')
-    const ageCheck = new Date().getFullYear() - date.getFullYear()
+    const age = new Date().getFullYear() - date.getFullYear()
 
     async function onSubmit() {
-        if (ageCheck >= 18) {
+        if (age >= 18) {
             await setLoading(true)
             setValidationError('')
             navigation.navigate('SetGender', {
@@ -31,7 +31,7 @@ export default function SetBirthDate({ route }) {
                 name,
                 birthdate: moment(date).format('YYYY-MM-DD'),
             })
-        } else if (ageCheck <= 17) {
+        } else if (age <= 17) {
             setValidationError('* Yoshingiz 18 dan katta bo\'lishi kerak')
         }
         setLoading(false)

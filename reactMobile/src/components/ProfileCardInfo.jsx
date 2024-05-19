@@ -9,6 +9,18 @@ import { COLOR } from '../utils/colors'
 export default function ProfileCardInfo({ profile, fields, additionalFields }) {
     return (
         <View>
+            {profile.bio ? (
+                <View style={styles.informationWrapper}>
+                    <Text style={[styles.informationTitle]}>O'zi haqida</Text>
+                    <View style={[styles.tagsWrapper]}>
+                        {/* eslint-disable-next-line max-len */}
+                        <Text style={[styles.informationSubTitle, { fontSize: normalize(19), lineHeight: 26, marginBottom: 6 }]}>
+                            {profile?.bio}
+                        </Text>
+                    </View>
+                </View>
+            ) : null}
+
             <View style={styles.informationWrapper}>
                 <Text style={[styles.informationTitle]}>{profile?.name} maqsadi</Text>
                 <View style={styles.tagsWrapper}>
@@ -22,9 +34,7 @@ export default function ProfileCardInfo({ profile, fields, additionalFields }) {
                 )}
                 <View style={styles.tagsWrapper}>
                     {fields.map((field, index) => (
-                        field.text && (
-                            <RoundedTagWithIcon key={index} icon={field.icon} text={field.text} />
-                        )
+                        field.text && <RoundedTagWithIcon key={index} icon={field.icon} text={field.text} />
                     ))}
                 </View>
             </View>
@@ -67,7 +77,8 @@ const styles = StyleSheet.create({
     informationTitle: {
         fontSize: normalize(16),
         marginBottom: 10,
-        color: COLOR.darkGrey,
+        color: COLOR.grey,
+        fontWeight: '500',
     },
     informationSubTitle: {
         fontSize: normalize(22),

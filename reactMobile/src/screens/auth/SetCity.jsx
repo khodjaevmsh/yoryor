@@ -59,10 +59,8 @@ export default function SetCity({ route }) {
 
     return (
         <Container>
-            <View>
-                <Text style={styles.title}>Qayerdan siz?</Text>
-            </View>
-
+            <Text style={styles.title}>Qayerdan siz?</Text>
+            <Text style={styles.subTitle}>Tug'ilgan joyingiz</Text>
             <View style={{ flex: 1 }}>
                 <PickerSelect
                     placeholder={{ label: 'Davlatni tanlang', value: '' }}
@@ -100,7 +98,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: fontSize.extraLarge,
         fontWeight: '500',
-        marginBottom: 18,
     },
     subTitle: {
         color: COLOR.grey,
@@ -145,7 +142,7 @@ const pickerSelectStyles = StyleSheet.create({
         fontSize: normalize(16),
         color: 'black',
         borderWidth: 1,
-        borderRadius: 15,
+        borderRadius: 55,
         paddingHorizontal: 15,
         paddingVertical: 18,
         borderColor: '#F2F2F2',
@@ -158,7 +155,7 @@ const pickerSelectStyles = StyleSheet.create({
         fontSize: normalize(16),
         color: 'black',
         borderWidth: 1,
-        borderRadius: 15,
+        borderRadius: 55,
         paddingHorizontal: 15,
         paddingVertical: 18,
         borderColor: '#F2F2F2',

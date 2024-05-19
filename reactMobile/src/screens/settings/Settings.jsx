@@ -76,7 +76,7 @@ export default function Settings() {
                 title="Akkauntdan chiqmoqchimisiz?"
                 subTitle="Qaytib keling, Sizni kutamiz!"
                 cancelTitle="Chiqish"
-                icon={<SmilingFace width={22} height={22} />}
+                icon={null}
                 isModalConfirm={isModalConfirm}
                 setModalConfirm={setModalConfirm}
                 cancel={() => onSingOut()} />

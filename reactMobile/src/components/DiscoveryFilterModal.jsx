@@ -1,7 +1,9 @@
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import RNModal from 'react-native-modal'
 import React, { useEffect, useState } from 'react'
 import normalize from 'react-native-normalize'
+import RangeSlider from 'rn-range-slider'
+import MultiSlider from '@ptomasroos/react-native-multi-slider'
 import { COLOR as color, COLOR } from '../utils/colors'
 import Container from './common/Container'
 import { baseAxios } from '../hooks/requests'
@@ -10,8 +12,11 @@ import PickerSelect from './common/PickerSelect'
 import ServerError from './common/ServerError'
 import Button from './common/Button'
 import { fontSize } from '../utils/fontSizes'
+import AgeRange from './AgeRange'
+import GenderFilter from './GenderFilter'
+import { showToast } from './common/Toast'
 
-export default function DiscoverySettingsModal({
+export default function DiscoveryFilterModal({
     isModalVisible,
     setModalVisible,
     country,
@@ -35,6 +40,7 @@ export default function DiscoverySettingsModal({
                 setRegionData(regionResponse.data)
             } catch (error) {
                 setServerError(error.response.data)
+                showToast('error', 'Oops!', 'Nomalum xatolik.')
             }
         }
         fetchCountryRegionData()
@@ -79,24 +85,16 @@ export default function DiscoverySettingsModal({
                                 value={region}
                                 onValueChange={(value) => setRegion(value)} />
 
-                            <Text style={styles.genderTitle}>Jins bo'yicha</Text>
-                            <View style={styles.genderWrapper}>
+                            <Text style={styles.filterTitle}>Jins bo'yicha</Text>
+                            <GenderFilter gender={gender} setGender={setGender} />
 
-                                <TouchableOpacity
-                                    style={[styles.gender, { backgroundColor: gender ? COLOR.lightPrimary : null }]}
-                                    onPress={() => setGender(true)}>
-                                    <Text style={styles.genderValue}>Erkak</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity
-                                    style={[styles.gender, { backgroundColor: !gender ? COLOR.lightPrimary : null }]}
-                                    onPress={() => setGender(false)}>
-                                    <Text style={styles.genderValue}>Ayol</Text>
-                                </TouchableOpacity>
+                            {/** * <View style={styles.ageRangeWrapper}>
+                                <Text style={styles.filterTitle}>Yosh</Text>
+                                <Text style={styles.rangeText}>{ageRange[0]} - {ageRange[1]}</Text>
                             </View>
+                            <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
 
-                            <ServerError error={serverError} style={styles.serverError} />
-
+                            <ServerError error={serverError} style={styles.serverError} /> ** */}
                         </View>
                     </Container>
                 </View>
@@ -111,8 +109,9 @@ const styles = StyleSheet.create({
     modal: {
         flex: 1,
         backgroundColor: 'white',
-        paddingTop: 42,
-        paddingBottom: 25,
+        paddingTop: Platform.OS === 'ios' ? 42 : null,
+        paddingBottom: Platform.OS === 'ios' ? 25 : null,
+        marginHorizontal: 10,
     },
     header: {
         height: normalize(46),
@@ -126,30 +125,24 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: normalize(18),
-        fontWeight: '500',
+        fontWeight: '600',
     },
-
-    genderTitle: {
+    filterTitle: {
         fontSize: fontSize.medium,
         fontWeight: '500',
         marginTop: 15,
         marginHorizontal: 10,
         marginBottom: 12,
     },
-    genderWrapper: {
+    ageRangeWrapper: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
-    gender: {
-        width: '47%',
-        height: normalize(48),
-        borderRadius: 100,
-        borderWidth: 1,
-        borderColor: COLOR.extraLightGrey,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        marginTop: 32,
     },
-    genderValue: {
+    rangeText: {
+        fontSize: fontSize.medium,
         fontWeight: '500',
+        marginHorizontal: 10,
     },
 })

@@ -1,3 +1,6 @@
+from datetime import timedelta
+
+from django.utils import timezone
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -12,8 +15,9 @@ class ProfileListView(APIView, PageNumPagination):
         country = request.query_params.get('country')
         region = request.query_params.get('region')
         gender = request.query_params.get('gender')
+        min_age = request.query_params.get('minAge')
 
-        profiles = Profile.objects.exclude(user=request.user).order_by('id')
+        profiles = Profile.objects.exclude(user=request.user).order_by('?')
 
         if country and region and gender:
             profiles = profiles.filter(region__country=country, region=region, gender=gender)

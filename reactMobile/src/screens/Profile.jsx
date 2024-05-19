@@ -98,7 +98,7 @@ export default function Profile() {
     )
 
     return (
-        <Container>
+        <Container containerStyle={{ marginTop: 24 }}>
             <View>
                 <ProfileHeader fetchImages={fetchImages} />
             </View>

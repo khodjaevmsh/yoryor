@@ -1,6 +1,6 @@
 import FastImage from 'react-native-fast-image'
 import LinearGradient from 'react-native-linear-gradient'
-import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import moment from 'moment'
 import React from 'react'
 import normalize from 'react-native-normalize'
@@ -24,8 +24,8 @@ export default function LikeItem({ item }) {
                 }}
                 resizeMode={FastImage.resizeMode.cover} />
             <LinearGradient
-                colors={['transparent', 'rgba(0, 0, 0, 0.7)']}
-                start={{ x: 0.5, y: 0.2 }}
+                colors={['transparent', 'rgba(0, 0, 0, 0.6)']}
+                start={{ x: 0.5, y: 0.0 }}
                 style={styles.linearGradient}>
                 <Text style={styles.bottomText}>
                     {item.sender.name}, {new Date().getFullYear() - moment(item.sender.birthdate).format('YYYY')}
@@ -50,10 +50,10 @@ const styles = StyleSheet.create({
     },
     bottomText: {
         color: COLOR.white,
-        fontSize: normalize(14),
+        fontSize: normalize(Platform.OS === 'ios' ? 14 : 16),
         fontWeight: '600',
-        paddingHorizontal: 10,
-        paddingVertical: 12,
+        paddingHorizontal: 16,
+        paddingVertical: 18,
     },
     linearGradient: {
         position: 'absolute',

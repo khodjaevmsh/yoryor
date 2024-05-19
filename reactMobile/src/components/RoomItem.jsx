@@ -52,7 +52,10 @@ export default function RoomItem({ item }) {
 
                 <View style={styles.isReadWrapper}>
                     <Text style={styles.chatMessage}>
-                        {shortenText(item.lastMessage || item.message.content, 25)}
+                        {item.lastMessage || item.message.content ? shortenText(
+                            item?.lastMessage?.replace(/\s{2,}/g, ' ') || item.message.content.replace(/\s{2,}/g, ' '),
+                            25,
+                        ) : 'Bu match!'}
                     </Text>
                     {(item.unreadMessageCount > 0 || item.unreadMessagesCount > 0) && isUnread && (
                         <View style={styles.unread}>

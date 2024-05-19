@@ -1,20 +1,25 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
-import { KeyboardAvoidingView, View, Platform, StyleSheet, ActivityIndicator } from 'react-native'
+import { KeyboardAvoidingView, View, Platform, StyleSheet, ActivityIndicator, Text } from 'react-native'
 import { ArrowUp } from 'react-native-feather'
-import { useFocusEffect } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 import { GlobalContext } from '../../context/GlobalContext'
 import ChatDetailHeader from '../../components/ChatDetailHeader'
 import { COLOR } from '../../utils/colors'
 import { baseAxios, webSocketUrl } from '../../hooks/requests'
 import { MESSAGES } from '../../urls'
+import EmptyChatView from '../../components/EmptyChatView'
 
-export default function ChatScreen({ route }) {
+export default function ChatDetail({ route }) {
     const [messages, setMessages] = useState([])
     const [socket, setSocket] = useState(null)
+    const [loading, setLoading] = useState(true)
     const [isLoadingEarlier, setIsLoadingEarlier] = useState(false)
     const { token, profile, setRender } = useContext(GlobalContext)
     const { room } = route.params
+
+    const sender = room.participants.find((participant) => participant.id === profile.id)
+    const receiver = room.participants.find((participant) => participant.id !== profile.id)
 
     useFocusEffect(
         useCallback(() => {
@@ -25,9 +30,6 @@ export default function ChatScreen({ route }) {
             }
         }, [setRender]),
     )
-
-    const sender = room.participants.find((participant) => participant.id === profile.id)
-    const receiver = room.participants.find((participant) => participant.id !== profile.id)
 
     const createWebSocket = useCallback(() => {
         const ws = new WebSocket(`ws://${webSocketUrl}/ws/chat/${room.id}/?token=${token}`)
@@ -59,6 +61,7 @@ export default function ChatScreen({ route }) {
 
     async function fetchMessages() {
         try {
+            setLoading(true)
             setIsLoadingEarlier(true)
             const response = await baseAxios.get(MESSAGES, { params: { room: room.id } })
             const msgs = response.data.map((message) => ({
@@ -71,9 +74,11 @@ export default function ChatScreen({ route }) {
         } catch (error) {
             console.log(error.response)
         } finally {
+            setLoading(false)
             setIsLoadingEarlier(false)
         }
     }
+
     const onSend = useCallback(
         (newMessages = []) => {
             if (socket) {
@@ -120,7 +125,7 @@ export default function ChatScreen({ route }) {
                     renderAvatar={() => null}
                     showAvatarForEveryMessage
                     bottomOffset={15}
-                    renderLoading={() => <ActivityIndicator size="small" color={COLOR.darkGrey} />}
+                    renderLoading={() => (loading ? <ActivityIndicator size="small" color={COLOR.darkGrey} /> : null)}
                     listViewProps={{
                         scrollEventThrottle: 80,
                         onScroll: ({ nativeEvent }) => {
@@ -129,7 +134,7 @@ export default function ChatScreen({ route }) {
                             }
                         },
                     }}
-                />
+                    renderChatEmpty={() => (!loading ? <EmptyChatView /> : null)} />
             </View>
 
             {Platform.OS === 'android' && <KeyboardAvoidingView behavior="height" />}
