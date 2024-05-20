@@ -30,6 +30,14 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class SimpleProfileSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['images'] = ProfileImageSerializer(
+            ProfileImage.objects.filter(profile=instance).order_by('button_number'), many=True
+        ).data
+
+        return data
+
     class Meta:
         model = Profile
         fields = '__all__'

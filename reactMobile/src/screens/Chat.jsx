@@ -1,104 +1,148 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, RefreshControl } from 'react-native'
+import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, StyleSheet, View } from 'react-native'
+import FastImage from 'react-native-fast-image'
+import normalize from 'react-native-normalize'
+import { useNavigation } from '@react-navigation/native'
 import Container from '../components/common/Container'
 import { COLOR } from '../utils/colors'
-import { baseAxios, webSocketUrl } from '../hooks/requests'
+import { baseAxios, domain, webSocketUrl } from '../hooks/requests'
 import { ROOMS } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
-import RoomItem from '../components/RoomItem'
 import NotFound from '../components/NotFound'
+import { fontSize } from '../utils/fontSizes'
+import { shortenText } from '../utils/string'
 
 export default function Chat() {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     const [rooms, setRooms] = useState([])
     const [refreshing, setRefreshing] = useState(false)
     const [page, setPage] = useState(1)
     const [numPages, setNumPages] = useState(1)
-    const { profile, token, render, setRender } = useContext(GlobalContext)
+    const { profile, token } = useContext(GlobalContext)
+    const navigation = useNavigation()
+    const [lastMessages, setLastMessages] = useState({})
 
     const createWebSocket = useCallback((roomId) => {
         const ws = new WebSocket(`ws://${webSocketUrl}/ws/chat/${roomId}/?token=${token}`)
-        ws.onopen = () => {
-            console.log('WebSocket connected')
-        }
-
+        ws.onopen = () => console.log('WebSocket connected')
         ws.onmessage = (event) => {
             const receivedMessage = JSON.parse(event.data)
-            setRooms((prevRooms) => prevRooms.map((room) => (room.id === roomId
-                ? {
-                    ...room,
-                    lastMessage: receivedMessage.message.text,
-                    unreadMessageCount: receivedMessage.unread_message_count,
-                }
-                : room)))
-            setRender(true)
+            setLastMessages((prevMessages) => ({
+                ...prevMessages,
+                [roomId]: receivedMessage.message.text,
+            }))
         }
-
-        ws.onclose = () => {
-            console.log('WebSocket disconnected')
-        }
+        ws.onclose = () => console.log('WebSocket disconnected')
 
         return ws
-    }, [token, setRooms, setRender])
+    }, [token])
 
     useEffect(() => {
         let roomWebsockets = []
-
         async function fetchRooms() {
             try {
-                const roomsResponse = await baseAxios.get(ROOMS, { params: { page } })
-                setRooms(roomsResponse.data.results)
+                setLoading(true)
+                const response = await baseAxios.get(ROOMS, { params: { page } })
+                setRooms((prevRooms) => [...prevRooms, ...response.data.results])
+                setNumPages(response.data.numPages)
 
                 // Initialize WebSocket connection for each room
-                roomWebsockets = roomsResponse.data.results.map((room) => createWebSocket(room.id))
+                roomWebsockets = await response.data.results.map((room) => createWebSocket(room.id))
             } catch (error) {
                 console.log(error.response.data)
             } finally {
                 setLoading(false)
                 setRefreshing(false)
-                setRender(false)
             }
         }
 
-        if (page <= numPages) {
-            fetchRooms()
-        }
+        if (page <= numPages) fetchRooms()
 
+        // Cleanup WebSocket connections on component unmount
         return () => {
-            // Cleanup WebSocket connections on component unmount
             roomWebsockets.forEach((ws) => ws.close())
         }
-        // eslint-disable-next-line max-len
-    }, [profile.id, refreshing, render, createWebSocket, setRooms, setLoading, setRefreshing, setRender, page, numPages])
+    }, [page, numPages, createWebSocket, refreshing])
 
-    const renderItem = useCallback(({ item }) => <RoomItem item={item} />, [])
+    const renderItem = ({ item }) => {
+        const sender = item.participants.find((participant) => participant.id === profile.id)
+        const receiver = item.participants.find((participant) => participant.id !== profile.id)
+        const lastMessage = lastMessages[item.id] || item.message.content || 'Bu match!'
+
+        return (
+            <TouchableOpacity onPress={() => {
+                navigation.navigate('ChatDetail', { room: item, sender, receiver })
+            }} style={styles.roomItemWrapper}>
+                <FastImage
+                    style={styles.receiverImage}
+                    source={{
+                        uri: receiver ? `${domain + receiver.images?.[0]?.image}` : null,
+                        priority: FastImage.priority.medium,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover} />
+                <View style={styles.receiverMsg}>
+                    <Text style={styles.receiverName}>{receiver.name}</Text>
+                    <Text style={styles.receiverMsgContent}>
+                        {shortenText(lastMessage, 25)}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        )
+    }
 
     return (
-        <Container containerStyle={{ marginVertical: 0 }} keyboardDismiss={false}>
+        <Container containerStyle={{ marginBottom: 0 }} keyboardDismiss={false}>
             <FlatList
                 data={rooms}
-                style={{ flexGrow: 1 }}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
                 onEndReached={() => setPage((prevPage) => prevPage + 1)}
                 onEndReachedThreshold={0.8}
-                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator size="large" /> : null)}
+                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator size="small" /> : null)}
+                showsVerticalScrollIndicator={false}
                 refreshControl={(
                     <RefreshControl
+                        tintColor={COLOR.lightGrey}
                         refreshing={refreshing}
                         onRefresh={() => {
                             setRefreshing(true)
                             setRooms([])
                             setPage(1)
-                        }}
-                        tintColor={COLOR.lightGrey} />
+                        }} />
                 )}
                 ListEmptyComponent={!loading && !refreshing ? (
-                    <NotFound wrapperStyle={{ marginHorizontal: 18 }} />
+                    <NotFound wrapperStyle={{ marginHorizontal: 8 }} />
                 ) : null}
             />
         </Container>
     )
 }
 
-// const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    roomItemWrapper: {
+        flex: 1,
+        borderBottomColor: COLOR.lightGrey,
+        borderBottomWidth: 0.3,
+        paddingVertical: 14,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    receiverImage: {
+        width: normalize(58),
+        height: normalize(58),
+        borderRadius: 100,
+    },
+    receiverMsg: {
+        flex: 1,
+        paddingHorizontal: 14,
+    },
+    receiverName: {
+        fontSize: fontSize.large,
+        fontWeight: '500',
+    },
+    receiverMsgContent: {
+        fontSize: fontSize.small,
+        color: COLOR.darkGrey,
+        marginTop: 4,
+    },
+})
