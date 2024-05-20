@@ -161,7 +161,6 @@ function TabScreen() {
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
-                    /* eslint-disable-next-line max-len */
                     <ChatRounded width={30} height={30} color={focused ? COLOR.black : COLOR.grey} />
                 ),
                 headerLeft: () => <Text style={styles.title}>Chat</Text>,

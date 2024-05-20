@@ -8,7 +8,7 @@ from core.utils.pagination import PageNumPagination
 
 
 class RoomListView(APIView, PageNumPagination):
-    page_size = 10
+    page_size = 8
 
     def get(self, request):
         profile = request.user.profile.id

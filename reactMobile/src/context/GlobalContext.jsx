@@ -13,7 +13,6 @@ export default function GlobalProvider({ children }) {
     const [language, setLanguage] = usePersistState('language', 'uz')
     const [isLoaded, setIsLoaded] = useState(false)
     const [render, setRender] = useState(false)
-    const [tabMessageCount, setTabMessageCount] = useState(null)
 
     useEffect(() => {
         AsyncStorage.getItem('token').then(async (value) => {
@@ -60,8 +59,6 @@ export default function GlobalProvider({ children }) {
             setLanguage,
             render,
             setRender,
-            tabMessageCount,
-            setTabMessageCount,
         }}>
             {isLoaded ? children : null}
             <Toast config={toastConfig} />

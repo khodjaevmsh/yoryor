@@ -62,7 +62,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         room = await self.get_or_create_room(sender=sender, receiver=receiver)
         saved_message = await self.create_and_save_message(room=room, sender=sender, content=content)
-        unread_message_count = await self.get_unread_messages_count(room.id)
 
         # Send message to room group
         await self.channel_layer.group_send(
@@ -70,18 +69,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'chat.message',
                 'message': message,
-                'unread_message_count': unread_message_count
             }
         )
 
     async def chat_message(self, event):
         message = event['message']
-        unread_message_count = event['unread_message_count']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
-            'unread_message_count': unread_message_count
         }))
 
     @database_sync_to_async
@@ -107,7 +103,3 @@ class ChatConsumer(AsyncWebsocketConsumer):
         room.updated_at = timezone.now()
         room.save()
         return Message.objects.create(room=room, user=sender_profile, content=content, seen=False)
-
-    @database_sync_to_async
-    def get_unread_messages_count(self, room_id):
-        return Message.objects.filter(room=room_id, seen=False).count()

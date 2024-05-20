@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react'
 import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
-import { KeyboardAvoidingView, View, Platform, StyleSheet, ActivityIndicator, Text } from 'react-native'
+import { KeyboardAvoidingView, View, Platform, StyleSheet, ActivityIndicator } from 'react-native'
 import { ArrowUp } from 'react-native-feather'
-import { useFocusEffect } from '@react-navigation/native'
 import { GlobalContext } from '../../context/GlobalContext'
 import ChatDetailHeader from '../../components/ChatDetailHeader'
 import { COLOR } from '../../utils/colors'
@@ -15,49 +14,20 @@ export default function ChatDetail({ route }) {
     const [socket, setSocket] = useState(null)
     const [loading, setLoading] = useState(true)
     const [isLoadingEarlier, setIsLoadingEarlier] = useState(false)
-    const { token, profile, setRender } = useContext(GlobalContext)
-    const { room } = route.params
-
-    const sender = room.participants.find((participant) => participant.id === profile.id)
-    const receiver = room.participants.find((participant) => participant.id !== profile.id)
-
-    useFocusEffect(
-        useCallback(() => {
-            setRender(true)
-            return () => {
-                setRender(false)
-                // Cleanup if needed
-            }
-        }, [setRender]),
-    )
+    const { token } = useContext(GlobalContext)
+    const { room, sender, receiver } = route.params
 
     const createWebSocket = useCallback(() => {
         const ws = new WebSocket(`ws://${webSocketUrl}/ws/chat/${room.id}/?token=${token}`)
-        ws.onopen = () => {
-            console.log('WebSocket connected')
-            setSocket(ws)
-        }
-
+        ws.onopen = () => setSocket(ws)
         ws.onmessage = (event) => {
             const receivedMessage = JSON.parse(event.data)
             setMessages((prevMessages) => GiftedChat.append(prevMessages, receivedMessage.message))
         }
-
-        ws.onclose = () => {
-            console.log('WebSocket disconnected')
-        }
+        ws.onclose = () => console.log('WebSocket disconnected')
 
         return ws
     }, [token, room.id])
-
-    useEffect(() => {
-        fetchMessages()
-        const ws = createWebSocket()
-
-        return () => {
-            ws.close()
-        }
-    }, [createWebSocket])
 
     async function fetchMessages() {
         try {
@@ -78,6 +48,12 @@ export default function ChatDetail({ route }) {
             setIsLoadingEarlier(false)
         }
     }
+
+    useEffect(() => {
+        fetchMessages()
+        const ws = createWebSocket()
+        return () => ws.close()
+    }, [createWebSocket])
 
     const onSend = useCallback(
         (newMessages = []) => {
