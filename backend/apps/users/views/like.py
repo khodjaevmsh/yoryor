@@ -1,9 +1,6 @@
-from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from chat.models import Room
-from chat.serializers.room import RoomSerializer
 from core.utils.pagination import PageNumPagination
 from users.models import Like
 from users.serializers.like import LikeSerializer
@@ -30,8 +27,3 @@ class LikeDetailView(APIView):
         like = Like.objects.filter(sender=request.user.profile, receiver=pk).first()
         serializer = LikeSerializer(like)
         return Response(serializer.data, status=200)
-
-    def delete(self, request, pk):
-        like = get_object_or_404(Like, sender=request.user.profile, receiver=pk)
-        like.delete()
-        return Response({}, status=204)

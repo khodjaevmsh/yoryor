@@ -15,14 +15,11 @@ export default function LikeItem({ item }) {
         <TouchableOpacity
             style={styles.item}
             activeOpacity={0.96}
-            onPress={() => navigation.navigate('ProfileCardDetail', { profile: item.sender })}>
-            <FastImage
-                style={styles.image}
-                source={{
-                    uri: item.sender ? `${domain + item.sender.images[0].image}` : null,
-                    priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.cover} />
+            onPress={() => navigation.navigate('ReceiverDetail', { receiver: item.sender })}>
+            <FastImage style={styles.image} source={{
+                uri: item.sender ? `${domain + item.sender.images[0].image}` : null,
+                priority: FastImage.priority.normal,
+            }} resizeMode={FastImage.resizeMode.cover} />
             <LinearGradient
                 colors={['transparent', 'rgba(0, 0, 0, 0.6)']}
                 start={{ x: 0.5, y: 0.0 }}

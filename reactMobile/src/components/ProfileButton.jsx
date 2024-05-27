@@ -10,7 +10,7 @@ export default function ProfileButton({ title, screen, icon }) {
     const navigation = useNavigation()
     return (
         <TouchableOpacity
-            activeOpacity={0.8}
+            activeOpacity={0.7}
             onPress={() => navigation.navigate(screen)}
             style={styles.settingsButton}>
             <View style={styles.iconTitleWrapper}>
@@ -19,7 +19,7 @@ export default function ProfileButton({ title, screen, icon }) {
                 </View>
                 <Text style={styles.settingsTitle}>{title}</Text>
             </View>
-            <ChevronRight width={24} height={24} color={COLOR.black} />
+            <ChevronRight width={24} height={24} color={COLOR.black} strokeWidth={3} />
         </TouchableOpacity>
     )
 }
@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     settingsTitle: {
         fontSize: fontSize.medium,
         fontWeight: '500',
-        marginLeft: 12,
+        marginLeft: 10,
     },
 })

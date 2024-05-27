@@ -118,7 +118,7 @@ export default function Profile() {
             <View style={styles.footerWrapper}>
                 <ProfileButton
                     title="Sozlamalar"
-                    icon={<Settings width={24} height={24} color={COLOR.black} />}
+                    icon={<Settings width={24} height={24} color={COLOR.black} strokeWidth={2.3} />}
                     screen="Settings" />
             </View>
 

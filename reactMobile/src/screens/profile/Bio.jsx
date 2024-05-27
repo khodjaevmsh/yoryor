@@ -3,6 +3,7 @@ import { Text, View, StyleSheet } from 'react-native'
 import { Formik } from 'formik'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
+import * as Yup from 'yup'
 import Container from '../../components/common/Container'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
@@ -19,6 +20,11 @@ export default function Bio({ route }) {
     const { fetchedProfile } = route.params
     const { setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
+
+    const validationSchema = Yup.object().shape({
+        bio: Yup.string()
+            .max(200, "Ma'lumot 195 ta harfdan yoki belgidan oshmasligi lozim"),
+    })
 
     async function onSubmit(data) {
         try {
@@ -47,20 +53,18 @@ export default function Bio({ route }) {
                 <View style={{ flex: 1 }}>
                     <Formik
                         initialValues={{ bio: (fetchedProfile && fetchedProfile.bio) || '' }}
-                        validationSchema={null}
+                        validationSchema={validationSchema}
                         onSubmit={onSubmit}>
                         {({ handleSubmit }) => (
                             <>
-                                <View style={styles.inputWrapper}>
-                                    <Input
-                                        name="bio"
-                                        keyboardType="default"
-                                        style={styles.input}
-                                        multiline
-                                        numberOfLines={4}
-                                        placeholder="Oilali erkaklar yozmsin..."
-                                    />
-                                </View>
+                                <Input
+                                    name="bio"
+                                    keyboardType="default"
+                                    style={styles.input}
+                                    multiline
+                                    numberOfLines={4}
+                                    placeholder="Oilali erkaklar yozmsin..."
+                                />
 
                                 <View style={styles.buttonWrapper}>
                                     <Button title="Qo'shish" onPress={handleSubmit} loading={loading} />
@@ -87,24 +91,20 @@ const styles = StyleSheet.create({
         fontSize: fontSize.small,
         lineHeight: 19.5,
     },
-    inputWrapper: {
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: normalize(15),
-        paddingLeft: normalize(25),
-        paddingRight: normalize(20),
-        borderRadius: 19,
-        borderWidth: 2,
-        borderColor: COLOR.lightGrey,
-        marginTop: 22,
-    },
     input: {
         width: '100%',
-        minHeight: normalize(100),
+        minHeight: normalize(145),
         justifyContent: 'flex-start',
         textAlignVertical: 'top',
         fontSize: fontSize.medium,
+        marginTop: 22,
+        borderRadius: 19,
+        borderWidth: 2,
+        borderColor: COLOR.lightGrey,
+        paddingTop: normalize(15),
+        paddingBottom: 15,
+        paddingLeft: normalize(25),
+        paddingRight: normalize(20),
     },
     buttonWrapper: {
         flex: 1,

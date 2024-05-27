@@ -1,94 +1,68 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Text, View, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native'
-import { fontSize } from '../utils/fontSizes'
+import { StyleSheet, FlatList, RefreshControl } from 'react-native'
 import { COLOR } from '../utils/colors'
 import { baseAxios } from '../hooks/requests'
 import { LIKES } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
-import NotFound from '../components/NotFound'
 import LikeItem from '../components/LikeItem'
+import ActivityIndicator from '../components/common/ActivityIndicator'
+import { showToast } from '../components/common/Toast'
 
 export default function Likes() {
     const [loading, setLoading] = useState(false)
     const [likes, setLikes] = useState([])
-    const [likesCount, setLikesCount] = useState(0)
-    const [refreshing, setRefreshing] = useState(false)
     const [page, setPage] = useState(1)
-    const [numPages, setNumPages] = useState(1)
-    const { profile } = useContext(GlobalContext)
+    const [nextPage, setNextPage] = useState(null)
+    const [refreshing, setRefreshing] = useState(false)
+    const { profile: receiver } = useContext(GlobalContext)
 
     useEffect(() => {
         async function fetchLikes() {
             try {
                 setLoading(true)
-                const response = await baseAxios.get(LIKES, { params: { page, receiver: profile.id } })
-
-                setNumPages(response.data.numPages)
-                setLikes((prevData) => [...prevData, ...response.data.results])
-                setLikesCount(response.data.results[0].likesCount)
+                const response = await baseAxios.get(LIKES, { params: { page, receiver: receiver.id } })
+                if (!refreshing) {
+                    setLikes((prevData) => [...prevData, ...response.data.results])
+                } else {
+                    setLikes(response.data.results)
+                }
+                setNextPage(response.data.next !== null)
             } catch (error) {
                 console.log(error.response.data)
+                showToast('error', 'Oops!', 'Nomalum xatolik.')
             } finally {
-                setLoading(false)
                 setRefreshing(false)
+                setLoading(false)
             }
         }
-        if (page <= numPages) {
-            fetchLikes()
+        fetchLikes()
+    }, [receiver, page])
+
+    function handleRefresh() {
+        setRefreshing(true)
+        setPage(1)
+    }
+
+    function handleLoadMore() {
+        if (nextPage && !loading && !refreshing) {
+            setPage((prevPage) => prevPage + 1)
         }
-    }, [profile.id, refreshing, setLoading, setRefreshing, page, numPages])
+    }
 
     return (
-        <>
-            <View style={styles.tabs}>
-                <View style={styles.tabItem}>
-                    <Text style={styles.tabTitle}>{likesCount} Likes</Text>
-                </View>
-            </View>
-            <FlatList
-                data={likes}
-                renderItem={({ item }) => <LikeItem item={item} />}
-                numColumns={2}
-                columnWrapperStyle={{ marginTop: 12, marginHorizontal: 6 }}
-                keyExtractor={(item) => item.id}
-                onEndReached={() => setPage((prevPage) => prevPage + 1)}
-                onEndReachedThreshold={0.8}
-                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator size="large" /> : null)}
-                refreshControl={(
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={() => {
-                            setRefreshing(true)
-                            setLikes([])
-                            setPage(1)
-                        }}
-                        tintColor={COLOR.lightGrey} />
-                )}
-                ListEmptyComponent={!loading && !refreshing ? (
-                    <NotFound wrapperStyle={{ marginHorizontal: 18 }} />
-                ) : null}
-            />
-        </>
+        <FlatList
+            data={likes}
+            renderItem={({ item }) => <LikeItem item={item} />}
+            keyExtractor={(item, index) => index.toString()}
+            numColumns={2}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.2}
+            ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
+            refreshControl={(
+                <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
+            )} />
+
     )
 }
 
-const styles = StyleSheet.create({
-    tabs: {
-        flexDirection: 'row',
-        borderBottomWidth: 0.5,
-        borderColor: COLOR.lightGrey,
-        paddingVertical: 10,
-    },
-    tabItem: {
-        flex: 1,
-        borderRightWidth: 1,
-        borderColor: COLOR.lightGrey,
-        justifyContent: 'center',
-        alignItems: 'center',
-        paddingVertical: 5,
-    },
-    tabTitle: {
-        fontSize: fontSize.medium,
-        fontWeight: '600',
-    },
-})
+const styles = StyleSheet.create({})

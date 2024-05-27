@@ -1,21 +1,20 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import normalize from 'react-native-normalize'
-import { COLOR as color, COLOR } from '../utils/colors'
-import { fontSize } from '../utils/fontSizes'
+import { COLOR } from '../utils/colors'
 
 export default function GenderFilter({ gender, setGender }) {
     return (
         <View style={styles.genderWrapper}>
             <TouchableOpacity
-                style={[styles.gender, { backgroundColor: gender ? COLOR.lightPrimary : null }]}
-                onPress={() => setGender(true)}>
+                style={[styles.gender, { backgroundColor: gender === 'male' ? COLOR.lightPrimary : null }]}
+                onPress={() => setGender('male')}>
                 <Text style={styles.genderValue}>Erkak</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-                style={[styles.gender, { backgroundColor: !gender ? COLOR.lightPrimary : null }]}
-                onPress={() => setGender(false)}>
+                style={[styles.gender, { backgroundColor: gender === 'female' ? COLOR.lightPrimary : null }]}
+                onPress={() => setGender('female')}>
                 <Text style={styles.genderValue}>Ayol</Text>
             </TouchableOpacity>
         </View>

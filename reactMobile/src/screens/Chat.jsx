@@ -56,7 +56,9 @@ export default function Chat() {
             }
         }
 
-        if (page <= numPages) fetchRooms()
+        if (page <= numPages) {
+            fetchRooms()
+        }
 
         // Cleanup WebSocket connections on component unmount
         return () => {
@@ -70,16 +72,13 @@ export default function Chat() {
         const lastMessage = lastMessages[item.id] || item.message.content || 'Bu match!'
 
         return (
-            <TouchableOpacity onPress={() => {
-                navigation.navigate('ChatDetail', { room: item, sender, receiver })
-            }} style={styles.roomItemWrapper}>
-                <FastImage
-                    style={styles.receiverImage}
-                    source={{
-                        uri: receiver ? `${domain + receiver.images?.[0]?.image}` : null,
-                        priority: FastImage.priority.medium,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover} />
+            <TouchableOpacity
+                onPress={() => { navigation.navigate('ChatDetail', { room: item, sender, receiver }) }}
+                style={styles.roomItemWrapper}>
+                <FastImage style={styles.receiverImage} source={{
+                    uri: receiver ? `${domain + receiver.images?.[0]?.image}` : null,
+                    priority: FastImage.priority.medium,
+                }} resizeMode={FastImage.resizeMode.cover} />
                 <View style={styles.receiverMsg}>
                     <Text style={styles.receiverName}>{receiver.name}</Text>
                     <Text style={styles.receiverMsgContent}>

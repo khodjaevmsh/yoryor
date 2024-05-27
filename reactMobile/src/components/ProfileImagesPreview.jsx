@@ -14,7 +14,7 @@ const { width: screenWidth } = Dimensions.get('window')
 const SLIDER_WIDTH = screenWidth
 const SLIDER_ITEM_WIDTH = screenWidth
 
-export default function ProfileImagesPreview({ previewModal, setPreviewModal, profile }) {
+export default function ProfileImagesPreview({ previewModal, setPreviewModal, receiver }) {
     const [loading, setLoading] = useState(false)
     const [images, setImages] = useState([])
     const [serverError, setServerError] = useState(null)
@@ -25,7 +25,7 @@ export default function ProfileImagesPreview({ previewModal, setPreviewModal, pr
             try {
                 setLoading(true)
 
-                const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
+                const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: receiver.id } })
                 setImages(response.data)
             } catch (error) {
                 setServerError(error.response)
@@ -35,7 +35,7 @@ export default function ProfileImagesPreview({ previewModal, setPreviewModal, pr
         }
 
         fetchImages()
-    }, [profile?.id])
+    }, [receiver?.id])
 
     const renderItem = ({ item }) => (
         <View style={styles.carouselItem}>
