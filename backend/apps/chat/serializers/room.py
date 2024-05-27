@@ -6,7 +6,7 @@ from users.serializers.profile import ProfileSerializer, SimpleProfileSerializer
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    participants = SimpleProfileSerializer(many=True)
+    participants = ProfileSerializer(many=True)
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
