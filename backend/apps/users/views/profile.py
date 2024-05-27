@@ -1,12 +1,9 @@
-from datetime import timedelta
-
-from django.utils import timezone
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.utils.pagination import PageNumPagination
-from users.models import Profile
+from users.models import Profile, Like, Dislike
 from users.serializers.profile import ProfileSerializer, SimpleProfileSerializer
 
 
@@ -15,20 +12,28 @@ class ProfileListView(APIView, PageNumPagination):
         country = request.query_params.get('country')
         region = request.query_params.get('region')
         gender = request.query_params.get('gender')
-        min_age = request.query_params.get('minAge')
+        encounter = request.query_params.get('encounter')
 
-        profiles = Profile.objects.exclude(user=request.user).order_by('?')
+        queryset = Profile.objects.exclude(user=request.user)
 
-        if country and region and gender:
-            profiles = profiles.filter(region__country=country, region=region, gender=gender)
-        elif country:
-            profiles = profiles.filter(region__country=country)
-        elif region:
-            profiles = profiles.filter(region=region)
-        elif gender:
-            profiles = profiles.filter(gender=gender)
+        if country:
+            queryset = queryset.filter(region__country=country)
+        if region:
+            queryset = queryset.filter(region=region)
+        if gender:
+            queryset = queryset.filter(gender=gender)
+        if encounter: # Фильтр по пользователям у которых уже есть лайк или дислайк
+            # Получаем все профили, которые пользователь лайкал
+            liked_profiles = Like.objects.filter(sender=request.user.profile).values_list('receiver_id', flat=True)
+            disliked_profiles = Dislike.objects.filter(sender=request.user.profile).values_list('receiver_id', flat=True)
 
-        results = self.paginate_queryset(profiles, request, view=self)
+            # Объединяем списки профилей, на которые пользователь поставил лайк или дислайк
+            profiles = list(liked_profiles) + list(disliked_profiles)
+
+            # Исключаем эти профили из queryset
+            queryset = queryset.exclude(id__in=profiles)
+
+        results = self.paginate_queryset(queryset, request, view=self)
         serializer = ProfileSerializer(results, many=True)
         return self.get_paginated_response(serializer.data)
 

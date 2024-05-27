@@ -1,32 +1,40 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import normalize from 'react-native-normalize'
-import SingleTag from './SingleTag'
-import { Goal } from './common/Svgs'
 import RoundedTagWithIcon from './RoundedTagWithIcon'
 import { COLOR } from '../utils/colors'
+import { AcademicCap, CaseRound, Dollar, Heart, Ruler, Stars, Weigher } from './common/Svgs'
 
-export default function ProfileCardInfo({ profile, fields, additionalFields }) {
+export default function ReceiverBody({ receiver }) {
+    const fields = [
+        { icon: <Heart width={20} height={20} />, text: receiver?.maritalStatus?.label },
+        { icon: <AcademicCap width={20} height={20} />, text: receiver?.educationLevel?.label },
+        { icon: <CaseRound width={20} height={20} />, text: receiver?.jobTitle },
+    ]
+
+    const additionalFields = [
+        { icon: <Dollar width={20} height={20} />, text: receiver?.incomeLevel?.label },
+        { icon: <Ruler width={20} height={20} />, text: receiver?.height },
+        { icon: <Weigher width={20} height={20} />, text: receiver?.weight },
+        { icon: <Stars width={20} height={20} />, text: receiver?.zodiac?.label },
+    ]
+
     return (
-        <View>
-            {profile.bio ? (
+        <View style={styles.container}>
+            {receiver?.bio ? (
                 <View style={styles.informationWrapper}>
                     <Text style={[styles.informationTitle]}>O'zi haqida</Text>
                     <View style={[styles.tagsWrapper]}>
-                        {/* eslint-disable-next-line max-len */}
-                        <Text style={[styles.informationSubTitle, { fontSize: normalize(19), lineHeight: 26, marginBottom: 6 }]}>
-                            {profile?.bio}
+                        <Text style={[styles.informationSubTitle, {
+                            fontSize: normalize(19),
+                            lineHeight: 26,
+                            marginBottom: 6,
+                        }]}>
+                            {receiver?.bio}
                         </Text>
                     </View>
                 </View>
             ) : null}
-
-            <View style={styles.informationWrapper}>
-                <Text style={[styles.informationTitle]}>{profile?.name} maqsadi</Text>
-                <View style={styles.tagsWrapper}>
-                    <SingleTag icon={<Goal width={22} height={22} />} text={profile?.goal?.label} />
-                </View>
-            </View>
 
             <View style={styles.informationWrapper}>
                 {fields.some((field) => field.text !== null) && (
@@ -52,17 +60,17 @@ export default function ProfileCardInfo({ profile, fields, additionalFields }) {
                 </View>
             </View>
 
-            {profile?.educationSchool ? (
+            {receiver?.educationSchool ? (
                 <View style={[styles.informationWrapper]}>
                     <Text style={styles.informationTitle}>O'qish joyi</Text>
-                    <Text style={styles.informationSubTitle}>{profile?.educationSchool}</Text>
+                    <Text style={styles.informationSubTitle}>{receiver?.educationSchool}</Text>
                 </View>
             ) : null}
 
-            {profile?.jobCompany ? (
+            {receiver?.jobCompany ? (
                 <View style={styles.informationWrapper}>
                     <Text style={styles.informationTitle}>Ish joyi</Text>
-                    <Text style={styles.informationSubTitle}>{profile?.jobCompany}</Text>
+                    <Text style={styles.informationSubTitle}>{receiver?.jobCompany}</Text>
                 </View>
             ) : null}
         </View>
@@ -70,6 +78,9 @@ export default function ProfileCardInfo({ profile, fields, additionalFields }) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        marginHorizontal: 5,
+    },
     informationWrapper: {
         flex: 1,
         marginTop: 28,

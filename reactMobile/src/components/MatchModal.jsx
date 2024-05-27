@@ -15,11 +15,9 @@ import ButtonOutline from './common/ButtonOutline'
 export default function MatchModal({ isModalVisible, setModalVisible, room, sender, receiver }) {
     const navigation = useNavigation()
 
-    async function onSendMessage() {
-        await setModalVisible(false)
-        setTimeout(() => {
-            navigation.navigate('ChatDetail', { room })
-        }, 300)
+    function onSendMessage() {
+        navigation.navigate('ChatDetail', { room, sender, receiver })
+        setModalVisible(false)
     }
 
     return (
@@ -42,28 +40,22 @@ export default function MatchModal({ isModalVisible, setModalVisible, room, send
                 </ImageBackground>
 
                 <View style={styles.contentWrapper}>
-                    <FastImage
-                        style={[styles.userImg, { position: 'relative', left: 25 }]}
-                        source={{
-                            uri: sender ? `${domain + sender.images[0].image}` : null,
-                            priority: FastImage.priority.high,
-                        }}
-                        resizeMode={FastImage.resizeMode.cover} />
+                    <FastImage style={[styles.userImg, { position: 'relative', left: 25 }]} source={{
+                        uri: sender && sender.images ? `${domain + sender.images[0].image}` : null,
+                        priority: FastImage.priority.high,
+                    }} resizeMode={FastImage.resizeMode.cover} />
 
-                    <FastImage
-                        style={[styles.userImg, { position: 'relative', right: 25 }]}
-                        source={{
-                            uri: receiver ? `${domain + receiver.images[0].image}` : null,
-                            priority: FastImage.priority.high,
-                        }}
-                        resizeMode={FastImage.resizeMode.cover} />
+                    <FastImage style={[styles.userImg, { position: 'relative', right: 25 }]} source={{
+                        uri: receiver ? `${domain + receiver.images[0].image}` : null,
+                        priority: FastImage.priority.high,
+                    }} resizeMode={FastImage.resizeMode.cover} />
                 </View>
 
                 <View style={styles.preFooterWrapper}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
                         <Text style={styles.youAndText}>Siz va</Text>
                         <View style={styles.receiverNameWrapper}>
-                            <Text style={styles.receiverName}>{receiver.name}</Text>
+                            <Text style={styles.receiverName}>{receiver?.name}</Text>
                         </View>
                         <Text style={styles.youAndText}>like qoydingizlar!</Text>
                     </View>

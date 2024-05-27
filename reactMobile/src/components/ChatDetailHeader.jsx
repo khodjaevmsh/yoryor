@@ -14,11 +14,11 @@ export default function ChatDetailHeader({ receiver }) {
     return (
         <View style={styles.container}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-                <ChevronLeft width={32} height={32} color={COLOR.primary} />
+                <ChevronLeft width={34} height={34} color={COLOR.primary} />
             </TouchableOpacity>
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('ProfileCardDetail', { profile: receiver })}>
+                onPress={() => navigation.navigate('ReceiverDetail', { receiver })}>
                 <FastImage
                     style={styles.profileImage}
                     source={{
@@ -30,7 +30,7 @@ export default function ChatDetailHeader({ receiver }) {
 
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('ProfileCardDetail', { profile: receiver })}>
+                onPress={() => navigation.navigate('ReceiverDetail', { receiver })}>
                 <Text style={styles.profileName}>{receiver.name}</Text>
             </TouchableOpacity>
         </View>

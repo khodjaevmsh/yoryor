@@ -18,11 +18,9 @@ export default function ConfirmModal({ title, subTitle, icon, isModalConfirm, se
             hasBackdrop
             backdropOpacity={0.3}
             style={styles.modal}>
-
             <View style={styles.modalChildren}>
-
                 <View style={styles.content}>
-                    <AlertCircle width={32} height={32} color={COLOR.primary} />
+                    <AlertCircle width={34} height={34} color={COLOR.primary} />
                     <Text style={styles.title}>{title}</Text>
                     <View style={styles.iconWrapper}>
                         <Text style={styles.subTitle}>{subTitle || null}</Text>
@@ -50,23 +48,25 @@ const styles = StyleSheet.create({
     modal: {
         flex: 1,
         alignItems: 'center',
+        justifyContent: 'center',
     },
     modalChildren: {
         width: normalize(310),
-        height: normalize(198),
-        borderRadius: 18,
-        padding: 16,
+        height: normalize(190),
+        borderRadius: 22,
+        padding: 15,
         backgroundColor: COLOR.white,
     },
     content: {
         flex: 1,
         alignItems: 'center',
+        marginTop: 10,
     },
     title: {
         fontSize: fontSize.medium,
         fontWeight: '500',
-        marginTop: 14,
-        marginBottom: 6,
+        marginTop: 10,
+        marginBottom: 5,
     },
     subTitle: {
         fontSize: fontSize.small,

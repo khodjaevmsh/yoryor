@@ -1,95 +1,96 @@
-import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, ActivityIndicator, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
+import React, { useContext, useEffect, useState } from 'react'
+import { View, StyleSheet, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { baseAxios } from '../hooks/requests'
 import { PROFILES } from '../urls'
-import RenderProfileCard from '../components/RenderProfileCard'
 import { Tuning2 } from '../components/common/Svgs'
 import { COLOR } from '../utils/colors'
-import DiscoveryFilterModal from '../components/DiscoveryFilterModal'
+import FilterModal from '../components/FilterModal'
+import DiscoverItem from '../components/DiscoverItem'
+import { GlobalContext } from '../context/GlobalContext'
+import ActivityIndicator from '../components/common/ActivityIndicator'
 
 export default function Discover() {
+    const { profile: sender } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
-    const [serverError, setServerError] = useState(null)
-    const [fetchedProfiles, setFetchedProfile] = useState([])
+    const [refreshing, setRefreshing] = useState(false)
+    const [receivers, setReceivers] = useState([])
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
-    const [gender, setGender] = useState(null)
-    const [ageRange, setAgeRange] = useState([18, 80])
+    const [gender, setGender] = useState(sender?.gender?.value === 'male' ? 'female' : 'male')
     const [page, setPage] = useState(1)
-    const [numPages, setNumPages] = useState(1)
+    const [nextPage, setNextPage] = useState(null)
     const [isModalVisible, setModalVisible] = useState(false)
-    const [refreshing, setRefreshing] = useState(false)
-
     const navigation = useNavigation()
 
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <TouchableOpacity onPress={() => setModalVisible(true)} style={{ paddingRight: 6 }}>
+                <TouchableOpacity onPress={() => setModalVisible(true)}>
                     <Tuning2 width={28} height={28} color={COLOR.black} />
                 </TouchableOpacity>
             ),
         })
     }, [navigation])
 
-    const localGender = gender === 'male' ? 'female' : 'male'
-
     useEffect(() => {
-        async function fetchProfile() {
+        async function fetchReceivers() {
             try {
                 setLoading(true)
-                const response = await baseAxios.get(PROFILES, {
-                    params: { page, country, region, gender: localGender },
-                })
-                setNumPages(response.data.numPages)
-                setFetchedProfile((prevData) => [...prevData, ...response.data.results])
+                const response = await baseAxios.get(PROFILES, { params: { page, country, region, gender } })
+                if (!refreshing) {
+                    setReceivers((prevData) => [...prevData, ...response.data.results])
+                } else {
+                    setReceivers([])
+                }
+                setNextPage(response.data.next !== null)
             } catch (error) {
-                setServerError(error.response)
+                console.log(error.response.data)
             } finally {
                 setLoading(false)
                 setRefreshing(false)
             }
         }
-
-        if (page <= numPages) {
-            fetchProfile()
-        }
-    }, [numPages, page, isModalVisible])
+        fetchReceivers()
+    }, [refreshing, page, isModalVisible])
 
     useEffect(() => {
         // Function to be executed when isModalVisible changes to false
         if (!isModalVisible) {
             // Reset the fetchedProfiles, page, or any other state you want to refresh
-            setFetchedProfile([])
+            setReceivers([])
             setPage(1)
         }
     }, [isModalVisible])
 
+    function handleRefresh() {
+        setRefreshing(true)
+        setPage(1)
+    }
+
+    function handleLoadMore() {
+        if (nextPage && !loading && !refreshing) {
+            setPage((prevPage) => prevPage + 1)
+        }
+    }
+
+    const renderItem = ({ item }) => <DiscoverItem item={item} />
+
     return (
         <View style={styles.container}>
             <FlatList
-                data={fetchedProfiles}
-                renderItem={({ item }) => <RenderProfileCard item={item} />}
-                numColumns={3}
-                contentContainerStyle={{ paddingTop: 12 }}
+                data={receivers}
+                renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
-                showsVerticalScrollIndicator={false}
-                onEndReached={() => setPage((prevPage) => prevPage + 1)}
-                onEndReachedThreshold={0.8}
-                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator size="large" /> : null)}
+                numColumns={3}
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.2}
+                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
                 refreshControl={(
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={() => {
-                            setRefreshing(true)
-                            setFetchedProfile([])
-                            setPage(1)
-                        }}
-                        tintColor={COLOR.lightGrey} />
+                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
                 )} />
 
-            <DiscoveryFilterModal
+            <FilterModal
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
                 country={country}
@@ -97,9 +98,7 @@ export default function Discover() {
                 region={region}
                 setRegion={setRegion}
                 gender={gender}
-                setGender={setGender}
-                ageRange={ageRange}
-                setAgeRange={setAgeRange} />
+                setGender={setGender} />
         </View>
     )
 }

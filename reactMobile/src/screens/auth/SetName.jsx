@@ -11,6 +11,7 @@ import { COLOR } from '../../utils/colors'
 import { fontSize } from '../../utils/fontSizes'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import ConfirmModal from '../../components/ConfirmModal'
+import CustomHeaderLeft from '../../components/common/CustomHeaderLeft'
 
 export default function SetName({ route }) {
     const [loading, setLoading] = useState(false)
@@ -19,13 +20,7 @@ export default function SetName({ route }) {
     const { phoneNumber, password } = route.params
 
     useEffect(() => {
-        navigation.setOptions({
-            headerLeft: () => (
-                <TouchableOpacity onPress={() => setModalConfirm(true)}>
-                    <ChevronLeft width={32} height={32} color={COLOR.primary} />
-                </TouchableOpacity>
-            ),
-        })
+        navigation.setOptions({ headerLeft: () => <CustomHeaderLeft /> })
     }, [navigation])
 
     const validationSchema = Yup.object().shape({

@@ -126,13 +126,25 @@ class ProfileImage(models.Model):
 
 
 class Like(models.Model):
-    sender = models.ForeignKey('users.Profile', related_name='sent_likes', on_delete=models.CASCADE)
-    receiver = models.ForeignKey('users.Profile', related_name='received_likes', on_delete=models.CASCADE)
+    sender = models.ForeignKey('users.Profile', related_name='sender_like', on_delete=models.CASCADE)
+    receiver = models.ForeignKey('users.Profile', related_name='receiver_like', on_delete=models.CASCADE)
     match = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # class Meta:
+    #     unique_together = ('sender', 'receiver')
+
+    def __str__(self):
+        return f"{self.sender} liked {self.receiver}"
+
+
+class Dislike(models.Model):
+    sender = models.ForeignKey('users.Profile', related_name='sender_dislike', on_delete=models.CASCADE)
+    receiver = models.ForeignKey('users.Profile', related_name='receiver_dislike', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         unique_together = ('sender', 'receiver')
 
     def __str__(self):
-        return f"{self.sender} liked {self.receiver}"
+        return f"{self.sender} disliked {self.receiver}"

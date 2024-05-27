@@ -22,14 +22,7 @@ class LikeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Like
-        fields = '__all__'
-
-    # def validate(self, attrs):
-    #     # Check if sender and receiver are the same
-    #     if attrs.get('sender') == attrs.get('receiver'):
-    #         raise serializers.ValidationError(_("Sender and receiver cannot be the same."))
-    #
-    #     return attrs
+        fields = ('id', 'sender', 'receiver', 'match')
 
     def create(self, validated_data):
         # Create the like

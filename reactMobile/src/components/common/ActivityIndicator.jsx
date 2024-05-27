@@ -1,9 +1,18 @@
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator as RNActivityIndicator, View, StyleSheet } from 'react-native'
 import React from 'react'
-import { COLOR } from '../../utils/colors'
 
-export default function ActiveIndicator({ color = COLOR.lightGrey }) {
+export default function ActivityIndicator({ size = 'small', color = '#ced4da', padding = false }) {
     return (
-        <ActivityIndicator size="large" style={{ transform: [{ scale: 0.88 }] }} color={color} />
+        <View style={[styles.wrapper, { padding: padding ? 15 : null }]}>
+            <RNActivityIndicator size={size} color={color} />
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    wrapper: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+})

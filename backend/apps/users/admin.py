@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from users.models import User, ConfirmationCode, Profile, Country, Region, ProfileImage, Like
+from users.models import User, ConfirmationCode, Profile, Country, Region, ProfileImage, Like, Dislike
 
 
 @admin.register(User)
@@ -49,4 +49,9 @@ class RegionAdmin(admin.ModelAdmin):
 
 @admin.register(Like)
 class LikeAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Dislike)
+class DislikeAdmin(admin.ModelAdmin):
     pass

@@ -1,22 +1,18 @@
-import { ActivityIndicator, Dimensions, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, StyleSheet, Text, View } from 'react-native'
 import RNModal from 'react-native-modal'
 import React, { useEffect, useState } from 'react'
 import normalize from 'react-native-normalize'
-import RangeSlider from 'rn-range-slider'
-import MultiSlider from '@ptomasroos/react-native-multi-slider'
 import { COLOR as color, COLOR } from '../utils/colors'
 import Container from './common/Container'
 import { baseAxios } from '../hooks/requests'
 import { COUNTRY, REGION } from '../urls'
 import PickerSelect from './common/PickerSelect'
-import ServerError from './common/ServerError'
 import Button from './common/Button'
 import { fontSize } from '../utils/fontSizes'
-import AgeRange from './AgeRange'
 import GenderFilter from './GenderFilter'
 import { showToast } from './common/Toast'
 
-export default function DiscoveryFilterModal({
+export default function FilterModal({
     isModalVisible,
     setModalVisible,
     country,
@@ -28,7 +24,7 @@ export default function DiscoveryFilterModal({
 }) {
     const [countryData, setCountryData] = useState([])
     const [regionData, setRegionData] = useState([])
-    const [serverError, setServerError] = useState('')
+    const [, setServerError] = useState('')
 
     useEffect(() => {
         async function fetchCountryRegionData() {
@@ -40,7 +36,7 @@ export default function DiscoveryFilterModal({
                 setRegionData(regionResponse.data)
             } catch (error) {
                 setServerError(error.response.data)
-                showToast('error', 'Oops!', 'Nomalum xatolik.')
+                showToast('error', 'Oops!', 'Nomalum xatolik')
             }
         }
         fetchCountryRegionData()
@@ -52,6 +48,8 @@ export default function DiscoveryFilterModal({
                 isVisible={isModalVisible}
                 animationIn="slideInUp"
                 animationOut="slideOutDown"
+                animationInTiming={400}
+                animationOutTiming={300}
                 backdropTransitionOutTiming={0}
                 coverScreen
                 hasBackdrop
@@ -87,14 +85,6 @@ export default function DiscoveryFilterModal({
 
                             <Text style={styles.filterTitle}>Jins bo'yicha</Text>
                             <GenderFilter gender={gender} setGender={setGender} />
-
-                            {/** * <View style={styles.ageRangeWrapper}>
-                                <Text style={styles.filterTitle}>Yosh</Text>
-                                <Text style={styles.rangeText}>{ageRange[0]} - {ageRange[1]}</Text>
-                            </View>
-                            <AgeRange ageRange={ageRange} setAgeRange={setAgeRange} />
-
-                            <ServerError error={serverError} style={styles.serverError} /> ** */}
                         </View>
                     </Container>
                 </View>
