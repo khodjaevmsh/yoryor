@@ -4,24 +4,25 @@ import normalize from 'react-native-normalize'
 import RoundedTagWithIcon from './RoundedTagWithIcon'
 import { COLOR } from '../utils/colors'
 import { AcademicCap, CaseRound, Dollar, Heart, Ruler, Stars, Weigher } from './common/Svgs'
+import { levels, martialStatus, incomeLevels, zodiacs } from '../utils/choices'
 
 export default function ReceiverBody({ receiver }) {
     const fields = [
-        { icon: <Heart width={20} height={20} />, text: receiver?.maritalStatus?.label },
-        { icon: <AcademicCap width={20} height={20} />, text: receiver?.educationLevel?.label },
-        { icon: <CaseRound width={20} height={20} />, text: receiver?.jobTitle },
+        { icon: <Heart width={20} height={20} />, text: martialStatus[receiver.maritalStatus] },
+        { icon: <AcademicCap width={20} height={20} />, text: levels[receiver.educationLevel] },
+        { icon: <CaseRound width={20} height={20} />, text: receiver.jobTitle },
     ]
 
     const additionalFields = [
-        { icon: <Dollar width={20} height={20} />, text: receiver?.incomeLevel?.label },
-        { icon: <Ruler width={20} height={20} />, text: receiver?.height },
-        { icon: <Weigher width={20} height={20} />, text: receiver?.weight },
-        { icon: <Stars width={20} height={20} />, text: receiver?.zodiac?.label },
+        { icon: <Dollar width={20} height={20} />, text: incomeLevels[receiver.incomeLevel] },
+        { icon: <Ruler width={20} height={20} />, text: receiver.height },
+        { icon: <Weigher width={20} height={20} />, text: receiver.weight },
+        { icon: <Stars width={20} height={20} />, text: zodiacs[receiver.zodiac] },
     ]
 
     return (
         <View style={styles.container}>
-            {receiver?.bio ? (
+            {receiver.bio ? (
                 <View style={styles.informationWrapper}>
                     <Text style={[styles.informationTitle]}>O'zi haqida</Text>
                     <View style={[styles.tagsWrapper]}>
@@ -30,7 +31,7 @@ export default function ReceiverBody({ receiver }) {
                             lineHeight: 26,
                             marginBottom: 6,
                         }]}>
-                            {receiver?.bio}
+                            {receiver.bio}
                         </Text>
                     </View>
                 </View>
@@ -60,17 +61,17 @@ export default function ReceiverBody({ receiver }) {
                 </View>
             </View>
 
-            {receiver?.educationSchool ? (
+            {receiver.educationSchool ? (
                 <View style={[styles.informationWrapper]}>
                     <Text style={styles.informationTitle}>O'qish joyi</Text>
-                    <Text style={styles.informationSubTitle}>{receiver?.educationSchool}</Text>
+                    <Text style={styles.informationSubTitle}>{receiver.educationSchool}</Text>
                 </View>
             ) : null}
 
-            {receiver?.jobCompany ? (
+            {receiver.jobCompany ? (
                 <View style={styles.informationWrapper}>
                     <Text style={styles.informationTitle}>Ish joyi</Text>
-                    <Text style={styles.informationSubTitle}>{receiver?.jobCompany}</Text>
+                    <Text style={styles.informationSubTitle}>{receiver.jobCompany}</Text>
                 </View>
             ) : null}
         </View>
@@ -79,7 +80,7 @@ export default function ReceiverBody({ receiver }) {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 5,
+        marginHorizontal: 10,
     },
     informationWrapper: {
         flex: 1,

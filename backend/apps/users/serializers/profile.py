@@ -1,3 +1,4 @@
+from django.db.models import Prefetch
 from rest_framework import serializers
 
 from users.models import Profile, ProfileImage
@@ -31,10 +32,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class SimpleProfileSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
+        instance = Profile.objects.prefetch_related(
+            Prefetch('profileimage_set', queryset=instance.profileimage_set.order_by('button_number'))
+        ).get(pk=instance.pk)
         data = super().to_representation(instance)
-        data['images'] = ProfileImageSerializer(
-            ProfileImage.objects.filter(profile=instance).order_by('button_number'), many=True
-        ).data
+        data['region'] = RegionSerializer(instance.region).data
+        data['images'] = ProfileImageSerializer(instance.profileimage_set.all(), many=True).data
 
         return data
 
