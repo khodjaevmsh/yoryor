@@ -30,16 +30,12 @@ const DiscoverItem = memo(({ item }) => {
     return (
         <TouchableOpacity
             style={styles.card}
-            activeOpacity={0.95}
+            activeOpacity={0.85}
             onPress={() => navigation.navigate('ReceiverDetail', { receiver: item })}>
-            <FastImage
-                style={styles.profileImage}
-                source={{
-                    uri: `${domain + item.images[0].image}`,
-                    priority: FastImage.priority.low,
-                }}
-                resizeMode={FastImage.resizeMode.cover}
-            />
+            <FastImage style={styles.profileImage} source={{
+                uri: `${domain + item.images[0].image}`,
+                priority: FastImage.priority.low,
+            }} resizeMode={FastImage.resizeMode.cover} />
             <View style={styles.profileInfo}>
                 <Text style={styles.name}>
                     {shortenText(item.name, 15)}, {new Date().getFullYear() - moment(item.birthdate).format('YYYY')}

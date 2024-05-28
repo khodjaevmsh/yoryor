@@ -34,7 +34,7 @@ class ProfileListView(APIView, PageNumPagination):
             queryset = queryset.exclude(id__in=profiles)
 
         results = self.paginate_queryset(queryset, request, view=self)
-        serializer = ProfileSerializer(results, many=True)
+        serializer = SimpleProfileSerializer(results, many=True)
         return self.get_paginated_response(serializer.data)
 
     def post(self, request):

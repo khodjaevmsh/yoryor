@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import FastImage from 'react-native-fast-image'
-import { Animated, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import moment from 'moment'
 import normalize from 'react-native-normalize'
 import LinearGradient from 'react-native-linear-gradient'
@@ -9,19 +9,33 @@ import { ChatRounded, Goal, Heart, MapPoint } from './common/Svgs'
 import ProfileImagesPreview from './ProfileImagesPreview'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
-import { LIKES } from '../urls'
+import { LIKE, LIKES } from '../urls'
 import { showToast } from './common/Toast'
 import { GlobalContext } from '../context/GlobalContext'
 import MatchModal from './MatchModal'
+import { goals } from '../utils/choices'
 
 const { height: screenHeight } = Dimensions.get('window')
 const imageHeight = screenHeight * 0.68
 
-export default function ReceiverHead({ receiver, like, setLike }) {
-    const [previewModal, setPreviewModal] = useState(false)
+export default function ReceiverHead({ receiver }) {
+    const [like, setLike] = useState(null)
     const [room, setRoom] = useState(null)
+    const [previewModal, setPreviewModal] = useState(false)
     const [isModalVisible, setModalVisible] = useState(false)
     const { profile: sender } = useContext(GlobalContext)
+
+    useEffect(() => {
+        async function fetchLike() {
+            try {
+                const likeResponse = await baseAxios.get(LIKE.replace('{id}', receiver.id))
+                setLike(likeResponse.data)
+            } catch (error) {
+                console.log(error.response)
+            }
+        }
+        fetchLike()
+    }, [receiver])
 
     async function onLike() {
         try {
@@ -50,7 +64,7 @@ export default function ReceiverHead({ receiver, like, setLike }) {
 
                 <View style={[styles.topTagWrapper, { backgroundColor: COLOR.white }]}>
                     <Goal width={15} height={15} />
-                    <Text style={[styles.topTag, { color: COLOR.black }]}>{receiver?.goal?.label}</Text>
+                    <Text style={[styles.topTag, { color: COLOR.black }]}>{goals[receiver.goal]}</Text>
                 </View>
                 <View style={styles.topTagWrapper}>
                     <MapPoint width={15} height={15} color={COLOR.white} />
@@ -106,10 +120,11 @@ const styles = StyleSheet.create({
         borderRadius: 32,
     },
     name: {
-        fontSize: normalize(26),
+        fontSize: normalize(24),
         fontWeight: '600',
         color: COLOR.white,
-        marginBottom: 2,
+        marginBottom: 4,
+        marginLeft: 2,
     },
     topTag: {
         fontSize: normalize(12),
