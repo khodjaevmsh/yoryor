@@ -44,7 +44,7 @@ export default function Chat() {
                 setLoading(true)
                 const response = await baseAxios.get(ROOMS, { params: { page } })
                 setRooms((prevRooms) => [...prevRooms, ...response.data.results])
-                setNumPages(response.data.numPages)
+                setNumPages(response.data.totalPages)
 
                 // Initialize WebSocket connection for each room
                 roomWebsockets = await response.data.results.map((room) => createWebSocket(room.id))
