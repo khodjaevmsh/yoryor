@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, FlatList, RefreshControl } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Text } from 'react-native'
+import normalize from 'react-native-normalize'
 import { COLOR } from '../utils/colors'
 import { baseAxios } from '../hooks/requests'
 import { LIKES } from '../urls'
@@ -7,62 +8,98 @@ import { GlobalContext } from '../context/GlobalContext'
 import LikeItem from '../components/LikeItem'
 import ActivityIndicator from '../components/common/ActivityIndicator'
 import { showToast } from '../components/common/Toast'
+import WantMoreLikes from '../components/WantMoreLikes'
 
 export default function Likes() {
     const [loading, setLoading] = useState(false)
     const [likes, setLikes] = useState([])
     const [page, setPage] = useState(1)
-    const [nextPage, setNextPage] = useState(null)
+    const [totalPages, setTotalPages] = useState(1)
     const [refreshing, setRefreshing] = useState(false)
-    const { profile: receiver } = useContext(GlobalContext)
+    const { profile: receiver, numOfLikes } = useContext(GlobalContext)
 
     useEffect(() => {
         async function fetchLikes() {
             try {
                 setLoading(true)
-                const response = await baseAxios.get(LIKES, { params: { page, receiver: receiver.id } })
+                const response = await baseAxios.get(LIKES, { params: { receiver: receiver.id, page } })
                 if (!refreshing) {
                     setLikes((prevData) => [...prevData, ...response.data.results])
                 } else {
-                    setLikes(response.data.results)
+                    setLikes([])
                 }
-                setNextPage(response.data.next !== null)
+                setTotalPages(response.data.totalPages)
             } catch (error) {
-                console.log(error.response.data)
                 showToast('error', 'Oops!', 'Nomalum xatolik.')
             } finally {
-                setRefreshing(false)
                 setLoading(false)
+                setRefreshing(false)
             }
         }
+
         fetchLikes()
-    }, [receiver, page])
+    }, [receiver, refreshing, page])
 
     function handleRefresh() {
         setRefreshing(true)
         setPage(1)
     }
 
-    function handleLoadMore() {
-        if (nextPage && !loading && !refreshing) {
-            setPage((prevPage) => prevPage + 1)
+    const handleLoadMore = () => {
+        if (!loading && !refreshing && page < totalPages) {
+            setPage(page + 1) // Load next page
         }
     }
 
     return (
-        <FlatList
-            data={likes}
-            renderItem={({ item }) => <LikeItem item={item} />}
-            keyExtractor={(item, index) => index.toString()}
-            numColumns={2}
-            onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.2}
-            ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
-            refreshControl={(
-                <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
-            )} />
-
+        <>
+            <View style={styles.likesCount}>
+                <Text style={styles.likes}>{numOfLikes} likes</Text>
+            </View>
+            <FlatList
+                data={likes}
+                renderItem={({ item }) => <LikeItem item={item} />}
+                keyExtractor={(item, index) => index.toString()}
+                numColumns={2}
+                onEndReached={handleLoadMore}
+                contentContainerStyle={styles.contentContainer}
+                onEndReachedThreshold={0.2}
+                showsVerticalScrollIndicator={false}
+                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
+                refreshControl={(
+                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
+                )}
+                ListEmptyComponent={!loading && !refreshing ? (
+                    <View style={styles.emptyContainer}>
+                        <WantMoreLikes />
+                    </View>
+                ) : null}
+            />
+        </>
     )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    likesCount: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderBottomColor: COLOR.extraLightGrey,
+        paddingVertical: 12,
+    },
+    likes: {
+        color: COLOR.black,
+        fontWeight: '500',
+        fontSize: normalize(18),
+    },
+    contentContainer: {
+        flexGrow: 1,
+        marginHorizontal: 8,
+        paddingTop: 16,
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+})

@@ -3,6 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import { usePersistState } from '../utils/state'
 import { toastConfig } from '../components/common/Toast'
+import { baseAxios } from '../hooks/requests'
+import { NUM_OF_LIKES } from '../urls'
 
 export const GlobalContext = createContext({})
 
@@ -13,6 +15,7 @@ export default function GlobalProvider({ children }) {
     const [language, setLanguage] = usePersistState('language', 'uz')
     const [isLoaded, setIsLoaded] = useState(false)
     const [render, setRender] = useState(false)
+    const [numOfLikes, setNumOfLikes] = useState(0)
 
     useEffect(() => {
         AsyncStorage.getItem('token').then(async (value) => {
@@ -47,6 +50,22 @@ export default function GlobalProvider({ children }) {
         await AsyncStorage.removeItem('profile')
     }
 
+    useEffect(() => {
+        async function fetchNumOfLikes() {
+            try {
+                const response = await baseAxios.get(NUM_OF_LIKES, { params: { receiver: profile.id } })
+                setNumOfLikes(response.data.num)
+            } catch (error) {
+                console.log(error.response.data)
+                setNumOfLikes(0)
+            }
+        }
+
+        if (profile) {
+            fetchNumOfLikes()
+        }
+    }, [profile])
+
     return (
         // eslint-disable-next-line react/jsx-no-constructed-context-values
         <GlobalContext.Provider value={{
@@ -59,6 +78,8 @@ export default function GlobalProvider({ children }) {
             setLanguage,
             render,
             setRender,
+            numOfLikes,
+            setNumOfLikes,
         }}>
             {isLoaded ? children : null}
             <Toast config={toastConfig} />

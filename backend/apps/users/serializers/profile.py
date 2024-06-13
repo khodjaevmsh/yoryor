@@ -38,9 +38,11 @@ class SimpleProfileSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         data['region'] = RegionSerializer(instance.region).data
         data['images'] = ProfileImageSerializer(instance.profileimage_set.all(), many=True).data
-
         return data
 
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = [
+            'id', "name", "birthdate", "gender", "region", "goal", "bio", "height", "weight", "education_level",
+            "education_school", "job_title", "job_company", "marital_status", "income_level", "zodiac"
+        ]

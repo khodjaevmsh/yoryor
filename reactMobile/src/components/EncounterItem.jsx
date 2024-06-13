@@ -9,6 +9,7 @@ import { domain } from '../hooks/requests'
 import { Goal, Heart, MapPoint } from './common/Svgs'
 import { COLOR } from '../utils/colors'
 import ReceiverBody from './ReceiverBody'
+import { goals, martialStatus } from '../utils/choices'
 
 const { height: screenHeight } = Dimensions.get('window')
 const imageHeight = screenHeight * 0.75 // Например, чтобы изображение занимало 75% высоты экрана
@@ -59,7 +60,7 @@ export default function EncounterItem({ swiperRef, receiver }) {
                             opacity: animation,
                         }]}>
                             <Goal width={15} height={15} />
-                            <Text style={[styles.topTag, { color: COLOR.black }]}>{receiver?.goal?.label}</Text>
+                            <Text style={[styles.topTag, { color: COLOR.black }]}>{goals[receiver.goal]}</Text>
                         </Animated.View>
 
                         <Animated.View style={[styles.topTagWrapper, { opacity: animation }]}>
@@ -96,13 +97,13 @@ export default function EncounterItem({ swiperRef, receiver }) {
                     style={styles.iconWrapper}
                     activeOpacity={0.7}
                     onPress={() => swiperRef.current.swipeLeft()}>
-                    <X height={34} width={34} color={COLOR.black} strokeWidth={3} />
+                    <X height={38} width={38} color={COLOR.black} strokeWidth={3} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.iconWrapper, { paddingTop: 12, paddingBottom: 9 }]}
                     activeOpacity={0.7}
                     onPress={() => swiperRef.current.swipeRight()}>
-                    <Heart color={COLOR.black} />
+                    <Heart height={38} width={38} color={COLOR.black} />
                 </TouchableOpacity>
             </LinearGradient>
         </View>
@@ -144,12 +145,12 @@ const styles = StyleSheet.create({
     bottomLinearGradient: {
         position: 'absolute',
         width: '100%',
-        height: '15%',
+        height: '30%',
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'flex-end',
         paddingHorizontal: 25,
-        paddingVertical: 20,
+        paddingVertical: 38,
         bottom: 0,
         zIndex: 1,
     },
@@ -177,8 +178,8 @@ const styles = StyleSheet.create({
     },
 
     iconWrapper: {
-        width: normalize(55),
-        height: normalize(55),
+        width: normalize(65),
+        height: normalize(65),
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',

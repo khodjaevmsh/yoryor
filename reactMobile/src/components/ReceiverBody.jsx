@@ -38,7 +38,7 @@ export default function ReceiverBody({ receiver }) {
             ) : null}
 
             <View style={styles.informationWrapper}>
-                {fields.some((field) => field.text !== null) && (
+                {fields.some((field) => field.text !== null && field.text !== undefined) && (
                     <Text style={styles.informationTitle}>Ma'lumotlar</Text>
                 )}
                 <View style={styles.tagsWrapper}>
@@ -49,7 +49,7 @@ export default function ReceiverBody({ receiver }) {
             </View>
 
             <View style={styles.informationWrapper}>
-                {additionalFields.some((field) => field.text !== null) && (
+                {additionalFields.some((field) => field.text !== null && field.text !== undefined) && (
                     <Text style={styles.informationTitle}>Qo'shimcha ma'lumotlar</Text>
                 )}
                 <View style={styles.tagsWrapper}>
@@ -80,7 +80,7 @@ export default function ReceiverBody({ receiver }) {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 10,
+        marginHorizontal: 5,
     },
     informationWrapper: {
         flex: 1,
