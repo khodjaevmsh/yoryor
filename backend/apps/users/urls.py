@@ -3,7 +3,7 @@ from django.urls import path
 from users.views.change_password import ChangePasswordView
 from users.views.country import CountryListView
 from users.views.dislike import DislikeListView, DislikeDetailView
-from users.views.like import LikeListView, LikeDetailView
+from users.views.like import LikeListView, LikeDetailView, NumOfLikesView
 from users.views.profile import ProfileListView, ProfileDetailView
 from users.views.profile_image import ProfileImageListView, ProfileImageDetailView, ChangeProfileImageView
 from users.views.region import RegionListView
@@ -31,4 +31,5 @@ urlpatterns = [
     path('like/<int:pk>', LikeDetailView.as_view(), name='like'),
     path('dislikes', DislikeListView.as_view(), name='dislike-list'),
     path('dislike/<int:pk>', DislikeDetailView.as_view(), name='dislike'),
+    path('num-of-likes', NumOfLikesView.as_view(), name='num-of-likes'),
 ]

@@ -18,7 +18,7 @@ export default function LikeItem({ item }) {
             onPress={() => navigation.navigate('ReceiverDetail', { receiver: item.sender })}>
             <FastImage style={styles.image} source={{
                 uri: item.sender ? `${domain + item.sender.images[0].image}` : null,
-                priority: FastImage.priority.normal,
+                priority: FastImage.priority.high,
             }} resizeMode={FastImage.resizeMode.cover} />
             <LinearGradient
                 colors={['transparent', 'rgba(0, 0, 0, 0.6)']}

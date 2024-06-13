@@ -19,7 +19,7 @@ export default function Discover() {
     const [region, setRegion] = useState('')
     const [gender, setGender] = useState(sender?.gender?.value === 'male' ? 'female' : 'male')
     const [page, setPage] = useState(1)
-    const [nextPage, setNextPage] = useState(null)
+    const [totalPages, setTotalPages] = useState(1)
     const [isModalVisible, setModalVisible] = useState(false)
     const navigation = useNavigation()
 
@@ -43,7 +43,7 @@ export default function Discover() {
                 } else {
                     setReceivers([])
                 }
-                setNextPage(response.data.next !== null)
+                setTotalPages(response.data.totalPages)
             } catch (error) {
                 console.log(error.response.data)
             } finally {
@@ -69,8 +69,8 @@ export default function Discover() {
     }
 
     function handleLoadMore() {
-        if (nextPage && !loading && !refreshing) {
-            setPage((prevPage) => prevPage + 1)
+        if (!loading && !refreshing && page < totalPages) {
+            setPage(page + 1) // Load next page
         }
     }
 

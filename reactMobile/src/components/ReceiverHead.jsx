@@ -16,7 +16,7 @@ import MatchModal from './MatchModal'
 import { goals } from '../utils/choices'
 
 const { height: screenHeight } = Dimensions.get('window')
-const imageHeight = screenHeight * 0.68
+const imageHeight = screenHeight * 0.65
 
 export default function ReceiverHead({ receiver }) {
     const [like, setLike] = useState(null)
@@ -83,14 +83,14 @@ export default function ReceiverHead({ receiver }) {
                 end={{ x: 0.5, y: 0.0 }}
                 style={styles.bottomLinearGradient}>
                 <TouchableOpacity style={styles.heart}>
-                    <ChatRounded />
+                    <ChatRounded width={38} height={38} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.heart}
                     onPress={like && !like.id ? onLike : null}
                     activeOpacity={like && !like.id ? 0.5 : 1}>
                     <View style={{ marginTop: 3 }}>
-                        <Heart color={like && like.id ? COLOR.red : COLOR.black} />
+                        <Heart width={38} height={38} color={like && like.id ? COLOR.red : COLOR.black} />
                     </View>
                 </TouchableOpacity>
             </LinearGradient>
@@ -169,8 +169,8 @@ const styles = StyleSheet.create({
         borderRadius: 32,
     },
     heart: {
-        width: normalize(55),
-        height: normalize(55),
+        width: normalize(65),
+        height: normalize(65),
         borderRadius: 100,
         justifyContent: 'center',
         alignItems: 'center',
