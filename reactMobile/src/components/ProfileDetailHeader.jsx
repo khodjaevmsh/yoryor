@@ -13,7 +13,7 @@ import { domain } from '../hooks/requests'
 import { GlobalContext } from '../context/GlobalContext'
 import { determineFontSize } from '../utils/string'
 
-const itemWidth = Dimensions.get('window').width * 0.84
+const itemWidth = Dimensions.get('window').width * 0.94
 
 export default function ProfileDetailHeader({ profileImages }) {
     const { profile } = useContext(GlobalContext)
@@ -24,13 +24,10 @@ export default function ProfileDetailHeader({ profileImages }) {
             activeOpacity={1}
             style={styles.carouselItem}
             onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id })}>
-            <FastImage
-                style={styles.carouselImage}
-                source={{
-                    uri: `${domain + item.image}`,
-                    priority: FastImage.priority.normal,
-                }}
-                resizeMode={FastImage.resizeMode.cover} />
+            <FastImage style={styles.carouselImage} source={{
+                uri: `${domain + item.image}`,
+                priority: FastImage.priority.normal,
+            }} resizeMode={FastImage.resizeMode.cover} />
             {index === 0 && (
                 <TouchableOpacity
                     activeOpacity={0.5}
@@ -47,7 +44,7 @@ export default function ProfileDetailHeader({ profileImages }) {
         <View>
             <View style={styles.nameWrapper}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={[styles.name, { fontSize: determineFontSize(profile.name, 26) }]}>
+                    <Text style={[styles.name, { fontSize: determineFontSize(profile.name, 24) }]}>
                         {profile.name}, {new Date().getFullYear() - moment(profile.birthdate).format('YYYY')}
                     </Text>
                     <CheckMarkBlue width={22} height={22} />
@@ -62,8 +59,8 @@ export default function ProfileDetailHeader({ profileImages }) {
                     renderItem={renderItem}
                     sliderWidth={Dimensions.get('window').width}
                     itemWidth={itemWidth}
-                    inactiveSlideScale={0.91}
-                    inactiveSlideOpacity={0.7} />
+                    inactiveSlideScale={0.98}
+                    inactiveSlideOpacity={0.8} />
             </View>
         </View>
     )
@@ -81,7 +78,7 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
     region: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         marginTop: 3,
         marginLeft: 1,
         color: COLOR.grey,
@@ -96,8 +93,8 @@ const styles = StyleSheet.create({
     carouselItem: {
         position: 'relative',
         width: '100%',
-        height: normalize(380),
-        borderRadius: 16,
+        height: normalize(475),
+        borderRadius: 30,
         overflow: 'hidden',
     },
     carouselImage: {
@@ -105,13 +102,13 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
-        borderRadius: 14,
+        borderRadius: 30,
     },
 
     updateButton: {
         position: 'absolute',
-        top: 12,
-        right: 12,
+        top: 18,
+        right: 18,
         backgroundColor: 'rgba(0, 0, 0, 0.6)',
         paddingVertical: 6,
         paddingHorizontal: 8,

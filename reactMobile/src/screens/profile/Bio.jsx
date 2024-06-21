@@ -63,9 +63,9 @@ export default function Bio({ route }) {
                                     style={styles.input}
                                     multiline
                                     numberOfLines={4}
-                                    placeholder="Oilali erkaklar yozmsin..."
+                                    placeholder="Masalan: Men doimiy optimist.
+                                     Kulishni va hayotdan bahramand boʼlishni yaxshi koʼradigan inson qidiryapman..."
                                 />
-
                                 <View style={styles.buttonWrapper}>
                                     <Button title="Qo'shish" onPress={handleSubmit} loading={loading} />
                                 </View>
@@ -81,8 +81,8 @@ export default function Bio({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
         borderColor: COLOR.lightGrey,
         paddingTop: normalize(15),
         paddingBottom: 15,
-        paddingLeft: normalize(25),
-        paddingRight: normalize(20),
+        paddingLeft: normalize(18),
+        paddingRight: normalize(18),
     },
     buttonWrapper: {
         flex: 1,

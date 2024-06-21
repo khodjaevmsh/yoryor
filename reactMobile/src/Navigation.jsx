@@ -1,10 +1,11 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Platform, StyleSheet, Text } from 'react-native'
+import { Platform, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import normalize from 'react-native-normalize'
+import { ChevronLeft } from 'react-native-feather'
 import { COLOR } from './utils/colors'
 import Likes from './screens/Likes'
 import Splash from './screens/Splash'
@@ -42,12 +43,11 @@ import ChangeLanguage from './screens/settings/ChangeLanguage'
 import AboutApp from './screens/settings/AboutApp'
 import Help from './screens/settings/Help'
 import AddProfileImage from './screens/profile/AddProfileImage'
-import ProfileDetail from './screens/profile/ProfileDetail'
+import MyProfileDetail from './screens/profile/MyProfileDetail'
 import { ChatRounded, EncounterI, Heart, UserRounded, Widget4 } from './components/common/Svgs'
 import Profile from './screens/Profile'
 import ReceiverDetail from './screens/discover/ReceiverDetail'
 import ChatDetail from './screens/chat/ChatDetail'
-import CustomHeaderLeft from './components/common/CustomHeaderLeft'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -77,7 +77,11 @@ export default function Navigation() {
                 headerTitle: () => false,
                 headerShadowVisible: false,
                 headerBackTitleVisible: false,
-                headerLeft: () => (Platform.OS === 'ios' ? <CustomHeaderLeft /> : null),
+                headerLeft: () => (Platform.OS === 'ios' ? (
+                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: -8 }}>
+                        <ChevronLeft width={32} height={32} color={COLOR.primary} />
+                    </TouchableOpacity>
+                ) : null),
             })}>
                 <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
                 {/* eslint-disable-next-line max-len */}
@@ -100,7 +104,7 @@ export default function Navigation() {
 
                 {/*  PROFILE  */}
                 <Stack.Screen name="Settings" component={Settings} options={{ headerShown: true }} />
-                <Stack.Screen name="ProfileDetail" component={ProfileDetail} options={{ headerShown: true }} />
+                <Stack.Screen name="MyProfileDetail" component={MyProfileDetail} options={{ headerShown: true }} />
                 <Stack.Screen name="AddProfileImage" component={AddProfileImage} options={{ headerShown: true }} />
                 <Stack.Screen name="Bio" component={Bio} options={{ headerShown: true }} />
                 <Stack.Screen name="BirthDate" component={BirthDate} options={{ headerShown: true }} />
@@ -126,9 +130,6 @@ export default function Navigation() {
                 <Stack.Screen name="ReceiverDetail" component={ReceiverDetail} options={{
                     headerShown: true,
                     gestureEnabled: true,
-                    animation: 'default',
-                    animationDuration: 175,
-                    headerLeft: () => <CustomHeaderLeft />,
                 }} />
 
                 {/*  CHAT  */}
@@ -143,41 +144,32 @@ function TabScreen() {
     return (
         <Tab.Navigator initialRouteName="Encounter" screenOptions={{
             headerTitle: () => false,
-            headerStyle: styles.headerStyle,
             tabBarLabel: () => false,
-            tabBarStyle: styles.tabBarStyle,
-            headerLeftContainerStyle: styles.headerLeftContainerStyle,
-            headerRightContainerStyle: styles.headerRightContainerStyle,
         }}>
             <Tab.Screen name="Discover" component={Discover} options={{
                 tabBarIcon: ({ focused }) => (
                     <Widget4 color={focused ? COLOR.black : COLOR.grey} width={28} height={28} strokeWidth={2.2} />
                 ),
-                headerLeft: () => <Text style={[styles.title, { color: COLOR.primary }]}>Sovchi</Text>,
             }} />
             <Tab.Screen name="Likes" component={Likes} options={{
                 tabBarIcon: ({ focused }) => (
                     <Heart color={focused ? COLOR.black : COLOR.grey} width={31} height={31} strokeWidth={2.2} />
                 ),
-                headerLeft: () => <Text style={styles.title}>Like</Text>,
             }} />
             <Tab.Screen name="Encounter" component={Encounter} options={{
                 tabBarIcon: ({ focused }) => (
                     <EncounterI color={focused ? COLOR.black : COLOR.grey} width={29} height={29} strokeWidth={2.2} />
                 ),
-                headerLeft: () => <Text style={styles.title}>Tanishuvlar</Text>,
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
                     <ChatRounded width={30} height={30} color={focused ? COLOR.black : COLOR.grey} />
                 ),
-                headerLeft: () => <Text style={styles.title}>Chat</Text>,
             }} />
             <Tab.Screen name="Profile" component={Profile} options={{
                 tabBarIcon: ({ focused }) => (
                     <UserRounded width={31} height={31} color={focused ? COLOR.black : COLOR.grey} />
                 ),
-                headerLeft: () => <Text style={styles.title}>Profil</Text>,
             }} />
         </Tab.Navigator>
     )
@@ -185,9 +177,10 @@ function TabScreen() {
 
 const styles = StyleSheet.create({
     headerStyle: {
-        elevation: 0,
+        elevation: 0, // For Android, remove shadow
         shadowOpacity: 0,
-        borderBottomWidth: 0,
+        borderTopWidth: 0.3,
+        borderColor: COLOR.grey,
     },
     tabBarStyle: {
         elevation: 0, // For Android, remove shadow
@@ -195,16 +188,14 @@ const styles = StyleSheet.create({
         borderTopWidth: 0.3,
         borderColor: COLOR.grey,
     },
-    headerLeftContainerStyle: {
-        paddingRight: 22,
-    },
-    headerRightContainerStyle: {
-        paddingRight: 22,
+    headerLeftContainer: {
+        marginLeft: 16,
+        marginRight: 16,
     },
     title: {
         fontSize: normalize(24),
         fontWeight: '700',
         marginTop: 10,
-        marginLeft: 22,
+        // marginLeft: 22,
     },
 })

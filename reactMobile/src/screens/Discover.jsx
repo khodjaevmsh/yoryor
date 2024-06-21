@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { View, StyleSheet, FlatList, TouchableOpacity, RefreshControl } from 'react-native'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { View, StyleSheet, FlatList, TouchableOpacity, RefreshControl, Text } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
+import normalize from 'react-native-normalize'
 import { baseAxios } from '../hooks/requests'
 import { PROFILES } from '../urls'
 import { Tuning2 } from '../components/common/Svgs'
@@ -23,11 +24,16 @@ export default function Discover() {
     const [isModalVisible, setModalVisible] = useState(false)
     const navigation = useNavigation()
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
+            headerLeft: () => (
+                <View style={{ marginLeft: 18 }}>
+                    <Text style={{ fontSize: normalize(22), fontWeight: '700', color: COLOR.primary }}>Sovchi</Text>
+                </View>
+            ),
             headerRight: () => (
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
-                    <Tuning2 width={28} height={28} color={COLOR.black} />
+                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => setModalVisible(true)}>
+                    <Tuning2 width={26} height={26} color={COLOR.black} />
                 </TouchableOpacity>
             ),
         })
@@ -83,6 +89,7 @@ export default function Discover() {
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={3}
+                contentContainerStyle={styles.contentContainerStyle}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.2}
                 ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
@@ -107,6 +114,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginHorizontal: 5,
-        marginTop: 10,
+    },
+    contentContainerStyle: {
+        paddingTop: 10,
     },
 })

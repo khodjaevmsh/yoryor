@@ -9,73 +9,54 @@ import { baseAxios } from '../../hooks/requests'
 import { PROFILE } from '../../urls'
 import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
-import ServerError from '../../components/common/ServerError'
 import { showToast } from '../../components/common/Toast'
-
-const genders = [
-    { id: 'low', title: 'Past daromad' },
-    { id: 'moderate', title: 'O\'rtacha daromad' },
-    { id: 'above_moderate', title: 'O\'rtacha daromaddan yuqori' },
-    { id: 'high', title: 'Yuqori daromad' },
-    { id: 'very_high', title: 'Juda yuqori daromad' },
-]
+import { incomeLevels } from '../../utils/choices'
 
 export default function FinancialStatus({ route }) {
     const { props } = route.params
-    const [status, setStatus] = useState(props.level.value)
+    const [status, setStatus] = useState(props.key)
     const [loading, setLoading] = useState(false)
-    const [serverError, setServerError] = useState('')
-    const [validationError, setValidationError] = useState('')
     const { profile, setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit() {
-        if (!status) {
-            setValidationError('* Moliaviy holatni tanlang')
-        } else {
-            try {
-                setLoading(true)
-                await baseAxios.put(PROFILE.replace('{id}', profile.id), { incomeLevel: status })
-                navigation.goBack()
-                if (props.level.value !== status) {
-                    setRender(true)
-                    showToast('success', 'Muvaffaqiyatli', 'Moliaviy ahvolingiz o\'zgartirildi.')
-                }
-            } catch (error) {
-                setServerError(error.response)
-            } finally {
-                setLoading(false)
+        try {
+            setLoading(true)
+            await baseAxios.put(PROFILE.replace('{id}', profile.id), { incomeLevel: status })
+            navigation.goBack()
+            if (props.key !== status) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Moliaviy ahvolingiz o\'zgartirildi.')
             }
+        } catch (error) {
+            console.log(error.response)
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <Container>
             <View style={{ flex: 1 }}>
-                <Text style={styles.title}>Moliaviy ahvolingiz?</Text>
-
+                <Text style={styles.title}>Moliaviy ahvolingiz</Text>
+                <Text style={styles.subTitle}>
+                    Ayrim foydalanuvchilar moliaviy ahvolingizga qarab munosbat bildirishadi.
+                    Yuqori daromadni belgilash uchun Premium akkaunt xarid qilishingiz lozim.
+                </Text>
                 <View style={{ marginTop: 22 }}>
-                    {genders.map((item) => (
+                    {Object.entries(incomeLevels).map(([key, value]) => (
                         <TouchableOpacity
-                            key={item.id}
+                            key={key}
                             activeOpacity={0.7}
-                            onPress={() => setStatus(item.id)}
-                            style={[styles.gender, status === item.id && styles.activeGender]}>
-                            <Text style={styles.genderText}>{item.title}</Text>
-                            <View style={[styles.radio, status === item.id && styles.activeRadio]} />
+                            onPress={() => setStatus(key)}
+                            style={[styles.status, status === key && styles.activeStatus]}>
+                            <Text style={styles.statusText}>{value}</Text>
+                            <View style={[styles.radio, status === key && styles.activeRadio]} />
                         </TouchableOpacity>
                     ))}
-
-                    <ServerError error={serverError} style={styles.serverError} />
-                    {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
                 </View>
-
                 <View style={styles.buttonWrapper}>
-                    <Button
-                        title="Davom etish"
-                        onPress={onSubmit}
-                        buttonStyle={styles.button}
-                        loading={loading} />
+                    <Button title="Davom etish" onPress={onSubmit} buttonStyle={styles.button} loading={loading} />
                 </View>
             </View>
         </Container>
@@ -84,10 +65,17 @@ export default function FinancialStatus({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
     },
-    gender: {
+    subTitle: {
+        color: COLOR.grey,
+        marginTop: 7,
+        marginBottom: 8,
+        fontSize: fontSize.small,
+        lineHeight: 19.5,
+    },
+    status: {
         width: '100%',
         height: normalize(52),
         flexDirection: 'row',
@@ -98,7 +86,7 @@ const styles = StyleSheet.create({
         marginVertical: 7,
         backgroundColor: COLOR.extraLightGrey,
     },
-    genderText: {
+    statusText: {
         fontSize: fontSize.medium,
         color: COLOR.black,
         fontWeight: '500',
@@ -115,7 +103,7 @@ const styles = StyleSheet.create({
         borderWidth: 6,
         borderRadius: 100,
     },
-    activeGender: {
+    activeStatus: {
         backgroundColor: COLOR.lightPrimary,
     },
     validationError: {

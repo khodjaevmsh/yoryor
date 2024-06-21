@@ -13,23 +13,13 @@ import { GlobalContext } from '../../context/GlobalContext'
 import PickerSelect from '../../components/common/PickerSelect'
 import Input from '../../components/common/Input'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
-import ServerError from '../../components/common/ServerError'
 import { showToast } from '../../components/common/Toast'
-
-const levels = [
-    { value: 'high_school', label: 'O\'rta maxsus' },
-    { value: 'bachelors_degree', label: 'Bakalavr' },
-    { value: 'masters_degree', label: 'Magistratura' },
-    { value: 'doctorate', label: 'Doktorantura' },
-    { value: 'other', label: 'Boshqasi' },
-]
+import { levels } from '../../utils/choices'
 
 export default function Education({ route }) {
     const { props } = route.params
-    const [level, setLevel] = useState(props.education.value)
+    const [level, setLevel] = useState(props.level)
     const [loading, setLoading] = useState(false)
-    const [serverError, setServerError] = useState('')
-    const [validationError, setValidationError] = useState('')
     const { profile, setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -41,12 +31,12 @@ export default function Education({ route }) {
                 educationSchool: data.school,
             })
             navigation.goBack()
-            if (props.education.value !== level || props.value !== data.school) {
+            if (props.level !== level || props.school !== data.school) {
                 setRender(true)
                 showToast('success', 'Muvaffaqiyatli', 'Ma\'lumotingiz o\'zgartirildi.')
             }
         } catch (error) {
-            setServerError(error.response)
+            console.log(error.response)
         } finally {
             setLoading(false)
         }
@@ -55,44 +45,32 @@ export default function Education({ route }) {
     return (
         <KeyboardAvoiding>
             <Container>
-                <View style={{ flex: 1 }}>
-                    <Text style={styles.title}>Ma'lumotingiz darajasini tanlang ...</Text>
-
-                    <Formik
-                        initialValues={{ school: props.value || '' }}
-                        validationSchema={null}
-                        onSubmit={onSubmit}>
-                        {({ handleSubmit }) => (
-                            <View style={{ flex: 1, marginTop: 28 }}>
-                                <PickerSelect
-                                    placeholder={{ label: 'Javobsiz qoldirish', value: '' }}
-                                    items={levels.map((item) => ({
-                                        label: item.label,
-                                        value: item.value,
-                                    }))}
-                                    value={level}
-                                    onValueChange={(val) => setLevel(val)} />
-
-                                <Input
-                                    name="school"
-                                    keyboardType="default"
-                                    placeholder="Tashkent State University of Law" />
-
-                                <ServerError error={serverError} style={styles.serverError} />
-                                {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
-
-                                <View style={styles.buttonWrapper}>
-                                    <Button
-                                        title="Davom etish"
-                                        onPress={handleSubmit}
-                                        buttonStyle={styles.button}
-                                        loading={loading} />
-                                </View>
+                <Text style={styles.title}>Ma'lumotingiz darajasini tanlang</Text>
+                <Text style={styles.subTitle}>O'qish darajangiz va o'qish joyingizni kiriting.</Text>
+                <Formik
+                    initialValues={{ school: props.school || '' }}
+                    onSubmit={onSubmit}>
+                    {({ handleSubmit }) => (
+                        <View style={styles.pickerWrapper}>
+                            <PickerSelect
+                                placeholder={{ label: 'Javobsiz qoldirish', value: '' }}
+                                items={Object.entries(levels).map(([key, title]) => ({ label: title, value: key }))}
+                                value={level}
+                                onValueChange={(val) => setLevel(val)} />
+                            <Input
+                                name="school"
+                                keyboardType="default"
+                                placeholder="Tashkent State University of Law" />
+                            <View style={styles.buttonWrapper}>
+                                <Button
+                                    title="Davom etish"
+                                    onPress={handleSubmit}
+                                    buttonStyle={styles.button}
+                                    loading={loading} />
                             </View>
-                        )}
-                    </Formik>
-
-                </View>
+                        </View>
+                    )}
+                </Formik>
             </Container>
         </KeyboardAvoiding>
     )
@@ -100,8 +78,19 @@ export default function Education({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
+    },
+    subTitle: {
+        color: COLOR.grey,
+        marginTop: 7,
+        marginBottom: 8,
+        fontSize: fontSize.small,
+        lineHeight: 19.5,
+    },
+    pickerWrapper: {
+        flex: 1,
+        marginTop: 28,
     },
     choice: {
         width: '100%',

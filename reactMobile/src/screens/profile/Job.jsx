@@ -12,12 +12,11 @@ import { GlobalContext } from '../../context/GlobalContext'
 import Input from '../../components/common/Input'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import { showToast } from '../../components/common/Toast'
+import { fontSize } from '../../utils/fontSizes'
 
 export default function Job({ route }) {
     const { props } = route.params
     const [loading, setLoading] = useState(false)
-    const [, setServerError] = useState('')
-    const [validationError, setValidationError] = useState('')
     const { profile, setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -34,7 +33,7 @@ export default function Job({ route }) {
                 showToast('success', 'Muvaffaqiyatli', 'Ish joyingiz o\'zgartirildi.')
             }
         } catch (error) {
-            setServerError(error.response)
+            console.log(error.response)
         } finally {
             setLoading(false)
         }
@@ -44,28 +43,26 @@ export default function Job({ route }) {
         <KeyboardAvoiding>
             <Container>
                 <View style={{ flex: 1 }}>
-                    <Text style={styles.title}>Lavozim va tashkilot</Text>
-
+                    <Text style={styles.title}>Lavozim va ish joyingiz</Text>
+                    <Text style={styles.subTitle}>
+                        Foydalanuvchilarga kim bo'lib ishlashingiz va qayerda ishlashingiz haqida ma'lumot bering.
+                    </Text>
                     <Formik
                         initialValues={{ jobTitle: props.job?.jobTitle || '', jobCompany: props.job?.jobCompany || '' }}
                         validationSchema={null}
                         onSubmit={onSubmit}>
                         {({ handleSubmit }) => (
-                            <View style={{ flex: 1, marginTop: 18 }}>
+                            <View style={styles.inputWrapper}>
                                 <Input
                                     name="jobTitle"
                                     keyboardType="default"
                                     inputStyle={styles.input}
                                     placeholder="Prokuror" />
-
                                 <Input
                                     name="jobCompany"
                                     keyboardType="default"
                                     inputStyle={styles.input}
                                     placeholder="Toshkent shahar prokuraturasi" />
-
-                                {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
-
                                 <View style={styles.buttonWrapper}>
                                     <Button
                                         title="Davom etish"
@@ -85,15 +82,22 @@ export default function Job({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
+    },
+    subTitle: {
+        color: COLOR.grey,
+        marginTop: 7,
+        marginBottom: 8,
+        fontSize: fontSize.small,
+        lineHeight: 19.5,
+    },
+    inputWrapper: {
+        flex: 1,
+        marginTop: 18,
     },
     input: {
         marginVertical: 8,
-    },
-    validationError: {
-        color: COLOR.primary,
-        marginTop: 8,
     },
     buttonWrapper: {
         flex: 1,

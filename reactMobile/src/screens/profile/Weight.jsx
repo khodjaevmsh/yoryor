@@ -45,33 +45,30 @@ export default function Weight({ route }) {
     }
 
     return (
-        <KeyboardAvoiding>
-            <Container>
-                <Text style={styles.title}>Vazningiz?</Text>
-
-                <View style={{ flex: 1, marginTop: 22 }}>
-                    <PickerSelect
-                        placeholder={{ label: 'Javobsiz qoldirish', value: '' }}
-                        items={weightArray.map((item) => ({ label: item.label, value: item.value }))}
-                        value={weight}
-                        onValueChange={(val) => setWeight(val)} />
-                </View>
-
-                <ServerError error={serverError} style={styles.serverError} />
-
-                <View style={styles.buttonWrapper}>
-                    <Button title="Qo'shish" onPress={onSubmit} loading={loading} />
-                </View>
-
-            </Container>
-        </KeyboardAvoiding>
+        <Container>
+            <Text style={styles.title}>Vazningiz?</Text>
+            <Text style={styles.subTitle}>
+                Vazningizni belgilang.
+            </Text>
+            <View style={styles.pickerWrapper}>
+                <PickerSelect
+                    placeholder={{ label: 'Javobsiz qoldirish', value: '' }}
+                    items={weightArray.map((item) => ({ label: item.label, value: item.value }))}
+                    value={weight}
+                    onValueChange={(val) => setWeight(val)} />
+            </View>
+            <ServerError error={serverError} style={styles.serverError} />
+            <View style={styles.buttonWrapper}>
+                <Button title="Qo'shish" onPress={onSubmit} loading={loading} />
+            </View>
+        </Container>
     )
 }
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
@@ -80,24 +77,9 @@ const styles = StyleSheet.create({
         fontSize: fontSize.small,
         lineHeight: 19.5,
     },
-    inputWrapper: {
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: normalize(15),
-        paddingLeft: normalize(25),
-        paddingRight: normalize(20),
-        borderRadius: normalize(15),
-        borderWidth: 2,
-        borderColor: COLOR.lightGrey,
+    pickerWrapper: {
+        flex: 1,
         marginTop: 22,
-    },
-    input: {
-        width: '100%',
-        minHeight: normalize(100),
-        justifyContent: 'flex-start',
-        textAlignVertical: 'top',
-        fontSize: fontSize.medium,
     },
     buttonWrapper: {
         flex: 1,

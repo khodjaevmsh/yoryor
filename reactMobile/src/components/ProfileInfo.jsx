@@ -20,10 +20,12 @@ export default function ProfileInfo({ title, icon, screen, props }) {
                     </View>
                     <View>
                         <Text style={styles.title}>{title}</Text>
-                        <Text style={styles.value}>{shortenText(props?.value || "Ko'rsatilmagan", 28)}</Text>
+                        <Text style={styles.subTitle}>
+                            {shortenText(props?.value || "Ko'rsatilmagan", 28)}
+                        </Text>
                     </View>
                 </View>
-                <ChevronRight width={24} height={24} strokeWidth={2.5} color={COLOR.grey} />
+                <ChevronRight width={22} height={22} strokeWidth={2.5} color={COLOR.grey} />
             </View>
         </TouchableWithoutFeedback>
     )
@@ -31,11 +33,12 @@ export default function ProfileInfo({ title, icon, screen, props }) {
 
 const styles = StyleSheet.create({
     wrapper: {
-        height: normalize(82),
+        // height: normalize(72),
+        paddingVertical: 17,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderTopWidth: 0.4,
+        borderTopWidth: 0.2,
         borderColor: COLOR.lightGrey,
     },
     leftSide: {
@@ -43,8 +46,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     icon: {
-        width: 46,
-        height: 46,
+        width: normalize(38),
+        height: normalize(38),
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: COLOR.extraLightGrey,
@@ -52,11 +55,11 @@ const styles = StyleSheet.create({
         marginRight: 12,
     },
     title: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         fontWeight: '500',
-        marginBottom: 6,
+        marginBottom: 4,
     },
-    value: {
+    subTitle: {
         color: COLOR.grey,
     },
 })

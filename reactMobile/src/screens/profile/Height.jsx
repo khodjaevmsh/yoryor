@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native'
 import Container from '../../components/common/Container'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
-import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import { baseAxios } from '../../hooks/requests'
 import { PROFILE } from '../../urls'
 import Button from '../../components/common/Button'
@@ -46,33 +45,28 @@ export default function Height({ route }) {
     }
 
     return (
-        <KeyboardAvoiding>
-            <Container>
-                <Text style={styles.title}>Bo'yingiz?</Text>
-
-                <View style={{ flex: 1, marginTop: 22 }}>
-                    <PickerSelect
-                        placeholder={{ label: 'Javobsiz qoldirish', value: '' }}
-                        items={heightArray.map((item) => ({ label: item.label, value: item.value }))}
-                        value={height}
-                        onValueChange={(val) => setHeight(val)} />
-
-                    <ServerError error={serverError} style={styles.serverError} />
-                </View>
-
-                <View style={styles.buttonWrapper}>
-                    <Button title="Qo'shish" onPress={onSubmit} loading={loading} />
-                </View>
-
-            </Container>
-        </KeyboardAvoiding>
+        <Container>
+            <Text style={styles.title}>Bo'yingiz?</Text>
+            <Text style={styles.subTitle}>Bo'yingizni belgilang.</Text>
+            <View style={{ flex: 1, marginTop: 22 }}>
+                <PickerSelect
+                    placeholder={{ label: 'Javobsiz qoldirish', value: '' }}
+                    items={heightArray.map((item) => ({ label: item.label, value: item.value }))}
+                    value={height}
+                    onValueChange={(val) => setHeight(val)} />
+                <ServerError error={serverError} style={styles.serverError} />
+            </View>
+            <View style={styles.buttonWrapper}>
+                <Button title="Qo'shish" onPress={onSubmit} loading={loading} />
+            </View>
+        </Container>
     )
 }
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
@@ -80,25 +74,6 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         fontSize: fontSize.small,
         lineHeight: 19.5,
-    },
-    inputWrapper: {
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: normalize(15),
-        paddingLeft: normalize(25),
-        paddingRight: normalize(20),
-        borderRadius: normalize(15),
-        borderWidth: 2,
-        borderColor: COLOR.lightGrey,
-        marginTop: 22,
-    },
-    input: {
-        width: '100%',
-        minHeight: normalize(100),
-        justifyContent: 'flex-start',
-        textAlignVertical: 'top',
-        fontSize: fontSize.medium,
     },
     buttonWrapper: {
         flex: 1,

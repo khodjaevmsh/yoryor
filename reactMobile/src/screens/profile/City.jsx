@@ -10,7 +10,6 @@ import { COUNTRY, PROFILE, REGION } from '../../urls'
 import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
 import PickerSelect from '../../components/common/PickerSelect'
-import ServerError from '../../components/common/ServerError'
 import { showToast } from '../../components/common/Toast'
 
 export default function City({ route }) {
@@ -20,28 +19,22 @@ export default function City({ route }) {
     const [regionData, setRegionData] = useState([])
     const [region, setRegion] = useState(props.region.id.toString())
     const [loading, setLoading] = useState(false)
-    const [serverError, setServerError] = useState('')
-    const [validationError, setValidationError] = useState('')
     const { profile, setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit() {
-        if (!country || !region) {
-            setValidationError('* Majburiy maydon')
-        } else {
-            try {
-                setLoading(true)
-                await baseAxios.put(PROFILE.replace('{id}', profile.id), { region })
-                navigation.goBack()
-                if (props.region.country.toString() !== country || props.region.id.toString() !== region) {
-                    setRender(true)
-                    showToast('success', 'Muvaffaqiyatli', 'Yashash joyingiz o\'zgartirildi.')
-                }
-            } catch (error) {
-                setServerError(error.response)
-            } finally {
-                setLoading(false)
+        try {
+            setLoading(true)
+            await baseAxios.put(PROFILE.replace('{id}', profile.id), { region })
+            navigation.goBack()
+            if (props.region.country.toString() !== country || props.region.id.toString() !== region) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Yashash joyingiz o\'zgartirildi.')
             }
+        } catch (error) {
+            console.log(error.response)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -51,7 +44,7 @@ export default function City({ route }) {
                 const response = await baseAxios.get(COUNTRY)
                 setCountryData(response.data)
             } catch (error) {
-                setValidationError('* Nomalum xatolik, qaytib urinib ko\'ring')
+                console.log(error.response)
             } finally {
                 setLoading(false)
             }
@@ -63,7 +56,7 @@ export default function City({ route }) {
                 const response = await baseAxios.get(REGION, { params: { country } })
                 setRegionData(response.data)
             } catch (error) {
-                setValidationError('* Nomalum xatolik, qaytib urinib ko\'ring')
+                console.log(error.response)
             } finally {
                 setLoading(false)
             }
@@ -73,39 +66,29 @@ export default function City({ route }) {
 
     return (
         <Container>
-            <View>
-                <Text style={styles.title}>Qayerdan siz?</Text>
-            </View>
-
-            <View style={{ flex: 1 }}>
+            <Text style={styles.title}>Qayerdan siz?</Text>
+            <Text style={styles.subTitle}>
+                Hozrigi kunda qayerda istiqomat qilishingiz to'g'risida kiriting.
+                Foydalanuvchilar sizni istiqomat qilish manzilingiz orqali topishadi.
+            </Text>
+            <View style={styles.pickerWrapper}>
                 <PickerSelect
-                    placeholder={{ label: 'Davlatni tanlang', value: '' }}
+                    // placeholder={{ label: 'Davlatni tanlang', value: '' }}
                     items={countryData && Array.isArray(countryData) ? (
                         countryData.map((item) => ({ label: item.title, value: `${item.id}` }))
                     ) : []}
                     value={country}
                     onValueChange={(value) => setCountry(value)} />
-
                 <PickerSelect
-                    placeholder={{ label: 'Shaharni tanlang', value: '' }}
+                    // placeholder={{ label: 'Shaharni tanlang', value: '' }}
                     items={regionData && Array.isArray(regionData) ? (
                         regionData.map((item) => ({ label: item.title, value: `${item.id}` }))
                     ) : []}
                     value={region}
-                    style={pickerSelectStyles}
                     onValueChange={(value) => setRegion(value)} />
-
-                <ServerError error={serverError} style={styles.serverError} />
-                {!country || !region ? <Text style={styles.validationError}>{validationError}</Text> : null}
-
             </View>
-
             <View style={styles.buttonWrapper}>
-                <Button
-                    title="Davom etish"
-                    onPress={onSubmit}
-                    buttonStyle={styles.button}
-                    loading={loading} />
+                <Button title="Davom etish" onPress={onSubmit} buttonStyle={styles.button} loading={loading} />
             </View>
         </Container>
     )
@@ -113,72 +96,22 @@ export default function City({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
-        marginBottom: 18,
+        fontSize: normalize(26),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
         marginTop: 7,
-        marginBottom: 30,
-        lineHeight: 19.5,
+        marginBottom: 8,
         fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
-    gender: {
-        width: '100%',
-        height: normalize(46),
-        backgroundColor: COLOR.extraLightGrey,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 12,
-        marginVertical: 6,
-    },
-    genderText: {
-        fontSize: fontSize.medium,
-        color: COLOR.black,
-        fontWeight: '500',
-    },
-    activeGender: {
-        borderColor: COLOR.primary,
-        borderWidth: 1.2,
-    },
-    validationError: {
-        color: COLOR.primary,
-        marginLeft: 4,
+    pickerWrapper: {
+        flex: 1,
+        marginTop: 22,
     },
     buttonWrapper: {
         flex: 1,
         justifyContent: 'flex-end',
-    },
-})
-
-const pickerSelectStyles = StyleSheet.create({
-    inputIOS: {
-        width: '100%',
-        height: 52,
-        fontSize: normalize(16),
-        color: 'black',
-        borderWidth: 1,
-        borderRadius: 15,
-        paddingHorizontal: 15,
-        paddingVertical: 18,
-        borderColor: '#F2F2F2',
-        flexGrow: 1,
-        backgroundColor: COLOR.extraLightGrey,
-    },
-    inputAndroid: {
-        width: '100%',
-        height: 52,
-        fontSize: normalize(16),
-        color: 'black',
-        borderWidth: 1,
-        borderRadius: 15,
-        paddingHorizontal: 15,
-        paddingVertical: 18,
-        borderColor: '#F2F2F2',
-        overflow: 'hidden',
-        flexGrow: 1,
-        marginBottom: normalize(18),
-        backgroundColor: COLOR.extraLightGrey,
     },
 })

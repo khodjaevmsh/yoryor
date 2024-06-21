@@ -1,8 +1,18 @@
+import React from 'react'
+import { ClinkingGlasses, FaceWithHeart, HeartWithArrow, WavingHand } from '../components/common/Svgs'
+
 export const goals = {
     match: 'Juftlik topish',
     friendship: "Do'st ortirish",
     long_term_dating: 'Uzoq muddatli tanishuv',
     short_term_dating: 'Qisqa muddatli tanishuv',
+}
+
+export const goalsWithIcon = {
+    match: { title: 'Juftlik topish', icon: <HeartWithArrow /> },
+    friendship: { title: "Do'st ortirish", icon: <WavingHand /> },
+    long_term_dating: { title: 'Uzoq muddatli tanishuv', icon: <FaceWithHeart /> },
+    short_term_dating: { title: 'Qisqa muddatli tanishuv', icon: <ClinkingGlasses /> },
 }
 
 export const genders = {
@@ -19,9 +29,9 @@ export const levels = {
     other: 'Boshqasi',
 }
 
-export const martialStatus = {
+export const maritalStatus = {
     single: "Yolg'iz",
-    married: 'Uylangan',
+    married: 'Turmush qurgan',
     divorced: 'Ajrashgan',
     widowed: 'Beva',
     engaged: 'Unashtirilgan',

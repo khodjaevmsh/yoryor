@@ -4,11 +4,11 @@ import normalize from 'react-native-normalize'
 import RoundedTagWithIcon from './RoundedTagWithIcon'
 import { COLOR } from '../utils/colors'
 import { AcademicCap, CaseRound, Dollar, Heart, Ruler, Stars, Weigher } from './common/Svgs'
-import { levels, martialStatus, incomeLevels, zodiacs } from '../utils/choices'
+import { levels, maritalStatus, incomeLevels, zodiacs } from '../utils/choices'
 
 export default function ReceiverBody({ receiver }) {
     const fields = [
-        { icon: <Heart width={20} height={20} />, text: martialStatus[receiver.maritalStatus] },
+        { icon: <Heart width={20} height={20} />, text: maritalStatus[receiver.maritalStatus] },
         { icon: <AcademicCap width={20} height={20} />, text: levels[receiver.educationLevel] },
         { icon: <CaseRound width={20} height={20} />, text: receiver.jobTitle },
     ]
