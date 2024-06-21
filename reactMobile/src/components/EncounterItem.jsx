@@ -9,7 +9,7 @@ import { domain } from '../hooks/requests'
 import { Goal, Heart, MapPoint } from './common/Svgs'
 import { COLOR } from '../utils/colors'
 import ReceiverBody from './ReceiverBody'
-import { goals, martialStatus } from '../utils/choices'
+import { goals } from '../utils/choices'
 
 const { height: screenHeight } = Dimensions.get('window')
 const imageHeight = screenHeight * 0.75 // Например, чтобы изображение занимало 75% высоты экрана

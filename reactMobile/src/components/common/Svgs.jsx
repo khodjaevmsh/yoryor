@@ -236,7 +236,7 @@ export function CheckMarkBlue({ width = 32, height = 32, props }) {
     )
 }
 
-export function CalendarMark({ width = 32, height = 32, props }) {
+export function CalendarMark({ width = 22, height = 22, props }) {
     return (
         <Svg
             {...props}
@@ -260,7 +260,7 @@ export function CalendarMark({ width = 32, height = 32, props }) {
     )
 }
 
-export function UserRounded({ width = 32, height = 32, color = '#000', props }) {
+export function UserRounded({ width = 22, height = 22, color = '#000', props }) {
     return (
         <Svg
             {...props}
@@ -358,7 +358,7 @@ export function Wheel({ width = 32, height = 32, props }) {
     )
 }
 
-export function MapPoint({ width = 32, height = 32, color = '#000', props }) {
+export function MapPoint({ width = 22, height = 22, color = '#000', props }) {
     return (
         <Svg
             {...props}
@@ -378,7 +378,7 @@ export function MapPoint({ width = 32, height = 32, color = '#000', props }) {
     )
 }
 
-export function Weigher({ width = 32, height = 32, props }) {
+export function Weigher({ width = 22, height = 22, props }) {
     return (
         <Svg
             {...props}
@@ -398,7 +398,7 @@ export function Weigher({ width = 32, height = 32, props }) {
     )
 }
 
-export function Goal({ width = 32, height = 32, color = '#000', props }) {
+export function Goal({ width = 22, height = 22, color = '#000', props }) {
     return (
         <Svg {...props} width={normalize(width)} height={normalize(height)} fill={color} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
             <Path fill={color} d="M248 8C111.03 8 0 119.03 0 256s111.03 248 248 248 248-111.03 248-248S384.97 8 248 8zm0 432c-101.69 0-184-82.29-184-184 0-101.69 82.29-184 184-184 101.69 0 184 82.29 184 184 0 101.69-82.29 184-184 184zm0-312c-70.69 0-128 57.31-128 128s57.31 128 128 128 128-57.31 128-128-57.31-128-128-128zm0 192c-35.29 0-64-28.71-64-64s28.71-64 64-64 64 28.71 64 64-28.71 64-64 64z" />
@@ -406,7 +406,7 @@ export function Goal({ width = 32, height = 32, color = '#000', props }) {
     )
 }
 
-export function Stars({ width = 32, height = 32, props }) {
+export function Stars({ width = 22, height = 22, props }) {
     return (
         <Svg
             {...props}
@@ -424,7 +424,7 @@ export function Stars({ width = 32, height = 32, props }) {
     )
 }
 
-export function Ruler({ width = 32, height = 32, props }) {
+export function Ruler({ width = 22, height = 22, props }) {
     return (
         <Svg {...props} width={normalize(width)} height={normalize(height)} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
             <Path d="M635.7 167.2 556.1 31.7c-8.8-15-28.3-20.1-43.5-11.5l-69 39.1L503.3 161c2.2 3.8.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9L416 75l-55.2 31.3 27.9 47.4c2.2 3.8.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9L333.2 122 278 153.3 337.8 255c2.2 3.7.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9l-59.7-101.7-55.2 31.3 27.9 47.4c2.2 3.8.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9l-27.9-47.5-55.2 31.3 59.7 101.7c2.2 3.7.9 8.5-2.9 10.7l-13.8 7.8c-3.8 2.2-8.7.9-10.9-2.9L84.9 262.9l-69 39.1C.7 310.7-4.6 329.8 4.2 344.8l79.6 135.6c8.8 15 28.3 20.1 43.5 11.5L624.1 210c15.2-8.6 20.4-27.8 11.6-42.8z" />
@@ -432,7 +432,7 @@ export function Ruler({ width = 32, height = 32, props }) {
     )
 }
 
-export function AcademicCap({ width = 32, height = 32, props }) {
+export function AcademicCap({ width = 22, height = 22, props }) {
     return (
         <Svg
             {...props}
@@ -454,7 +454,7 @@ export function AcademicCap({ width = 32, height = 32, props }) {
     )
 }
 
-export function ListHeart({ width = 32, height = 32, props }) {
+export function ListHeart({ width = 22, height = 22, props }) {
     return (
         <Svg
             {...props}
@@ -478,7 +478,7 @@ export function ListHeart({ width = 32, height = 32, props }) {
     )
 }
 
-export function CaseRound({ width = 32, height = 32, props }) {
+export function CaseRound({ width = 22, height = 22, props }) {
     return (
         <Svg
             {...props}
@@ -506,7 +506,7 @@ export function CaseRound({ width = 32, height = 32, props }) {
     )
 }
 
-export function Dollar({ width = 32, height = 32, props }) {
+export function Dollar({ width = 22, height = 22, props }) {
     return (
         <Svg
             {...props}

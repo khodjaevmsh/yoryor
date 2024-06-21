@@ -28,7 +28,7 @@ export default function Input({
             {label ? <Text style={[styles.label, labelStyle]}>{label}</Text> : null}
             <Field name={name}>
                 {({ field, form }) => (
-                    <View style={{ flexDirection: 'row', alignItems: 'center', position: 'relative' }}>
+                    <View style={styles.inputWrapper}>
                         <TextInput
                             style={[styles.input, inputStyle]}
                             keyboardType={keyboardType}
@@ -54,6 +54,11 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         marginLeft: 4,
         fontSize: fontSize.medium,
+    },
+    inputWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'relative',
     },
     input: {
         width: '100%',

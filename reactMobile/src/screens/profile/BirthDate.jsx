@@ -17,15 +17,11 @@ import { showToast } from '../../components/common/Toast'
 
 export default function BirthDate({ route }) {
     const { props } = route.params
+    const { profile, setRender } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
-    const [, setServerError] = useState('')
     const [validationError, setValidationError] = useState('')
-    const [date, setDate] = useState(new Date())
+    const [date, setDate] = useState(new Date(profile.birthdate))
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-    const {
-        profile,
-        setRender,
-    } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     const birthdate = moment(date).format('D MMMM, YYYY')
@@ -38,13 +34,13 @@ export default function BirthDate({ route }) {
                 await baseAxios.put(PROFILE.replace('{id}', profile.id), {
                     birthdate: moment(date).format('YYYY-MM-DD'),
                 })
-                navigation.goBack()
                 if (props.value !== birthdate) {
                     setRender(true)
                     showToast('success', 'Muvaffaqiyatli', 'Tug\'ilgan yil o\'zgartirildi.')
                 }
+                navigation.goBack()
             } catch (error) {
-                setServerError(error.response)
+                console.log(error.response)
             } finally {
                 setLoading(false)
             }
@@ -57,6 +53,9 @@ export default function BirthDate({ route }) {
         <KeyboardAvoiding>
             <Container>
                 <Text style={styles.title}>Tug'ilgan kuningiz?</Text>
+                <Text style={styles.subTitle}>
+                    Foydalanuvchilarga Siznining yoshingiz ko'rsatiladi, tug'ilgan kuningiz emas!
+                </Text>
 
                 {Platform.OS === 'android' ? (
                     <TouchableOpacity
@@ -104,8 +103,8 @@ export default function BirthDate({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,

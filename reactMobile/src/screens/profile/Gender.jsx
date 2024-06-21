@@ -9,76 +9,58 @@ import { baseAxios } from '../../hooks/requests'
 import { PROFILE } from '../../urls'
 import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
-import ServerError from '../../components/common/ServerError'
 import { showToast } from '../../components/common/Toast'
-
-const genders = [
-    { id: 'male', title: 'Erkak' },
-    { id: 'female', title: 'Ayol' },
-    { id: 'other', title: 'Boshqasi' },
-]
+import { genders } from '../../utils/choices'
 
 export default function Gender({ route }) {
     const { props } = route.params
-    const [gender, setGender] = useState(props.gender.value)
+    const [gender, setGender] = useState(props.key)
     const [loading, setLoading] = useState(false)
-    const [serverError, setServerError] = useState('')
-    const [validationError, setValidationError] = useState('')
     const { profile, setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
-    useEffect(() => {
-        setValidationError('')
-    }, [gender])
-
     async function onSubmit() {
-        if (!gender) {
-            setValidationError('* Jinsigzini tanlang')
-        } else {
-            try {
-                setLoading(true)
-                await baseAxios.put(PROFILE.replace('{id}', profile.id), { gender })
-                navigation.goBack()
-                if (gender !== props.gender.value) {
-                    setRender(true)
-                    showToast('success', 'Muvaffaqiyatli', 'Jinsingiz o\'zgartirildi.')
-                }
-            } catch (error) {
-                setServerError(error.response)
-            } finally {
-                setLoading(false)
+        try {
+            setLoading(true)
+            await baseAxios.put(PROFILE.replace('{id}', profile.id), { gender })
+            navigation.goBack()
+            if (gender !== props.gender) {
+                setRender(true)
+                showToast('success', 'Muvaffaqiyatli', 'Jinsingiz o\'zgartirildi.')
             }
+        } catch (error) {
+            console.log(error.response)
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <Container>
-            <View style={{ flex: 1 }}>
-                <Text style={styles.title}>Jinsingiz?</Text>
+            <Text style={styles.title}>Jinsingiz?</Text>
+            <Text style={styles.subTitle}>
+                Foydalanuvchilar Sizning jinsingizga qarab filtrlanadi va
+                faqat qarama-qarshi jinsdagi foydalanuvchilar ko'rsatiladi.
+            </Text>
 
-                <View style={{ marginTop: 22 }}>
-                    {genders.map((item) => (
-                        <TouchableOpacity
-                            key={item.id}
-                            activeOpacity={0.7}
-                            onPress={() => setGender(item.id)}
-                            style={[styles.gender, gender === item.id && styles.activeGender]}>
-                            <Text style={styles.genderText}>{item.title}</Text>
-                            <View style={[styles.radio, gender === item.id && styles.activeRadio]} />
-                        </TouchableOpacity>
-                    ))}
-                </View>
-
-                <ServerError error={serverError} style={styles.serverError} />
-                {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
-
-                <View style={styles.buttonWrapper}>
-                    <Button
-                        title="Davom etish"
-                        onPress={onSubmit}
-                        buttonStyle={styles.button}
-                        loading={loading} />
-                </View>
+            <View style={{ marginTop: 22 }}>
+                {Object.entries(genders).map(([key, value]) => (
+                    <TouchableOpacity
+                        key={key}
+                        activeOpacity={0.7}
+                        onPress={() => setGender(key)}
+                        style={[styles.gender, gender === key && styles.activeGender]}>
+                        <Text style={styles.genderText}>{value}</Text>
+                        <View style={[styles.radio, gender === key && styles.activeRadio]} />
+                    </TouchableOpacity>
+                ))}
+            </View>
+            <View style={styles.buttonWrapper}>
+                <Button
+                    title="Davom etish"
+                    onPress={onSubmit}
+                    buttonStyle={styles.button}
+                    loading={loading} />
             </View>
         </Container>
     )
@@ -86,8 +68,15 @@ export default function Gender({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: normalize(28),
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
+    },
+    subTitle: {
+        color: COLOR.grey,
+        marginTop: 7,
+        marginBottom: 8,
+        fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
     gender: {
         width: '100%',

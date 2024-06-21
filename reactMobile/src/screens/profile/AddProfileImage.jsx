@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { launchImageLibrary } from 'react-native-image-picker'
 import axios from 'axios'
+import normalize from 'react-native-normalize'
 import Container from '../../components/common/Container'
 import { COLOR } from '../../utils/colors'
 import Button from '../../components/common/Button'
@@ -128,7 +129,7 @@ export default function AddProfileImage({ route }) {
             setRender(true)
             showToast('success', 'Muvaffaqiyatli', 'Rasmlar o\'zgartirildi.')
         } catch (error) {
-            showToast('error', 'Oops!', `${error.response.data.uploaded_images}`)
+            showToast('warning', 'Oops!', "Yangi rasm qo'shish talab etiladi.")
         } finally {
             setLoading(false)
         }
@@ -144,7 +145,7 @@ export default function AddProfileImage({ route }) {
             <View>
                 <Text style={styles.title}>Rasmingiz ...</Text>
                 <Text style={styles.subTitle}>
-                    Foydalanuvchilarni jalb qilish maqsadida ko'proq rasm joylashtirish maslahat beriladi!
+                    Foydalanuvchilarni jalb qilish maqsadida ko'proq rasm joylashtirishingiz tavsiya etiladi!
                 </Text>
             </View>
 
@@ -183,8 +184,8 @@ export default function AddProfileImage({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(26),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,

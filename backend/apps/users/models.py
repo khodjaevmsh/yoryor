@@ -65,7 +65,7 @@ class Profile(models.Model):
 
     MARITAL_STATUS_CHOICES = [
         ('single', 'Yolg\'iz'),
-        ('married', 'Uylangan'),
+        ('married', 'Turmush qurgan'),
         ('divorced', 'Ajrashgan'),
         ('widowed', 'Beva'),
         ('engaged', 'Unashtirilgan'),

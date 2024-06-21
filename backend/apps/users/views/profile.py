@@ -47,7 +47,7 @@ class ProfileListView(APIView, PageNumPagination):
 class ProfileDetailView(APIView):
     def get(self, request, pk):
         instance = get_object_or_404(Profile, id=pk)
-        serializer = ProfileSerializer(instance)
+        serializer = SimpleProfileSerializer(instance)
         return Response(serializer.data, status=200)
 
     def put(self, request, pk):

@@ -11,17 +11,12 @@ import { COLOR } from '../../utils/colors'
 import { fontSize } from '../../utils/fontSizes'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import ConfirmModal from '../../components/ConfirmModal'
-import CustomHeaderLeft from '../../components/common/CustomHeaderLeft'
 
 export default function SetName({ route }) {
     const [loading, setLoading] = useState(false)
     const [isModalConfirm, setModalConfirm] = useState(false)
     const navigation = useNavigation()
     const { phoneNumber, password } = route.params
-
-    useEffect(() => {
-        navigation.setOptions({ headerLeft: () => <CustomHeaderLeft /> })
-    }, [navigation])
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()

@@ -86,8 +86,8 @@ export default function Settings() {
 
 const styles = StyleSheet.create({
     headerTitle: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
     sectionTitle: {
         fontSize: fontSize.medium,

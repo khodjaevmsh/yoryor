@@ -56,15 +56,16 @@ const styles = StyleSheet.create({
         marginBottom: 18,
     },
     dot: {
-        width: 10,
-        height: 10,
+        width: 7,
+        height: 7,
         borderRadius: 100,
-        marginRight: 10,
+        marginRight: 8,
         backgroundColor: COLOR.primary,
     },
     profileDescription: {
-        fontSize: normalize(20),
-        fontWeight: '500',
+        fontSize: normalize(16),
+        fontWeight: '600',
+        textTransform: 'uppercase',
     },
     textArea: {
         width: '100%',

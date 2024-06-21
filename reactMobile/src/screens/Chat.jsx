@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
-import { ActivityIndicator, FlatList, RefreshControl, Text, TouchableOpacity, StyleSheet, View } from 'react-native'
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { FlatList, RefreshControl, Text, TouchableOpacity, StyleSheet, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
@@ -11,22 +11,35 @@ import { GlobalContext } from '../context/GlobalContext'
 import NotFound from '../components/NotFound'
 import { fontSize } from '../utils/fontSizes'
 import { shortenText } from '../utils/string'
+import { showToast } from '../components/common/Toast'
+import ActivityIndicator from '../components/common/ActivityIndicator'
 
 export default function Chat() {
     const [loading, setLoading] = useState(false)
     const [rooms, setRooms] = useState([])
     const [refreshing, setRefreshing] = useState(false)
     const [page, setPage] = useState(1)
-    const [numPages, setNumPages] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
     const { profile, token } = useContext(GlobalContext)
     const navigation = useNavigation()
     const [lastMessages, setLastMessages] = useState({})
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <View style={{ marginLeft: 18 }}>
+                    <Text style={{ fontSize: normalize(22), fontWeight: '700' }}>Chat</Text>
+                </View>
+            ),
+        })
+    }, [navigation])
 
     const createWebSocket = useCallback((roomId) => {
         const ws = new WebSocket(`ws://${webSocketUrl}/ws/chat/${roomId}/?token=${token}`)
         ws.onopen = () => console.log('WebSocket connected')
         ws.onmessage = (event) => {
             const receivedMessage = JSON.parse(event.data)
+            showToast('success', 'Message', 'Hello')
             setLastMessages((prevMessages) => ({
                 ...prevMessages,
                 [roomId]: receivedMessage.message.text,
@@ -43,8 +56,12 @@ export default function Chat() {
             try {
                 setLoading(true)
                 const response = await baseAxios.get(ROOMS, { params: { page } })
-                setRooms((prevRooms) => [...prevRooms, ...response.data.results])
-                setNumPages(response.data.totalPages)
+                if (!refreshing) {
+                    setRooms((prevRooms) => [...prevRooms, ...response.data.results])
+                } else {
+                    setRooms([])
+                }
+                setTotalPages(response.data.totalPages)
 
                 // Initialize WebSocket connection for each room
                 roomWebsockets = await response.data.results.map((room) => createWebSocket(room.id))
@@ -56,15 +73,24 @@ export default function Chat() {
             }
         }
 
-        if (page <= numPages) {
-            fetchRooms()
-        }
+        fetchRooms()
 
         // Cleanup WebSocket connections on component unmount
         return () => {
             roomWebsockets.forEach((ws) => ws.close())
         }
-    }, [page, numPages, createWebSocket, refreshing])
+    }, [page, createWebSocket, refreshing])
+
+    function handleRefresh() {
+        setRefreshing(true)
+        setPage(1)
+    }
+
+    const handleLoadMore = () => {
+        if (!loading && !refreshing && page < totalPages) {
+            setPage(page + 1) // Load next page
+        }
+    }
 
     const renderItem = ({ item }) => {
         const sender = item.participants.find((participant) => participant.id === profile.id)
@@ -90,24 +116,18 @@ export default function Chat() {
     }
 
     return (
-        <Container containerStyle={{ marginBottom: 0 }} keyboardDismiss={false}>
+        <Container containerStyle={styles.container}>
             <FlatList
                 data={rooms}
                 renderItem={renderItem}
                 keyExtractor={(item, index) => index.toString()}
-                onEndReached={() => setPage((prevPage) => prevPage + 1)}
-                onEndReachedThreshold={0.8}
-                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator size="small" /> : null)}
+                onEndReached={handleLoadMore}
+                onEndReachedThreshold={0.2}
+                contentContainerStyle={styles.contentContainer}
+                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
                 showsVerticalScrollIndicator={false}
                 refreshControl={(
-                    <RefreshControl
-                        tintColor={COLOR.lightGrey}
-                        refreshing={refreshing}
-                        onRefresh={() => {
-                            setRefreshing(true)
-                            setRooms([])
-                            setPage(1)
-                        }} />
+                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
                 )}
                 ListEmptyComponent={!loading && !refreshing ? (
                     <NotFound wrapperStyle={{ marginHorizontal: 8 }} />
@@ -118,6 +138,12 @@ export default function Chat() {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        marginTop: 0,
+    },
+    contentContainer: {
+        marginTop: 15,
+    },
     roomItemWrapper: {
         flex: 1,
         borderBottomColor: COLOR.lightGrey,

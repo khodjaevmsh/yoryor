@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
+import normalize from 'react-native-normalize/src/index'
 import EncounterCard from '../components/EncounterCard'
 import { baseAxios } from '../hooks/requests'
 import { PROFILES } from '../urls'
@@ -20,11 +21,18 @@ export default function Encounter() {
     const [gender, setGender] = useState(sender?.gender?.value === 'male' ? 'female' : 'male')
     const navigation = useNavigation()
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
+            headerLeft: () => (
+                <View style={{ marginLeft: 18 }}>
+                    <Text style={{ fontSize: normalize(22), fontWeight: '700' }}>
+                        Tanishuvlar
+                    </Text>
+                </View>
+            ),
             headerRight: () => (
-                <TouchableOpacity onPress={() => setModalVisible(true)}>
-                    <Tuning2 width={28} height={28} color={COLOR.black} />
+                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => setModalVisible(true)}>
+                    <Tuning2 width={26} height={26} color={COLOR.black} />
                 </TouchableOpacity>
             ),
         })

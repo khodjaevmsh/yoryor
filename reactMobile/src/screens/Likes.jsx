@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Text } from 'react-native'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import { StyleSheet, FlatList, RefreshControl, View, Text, TouchableOpacity } from 'react-native'
 import normalize from 'react-native-normalize'
+import { useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
 import { baseAxios } from '../hooks/requests'
 import { LIKES } from '../urls'
@@ -9,6 +10,7 @@ import LikeItem from '../components/LikeItem'
 import ActivityIndicator from '../components/common/ActivityIndicator'
 import { showToast } from '../components/common/Toast'
 import WantMoreLikes from '../components/WantMoreLikes'
+import { Tuning2 } from '../components/common/Svgs'
 
 export default function Likes() {
     const [loading, setLoading] = useState(false)
@@ -17,6 +19,17 @@ export default function Likes() {
     const [totalPages, setTotalPages] = useState(1)
     const [refreshing, setRefreshing] = useState(false)
     const { profile: receiver, numOfLikes } = useContext(GlobalContext)
+    const navigation = useNavigation()
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <View style={{ marginLeft: 18 }}>
+                    <Text style={{ fontSize: normalize(22), fontWeight: '700' }}>Likes</Text>
+                </View>
+            ),
+        })
+    }, [navigation])
 
     useEffect(() => {
         async function fetchLikes() {
@@ -85,7 +98,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderBottomWidth: 1,
         borderBottomColor: COLOR.extraLightGrey,
-        paddingVertical: 12,
+        paddingVertical: 18,
     },
     likes: {
         color: COLOR.black,
