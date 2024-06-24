@@ -148,3 +148,8 @@ class Dislike(models.Model):
 
     def __str__(self):
         return f"{self.sender} disliked {self.receiver}"
+
+
+class Device(models.Model):
+    user = models.ForeignKey('users.User', related_name='devices', on_delete=models.CASCADE)
+    token = models.CharField(max_length=255)
