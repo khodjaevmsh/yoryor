@@ -25,8 +25,19 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+# Configure Firebase to be used as a static framework
+$RNFirebaseAsStaticFramework = true
+
 target 'reactMobile' do
   config = use_native_modules!
+
+  # Add Firebase pods with modular headers
+  pod 'Firebase', :modular_headers => true
+  pod 'Firebase/Messaging', :modular_headers => true
+  pod 'Firebase/Core', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
 
   # Flags change depending on the env values.
   flags = get_default_flags()

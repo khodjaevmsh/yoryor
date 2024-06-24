@@ -22,6 +22,8 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<true/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -35,8 +37,21 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take photos.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone for recording audio (if applicable).</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to select images.</string>
+	<key>UIAppFonts</key>
+	<array/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -49,17 +64,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to take photos.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to select images.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to your microphone for recording audio (if applicable).</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
-	<key>UIAppFonts</key>
-	<array/>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

@@ -39,7 +39,6 @@ export default function Chat() {
         ws.onopen = () => console.log('WebSocket connected')
         ws.onmessage = (event) => {
             const receivedMessage = JSON.parse(event.data)
-            showToast('success', 'Message', 'Hello')
             setLastMessages((prevMessages) => ({
                 ...prevMessages,
                 [roomId]: receivedMessage.message.text,

@@ -13,9 +13,11 @@ import os
 import sys
 from pathlib import Path
 
+import firebase_admin
 from django.utils.translation import gettext_lazy as _
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from firebase_admin import credentials
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -47,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     "channels",
 
+    'core',
     'users',
     'chat'
 ]
@@ -185,6 +188,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ESKIZ_EMAIL = 'khodjaevmsh@gmail.com'
 ESKIZ_PASSWORD = '1aJP1s7Xm2kj4l1LRhP0WqgFGumt7YuO16TMefNE'
+
+# Path to your service account key JSON file
+FIREBASE_SERVICE_ACCOUNT_KEY = 'serviceAccountKey.json'
+
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate(FIREBASE_SERVICE_ACCOUNT_KEY)
+firebase_admin.initialize_app(cred)
 
 try:
     from .settings_dev import *

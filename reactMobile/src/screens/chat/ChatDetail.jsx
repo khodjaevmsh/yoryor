@@ -19,11 +19,14 @@ export default function ChatDetail({ route }) {
 
     const createWebSocket = useCallback(() => {
         const ws = new WebSocket(`ws://${webSocketUrl}/ws/chat/${room.id}/?token=${token}`)
+
         ws.onopen = () => setSocket(ws)
-        ws.onmessage = (event) => {
+
+        ws.onmessage = async (event) => {
             const receivedMessage = JSON.parse(event.data)
             setMessages((prevMessages) => GiftedChat.append(prevMessages, receivedMessage.message))
         }
+
         ws.onclose = () => console.log('WebSocket disconnected')
 
         return ws

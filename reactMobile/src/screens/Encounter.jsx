@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Text, TouchableOpacity, View } from 'react-native'
-import normalize from 'react-native-normalize/src/index'
+import normalize from 'react-native-normalize'
 import EncounterCard from '../components/EncounterCard'
 import { baseAxios } from '../hooks/requests'
 import { PROFILES } from '../urls'
@@ -10,6 +10,8 @@ import { Tuning2 } from '../components/common/Svgs'
 import { COLOR } from '../utils/colors'
 import FilterModal from '../components/FilterModal'
 import { GlobalContext } from '../context/GlobalContext'
+import Button from '../components/common/Button'
+import LocalNotification from '../components/LocalNotification'
 
 export default function Encounter() {
     const { profile: sender } = useContext(GlobalContext)
@@ -67,6 +69,7 @@ export default function Encounter() {
                 setRegion={setRegion}
                 gender={gender}
                 setGender={setGender} />
+            <Button title="Alert" onPress={LocalNotification} />
         </>
     )
 }
