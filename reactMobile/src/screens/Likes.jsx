@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Text } from 'react-native'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
@@ -10,7 +10,6 @@ import LikeItem from '../components/LikeItem'
 import ActivityIndicator from '../components/common/ActivityIndicator'
 import { showToast } from '../components/common/Toast'
 import WantMoreLikes from '../components/WantMoreLikes'
-import { Tuning2 } from '../components/common/Svgs'
 
 export default function Likes() {
     const [loading, setLoading] = useState(false)

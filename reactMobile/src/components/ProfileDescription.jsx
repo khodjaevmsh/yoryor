@@ -4,18 +4,16 @@ import { ChevronRight } from 'react-native-feather'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
-import useTrans from '../translate'
 import { shortenText } from '../utils/string'
 
 export default function ProfileDescription({ fetchedProfile }) {
     const navigation = useNavigation()
-    const t = useTrans()
 
     return (
         <View style={styles.wrapper}>
             <View style={styles.titleWrapper}>
                 <View style={styles.dot} />
-                <Text style={styles.profileDescription}>{t('profileAbout')}</Text>
+                <Text style={styles.profileDescription}>Profilingiz tavsifi</Text>
             </View>
 
             <View style={styles.textArea}>

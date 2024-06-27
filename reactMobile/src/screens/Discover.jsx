@@ -58,12 +58,11 @@ export default function Discover() {
             }
         }
         fetchReceivers()
-    }, [refreshing, page, isModalVisible])
+    }, [isModalVisible, refreshing, page])
 
     useEffect(() => {
         // Function to be executed when isModalVisible changes to false
         if (!isModalVisible) {
-            // Reset the fetchedProfiles, page, or any other state you want to refresh
             setReceivers([])
             setPage(1)
         }
@@ -80,13 +79,11 @@ export default function Discover() {
         }
     }
 
-    const renderItem = ({ item }) => <DiscoverItem item={item} />
-
     return (
         <View style={styles.container}>
             <FlatList
                 data={receivers}
-                renderItem={renderItem}
+                renderItem={({ item }) => <DiscoverItem item={item} />}
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={3}
                 contentContainerStyle={styles.contentContainerStyle}

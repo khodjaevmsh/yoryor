@@ -29,8 +29,12 @@ class LikeSerializer(serializers.ModelSerializer):
             like.match = True
             like.save()
 
-            room, created = Room.objects.annotate(participant_count=Count('participants')).get_or_create(
-                participants__in=[like.sender, like.receiver], participant_count=2,
+            room, created = Room.objects.annotate(
+                participant_count=Count('participants')
+            ).get_or_create(
+                name=f'{like.sender}and{like.receiver}',
+                participants__in=[like.sender, like.receiver],
+                participant_count=2,
             )
 
             if not created and room.participant_count == 1:

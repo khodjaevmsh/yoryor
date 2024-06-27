@@ -20,8 +20,7 @@ export default function LikedUsers({ likedUsers }) {
                     source={{
                         uri: item.sender ? `${domain + item.sender.images[0].image}` : null,
                         priority: FastImage.priority.high,
-                    }}
-                    resizeMode={FastImage.resizeMode.cover} />
+                    }} resizeMode={FastImage.resizeMode.cover} />
                 <Text style={styles.likedUserName}>{item.sender.name}</Text>
             </View>
         </TouchableOpacity>

@@ -22,13 +22,15 @@ class ProfileListView(APIView, PageNumPagination):
             queryset = queryset.filter(region=region)
         if gender:
             queryset = queryset.filter(gender=gender)
-        if encounter: # Фильтр по пользователям у которых уже есть лайк или дислайк
+
+        # Фильтр по пользователям у которых уже есть лайк или дислайк
+        if encounter:
             # Получаем все профили, которые пользователь лайкал
-            liked_profiles = Like.objects.filter(sender=request.user.profile).values_list('receiver_id', flat=True)
-            disliked_profiles = Dislike.objects.filter(sender=request.user.profile).values_list('receiver_id', flat=True)
+            liked = Like.objects.filter(sender=request.user.profile).values_list('receiver_id', flat=True)
+            disliked = Dislike.objects.filter(sender=request.user.profile).values_list('receiver_id', flat=True)
 
             # Объединяем списки профилей, на которые пользователь поставил лайк или дислайк
-            profiles = list(liked_profiles) + list(disliked_profiles)
+            profiles = list(liked) + list(disliked)
 
             # Исключаем эти профили из queryset
             queryset = queryset.exclude(id__in=profiles)

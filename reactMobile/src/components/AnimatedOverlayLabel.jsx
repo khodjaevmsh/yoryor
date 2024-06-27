@@ -3,13 +3,13 @@ import { View, StyleSheet, Animated } from 'react-native'
 
 const AnimatedView = Animated.createAnimatedComponent(View)
 
-function AnimatedOverlayLabel({ icon, color, position }) {
+export default function AnimatedOverlayLabel({ icon, color, position }) {
     const [animation] = useState(new Animated.Value(position === 'left' ? -100 : 100))
 
     useEffect(() => {
         Animated.timing(animation, {
             toValue: 0,
-            duration: 100,
+            duration: 200,
             useNativeDriver: true,
         }).start()
     }, [animation])
@@ -34,10 +34,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         top: 280,
-        padding: 15,
-        borderRadius: 55,
+        padding: 18,
+        borderRadius: 100,
         zIndex: 1,
     },
 })
-
-export default AnimatedOverlayLabel

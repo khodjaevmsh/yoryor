@@ -13,37 +13,25 @@ import { shortenText } from '../utils/string'
 
 const DiscoverItem = memo(({ item }) => {
     const navigation = useNavigation()
-    const [like, setLike] = useState(null)
-
-    useEffect(() => {
-        async function fetchLikes() {
-            try {
-                const response = await baseAxios.get(LIKE.replace('{id}', item.id))
-                setLike(response.data)
-            } catch (error) {
-                showToast('error', 'Oops!', 'Nomalum xatolik')
-            }
-        }
-        fetchLikes()
-    }, [item.id])
 
     return (
         <TouchableOpacity
             style={styles.card}
             activeOpacity={0.85}
             onPress={() => navigation.navigate('ReceiverDetail', { receiver: item })}>
-            <FastImage style={styles.profileImage} source={{
-                uri: `${domain + item.images[0].image}`,
-                priority: FastImage.priority.low,
-            }} resizeMode={FastImage.resizeMode.cover} />
+            <FastImage
+                style={styles.profileImage}
+                resizeMode={FastImage.resizeMode.cover}
+                source={{
+                    uri: `${domain + item.images[0].image}`,
+                    priority: FastImage.priority.normal,
+                    cache: FastImage.cacheControl.web,
+                }} />
             <View style={styles.profileInfo}>
                 <Text style={styles.name}>
                     {shortenText(item.name, 15)}, {new Date().getFullYear() - moment(item.birthdate).format('YYYY')}
                 </Text>
                 <Text style={styles.city}>{item.region.title}</Text>
-            </View>
-            <View style={styles.iconContainer}>
-                {like && like.id ? <Heart color={COLOR.red} width={22} height={22} /> : null}
             </View>
         </TouchableOpacity>
     )

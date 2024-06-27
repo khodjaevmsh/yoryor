@@ -51,6 +51,7 @@
         "jsx-a11y/control-has-associated-label": 0,
         "react/jsx-props-no-spreading": 0,
         "react/no-unescaped-entities": 0,
-        "react/jsx-fragments": 0
+        "react/jsx-fragments": 0,
+        "object-shorthand": 0
     }
 }

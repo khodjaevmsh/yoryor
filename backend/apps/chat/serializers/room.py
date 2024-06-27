@@ -1,18 +1,12 @@
 from rest_framework import serializers
 
-from chat.models import Message, Room
-from chat.serializers.message import MessageSerializer
-from users.serializers.profile import ProfileSerializer, SimpleProfileSerializer
+from chat.models import Room
+from users.serializers.profile import SimpleProfileSerializer
 
 
 class RoomSerializer(serializers.ModelSerializer):
-    participants = ProfileSerializer(many=True)
-
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data['message'] = MessageSerializer(Message.objects.filter(room=instance).last()).data
-        return data
+    participants = SimpleProfileSerializer(many=True)
 
     class Meta:
         model = Room
-        fields = ('id', 'name', 'participants',)
+        fields = ['id', 'name', 'participants']

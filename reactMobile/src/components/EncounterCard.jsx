@@ -58,7 +58,7 @@ export default function EncounterCard({ receivers, setModalVisible }) {
                 <Swiper
                     ref={swiperRef}
                     cards={receivers}
-                    renderCard={(card) => <EncounterItem swiperRef={swiperRef} receiver={card} />}
+                    renderCard={(item) => <EncounterItem swiperRef={swiperRef} receiver={item} />}
                     onSwipedRight={handleSwipedRight}
                     onSwipedLeft={handleSwipedLeft}
                     cardIndex={0}
@@ -72,14 +72,14 @@ export default function EncounterCard({ receivers, setModalVisible }) {
                     overlayLabels={{
                         left: {
                             element: <AnimatedOverlayLabel
-                                icon={<X height={42} width={42} color={COLOR.black} strokeWidth={3} />}
+                                icon={<X height={48} width={48} color={COLOR.black} strokeWidth={3} />}
                                 color={COLOR.white}
                                 position="left" />,
                             style: { wrapper: { alignItems: 'flex-end', justifyContent: 'center', marginLeft: -50 } },
                         },
                         right: {
                             element: <AnimatedOverlayLabel
-                                icon={<Heart height={42} width={42} color={COLOR.black} strokeWidth={3} />}
+                                icon={<Heart height={48} width={48} color={COLOR.black} strokeWidth={3} />}
                                 color={COLOR.white}
                                 position="right" />,
                             style: { wrapper: { alignItems: 'flex-start', justifyContent: 'center', marginLeft: 50 } },

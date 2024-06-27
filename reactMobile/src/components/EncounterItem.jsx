@@ -19,11 +19,20 @@ export default function EncounterItem({ swiperRef, receiver }) {
     const [animation] = useState(new Animated.Value(1))
 
     useEffect(() => {
+        if (receiver && receiver.images && receiver.images.length > 0) {
+            const imageUrls = receiver.images.map((image) => ({
+                uri: `${domain + image.image}`,
+            }))
+            FastImage.preload(imageUrls)
+        }
+    }, [receiver])
+
+    useEffect(() => {
         if (!isVisible) {
             Animated.timing(animation, {
                 toValue: 0,
-                duration: 200, // Duration of the animation in milliseconds
-                useNativeDriver: true, // Enable native driver for performance
+                duration: 200,
+                useNativeDriver: true,
             }).start()
         } else {
             Animated.timing(animation, {
@@ -36,7 +45,7 @@ export default function EncounterItem({ swiperRef, receiver }) {
 
     const handleScroll = (event) => {
         const offsetY = event.nativeEvent.contentOffset.y
-        if (offsetY > 150) { // Пороговое значение для скрытия элемента
+        if (offsetY > 150) {
             setIsVisible(false)
         } else {
             setIsVisible(true)
@@ -77,10 +86,14 @@ export default function EncounterItem({ swiperRef, receiver }) {
                 scrollEventThrottle={16}
                 bounces={false}>
                 <TouchableOpacity style={styles.touchable} activeOpacity={1}>
-                    <FastImage style={styles.cardImage} source={{
-                        uri: receiver ? `${domain + receiver.images[0].image}` : null,
-                        priority: FastImage.priority.normal,
-                    }} resizeMode={FastImage.resizeMode.cover} />
+                    <FastImage
+                        style={styles.cardImage}
+                        resizeMode={FastImage.resizeMode.cover}
+                        source={{
+                            uri: receiver ? `${domain + receiver.images[0].image}` : null,
+                            priority: FastImage.priority.normal,
+                            cache: FastImage.cacheControl.web,
+                        }} />
                     {receiver ? (
                         <View style={{ marginHorizontal: 18 }}>
                             <ReceiverBody receiver={receiver} />

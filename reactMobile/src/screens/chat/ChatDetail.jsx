@@ -1,80 +1,98 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react'
-import { GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
-import { KeyboardAvoidingView, View, Platform, StyleSheet, ActivityIndicator } from 'react-native'
-import { ArrowUp } from 'react-native-feather'
+import { GiftedChat } from 'react-native-gifted-chat'
+import { KeyboardAvoidingView, View, Platform, StyleSheet } from 'react-native'
 import { GlobalContext } from '../../context/GlobalContext'
 import ChatDetailHeader from '../../components/ChatDetailHeader'
-import { COLOR } from '../../utils/colors'
 import { baseAxios, webSocketUrl } from '../../hooks/requests'
 import { MESSAGES } from '../../urls'
 import EmptyChatView from '../../components/EmptyChatView'
+import ActivityIndicator from '../../components/common/ActivityIndicator'
+import InputToolBar from '../../components/InputToolBar'
 
 export default function ChatDetail({ route }) {
+    const [ws, setWs] = useState('')
+    const [loading, setLoading] = useState(false)
     const [messages, setMessages] = useState([])
-    const [socket, setSocket] = useState(null)
-    const [loading, setLoading] = useState(true)
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
     const [isLoadingEarlier, setIsLoadingEarlier] = useState(false)
     const { token } = useContext(GlobalContext)
     const { room, sender, receiver } = route.params
 
-    const createWebSocket = useCallback(() => {
-        const ws = new WebSocket(`ws://${webSocketUrl}/ws/chat/${room.id}/?token=${token}`)
+    useEffect(() => {
+        const newWs = new WebSocket(`${webSocketUrl}/${room.name}/?token=${token}`)
 
-        ws.onopen = () => setSocket(ws)
-
-        ws.onmessage = async (event) => {
-            const receivedMessage = JSON.parse(event.data)
-            setMessages((prevMessages) => GiftedChat.append(prevMessages, receivedMessage.message))
+        newWs.onopen = () => {
+            console.log('WebSocket connected')
+            setWs(newWs)
         }
 
-        ws.onclose = () => console.log('WebSocket disconnected')
+        newWs.onmessage = (event) => {
+            const newMessage = JSON.parse(event.data).message
+            setMessages((previousMessages) => GiftedChat.append(previousMessages, {
+                _id: Math.random().toString(36).substr(2, 9),
+                text: newMessage.text,
+                createdAt: newMessage.createdAt,
+                user: newMessage.user,
+            }))
+        }
 
-        return ws
-    }, [token, room.id])
+        newWs.onerror = (event) => {
+            console.error('WebSocket error:', event.message)
+        }
+
+        newWs.onclose = () => {
+            console.log('WebSocket disconnected')
+        }
+
+        return () => {
+            if (newWs.readyState === WebSocket.OPEN) {
+                newWs.close()
+            }
+        }
+    }, [room.name, token])
 
     async function fetchMessages() {
         try {
             setLoading(true)
-            setIsLoadingEarlier(true)
-            const response = await baseAxios.get(MESSAGES, { params: { room: room.id } })
-            const msgs = response.data.map((message) => ({
-                _id: message.id,
+            const response = await baseAxios.get(MESSAGES, { params: { room: room.id, page } })
+            const messageResponse = response.data.results.map((message) => ({
+                _id: Math.random().toString(36).substr(2, 9),
                 text: message.content,
                 createdAt: message.timestamp,
                 user: { _id: message.user },
             }))
-            setMessages(msgs)
+
+            setMessages((prevMessages) => GiftedChat.prepend(prevMessages, messageResponse))
+            setTotalPages(response.data.totalPages)
         } catch (error) {
             console.log(error.response)
         } finally {
             setLoading(false)
-            setIsLoadingEarlier(false)
         }
     }
 
     useEffect(() => {
         fetchMessages()
-        const ws = createWebSocket()
-        return () => ws.close()
-    }, [createWebSocket])
+    }, [page])
 
-    const onSend = useCallback(
-        (newMessages = []) => {
-            if (socket) {
-                socket.send(JSON.stringify({ message: {
-                    ...newMessages[0],
-                    receiver: receiver.id,
-                } }))
-            } else {
-                console.error('WebSocket not connected. Message not sent.')
-            }
-        },
-        [socket, receiver],
-    )
+    const onSend = useCallback((newMessage = []) => {
+        const messageData = { room, sender, receiver, content: newMessage[0], message: newMessage[0] }
 
-    const isCloseToTop = ({ layoutMeasurement, contentOffset, contentSize }) => {
-        const paddingToTop = 80
-        return contentSize.height - layoutMeasurement.height - paddingToTop <= contentOffset.y
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            // setMessages((prevMessages) => GiftedChat.prepend(prevMessages, newMessage))
+            ws.send(JSON.stringify(messageData))
+        } else {
+            console.error('WebSocket connection not open.')
+        }
+    }, [ws])
+
+    function loadEarlierMessages() {
+        if (!loading && page < totalPages) {
+            setIsLoadingEarlier(true)
+            setPage(page + 1)
+            setIsLoadingEarlier(false)
+        }
     }
 
     return (
@@ -85,38 +103,22 @@ export default function ChatDetail({ route }) {
                     messages={messages}
                     onSend={(newMessages) => onSend(newMessages)}
                     user={{ _id: sender.id }}
-                    renderInputToolbar={(props) => (
-                        <InputToolbar {...props} containerStyle={styles.inputToolBar} />
-                    )}
-                    textInputStyle={styles.textInputStyle}
-                    alwaysShowSend
-                    renderSend={(props) => (
-                        <Send {...props}>
-                            <View style={styles.sendIcon}>
-                                <ArrowUp strokeWidth={2.3} color={COLOR.black} />
-                            </View>
-                        </Send>
-                    )}
-                    // onLoadEarlier={fetchMessages}
-                    isLoadingEarlier={isLoadingEarlier}
                     timeFormat="HH:mm"
-                    dateFormat="DD.MM.YYYY"
-                    renderAvatar={() => null}
-                    showAvatarForEveryMessage
+                    dateFormat="DD MMMM YYYY"
+                    renderAvatar={null}
+                    alwaysShowSend
+                    renderInputToolbar={(props) => <InputToolBar props={props} />}
+                    maxComposerHeight={200}
+                    minComposerHeight={Platform.OS === 'ios' ? 38 : 38}
                     bottomOffset={15}
-                    renderLoading={() => (loading ? <ActivityIndicator size="small" color={COLOR.darkGrey} /> : null)}
-                    listViewProps={{
-                        scrollEventThrottle: 80,
-                        onScroll: ({ nativeEvent }) => {
-                            if (isCloseToTop(nativeEvent) && !isLoadingEarlier) {
-                                fetchMessages() // Load more messages when close to the top
-                            }
-                        },
-                    }}
-                    renderChatEmpty={() => (!loading ? <EmptyChatView /> : null)} />
+                    loadEarlier
+                    isLoadingEarlier={isLoadingEarlier}
+                    listViewProps={{ onEndReached: loadEarlierMessages, onEndReachedThreshold: 0.1 }}
+                    renderLoadEarlier={() => (loading ? <ActivityIndicator padding /> : null)}
+                    renderLoading={() => (loading ? <ActivityIndicator padding /> : null)}
+                    renderChatEmpty={() => (!loading && messages.length <= 0 ? <EmptyChatView /> : null)} />
+                {Platform.OS === 'android' && <KeyboardAvoidingView behavior="padding" />}
             </View>
-
-            {Platform.OS === 'android' && <KeyboardAvoidingView behavior="height" />}
         </View>
     )
 }
@@ -125,26 +127,5 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingBottom: Platform.OS === 'ios' ? 22 : 5,
-    },
-    inputToolBar: {
-        paddingBottom: 5,
-        borderTopWidth: 0,
-    },
-    textInputStyle: {
-        paddingTop: 9,
-        paddingLeft: 14,
-        backgroundColor: COLOR.white,
-        borderRadius: 18,
-        overflow: 'hidden',
-        marginLeft: 15,
-        borderColor: COLOR.lightGrey,
-        borderWidth: 0.8,
-    },
-    sendIcon: {
-        backgroundColor: COLOR.lightGrey,
-        borderRadius: 50,
-        padding: Platform.OS === 'ios' ? 5 : 6,
-        marginRight: 15,
-        marginLeft: 12,
     },
 })

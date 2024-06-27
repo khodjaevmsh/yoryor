@@ -15,8 +15,9 @@ import SecureTextEntryIcon from '../../components/common/SecureTextEntryIcon'
 import { baseAxios } from '../../hooks/requests'
 import { SIGN_IN } from '../../urls'
 import { GlobalContext } from '../../context/GlobalContext'
+import { getToken } from '../../hooks/usePushNotification'
 
-export default function SignIn({ route }) {
+export default function SignIn() {
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState()
     const [secureTextEntry, setSecureTextEntry] = useState(true)
@@ -34,9 +35,11 @@ export default function SignIn({ route }) {
     async function onSubmit(data) {
         try {
             setLoading(true)
+            const deviceToken = await getToken()
             const response = await baseAxios.post(SIGN_IN, {
                 phoneNumber: data.phoneNumber,
                 password: data.password,
+                device: deviceToken,
             })
             auth(response.data.token, response.data.user, response.data.profile)
             navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })

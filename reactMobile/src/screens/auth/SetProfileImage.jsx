@@ -13,6 +13,7 @@ import ServerError from '../../components/common/ServerError'
 import { GlobalContext } from '../../context/GlobalContext'
 import { SIGN_UP } from '../../urls'
 import { domain } from '../../hooks/requests'
+import { getToken } from '../../hooks/usePushNotification'
 
 export default function SetProfileImage({ route }) {
     const [images, setImages] = useState(Array(6).fill(null))
@@ -63,6 +64,7 @@ export default function SetProfileImage({ route }) {
 
     async function onSubmit() {
         const formData = new FormData()
+        const deviceToken = await getToken()
 
         formData.append('phone_number', phoneNumber)
         formData.append('password', password)
@@ -74,6 +76,7 @@ export default function SetProfileImage({ route }) {
         buttonNumbers.forEach((number) => {
             formData.append('button_numbers', number)
         })
+        formData.append('device', deviceToken)
 
         if (images.filter((image) => image !== null).length < 2) {
             setValidationError('* Kamida 2 ta rasm qo\'shing')
