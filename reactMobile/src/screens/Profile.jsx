@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
-import { Edit, Settings } from 'react-native-feather'
+import { Settings } from 'react-native-feather'
 import { useNavigation } from '@react-navigation/native'
 import normalize from 'react-native-normalize'
 import Container from '../components/common/Container'
@@ -9,7 +9,6 @@ import { baseAxios } from '../hooks/requests'
 import { PROFILE_IMAGES } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 import { COLOR } from '../utils/colors'
-import ProfileButton from '../components/ProfileButton'
 import SubscriptionCard from '../components/SubscriptionCard'
 import MyProfileHeader from '../components/MyProfileHeader'
 import ActivityIndicator from '../components/common/ActivityIndicator'
@@ -38,7 +37,7 @@ const subscriptionPlans = [
 
 export default function Profile() {
     const [loading, setLoading] = useState(false)
-    const [fetchMyImages, setFetchedMyImages] = useState([])
+    const [myProfileImages, setMyProfileImages] = useState([])
     const { profile: myProfile, render, setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -46,14 +45,12 @@ export default function Profile() {
         navigation.setOptions({
             headerLeft: () => (
                 <View style={{ marginLeft: 18 }}>
-                    <Text style={{ fontSize: normalize(22), fontWeight: '700' }}>
-                        Profil
-                    </Text>
+                    <Text style={{ fontSize: normalize(22), fontWeight: '700' }}>Profil</Text>
                 </View>
             ),
             headerRight: () => (
-                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => navigation.navigate('MyProfileDetail')}>
-                    <Edit width={25} height={25} color={COLOR.black} />
+                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => navigation.navigate('Settings')}>
+                    <Settings width={25} height={25} color={COLOR.black} />
                 </TouchableOpacity>
             ),
         })
@@ -64,7 +61,7 @@ export default function Profile() {
             try {
                 setLoading(true)
                 const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: myProfile.id } })
-                setFetchedMyImages(response.data[0])
+                setMyProfileImages(response.data)
             } catch (error) {
                 console.log(error.response)
             } finally {
@@ -81,8 +78,7 @@ export default function Profile() {
 
     return (
         <Container containerStyle={styles.container}>
-            <MyProfileHeader fetchMyImages={fetchMyImages} />
-
+            <MyProfileHeader myProfileImages={myProfileImages} />
             <View style={styles.carouselWrapper}>
                 <Carousel
                     layout="default"
@@ -94,14 +90,6 @@ export default function Profile() {
                     firstItem={1}
                     inactiveSlideOpacity={1} />
             </View>
-
-            <View style={styles.footerWrapper}>
-                <ProfileButton
-                    title="Sozlamalar"
-                    icon={<Settings width={24} height={24} color={COLOR.black} strokeWidth={2.3} />}
-                    screen="Settings" />
-            </View>
-
         </Container>
     )
 }
@@ -111,7 +99,7 @@ const styles = StyleSheet.create({
         flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 30,
+        marginTop: 20,
     },
     footerWrapper: {
         flex: 1,

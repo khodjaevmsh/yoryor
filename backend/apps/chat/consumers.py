@@ -1,16 +1,13 @@
-import json
-
+from asgiref.sync import sync_to_async
 from channels.db import database_sync_to_async
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.exceptions import StopConsumer
 from channels.middleware import BaseMiddleware
 from django.contrib.auth.models import AnonymousUser
-from django.db.models import Count
-from django.shortcuts import get_object_or_404
-from django.utils import timezone
 from rest_framework.authtoken.models import Token
 
-from chat.models import Message, Room
-from users.models import Profile
+from chat.models import Message
+from core.views.send_notification import send_notification
+from users.models import Device
 
 
 class WebSocketAuthMiddleware(BaseMiddleware):
@@ -34,16 +31,22 @@ class WebSocketAuthMiddleware(BaseMiddleware):
             return AnonymousUser()
 
 
+from channels.generic.websocket import AsyncWebsocketConsumer
+import json
+
+
 class ChatConsumer(AsyncWebsocketConsumer):
+
     async def connect(self):
-        self.room_id = self.scope['url_route']['kwargs']['room_id']
-        self.room_group_name = f"chat_{self.room_id}"
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_group_name = f'chat_{self.room_name}'
 
         # Join room group
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
+
         await self.accept()
 
     async def disconnect(self, close_code):
@@ -52,54 +55,48 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+        # raise StopConsumer()
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-        sender = message['user']['_id']
-        receiver = message['receiver']
-        content = message['text']
-
-        room = await self.get_or_create_room(sender=sender, receiver=receiver)
-        saved_message = await self.create_and_save_message(room=room, sender=sender, content=content)
+        room = text_data_json['room']
+        content = text_data_json['content']
+        sender = text_data_json['sender']
+        receiver = text_data_json['receiver']
 
         # Send message to room group
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'chat.message',
+                'type': 'chat_message',
                 'message': message,
+                'sender': sender,
+                'receiver': receiver,
             }
         )
 
+        # Save message to database
+        await sync_to_async(Message.objects.create)(
+            room_id=room['id'],
+            user_id=sender['id'],
+            content=content['text']
+        )
+
+        # Filter Device objects for the receiver
+        device = await sync_to_async(Device.objects.filter(user=receiver['user']).first)()
+
+        if device:
+            send_notification(device_token=device.token, title=sender['name'], body=content['text'])
+
     async def chat_message(self, event):
         message = event['message']
+        sender = event['sender']
+        receiver = event['receiver']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
+            'sender': sender,
+            'receiver': receiver,
         }))
-
-    @database_sync_to_async
-    def get_or_create_room(self, sender, receiver):
-        # Get or create a conversation between sender and receiver
-        room = Room.objects.filter(participants__in=[sender, receiver]).annotate(
-            participant_count=Count('participants')
-        ).filter(participant_count=2).first()
-
-        if not room:
-            # Create a new conversation
-            room = Room.objects.create()
-            room.participants.add(sender, receiver)
-        elif room.participants.count() == 1:
-            # If there is only one participant, add the second one
-            room.participants.add(receiver)
-
-        return room
-
-    @database_sync_to_async
-    def create_and_save_message(self, room, sender, content):
-        sender_profile = get_object_or_404(Profile, id=sender)
-        room.updated_at = timezone.now()
-        room.save()
-        return Message.objects.create(room=room, user=sender_profile, content=content, seen=False)

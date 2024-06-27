@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from core.utils.choices import GENDER_CHOICES, GOAL_CHOICES, LEVEL_CHOICES, MARITAL_STATUS_CHOICES, \
+    INCOME_LEVEL_CHOICES, ZODIAC_CHOICES
 from users.managers import UserManager
 
 
@@ -42,59 +44,6 @@ class Region(models.Model):
 
 
 class Profile(models.Model):
-    GOAL_CHOICES = [
-        ('match', 'Juftlik topish'),
-        ('friendship', 'Do\'st ortirish'),
-        ('long_term_dating', 'Uzoq muddatli tanishuv'),
-        ('short_term_dating', 'Qisqa muddatli tanishuv'),
-    ]
-
-    GENDER_CHOICES = [
-        ('male', 'Erkak'),
-        ('female', 'Ayol'),
-        ('other', 'Boshqasi'),
-    ]
-
-    LEVEL_CHOICES = [
-        ('high_school', 'O\'rta maxsus'),
-        ('bachelors_degree', 'Bakalavr'),
-        ('masters_degree', 'Magistratura'),
-        ('doctorate', 'Doktorantura'),
-        ('other', 'Boshqasi'),
-    ]
-
-    MARITAL_STATUS_CHOICES = [
-        ('single', 'Yolg\'iz'),
-        ('married', 'Turmush qurgan'),
-        ('divorced', 'Ajrashgan'),
-        ('widowed', 'Beva'),
-        ('engaged', 'Unashtirilgan'),
-        ('relationship', 'Munosabatda'),
-        ('other', 'Boshqasi'),
-    ]
-
-    INCOME_LEVEL_CHOICES = [
-        ('low', 'Past daromad'),
-        ('moderate', 'O\'rtacha daromad'),
-        ('above_moderate', 'O\'rtacha daromaddan yuqori'),
-        ('high', 'Yuqori daromad'),
-        ('very_high', 'Juda yuqori daromad'),
-    ]
-
-    ZODIAC_CHOICES = [
-        ('aries', 'Qo\'y'),
-        ('taurus', 'Buqa'),
-        ('gemini', 'Egizaklar'),
-        ('cancer', 'Qisqichbaqa'),
-        ('leo', 'Arslon'),
-        ('virgo', 'Parizod'),
-        ('libra', 'Tarozi'),
-        ('scorpio', 'Chayon'),
-        ('sagittarius', 'O\'q otar'),
-        ('capricorn', 'Tog\' echkisi'),
-        ('aquarius', 'Qovg\'a'),
-        ('pisces', 'Baliqlar'),
-    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=55, null=True, blank=True)
     birthdate = models.DateField(null=True, blank=True)
@@ -131,8 +80,8 @@ class Like(models.Model):
     match = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # class Meta:
-    #     unique_together = ('sender', 'receiver')
+    class Meta:
+        unique_together = ('sender', 'receiver')
 
     def __str__(self):
         return f"{self.sender} liked {self.receiver}"
@@ -153,3 +102,6 @@ class Dislike(models.Model):
 class Device(models.Model):
     user = models.ForeignKey('users.User', related_name='devices', on_delete=models.CASCADE)
     token = models.CharField(max_length=255)
+
+    def __str__(self):
+        return f"{self.user.username}'s device with token {self.token}"

@@ -15,7 +15,7 @@ import { determineFontSize } from '../utils/string'
 
 const itemWidth = Dimensions.get('window').width * 0.94
 
-export default function ProfileDetailHeader({ profileImages }) {
+export default function ProfileDetailHeader({ myProfileImages }) {
     const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -23,16 +23,20 @@ export default function ProfileDetailHeader({ profileImages }) {
         <TouchableOpacity
             activeOpacity={1}
             style={styles.carouselItem}
-            onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id })}>
-            <FastImage style={styles.carouselImage} source={{
-                uri: `${domain + item.image}`,
-                priority: FastImage.priority.normal,
-            }} resizeMode={FastImage.resizeMode.cover} />
+            onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id, myProfileImages })}>
+            <FastImage
+                style={styles.carouselImage}
+                resizeMode={FastImage.resizeMode.cover}
+                source={{
+                    uri: `${domain + item.image}`,
+                    priority: FastImage.priority.normal,
+                    cache: FastImage.cacheControl.web,
+                }} />
             {index === 0 && (
                 <TouchableOpacity
                     activeOpacity={0.5}
                     style={styles.updateButton}
-                    onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id })}>
+                    onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id, myProfileImages })}>
                     <Edit2 width={16} height={16} color={COLOR.white} />
                     <Text style={styles.updateText}>O'zgartirish</Text>
                 </TouchableOpacity>
@@ -55,7 +59,7 @@ export default function ProfileDetailHeader({ profileImages }) {
             <View style={styles.sliderWrapper}>
                 <Carousel
                     layout="default"
-                    data={profileImages && profileImages}
+                    data={myProfileImages}
                     renderItem={renderItem}
                     sliderWidth={Dimensions.get('window').width}
                     itemWidth={itemWidth}

@@ -3,12 +3,10 @@ import humps from 'humps'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Config from 'react-native-config'
 
-console.log(Config.BASE_URL)
-
 // const backendUrl = Config.BASE_URL
 const backendUrl = 'http://127.0.0.1:8000/'
 export const domain = backendUrl.endsWith('/') ? backendUrl.substr(0, backendUrl.length - 1) : backendUrl
-export const webSocketUrl = '127.0.0.1:8000'
+export const webSocketUrl = 'ws://127.0.0.1:8000/ws/chat'
 
 export const baseAxios = axios.create({
     baseURL: `${domain}/api/v1/`, // Базовый URL для всех запросов

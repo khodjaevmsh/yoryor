@@ -16,10 +16,14 @@ export default function LikeItem({ item }) {
             style={styles.item}
             activeOpacity={0.96}
             onPress={() => navigation.navigate('ReceiverDetail', { receiver: item.sender })}>
-            <FastImage style={styles.image} source={{
-                uri: item.sender ? `${domain + item.sender.images[0].image}` : null,
-                priority: FastImage.priority.high,
-            }} resizeMode={FastImage.resizeMode.cover} />
+            <FastImage
+                style={styles.image}
+                resizeMode={FastImage.resizeMode.cover}
+                source={{
+                    uri: item.sender ? `${domain + item.sender.images[0].image}` : null,
+                    priority: FastImage.priority.normal,
+                    cache: FastImage.cacheControl.web,
+                }} />
             <LinearGradient
                 colors={['transparent', 'rgba(0, 0, 0, 0.6)']}
                 start={{ x: 0.5, y: 0.0 }}

@@ -189,13 +189,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ESKIZ_EMAIL = 'khodjaevmsh@gmail.com'
 ESKIZ_PASSWORD = '1aJP1s7Xm2kj4l1LRhP0WqgFGumt7YuO16TMefNE'
 
-# Path to your service account key JSON file
-FIREBASE_SERVICE_ACCOUNT_KEY = 'serviceAccountKey.json'
-
-# Initialize Firebase Admin SDK
-cred = credentials.Certificate(FIREBASE_SERVICE_ACCOUNT_KEY)
-firebase_admin.initialize_app(cred)
-
 try:
     from .settings_dev import *
 except ImportError:

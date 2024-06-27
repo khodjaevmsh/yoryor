@@ -43,6 +43,6 @@ class SimpleProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = [
-            'id', "name", "birthdate", "gender", "region", "goal", "bio", "height", "weight", "education_level",
+            'id', "user", "name", "birthdate", "gender", "region", "goal", "bio", "height", "weight", "education_level",
             "education_school", "job_title", "job_company", "marital_status", "income_level", "zodiac"
         ]

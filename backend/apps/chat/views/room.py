@@ -12,7 +12,7 @@ class RoomListView(APIView, PageNumPagination):
 
     def get(self, request):
         profile = request.user.profile.id
-        rooms = Room.objects.filter(participants__in=[profile]).order_by('-updated_at')
+        rooms = Room.objects.filter(participants=profile).order_by('-updated_at')
         results = self.paginate_queryset(rooms, request, view=self)
         serializer = RoomSerializer(results, many=True)
         return self.get_paginated_response(serializer.data)

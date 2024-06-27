@@ -1,46 +1,40 @@
-from firebase_admin import messaging
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from rest_framework.views import APIView
+import firebase_admin
+from firebase_admin import messaging, credentials
+
+# Path to your service account key JSON file
+FIREBASE_SERVICE_ACCOUNT_KEY = 'serviceAccountKey.json'
+
+# Initialize Firebase Admin SDK
+cred = credentials.Certificate(FIREBASE_SERVICE_ACCOUNT_KEY)
+firebase_admin.initialize_app(cred)
 
 
-class SendNotification(APIView):
-    permission_classes = (AllowAny,)
-
-    def post(self, request, *args, **kwargs):
-        # Assuming you receive a device registration token and message data in the request
-        device_token = request.data.get('device_token')
-        message_title = request.data.get('title')
-        message_body = request.data.get('body')
-        sound = request.data.get('sound', 'default')
-
-        # Construct the message
-        message = messaging.Message(
-            token=device_token,
-            notification=messaging.Notification(
-                title=message_title,
-                body=message_body,
+def send_notification(device_token, title, body, sound='default'):
+    message = messaging.Message(
+        token=device_token,
+        notification=messaging.Notification(
+            title=title,
+            body=body,
+        ),
+        android=messaging.AndroidConfig(
+            notification=messaging.AndroidNotification(
+                sound=sound,
             ),
-            android=messaging.AndroidConfig(
-                notification=messaging.AndroidNotification(
+        ),
+        apns=messaging.APNSConfig(
+            payload=messaging.APNSPayload(
+                aps=messaging.Aps(
                     sound=sound,
                 ),
             ),
-            apns=messaging.APNSConfig(
-                payload=messaging.APNSPayload(
-                    aps=messaging.Aps(
-                        sound=sound,
-                    ),
-                ),
-            ),
-        )
+        ),
+    )
 
-        try:
-            # Send a message
-            response = messaging.send(message)
-            print('Successfully sent message:', response)
-            return Response({"success": True, "message": "Message sent successfully"})
+    try:
+        response = messaging.send(message)
+        print('Successfully sent message:', response)
+        return {"success": True, "message": "Message sent successfully"}
 
-        except Exception as e:
-            print('Error sending message:', e)
-            return Response({"success": False, "error": str(e)})
+    except Exception as e:
+        print('Error sending message:', e)
+        return {"success": False, "error": str(e)}

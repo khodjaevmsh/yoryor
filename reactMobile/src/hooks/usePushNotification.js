@@ -2,8 +2,6 @@ import React from 'react'
 import messaging from '@react-native-firebase/messaging'
 import { PermissionsAndroid, Platform } from 'react-native'
 import LocalNotification from '../utils/localNotification'
-import { baseAxios } from './requests'
-import { DEVICE_TOKEN } from '../urls'
 
 export async function requestUserPermission() {
     if (Platform.OS === 'ios') {
@@ -21,12 +19,13 @@ export async function requestUserPermission() {
 
 // Получение токена устройства
 export async function getToken() {
-    const fcmToken = await messaging().getToken()
-    if (fcmToken) {
-        saveToken(fcmToken) // Сохраните токен на сервере или используйте его по вашему усмотрению
-        console.log('FCM token is:', fcmToken)
-    } else {
-        console.log('Failed to get FCM token')
+    try {
+        const fcmToken = await messaging().getToken()
+        if (fcmToken) {
+            return fcmToken
+        } return null
+    } catch (error) {
+        return null
     }
 }
 
@@ -35,12 +34,13 @@ export function setupNotificationListeners() {
     // Обработка уведомлений на переднем плане
     messaging().onMessage(async (remoteMessage) => {
         console.log('A new FCM message arrived!', JSON.stringify(remoteMessage))
-        LocalNotification.showLoacalNotification(remoteMessage)
+        LocalNotification.showLocalNotification(remoteMessage)
     })
 
     // Обработка уведомлений на заднем плане
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
         console.log('Message handled in the background!', remoteMessage)
+        LocalNotification.showLocalNotification(remoteMessage)
     })
 
     // Обработка уведомлений при открытии приложения из состояния background
@@ -54,12 +54,4 @@ export function setupNotificationListeners() {
             console.log('Notification caused app to open from quit state:', remoteMessage.notification)
         }
     })
-}
-
-async function saveToken(token) {
-    try {
-        await baseAxios.post(DEVICE_TOKEN, { token })
-    } catch (error) {
-        console.log(error.response)
-    }
 }
