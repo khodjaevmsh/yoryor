@@ -62,6 +62,8 @@ export default function GlobalProvider({ children }) {
 
         if (profile && profile.id) {
             fetchNumOfLikes()
+        } else {
+            setNumOfLikes(0)
         }
     }, [])
 
