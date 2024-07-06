@@ -52,7 +52,7 @@ export default function ChangeLanguage() {
                     loading={loading}
                     onPress={() => {
                         navigation.goBack()
-                        showToast('success', 'Muvaffaqiyatli', 'Ilova tili o\'zgartirildi.')
+                        showToast('success', 'Woohoo!', 'Ilova tili o\'zgartirildi')
                     }} />
             </View>
         </Container>

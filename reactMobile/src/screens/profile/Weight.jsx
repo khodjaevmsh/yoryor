@@ -35,7 +35,7 @@ export default function Weight({ route }) {
             navigation.goBack()
             if (props.value !== weight) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Vazningiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Vazningiz o\'zgartirildi')
             }
         } catch (error) {
             setServerError(error.response)

@@ -1,12 +1,14 @@
 #import "AppDelegate.h"
 
-#import <Firebase.h>
+#import <Firebase.h> // Add this import
 
-#import <React/RCTBundleURLProvider.h>
+#import <React/RCTBundleURLProvider.h> // Add this import
 
-#import <UserNotifications/UserNotifications.h>
+#import <UserNotifications/UserNotifications.h> // Add this import
 
-#import <RNCPushNotificationIOS.h>
+#import <RNCPushNotificationIOS.h> // Add this import
+
+#import "RNCConfig.h" // Add this import
 
 @implementation AppDelegate
 
@@ -23,6 +25,9 @@
   // Define UNUserNotificationCenter
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
   center.delegate = self;
+  
+  // or just fetch the whole config
+  NSDictionary *config = [RNCConfig env];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }

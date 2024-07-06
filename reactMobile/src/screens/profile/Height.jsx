@@ -35,7 +35,7 @@ export default function Height({ route }) {
             navigation.goBack()
             if (props.value !== height) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Bo\'yingiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Bo\'yingiz o\'zgartirildi')
             }
         } catch (error) {
             setServerError(error.response)

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#ffffff',
-        fontWeight: '500',
+        fontWeight: '600',
         fontSize: normalize(16),
     },
 })

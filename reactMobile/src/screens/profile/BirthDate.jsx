@@ -36,7 +36,7 @@ export default function BirthDate({ route }) {
                 })
                 if (props.value !== birthdate) {
                     setRender(true)
-                    showToast('success', 'Muvaffaqiyatli', 'Tug\'ilgan yil o\'zgartirildi.')
+                    showToast('success', 'Woohoo!', 'Tug\'ilgan yil o\'zgartirildi')
                 }
                 navigation.goBack()
             } catch (error) {

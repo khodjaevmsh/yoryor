@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import Swiper from 'react-native-deck-swiper'
-import { X } from 'react-native-feather'
 import { COLOR } from '../utils/colors'
 import EncounterItem from './EncounterItem'
 import { baseAxios } from '../hooks/requests'
@@ -10,10 +9,11 @@ import { showToast } from './common/Toast'
 import { GlobalContext } from '../context/GlobalContext'
 import MatchModal from './MatchModal'
 import WantMore from './WantMore'
-import AnimatedOverlayLabel from './AnimatedOverlayLabel'
-import { Heart } from './common/Svgs'
+import { overlayLabels } from '../utils/swiperOverlayLabes'
+import ActivityIndicator from './common/ActivityIndicator'
 
 export default function EncounterCard({ receivers, setModalVisible }) {
+    const [loading, setLoading] = useState(false)
     const [isMModalVisible, setMModalVisible] = useState(false)
     const [receiver, setReceiver] = useState(null)
     const [room, setRoom] = useState(null)
@@ -23,6 +23,7 @@ export default function EncounterCard({ receivers, setModalVisible }) {
 
     async function handleSwipedRight(cardIndex) {
         try {
+            setLoading(true)
             if (receivers[cardIndex].id) {
                 const response = await baseAxios.post(LIKES, {
                     sender: sender.id,
@@ -36,19 +37,22 @@ export default function EncounterCard({ receivers, setModalVisible }) {
                 }
             }
         } catch (error) {
-            console.log(error.response.data)
-            showToast('error', 'Oops!', 'Nomalum xatolik.')
+            showToast('error', 'Oops!', 'Nomalum xatolik')
+        } finally {
+            setLoading(false)
         }
     }
 
     async function handleSwipedLeft(cardIndex) {
         try {
+            setLoading(true)
             if (receivers[cardIndex].id) {
                 await baseAxios.post(DISLIKES, { sender: sender.id, receiver: receivers[cardIndex].id })
             }
         } catch (error) {
-            console.log(error.response.data)
-            showToast('error', 'Oops!', 'Nomalum xatolik.')
+            showToast('error', 'Oops!', 'Nomalum xatolik')
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -63,29 +67,14 @@ export default function EncounterCard({ receivers, setModalVisible }) {
                     onSwipedLeft={handleSwipedLeft}
                     cardIndex={0}
                     stackSize={3}
-                    backgroundColor={COLOR.white}
-                    marginTop={15}
-                    onSwipedAll={() => setOnSwipedAll(true)}
-                    cardVerticalMargin={0}
-                    cardHorizontalMargin={8}
+                    // onTapCard={(index) => console.log(index)}
                     verticalSwipe={false}
-                    overlayLabels={{
-                        left: {
-                            element: <AnimatedOverlayLabel
-                                icon={<X height={48} width={48} color={COLOR.black} strokeWidth={3} />}
-                                color={COLOR.white}
-                                position="left" />,
-                            style: { wrapper: { alignItems: 'flex-end', justifyContent: 'center', marginLeft: -50 } },
-                        },
-                        right: {
-                            element: <AnimatedOverlayLabel
-                                icon={<Heart height={48} width={48} color={COLOR.black} strokeWidth={3} />}
-                                color={COLOR.white}
-                                position="right" />,
-                            style: { wrapper: { alignItems: 'flex-start', justifyContent: 'center', marginLeft: 50 } },
-                        },
-                    }}
-                />
+                    onSwipedAll={() => setOnSwipedAll(true)}
+                    backgroundColor={COLOR.white}
+                    cardVerticalMargin={12}
+                    cardHorizontalMargin={5}
+                    stackAnimationFriction={10}
+                    overlayLabels={overlayLabels} />
             ) : <WantMore setModalVisible={setModalVisible} />}
 
             <MatchModal
@@ -94,6 +83,9 @@ export default function EncounterCard({ receivers, setModalVisible }) {
                 receiver={receiver}
                 sender={sender}
                 room={room} />
+
+            {loading && !onSwipedAll ? <ActivityIndicator /> : null}
+
         </View>
     )
 }
@@ -101,8 +93,8 @@ export default function EncounterCard({ receivers, setModalVisible }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: COLOR.white,
     },
 })

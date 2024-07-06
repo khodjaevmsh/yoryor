@@ -1,61 +1,59 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Text, TouchableOpacity, View } from 'react-native'
-import normalize from 'react-native-normalize'
 import EncounterCard from '../components/EncounterCard'
 import { baseAxios } from '../hooks/requests'
 import { PROFILES } from '../urls'
-import ActivityIndicator from '../components/common/ActivityIndicator'
 import { Tuning2 } from '../components/common/Svgs'
 import { COLOR } from '../utils/colors'
 import FilterModal from '../components/FilterModal'
 import { GlobalContext } from '../context/GlobalContext'
-import { getToken } from '../hooks/usePushNotification'
+import HeaderLeft from '../components/common/HeaderLeft'
+import HeaderRight from '../components/common/HeaderRight'
+import { showToast } from '../components/common/Toast'
+import SkeletonEncounter from '../components/SkeletonEncounter'
 
 export default function Encounter() {
     const { profile: sender } = useContext(GlobalContext)
-    const [loading, setLoading] = useState(false)
+    const initialGender = sender.gender?.value === 'male' ? 'female' : 'male'
+
+    const [loading, setLoading] = useState(true)
     const [isModalVisible, setModalVisible] = useState(false)
     const [receivers, setReceivers] = useState([])
-    const [country, setCountry] = useState('')
-    const [region, setRegion] = useState('')
-    const [gender, setGender] = useState(sender?.gender?.value === 'male' ? 'female' : 'male')
+    const [country, setCountry] = useState(null)
+    const [region, setRegion] = useState(null)
+    const [gender, setGender] = useState(initialGender)
+    const [applyFilter, setApplyFilter] = useState(false)
     const navigation = useNavigation()
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <View style={{ marginLeft: 18 }}>
-                    <Text style={{ fontSize: normalize(22), fontWeight: '700' }}>
-                        Tanishuvlar
-                    </Text>
-                </View>
-            ),
+            headerLeft: () => <HeaderLeft title="Tanishuvlar" />,
             headerRight: () => (
-                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => setModalVisible(true)}>
-                    <Tuning2 width={26} height={26} color={COLOR.black} />
-                </TouchableOpacity>
+                <HeaderRight
+                    onPress={() => setModalVisible(true)}
+                    icon={<Tuning2 width={26} height={26} color={COLOR.black} />} />
             ),
         })
     }, [navigation])
 
     useEffect(() => {
-        async function fetchReceiver() {
+        async function fetchReceivers() {
             try {
                 setLoading(true)
                 const response = await baseAxios.get(PROFILES, { params: { encounter: true, country, region, gender } })
                 setReceivers(response.data.results)
             } catch (error) {
-                console.log(error.response.data)
+                showToast('warning', 'Oops!', 'Internet mavjudligini tekshiring')
             } finally {
                 setLoading(false)
+                setApplyFilter(false)
             }
         }
-        fetchReceiver()
-    }, [isModalVisible])
+        fetchReceivers()
+    }, [applyFilter])
 
     if (loading) {
-        return <ActivityIndicator padding />
+        return <SkeletonEncounter />
     }
 
     return (
@@ -64,6 +62,7 @@ export default function Encounter() {
             <FilterModal
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
+                setApplyFilter={setApplyFilter}
                 country={country}
                 setCountry={setCountry}
                 region={region}

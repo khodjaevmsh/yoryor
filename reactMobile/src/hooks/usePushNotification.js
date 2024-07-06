@@ -1,13 +1,15 @@
-import React from 'react'
 import messaging from '@react-native-firebase/messaging'
 import { PermissionsAndroid, Platform } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import LocalNotification from '../utils/localNotification'
+import { baseAxios } from './requests'
+import { DEVICE_TOKEN } from '../urls'
 
 export async function requestUserPermission() {
     if (Platform.OS === 'ios') {
         const authStatus = await messaging().requestPermission()
         const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED
-    || authStatus === messaging.AuthorizationStatus.PROVISIONAL
+            || authStatus === messaging.AuthorizationStatus.PROVISIONAL
 
         if (enabled) {
             console.log('FCM auth status:', authStatus)
@@ -17,19 +19,35 @@ export async function requestUserPermission() {
     }
 }
 
-// Получение токена устройства
+// Get device token
 export async function getToken() {
     try {
         const fcmToken = await messaging().getToken()
         if (fcmToken) {
+            await saveDeviceToken(fcmToken)
             return fcmToken
-        } return null
+        }
+        return null
     } catch (error) {
+        console.error('Error getting FCM token:', error)
         return null
     }
 }
 
-// Настройка слушателей уведомлений
+// Save device token to backend
+async function saveDeviceToken(deviceToken) {
+    try {
+        const token = AsyncStorage.getItem('token')
+        if (token) {
+            const response = await baseAxios.post(DEVICE_TOKEN, { token: deviceToken })
+            console.log('Token saved successfully:', response.data)
+        }
+    } catch (error) {
+        console.error('Error saving token:', error.response.data)
+    }
+}
+
+// Settings of notification listener
 export function setupNotificationListeners() {
     // Обработка уведомлений на переднем плане
     messaging().onMessage(async (remoteMessage) => {

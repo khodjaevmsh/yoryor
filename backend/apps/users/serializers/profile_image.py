@@ -6,7 +6,7 @@ from users.models import ProfileImage
 class ProfileImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfileImage
-        fields = ('id', 'profile', 'image')
+        fields = ['id', 'profile', 'image']
 
 
 class ChangeProfileImageSerializer(serializers.ModelSerializer):

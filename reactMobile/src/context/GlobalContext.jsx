@@ -53,20 +53,17 @@ export default function GlobalProvider({ children }) {
     useEffect(() => {
         async function fetchNumOfLikes() {
             try {
-                const response = await baseAxios.get(NUM_OF_LIKES, { params: { receiver: profile.id } })
-                setNumOfLikes(response.data.num)
+                const likesResponse = await baseAxios.get(NUM_OF_LIKES, { params: { receiver: profile.id } })
+                setNumOfLikes(likesResponse.data.num)
             } catch (error) {
                 console.log(error.response.data)
-                setNumOfLikes(0)
             }
         }
 
         if (profile && profile.id) {
             fetchNumOfLikes()
-        } else {
-            setNumOfLikes(0)
         }
-    }, [profile])
+    }, [])
 
     return (
         // eslint-disable-next-line react/jsx-no-constructed-context-values

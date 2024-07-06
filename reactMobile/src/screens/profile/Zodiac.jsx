@@ -27,7 +27,7 @@ export default function Zodiac({ route }) {
             navigation.goBack()
             if (props.key !== zodiac) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Burjingiz o\'zgartirildi')
+                showToast('success', 'Woohoo!', 'Burjingiz o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response)

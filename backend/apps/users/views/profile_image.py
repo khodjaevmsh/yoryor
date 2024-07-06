@@ -45,3 +45,12 @@ class ChangeProfileImageView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({}, status=201)
+
+
+class SingleProfileImageView(APIView):
+    def get(self, request):
+        profile = request.query_params.get('profile', None)
+
+        profile_image = ProfileImage.objects.filter(profile=profile).order_by('button_number').first()
+        serializer = ProfileImageSerializer(profile_image)
+        return Response(serializer.data, status=200)

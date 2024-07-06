@@ -1,17 +1,18 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { View, StyleSheet, Dimensions, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, Dimensions } from 'react-native'
 import Carousel from 'react-native-snap-carousel'
 import { Settings } from 'react-native-feather'
 import { useNavigation } from '@react-navigation/native'
-import normalize from 'react-native-normalize'
 import Container from '../components/common/Container'
 import { baseAxios } from '../hooks/requests'
-import { PROFILE_IMAGES } from '../urls'
+import { SINGLE_PROFILE_IMAGE } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 import { COLOR } from '../utils/colors'
 import SubscriptionCard from '../components/SubscriptionCard'
 import MyProfileHeader from '../components/MyProfileHeader'
-import ActivityIndicator from '../components/common/ActivityIndicator'
+import HeaderLeft from '../components/common/HeaderLeft'
+import HeaderRight from '../components/common/HeaderRight'
+import SkeletonMyProfile from '../components/SkeletonMyProfile'
 
 const itemWidth = Dimensions.get('window').width * 0.90
 const sliderWidth = Dimensions.get('window').width
@@ -37,21 +38,17 @@ const subscriptionPlans = [
 
 export default function Profile() {
     const [loading, setLoading] = useState(false)
-    const [myProfileImages, setMyProfileImages] = useState([])
-    const { profile: myProfile, render, setRender } = useContext(GlobalContext)
+    const [myProfileImage, setMyProfileImage] = useState({})
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <View style={{ marginLeft: 18 }}>
-                    <Text style={{ fontSize: normalize(22), fontWeight: '700' }}>Profil</Text>
-                </View>
-            ),
+            headerLeft: () => <HeaderLeft title="Profil" />,
             headerRight: () => (
-                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => navigation.navigate('Settings')}>
-                    <Settings width={25} height={25} color={COLOR.black} />
-                </TouchableOpacity>
+                <HeaderRight
+                    icon={<Settings width={25} height={25} color={COLOR.black} />}
+                    onPress={() => navigation.navigate('Settings')} />
             ),
         })
     }, [navigation])
@@ -60,25 +57,24 @@ export default function Profile() {
         async function fetchMyProfile() {
             try {
                 setLoading(true)
-                const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile: myProfile.id } })
-                setMyProfileImages(response.data)
+                const response = await baseAxios.get(SINGLE_PROFILE_IMAGE, { params: { profile: profile.id } })
+                setMyProfileImage(response.data)
             } catch (error) {
                 console.log(error.response)
             } finally {
-                setRender(false)
                 setLoading(false)
             }
         }
         fetchMyProfile()
-    }, [myProfile.id, render])
+    }, [profile.id])
 
     if (loading) {
-        return <ActivityIndicator />
+        return <SkeletonMyProfile />
     }
 
     return (
         <Container containerStyle={styles.container}>
-            <MyProfileHeader myProfileImages={myProfileImages} />
+            <MyProfileHeader myProfileImage={myProfileImage} />
             <View style={styles.carouselWrapper}>
                 <Carousel
                     layout="default"

@@ -30,7 +30,7 @@ export default function Job({ route }) {
             navigation.goBack()
             if (props.job?.jobTitle !== data.jobTitle || props.job?.jobCompany !== data.jobCompany) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Ish joyingiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Ish joyingiz o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response)

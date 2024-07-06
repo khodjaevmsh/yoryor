@@ -35,15 +35,14 @@ export default function SignIn() {
     async function onSubmit(data) {
         try {
             setLoading(true)
-            const deviceToken = await getToken()
             const response = await baseAxios.post(SIGN_IN, {
                 phoneNumber: data.phoneNumber,
                 password: data.password,
-                device: deviceToken,
             })
             auth(response.data.token, response.data.user, response.data.profile)
             navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
             navigation.navigate('TabScreen')
+            await getToken()
         } catch (error) {
             setServerError(error.response)
         } finally {

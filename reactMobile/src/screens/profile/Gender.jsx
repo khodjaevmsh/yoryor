@@ -26,7 +26,7 @@ export default function Gender({ route }) {
             navigation.goBack()
             if (gender !== props.gender) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Jinsingiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Jinsingiz o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response)

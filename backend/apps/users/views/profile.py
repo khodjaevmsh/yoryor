@@ -8,6 +8,8 @@ from users.serializers.profile import ProfileSerializer, SimpleProfileSerializer
 
 
 class ProfileListView(APIView, PageNumPagination):
+    page_size = 14
+
     def get(self, request):
         country = request.query_params.get('country')
         region = request.query_params.get('region')

@@ -1,42 +1,54 @@
-from asgiref.sync import sync_to_async
-from channels.db import database_sync_to_async
-from channels.exceptions import StopConsumer
-from channels.middleware import BaseMiddleware
-from django.contrib.auth.models import AnonymousUser
-from rest_framework.authtoken.models import Token
+import json
 
-from chat.models import Message
+from asgiref.sync import sync_to_async
+from channels.exceptions import StopConsumer
+from channels.generic.websocket import AsyncWebsocketConsumer
+from django.utils import timezone
+
+from chat.models import Message, Room
 from core.views.send_notification import send_notification
 from users.models import Device
 
 
-class WebSocketAuthMiddleware(BaseMiddleware):
-    async def __call__(self, scope, receive, send):
-        # Get the token from the query string
-        query_string = scope.get("query_string", b"").decode("utf-8")
-        params = dict(qc.split("=") for qc in query_string.split("&"))
-        token = params.get("token")
+class RoomsConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.room_group_name = 'rooms'
 
-        # Authenticate the user based on the token
-        scope["user"] = await self.get_user(token)
+        # Join room group
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
 
-        return await super().__call__(scope, receive, send)
+        await self.accept()
 
-    @database_sync_to_async
-    def get_user(self, token):
-        try:
-            # Get the user associated with the token
-            return Token.objects.get(key=token).user
-        except Token.DoesNotExist:
-            return AnonymousUser()
+    # Leave room group
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
 
+    # Process incoming WebSocket messages if needed
+    async def receive(self, text_data):
+        pass
 
-from channels.generic.websocket import AsyncWebsocketConsumer
-import json
+    async def rooms_update(self, event):
+        room = event['room']
+        message = event['message']
+
+        room_instance = await sync_to_async(Room.objects.get)(id=room['id'])
+        unseen = await sync_to_async(room_instance.messages.filter(seen=False).count)()
+
+        # Send the updated room info to WebSocket clients
+        await self.send(text_data=json.dumps({
+            'room': room,
+            'message': message,
+            'unseen': unseen,
+        }))
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
-
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = f'chat_{self.room_name}'
@@ -55,14 +67,13 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-        # raise StopConsumer()
+        raise StopConsumer()
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         room = text_data_json['room']
-        content = text_data_json['content']
-        sender = text_data_json['sender']
+        sender = text_data_json['message']['user']
         receiver = text_data_json['receiver']
 
         # Send message to room group
@@ -71,32 +82,48 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'chat_message',
                 'message': message,
-                'sender': sender,
-                'receiver': receiver,
+                'room': room,
+            }
+        )
+
+        # Broadcast update to rooms group
+        await self.channel_layer.group_send(
+            'rooms',
+            {
+                'type': 'rooms_update',
+                'room': room,
+                'message': message,
             }
         )
 
         # Save message to database
         await sync_to_async(Message.objects.create)(
             room_id=room['id'],
-            user_id=sender['id'],
-            content=content['text']
+            user_id=sender['_id'],
+            content=message['text']
         )
 
-        # Filter Device objects for the receiver
-        device = await sync_to_async(Device.objects.filter(user=receiver['user']).first)()
+        # Update the room's updated_at field
+        room = await sync_to_async(Room.objects.get)(id=room['id'])
+        room.updated_at = timezone.now()
+        await sync_to_async(room.save)()
 
-        if device:
-            send_notification(device_token=device.token, title=sender['name'], body=content['text'])
+        # Filter Device objects for the receiver
+        receiver_device = await sync_to_async(Device.objects.filter(user=receiver['user']).first)()
+
+        if receiver_device:
+            send_notification(device_tokens=[receiver_device.token], title=sender['name'], body=message['text'])
 
     async def chat_message(self, event):
         message = event['message']
-        sender = event['sender']
-        receiver = event['receiver']
+        room = event['room']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
-            'sender': sender,
-            'receiver': receiver,
+            'room': room,
         }))
+
+    # No need to handle this in ChatConsumer, but must define it
+    async def rooms_update(self, event):
+        pass

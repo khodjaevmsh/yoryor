@@ -1,32 +1,29 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Text } from 'react-native'
+import { StyleSheet, FlatList, View, Text } from 'react-native'
 import normalize from 'react-native-normalize'
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
 import { baseAxios } from '../hooks/requests'
 import { LIKES } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 import LikeItem from '../components/LikeItem'
-import ActivityIndicator from '../components/common/ActivityIndicator'
 import { showToast } from '../components/common/Toast'
 import WantMoreLikes from '../components/WantMoreLikes'
+import HeaderLeft from '../components/common/HeaderLeft'
+import SkeletonLikes from '../components/SkeletonLikes'
 
 export default function Likes() {
     const [loading, setLoading] = useState(false)
     const [likes, setLikes] = useState([])
-    const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
-    const [refreshing, setRefreshing] = useState(false)
+    const [page, setPage] = useState(1)
     const { profile: receiver, numOfLikes } = useContext(GlobalContext)
     const navigation = useNavigation()
+    const isFocused = useIsFocused()
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <View style={{ marginLeft: 18 }}>
-                    <Text style={{ fontSize: normalize(22), fontWeight: '700' }}>Likes</Text>
-                </View>
-            ),
+            headerLeft: () => <HeaderLeft title="Likes" />,
         })
     }, [navigation])
 
@@ -35,32 +32,25 @@ export default function Likes() {
             try {
                 setLoading(true)
                 const response = await baseAxios.get(LIKES, { params: { receiver: receiver.id, page } })
-                if (!refreshing) {
-                    setLikes((prevData) => [...prevData, ...response.data.results])
-                } else {
-                    setLikes([])
-                }
+                setLikes(response.data.results)
                 setTotalPages(response.data.totalPages)
             } catch (error) {
-                showToast('error', 'Oops!', 'Nomalum xatolik.')
+                showToast('error', 'Oops!', 'Nomalum xatolik')
             } finally {
                 setLoading(false)
-                setRefreshing(false)
             }
         }
-
         fetchLikes()
-    }, [receiver, refreshing, page])
-
-    function handleRefresh() {
-        setRefreshing(true)
-        setPage(1)
-    }
+    }, [isFocused, page])
 
     const handleLoadMore = () => {
-        if (!loading && !refreshing && page < totalPages) {
-            setPage(page + 1) // Load next page
+        if (!loading && page < totalPages) {
+            setPage(page + 1)
         }
+    }
+
+    if (loading) {
+        return <SkeletonLikes />
     }
 
     return (
@@ -74,19 +64,10 @@ export default function Likes() {
                 keyExtractor={(item, index) => index.toString()}
                 numColumns={2}
                 onEndReached={handleLoadMore}
-                contentContainerStyle={styles.contentContainer}
+                contentContainerStyle={styles.contentContainerStyle}
                 onEndReachedThreshold={0.2}
                 showsVerticalScrollIndicator={false}
-                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
-                refreshControl={(
-                    <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
-                )}
-                ListEmptyComponent={!loading && !refreshing ? (
-                    <View style={styles.emptyContainer}>
-                        <WantMoreLikes />
-                    </View>
-                ) : null}
-            />
+                ListEmptyComponent={!loading ? <WantMoreLikes /> : null} />
         </>
     )
 }
@@ -104,13 +85,12 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         fontSize: normalize(18),
     },
-    contentContainer: {
+    contentContainerStyle: {
         flexGrow: 1,
-        marginHorizontal: 8,
+        marginHorizontal: 4,
         paddingTop: 16,
     },
     emptyContainer: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },

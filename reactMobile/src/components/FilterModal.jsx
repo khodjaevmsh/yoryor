@@ -1,7 +1,8 @@
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import RNModal from 'react-native-modal'
 import React, { useEffect, useState } from 'react'
 import normalize from 'react-native-normalize'
+import { X } from 'react-native-feather'
 import { COLOR as color, COLOR } from '../utils/colors'
 import Container from './common/Container'
 import { baseAxios } from '../hooks/requests'
@@ -15,16 +16,17 @@ import { showToast } from './common/Toast'
 export default function FilterModal({
     isModalVisible,
     setModalVisible,
+    setApplyFilter,
     country,
     setCountry,
     region,
     setRegion,
     gender,
     setGender,
+    setPage = () => {},
 }) {
     const [countryData, setCountryData] = useState([])
     const [regionData, setRegionData] = useState([])
-    const [, setServerError] = useState('')
 
     useEffect(() => {
         async function fetchCountryRegionData() {
@@ -35,7 +37,6 @@ export default function FilterModal({
                 const regionResponse = await baseAxios.get(REGION, { params: { country } })
                 setRegionData(regionResponse.data)
             } catch (error) {
-                setServerError(error.response.data)
                 showToast('error', 'Oops!', 'Nomalum xatolik')
             }
         }
@@ -57,39 +58,45 @@ export default function FilterModal({
                 style={styles.modal}
                 backdropOpacity={1}>
 
-                <View style={{ flex: 1 }}>
-                    <View style={styles.header}>
-                        <Text style={styles.title}>Filter</Text>
-                    </View>
-
-                    <Container scrollable containerStyle={{ paddingHorizontal: 6 }}>
-                        <View style={{ flex: 1 }}>
-                            <PickerSelect
-                                label="Davlat bo'yicha"
-                                placeholder={{ label: 'Davlatni tanlang', value: '' }}
-                                items={countryData && Array.isArray(countryData) ? (
-                                    countryData.map((item) => ({ label: item.title, value: `${item.id}` }))
-                                ) : []}
-                                value={country}
-                                onValueChange={(value) => setCountry(value)} />
-
-                            <PickerSelect
-                                label="Shahar bo'yicha"
-                                labelStyle={{ marginTop: 6 }}
-                                placeholder={{ label: 'Shaharni tanlang', value: '' }}
-                                items={regionData && Array.isArray(regionData) ? (
-                                    regionData.map((item) => ({ label: item.title, value: `${item.id}` }))
-                                ) : []}
-                                value={region}
-                                onValueChange={(value) => setRegion(value)} />
-
-                            <Text style={styles.filterTitle}>Jins bo'yicha</Text>
-                            <GenderFilter gender={gender} setGender={setGender} />
-                        </View>
-                    </Container>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => setModalVisible(false)}>
+                        <X width={30} height={30} color={COLOR.black} strokeWidth={2.2} />
+                    </TouchableOpacity>
+                    <Text style={styles.title}>Filter</Text>
+                    <X width={30} height={30} color="transparent" />
                 </View>
 
-                <Button title="Qo'llash" onPress={() => setModalVisible(false)} />
+                <Container scrollable containerStyle={styles.containerStyle}>
+                    <View style={styles.pickerSelect}>
+                        <PickerSelect
+                            label="Davlat bo'yicha"
+                            placeholder={{ label: 'Davlatni tanlang', value: '' }}
+                            items={countryData && Array.isArray(countryData) ? (
+                                countryData.map((item) => ({ label: item.title, value: `${item.id}` }))
+                            ) : []}
+                            value={country}
+                            onValueChange={(value) => setCountry(value)} />
+
+                        <PickerSelect
+                            label="Shahar bo'yicha"
+                            labelStyle={{ marginTop: 6 }}
+                            placeholder={{ label: 'Shaharni tanlang', value: '' }}
+                            items={regionData && Array.isArray(regionData) ? (
+                                regionData.map((item) => ({ label: item.title, value: `${item.id}` }))
+                            ) : []}
+                            value={region}
+                            onValueChange={(value) => setRegion(value)} />
+
+                        <Text style={styles.filterTitle}>Jins bo'yicha</Text>
+                        <GenderFilter gender={gender} setGender={setGender} />
+                    </View>
+                </Container>
+
+                <Button title="Qo'llash" onPress={() => {
+                    setPage(setPage)
+                    setApplyFilter(true)
+                    setModalVisible(false)
+                }} />
             </RNModal>
         </View>
     )
@@ -107,7 +114,7 @@ const styles = StyleSheet.create({
         height: normalize(46),
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         paddingHorizontal: 10,
         paddingBottom: 10,
         borderBottomWidth: 0.3,
@@ -124,15 +131,10 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         marginBottom: 12,
     },
-    ageRangeWrapper: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginTop: 32,
+    containerStyle: {
+        paddingHorizontal: 6,
     },
-    rangeText: {
-        fontSize: fontSize.medium,
-        fontWeight: '500',
-        marginHorizontal: 10,
+    pickerSelect: {
+        flex: 1,
     },
 })
