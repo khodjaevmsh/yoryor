@@ -1,8 +1,11 @@
-from django.db.models import Count
+import uuid
+
+from django.db import transaction
 from rest_framework import serializers
 
 from chat.models import Room
-from users.models import Like
+from core.views.send_notification import send_notification
+from users.models import Like, Device
 from users.serializers.profile import SimpleProfileSerializer
 
 
@@ -18,26 +21,34 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = ['id', 'sender', 'receiver', 'match']
 
     def create(self, validated_data):
-        # Create the like
-        like = Like.objects.create(**validated_data)
+        instance = super().create(validated_data)
 
-        # Check for match
-        match_check = Like.objects.filter(sender=like.receiver, receiver=like.sender).exists()
+        match = Like.objects.filter(sender=instance.receiver, receiver=instance.sender).exists()
+        sender_device = Device.objects.filter(user=instance.sender.user).first()
+        receiver_device = Device.objects.filter(user=instance.receiver.user).first()
 
-        if match_check:
-            # It's a match!
-            like.match = True
-            like.save()
-
-            room, created = Room.objects.annotate(
-                participant_count=Count('participants')
-            ).get_or_create(
-                name=f'{like.sender}and{like.receiver}',
-                participants__in=[like.sender, like.receiver],
-                participant_count=2,
+        if match:
+            instance.match = True
+            instance.save()
+            send_notification(
+                device_tokens=[sender_device.token, receiver_device.token],
+                title='Bu match! \U0001F4AC',
+                body='Sizga yangi xabar keldi'
             )
 
-            if not created and room.participant_count == 1:
-                room.participants.add(like.receiver)
+            # Используем транзакцию, чтобы гарантировать целостность данных
+            with transaction.atomic():
+                room, created = Room.objects.get_or_create(name=uuid.uuid4())
 
-        return like
+                if created:
+                    room.participants.add(instance.sender, instance.receiver)
+                else:
+                    room.participants.add(instance.receiver)
+
+        send_notification(
+            device_tokens=receiver_device.token,
+            title=instance.sender.name,
+            body='Sizga like qoydi \U00002764\uFE0F'
+        )
+
+        return instance

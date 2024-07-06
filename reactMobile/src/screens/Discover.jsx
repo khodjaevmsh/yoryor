@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
-import { View, StyleSheet, FlatList, TouchableOpacity, RefreshControl, Text } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import normalize from 'react-native-normalize'
 import { baseAxios } from '../hooks/requests'
 import { PROFILES } from '../urls'
 import { Tuning2 } from '../components/common/Svgs'
@@ -10,6 +9,11 @@ import FilterModal from '../components/FilterModal'
 import DiscoverItem from '../components/DiscoverItem'
 import { GlobalContext } from '../context/GlobalContext'
 import ActivityIndicator from '../components/common/ActivityIndicator'
+import HeaderLeft from '../components/common/HeaderLeft'
+import HeaderRight from '../components/common/HeaderRight'
+import { showToast } from '../components/common/Toast'
+import WantMoreLikes from '../components/WantMoreLikes'
+import SkeletonDiscover from '../components/SkeletonDiscover'
 
 export default function Discover() {
     const { profile: sender } = useContext(GlobalContext)
@@ -19,68 +23,68 @@ export default function Discover() {
     const [country, setCountry] = useState('')
     const [region, setRegion] = useState('')
     const [gender, setGender] = useState(sender?.gender?.value === 'male' ? 'female' : 'male')
-    const [page, setPage] = useState(1)
-    const [totalPages, setTotalPages] = useState(1)
     const [isModalVisible, setModalVisible] = useState(false)
+    const [applyFilter, setApplyFilter] = useState(false)
+    const [onLoadMore, setOnLoadMore] = useState(false)
+    const [totalPages, setTotalPages] = useState(1)
+    const [page, setPage] = useState(1)
     const navigation = useNavigation()
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => (
-                <View style={{ marginLeft: 18 }}>
-                    <Text style={{ fontSize: normalize(22), fontWeight: '700', color: COLOR.primary }}>Sovchi</Text>
-                </View>
-            ),
+            headerLeft: () => <HeaderLeft title="Sovchi" titleColor={COLOR.primary} />,
             headerRight: () => (
-                <TouchableOpacity style={{ marginRight: 18 }} onPress={() => setModalVisible(true)}>
-                    <Tuning2 width={26} height={26} color={COLOR.black} />
-                </TouchableOpacity>
+                <HeaderRight
+                    onPress={() => setModalVisible(true)}
+                    icon={<Tuning2 width={26} height={26} color={COLOR.black} />} />
             ),
         })
     }, [navigation])
 
-    useEffect(() => {
-        async function fetchReceivers() {
-            try {
-                setLoading(true)
-                const response = await baseAxios.get(PROFILES, { params: { page, country, region, gender } })
-                if (!refreshing) {
-                    setReceivers((prevData) => [...prevData, ...response.data.results])
-                } else {
-                    setReceivers([])
-                }
-                setTotalPages(response.data.totalPages)
-            } catch (error) {
-                console.log(error.response.data)
-            } finally {
-                setLoading(false)
-                setRefreshing(false)
+    async function fetchReceivers() {
+        try {
+            setLoading(true)
+            const response = await baseAxios.get(PROFILES, { params: { page, country, region, gender } })
+            if (onLoadMore) {
+                setReceivers((prevData) => [...prevData, ...response.data.results])
+                setOnLoadMore(false)
+            } else {
+                setReceivers(response.data.results)
             }
+            setTotalPages(response.data.totalPages)
+        } catch (error) {
+            showToast('warning', 'Oops!', 'Internet mavjudligini tekshiring')
+        } finally {
+            setRefreshing(false)
+            setLoading(false)
+            setApplyFilter(false)
         }
-        fetchReceivers()
-    }, [isModalVisible, refreshing, page])
+    }
 
     useEffect(() => {
-        // Function to be executed when isModalVisible changes to false
-        if (!isModalVisible) {
-            setReceivers([])
-            setPage(1)
-        }
-    }, [isModalVisible])
-
-    function handleRefresh() {
-        setRefreshing(true)
-        setPage(1)
-    }
+        fetchReceivers()
+    }, [page, applyFilter])
 
     function handleLoadMore() {
         if (!loading && !refreshing && page < totalPages) {
-            setPage(page + 1) // Load next page
+            setOnLoadMore(true)
+            setPage(page + 1)
         }
     }
 
+    function handleRefresh() {
+        setRefreshing(true)
+        setReceivers([])
+        setPage(1)
+        fetchReceivers()
+    }
+
+    if (loading) {
+        return <SkeletonDiscover />
+    }
+
     return (
-        <View style={styles.container}>
+        <>
             <FlatList
                 data={receivers}
                 renderItem={({ item }) => <DiscoverItem item={item} />}
@@ -88,31 +92,33 @@ export default function Discover() {
                 numColumns={3}
                 contentContainerStyle={styles.contentContainerStyle}
                 onEndReached={handleLoadMore}
+                showsVerticalScrollIndicator={false}
                 onEndReachedThreshold={0.2}
-                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
+                ListFooterComponent={() => (onLoadMore && !refreshing ? <ActivityIndicator padding /> : null)}
                 refreshControl={(
                     <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
-                )} />
+                )}
+                ListEmptyComponent={!loading && !refreshing ? <WantMoreLikes /> : null} />
 
             <FilterModal
                 isModalVisible={isModalVisible}
                 setModalVisible={setModalVisible}
+                applyFilter={applyFilter}
+                setApplyFilter={setApplyFilter}
                 country={country}
                 setCountry={setCountry}
                 region={region}
                 setRegion={setRegion}
                 gender={gender}
-                setGender={setGender} />
-        </View>
+                setGender={setGender}
+                setPage={setPage} />
+        </>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginHorizontal: 5,
-    },
     contentContainerStyle: {
+        flexGrow: 1,
         paddingTop: 10,
     },
 })

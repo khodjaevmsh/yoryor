@@ -1741,6 +1741,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/messaging/-/messaging-20.1.0.tgz#02026259c74d1725dfc5216158b05bc6655e7951"
   integrity sha512-y9FtQ9dIQSyueuLeJghvfLYnay5BqPVgl9T94p+HtUlkxinOgNDjquQFtV/QlzVOyVpLrVPmknMohvBj/fvBzg==
 
+"@react-native-masked-view/masked-view@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@react-native-masked-view/masked-view/-/masked-view-0.3.1.tgz#5bd76f17004a6ccbcec03856893777ee91f23d29"
+  integrity sha512-uVm8U6nwFIlUd1iDIB5cS+lDadApKR+l8k4k84d9hn+GN4lzAIJhUZ9syYX7c022MxNgAlbxoFLt0pqKoyaAGg==
+
 "@react-native-picker/picker@^2.6.1":
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.6.1.tgz#3b20ddd1385fab0487db103dc6519570f8892e6d"
@@ -6436,10 +6441,10 @@ react-native-communications@2.2.1:
   resolved "https://registry.yarnpkg.com/react-native-communications/-/react-native-communications-2.2.1.tgz#7883b56b20a002eeb790c113f8616ea8692ca795"
   integrity sha512-5+C0X9mopI0+qxyQHzOPEi5v5rxNBQjxydPPiKMQSlX1RBIcJ8uTcqUPssQ9Mo8p6c1IKIWJUSqCj4jAmD0qVQ==
 
-react-native-config@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.5.1.tgz#73c94f511493e9b7ff9350cdf351d203a1b05acc"
-  integrity sha512-g1xNgt1tV95FCX+iWz6YJonxXkQX0GdD3fB8xQtR1GUBEqweB9zMROW77gi2TygmYmUkBI7LU4pES+zcTyK4HA==
+react-native-config@^1.4.6:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/react-native-config/-/react-native-config-1.5.2.tgz#035801ae35117ffff41a32d7c49def6721324d5d"
+  integrity sha512-jIx/21Ryr7+NXfULG1lQoct4KgmVae2KZ7/mt5fY2tm4s7N0jAxRm5Js8FX6adgkHuhV2fiizEBJDn/fWIFWiw==
 
 react-native-confirmation-code-field@^7.3.1:
   version "7.3.2"
@@ -6561,6 +6566,11 @@ react-native-screens@^3.25.0:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
+
+react-native-skeleton-placeholder@^5.2.4:
+  version "5.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-skeleton-placeholder/-/react-native-skeleton-placeholder-5.2.4.tgz#a654fa083ff274a39c763e086f8a850c556d4c95"
+  integrity sha512-OZntVq1hU1UX33FltxK2ezT2v9vHIhV8YnEbnMWUCvxT0N9OsgD1qxiHm6qb9YRJVgq2o5z3S7dNPsPnDF/jNg==
 
 react-native-snap-carousel@^3.9.1:
   version "3.9.1"

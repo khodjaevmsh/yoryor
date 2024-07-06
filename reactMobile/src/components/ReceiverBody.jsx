@@ -43,6 +43,7 @@ export default function ReceiverBody({ receiver }) {
                 )}
                 <View style={styles.tagsWrapper}>
                     {fields.map((field, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
                         field.text && <RoundedTagWithIcon key={index} icon={field.icon} text={field.text} />
                     ))}
                 </View>
@@ -55,6 +56,7 @@ export default function ReceiverBody({ receiver }) {
                 <View style={styles.tagsWrapper}>
                     {additionalFields.map((field, index) => (
                         field.text && (
+                            // eslint-disable-next-line react/no-array-index-key
                             <RoundedTagWithIcon key={index} icon={field.icon} text={field.text} />
                         )
                     ))}

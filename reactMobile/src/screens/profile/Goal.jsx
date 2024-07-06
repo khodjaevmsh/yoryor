@@ -26,7 +26,7 @@ export default function Goal({ route }) {
             navigation.goBack()
             if (props.key !== goal) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Maqsadingiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Maqsadingiz o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response)

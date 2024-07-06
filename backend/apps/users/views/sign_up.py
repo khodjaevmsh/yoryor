@@ -44,6 +44,10 @@ class SignUpView(APIView):
             Device.objects.create(user=request.user, token=device)
 
         user = User.objects.filter(phone_number=serializer.data.get('phone_number')).first()
+
+        if device and not Device.objects.filter(token=device).exists():
+            Device.objects.create(user=user, token=device)
+
         profile = Profile.objects.filter(user=user).first()
         token = Token.objects.create(user=user)
         user_data = UserSerializer(user).data

@@ -4,9 +4,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Config from 'react-native-config'
 
 // const backendUrl = Config.BASE_URL
-const backendUrl = 'http://127.0.0.1:8000/'
+// const wsUrl = Config.WEBSOCKET_URL
+
+console.log(Config)
+
+const backendUrl = 'http://192.168.1.5:8000/'
+const wsUrl = 'ws://192.168.1.5:8000/ws/chat'
+
 export const domain = backendUrl.endsWith('/') ? backendUrl.substr(0, backendUrl.length - 1) : backendUrl
-export const webSocketUrl = 'ws://127.0.0.1:8000/ws/chat'
+export const wsDomain = wsUrl.endsWith('/') ? wsUrl.substr(0, wsUrl.length - 1) : wsUrl
 
 export const baseAxios = axios.create({
     baseURL: `${domain}/api/v1/`, // Базовый URL для всех запросов

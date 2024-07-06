@@ -29,7 +29,7 @@ export default function City({ route }) {
             navigation.goBack()
             if (props.region.country.toString() !== country || props.region.id.toString() !== region) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Yashash joyingiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Yashash joyingiz o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response)

@@ -43,7 +43,7 @@ export default function ProfileImagesPreview({ previewModal, setPreviewModal, re
                 <FastImage
                     style={styles.image}
                     /* eslint-disable-next-line no-unsafe-optional-chaining */
-                    source={{ uri: `${domain + item?.image}`, priority: FastImage.priority.high }}
+                    source={{ uri: `${domain + item?.image}`, priority: FastImage.priority.normal }}
                     resizeMode={FastImage.resizeMode.cover} />
             ) : <ActivityIndicator />}
         </View>

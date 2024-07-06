@@ -104,6 +104,7 @@ export default function SetProfileImage({ route }) {
             auth(response.data.token, response.data.user, response.data.profile)
             navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
             navigation.navigate('TabScreen')
+            await getToken()
         } catch (error) {
             console.log(error.response.data)
             setServerError(error.response)

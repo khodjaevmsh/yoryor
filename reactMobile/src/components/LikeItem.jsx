@@ -15,12 +15,12 @@ export default function LikeItem({ item }) {
         <TouchableOpacity
             style={styles.item}
             activeOpacity={0.96}
-            onPress={() => navigation.navigate('ReceiverDetail', { receiver: item.sender })}>
+            onPress={() => navigation.navigate('ReceiverDetail', { receiverId: item.sender.id })}>
             <FastImage
                 style={styles.image}
                 resizeMode={FastImage.resizeMode.cover}
                 source={{
-                    uri: item.sender ? `${domain + item.sender.images[0].image}` : null,
+                    uri: item.sender && item.sender.images ? `${domain + item.sender.images[0].image}` : null,
                     priority: FastImage.priority.normal,
                     cache: FastImage.cacheControl.web,
                 }} />
@@ -47,14 +47,14 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: normalize(220),
-        borderRadius: 22,
+        borderRadius: 24,
     },
     bottomText: {
         color: COLOR.white,
         fontSize: normalize(Platform.OS === 'ios' ? 14 : 16),
         fontWeight: '600',
-        paddingHorizontal: 16,
-        paddingVertical: 18,
+        paddingHorizontal: 15,
+        paddingVertical: 14,
     },
     linearGradient: {
         position: 'absolute',

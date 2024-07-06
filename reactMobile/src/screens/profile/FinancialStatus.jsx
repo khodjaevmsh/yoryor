@@ -26,7 +26,7 @@ export default function FinancialStatus({ route }) {
             navigation.goBack()
             if (props.key !== status) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Moliaviy ahvolingiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Moliaviy ahvolingiz o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response)

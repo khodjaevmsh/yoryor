@@ -33,7 +33,7 @@ export default function Bio({ route }) {
             navigation.goBack()
             if ((fetchedProfile && fetchedProfile.bio) !== data.bio) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Bio o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Bio o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response.data)

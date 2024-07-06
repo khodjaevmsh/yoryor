@@ -1,56 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View, Animated } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import moment from 'moment'
 import FastImage from 'react-native-fast-image'
 import normalize from 'react-native-normalize'
 import { X } from 'react-native-feather'
+import { useNavigation } from '@react-navigation/native'
 import { domain } from '../hooks/requests'
 import { Goal, Heart, MapPoint } from './common/Svgs'
 import { COLOR } from '../utils/colors'
-import ReceiverBody from './ReceiverBody'
 import { goals } from '../utils/choices'
 
 const { height: screenHeight } = Dimensions.get('window')
-const imageHeight = screenHeight * 0.75 // Например, чтобы изображение занимало 75% высоты экрана
+const imageHeight = screenHeight * 0.76 // Например, чтобы изображение занимало 75% высоты экрана
 
 export default function EncounterItem({ swiperRef, receiver }) {
-    const [isVisible, setIsVisible] = useState(true)
-    const [animation] = useState(new Animated.Value(1))
-
-    useEffect(() => {
-        if (receiver && receiver.images && receiver.images.length > 0) {
-            const imageUrls = receiver.images.map((image) => ({
-                uri: `${domain + image.image}`,
-            }))
-            FastImage.preload(imageUrls)
-        }
-    }, [receiver])
-
-    useEffect(() => {
-        if (!isVisible) {
-            Animated.timing(animation, {
-                toValue: 0,
-                duration: 200,
-                useNativeDriver: true,
-            }).start()
-        } else {
-            Animated.timing(animation, {
-                toValue: 1,
-                duration: 300,
-                useNativeDriver: true,
-            }).start()
-        }
-    }, [isVisible, animation])
-
-    const handleScroll = (event) => {
-        const offsetY = event.nativeEvent.contentOffset.y
-        if (offsetY > 150) {
-            setIsVisible(false)
-        } else {
-            setIsVisible(true)
-        }
-    }
+    const navigation = useNavigation()
 
     return (
         <View style={styles.card}>
@@ -60,47 +25,30 @@ export default function EncounterItem({ swiperRef, receiver }) {
                 end={{ x: 0.5, y: 0.75 }}
                 style={styles.topLinearGradient}>
                 <Text style={styles.name}>
-                    {receiver.name}, {new Date().getFullYear() - moment(receiver?.birthdate).format('YYYY')}
+                    {receiver?.name}, {new Date().getFullYear() - moment(receiver?.birthdate).format('YYYY')}
                 </Text>
-                {isVisible && (
-                    <>
-                        <Animated.View style={[styles.topTagWrapper, {
-                            backgroundColor: COLOR.white,
-                            opacity: animation,
-                        }]}>
-                            <Goal width={15} height={15} />
-                            <Text style={[styles.topTag, { color: COLOR.black }]}>{goals[receiver.goal]}</Text>
-                        </Animated.View>
-
-                        <Animated.View style={[styles.topTagWrapper, { opacity: animation }]}>
-                            <MapPoint width={15} height={15} color={COLOR.white} />
-                            <Text style={styles.topTag}>{receiver.region.title}</Text>
-                        </Animated.View>
-                    </>
-                )}
+                <View style={[styles.topTagWrapper, { backgroundColor: COLOR.white }]}>
+                    <Goal width={15} height={15} />
+                    <Text style={[styles.topTag, { color: COLOR.black }]}>{goals[receiver.goal]}</Text>
+                </View>
+                <View style={styles.topTagWrapper}>
+                    <MapPoint width={15} height={15} color={COLOR.white} />
+                    <Text style={styles.topTag}>{receiver.region.title}</Text>
+                </View>
             </LinearGradient>
-            <ScrollView
-                contentContainerStyle={styles.scrollView}
-                showsVerticalScrollIndicator={false}
-                onScroll={handleScroll}
-                scrollEventThrottle={16}
-                bounces={false}>
-                <TouchableOpacity style={styles.touchable} activeOpacity={1}>
-                    <FastImage
-                        style={styles.cardImage}
-                        resizeMode={FastImage.resizeMode.cover}
-                        source={{
-                            uri: receiver ? `${domain + receiver.images[0].image}` : null,
-                            priority: FastImage.priority.normal,
-                            cache: FastImage.cacheControl.web,
-                        }} />
-                    {receiver ? (
-                        <View style={{ marginHorizontal: 18 }}>
-                            <ReceiverBody receiver={receiver} />
-                        </View>
-                    ) : null}
-                </TouchableOpacity>
-            </ScrollView>
+            <TouchableOpacity
+                onPress={() => navigation.navigate('ReceiverDetail', { receiverId: receiver.id, swiperRef })}
+                style={styles.touchable}
+                activeOpacity={1}>
+                <FastImage
+                    style={styles.cardImage}
+                    resizeMode={FastImage.resizeMode.cover}
+                    source={{
+                        uri: receiver && receiver.images ? `${domain + receiver.images[0].image}` : null,
+                        priority: FastImage.priority.normal,
+                        cache: FastImage.cacheControl.web,
+                    }} />
+            </TouchableOpacity>
             <LinearGradient
                 colors={['rgba(0, 0, 0, 0.2)', 'transparent']}
                 start={{ x: 0.5, y: 0.7 }}
@@ -110,7 +58,7 @@ export default function EncounterItem({ swiperRef, receiver }) {
                     style={styles.iconWrapper}
                     activeOpacity={0.7}
                     onPress={() => swiperRef.current.swipeLeft()}>
-                    <X height={38} width={38} color={COLOR.black} strokeWidth={3} />
+                    <X height={38} width={38} color={COLOR.black} strokeWidth={4} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.iconWrapper, { paddingTop: 12, paddingBottom: 9 }]}
@@ -125,14 +73,11 @@ export default function EncounterItem({ swiperRef, receiver }) {
 
 const styles = StyleSheet.create({
     card: {
-        flex: 0.75,
-        borderRadius: 32,
+        height: imageHeight,
+        borderRadius: 20,
         justifyContent: 'center',
         backgroundColor: 'white',
         overflow: 'hidden',
-    },
-    scrollView: {
-        paddingBottom: 125,
     },
     touchable: {
         flex: 1,
@@ -142,8 +87,8 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         height: imageHeight,
-        borderTopLeftRadius: 28,
-        borderTopRightRadius: 28,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
     },
     topLinearGradient: {
         position: 'absolute',
@@ -189,35 +134,12 @@ const styles = StyleSheet.create({
         borderRadius: 55,
         marginVertical: 4,
     },
-
     iconWrapper: {
-        width: normalize(65),
-        height: normalize(65),
-        borderRadius: 100,
+        width: normalize(60),
+        height: normalize(60),
+        borderRadius: 55,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: COLOR.white,
-        marginBottom: 5,
-    },
-
-    informationWrapper: {
-        flex: 1,
-        marginTop: 28,
-        marginHorizontal: 18,
-    },
-    informationTitle: {
-        fontSize: normalize(16),
-        marginBottom: 10,
-        color: COLOR.grey,
-        fontWeight: '500',
-    },
-    informationSubTitle: {
-        fontSize: normalize(22),
-        fontWeight: '600',
-        color: COLOR.black,
-    },
-    tagsWrapper: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
     },
 })

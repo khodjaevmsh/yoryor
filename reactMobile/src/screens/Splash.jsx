@@ -3,31 +3,32 @@ import { Text, StyleSheet, View } from 'react-native'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import Container from '../components/common/Container'
-import Button from '../components/common/Button'
 import { COLOR } from '../utils/colors'
 import ButtonOutline from '../components/common/ButtonOutline'
 
 export default function Splash() {
     const navigation = useNavigation()
     return (
-        <Container>
+        <Container containerStyle={styles.containerStyle}>
             <View style={styles.logoWrapper}>
-                <Text style={{ fontSize: 82, color: COLOR.primary, fontWeight: '400' }}>sovcHi</Text>
+                <Text style={{ fontSize: 82, color: COLOR.white, fontWeight: '400' }}>sovcHi</Text>
             </View>
             <View style={styles.policyAndTermsWrapper}>
                 <Text style={styles.policyAndTerms}>
                     “Ro‘yxatdan o‘tish” tugmasini bosish orqali siz Shartlarimizga rozilik bildirasiz.
-                    Maʼlumotlaringizni qanday qayta ishlashimizni Maxfiylik siyosatimiz va Cookie siyosatimizdan
+                    Maʼlumotlaringizni qanday qayta ishlatishimizni Maxfiylik va Cookie siyosatlarimizdan
                     bilib oling.
                 </Text>
 
-                <Button
+                <ButtonOutline
                     title="Ro'yxatdan o'tish"
+                    textStyle={{ color: COLOR.black }}
                     buttonStyle={[styles.button, { marginBottom: 6 }]}
                     onPress={() => navigation.navigate('SignUp')} />
 
                 <ButtonOutline
                     title="Kirish"
+                    textStyle={{ color: COLOR.black }}
                     buttonStyle={styles.button}
                     onPress={() => navigation.navigate('SignIn')} />
             </View>
@@ -37,6 +38,14 @@ export default function Splash() {
 }
 
 const styles = StyleSheet.create({
+    containerStyle: {
+        marginHorizontal: 0,
+        marginTop: 0,
+        marginBottom: 0,
+        backgroundColor: COLOR.primary,
+        paddingBottom: 32,
+        paddingHorizontal: 10,
+    },
     logoWrapper: {
         flex: 2,
         justifyContent: 'flex-end',
@@ -47,7 +56,9 @@ const styles = StyleSheet.create({
         height: 100,
     },
     button: {
+        borderWidth: 0,
         marginTop: 6,
+        backgroundColor: COLOR.white,
     },
     policyAndTermsWrapper: {
         flex: 2,
@@ -56,9 +67,10 @@ const styles = StyleSheet.create({
     policyAndTerms: {
         fontSize: normalize(12),
         lineHeight: 18,
-        fontWeight: '400',
+        fontWeight: '500',
         textAlign: 'center',
-        color: COLOR.grey,
+        color: COLOR.white,
         marginBottom: 20,
+        paddingHorizontal: 20,
     },
 })

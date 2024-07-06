@@ -1,7 +1,7 @@
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Platform, StyleSheet, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import normalize from 'react-native-normalize'
@@ -141,6 +141,7 @@ export default function Navigation() {
 }
 
 function TabScreen() {
+    const { numOfLikes, numOfUnseenMessages } = useContext(GlobalContext)
     return (
         <Tab.Navigator initialRouteName="Encounter" screenOptions={{
             headerTitle: () => false,
@@ -163,7 +164,10 @@ function TabScreen() {
             }} />
             <Tab.Screen name="Chats" component={Chat} options={{
                 tabBarIcon: ({ focused }) => (
-                    <ChatRounded width={30} height={30} color={focused ? COLOR.black : COLOR.grey} />
+                    <View style={styles.tabBarIconWrapper}>
+                        <View style={styles.badge} />
+                        <ChatRounded width={30} height={30} color={focused ? COLOR.black : COLOR.grey} />
+                    </View>
                 ),
             }} />
             <Tab.Screen name="Profile" component={Profile} options={{
@@ -176,26 +180,15 @@ function TabScreen() {
 }
 
 const styles = StyleSheet.create({
-    headerStyle: {
-        elevation: 0, // For Android, remove shadow
-        shadowOpacity: 0,
-        borderTopWidth: 0.3,
-        borderColor: COLOR.grey,
+    tabBarIconWrapper: {
+        flexDirection: 'row-reverse',
     },
-    tabBarStyle: {
-        elevation: 0, // For Android, remove shadow
-        shadowOpacity: 0,
-        borderTopWidth: 0.3,
-        borderColor: COLOR.grey,
-    },
-    headerLeftContainer: {
-        marginLeft: 16,
-        marginRight: 16,
-    },
-    title: {
-        fontSize: normalize(24),
-        fontWeight: '700',
-        marginTop: 10,
-        // marginLeft: 22,
+    badge: {
+        width: 9,
+        height: 9,
+        backgroundColor: COLOR.red,
+        borderRadius: 55,
+        position: 'absolute',
+        zIndex: 1,
     },
 })

@@ -36,7 +36,7 @@ export default function ChangePassword() {
                     confirmPassword: data.confirmPassword,
                 })
                 navigation.goBack()
-                showToast('success', 'Muvaffaqiyatli', 'Yangi parol tasdiqlandi.')
+                showToast('success', 'Woohoo!', 'Yangi parol tasdiqlandi')
             } catch (error) {
                 setServerError(error.response)
             } finally {

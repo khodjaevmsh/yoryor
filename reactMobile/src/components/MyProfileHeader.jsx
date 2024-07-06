@@ -4,6 +4,7 @@ import React, { useContext } from 'react'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import moment from 'moment'
+import { Edit3 } from 'react-native-feather'
 import { domain } from '../hooks/requests'
 import { determineFontSize } from '../utils/string'
 import { CheckMarkBlue } from './common/Svgs'
@@ -11,24 +12,30 @@ import { fontSize } from '../utils/fontSizes'
 import { COLOR } from '../utils/colors'
 import { GlobalContext } from '../context/GlobalContext'
 
-export default function MyProfileHeader({ myProfileImages }) {
+export default function MyProfileHeader({ myProfileImage }) {
     const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     return (
         <TouchableOpacity
             activeOpacity={1}
-            onPress={() => navigation.navigate('MyProfileDetail', { myProfileImages })}
+            onPress={() => navigation.navigate('MyProfileDetail')}
             style={styles.profileDetail}>
             <View style={styles.imageWrapper}>
                 <FastImage
                     style={styles.imageButton}
                     resizeMode={FastImage.resizeMode.cover}
                     source={{
-                        uri: myProfileImages && myProfileImages[0] ? `${domain + myProfileImages[0].image}` : null,
+                        uri: myProfileImage && myProfileImage.image ? `${domain + myProfileImage.image}` : null,
                         priority: FastImage.priority.medium,
                         cache: FastImage.cacheControl.web,
                     }} />
+                <TouchableOpacity
+                    style={styles.editIcon}
+                    activeOpacity={1}
+                    onPress={() => navigation.navigate('MyProfileDetail')}>
+                    <Edit3 width={20} height={20} color={COLOR.black} strokeWidth={2} />
+                </TouchableOpacity>
             </View>
             <View style={styles.nameWrapper}>
                 <Text style={[styles.name, { fontSize: determineFontSize(profile.name, 25) }]}>
@@ -52,6 +59,18 @@ const styles = StyleSheet.create({
         borderColor: COLOR.extraLightGrey,
         borderRadius: 100,
         padding: 6,
+    },
+    editIcon: {
+        position: 'absolute',
+        right: 0,
+        backgroundColor: COLOR.white,
+        padding: 8,
+        borderRadius: 55,
+        elevation: 4,
+        shadowColor: 'rgba(0, 0, 0, 0.3)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
     },
     imageButton: {
         width: normalize(110),

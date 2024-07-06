@@ -7,7 +7,6 @@ class Room(models.Model):
     updated_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        # Assuming there are only two participants in a conversation
         return f"Room between {self.participants.first()} and {self.participants.last()}"
 
 
@@ -15,7 +14,7 @@ class Message(models.Model):
     room = models.ForeignKey('chat.Room', on_delete=models.CASCADE, related_name='messages')
     user = models.ForeignKey('users.Profile', on_delete=models.CASCADE, related_name='sender')
     content = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     seen = models.BooleanField(default=False)
 
     def __str__(self):

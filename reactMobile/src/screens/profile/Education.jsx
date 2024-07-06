@@ -33,7 +33,7 @@ export default function Education({ route }) {
             navigation.goBack()
             if (props.level !== level || props.school !== data.school) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Ma\'lumotingiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Ma\'lumotingiz o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response)

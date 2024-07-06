@@ -57,7 +57,7 @@ export default function AddProfileImage({ route }) {
 
             setModalVisible(false)
             setRender(true)
-            showToast('error', 'Muvaffaqiyatli', "Rasm o'chirildi.")
+            showToast('error', 'Oh!', "Rasm o'chirildi")
 
             fetchProfileImages()
         } catch (error) {
@@ -127,9 +127,9 @@ export default function AddProfileImage({ route }) {
                 headers: { 'Content-Type': 'multipart/form-data', Authorization: `Token ${token}` },
             })
             setRender(true)
-            showToast('success', 'Muvaffaqiyatli', 'Rasmlar o\'zgartirildi.')
+            showToast('success', 'Woohoo!', 'Rasmlar o\'zgartirildi')
         } catch (error) {
-            showToast('warning', 'Oops!', "Yangi rasm qo'shish talab etiladi.")
+            showToast('warning', 'Oops!', "Yangi rasm qo'shish talab etiladi")
         } finally {
             setLoading(false)
         }

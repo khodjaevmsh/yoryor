@@ -26,7 +26,7 @@ export default function MaritalStatus({ route }) {
             navigation.goBack()
             if (props.key !== status) {
                 setRender(true)
-                showToast('success', 'Muvaffaqiyatli', 'Oilaviy ahvolingiz o\'zgartirildi.')
+                showToast('success', 'Woohoo!', 'Oilaviy ahvolingiz o\'zgartirildi')
             }
         } catch (error) {
             console.log(error.response)
