@@ -1,28 +1,23 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View, Platform, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import normalize from 'react-native-normalize'
 import ReceiverHead from '../../components/ReceiverHead'
 import { baseAxios } from '../../hooks/requests'
-import { LIKE, LIKES, PROFILE } from '../../urls'
+import { LIKE, PROFILE } from '../../urls'
 import ActivityIndicator from '../../components/common/ActivityIndicator'
 import ProfileHeaderLeft from '../../components/ProfileHeaderLeft'
 import ProfileHeaderRight from '../../components/ProfileHeaderRight'
 import { ChatRounded, Heart } from '../../components/common/Svgs'
 import { COLOR } from '../../utils/colors'
 import ReceiverBody from '../../components/ReceiverBody'
-import { showToast } from '../../components/common/Toast'
-import MatchModal from '../../components/MatchModal'
-import { GlobalContext } from '../../context/GlobalContext'
 
-export default function ReceiverDetail({ route }) {
-    const { receiverId } = route.params
+export default function EncounterDetail({ route }) {
+    const { receiverId, swiperRef } = route.params
     const [loading, setLoading] = useState(true)
     const [likeLoading, setLikeLoading] = useState(false)
     const [receiver, seReceiver] = useState({})
     const [like, setLike] = useState({})
-    const [isModalVisible, setModalVisible] = useState(false)
-    const { profile: sender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     useLayoutEffect(() => {
@@ -52,19 +47,11 @@ export default function ReceiverDetail({ route }) {
         fetchReceiver()
     }, [receiverId])
 
-    async function onLike() {
-        try {
-            setLikeLoading(true)
-            if (receiver && receiver.id) {
-                const response = await baseAxios.post(LIKES, { sender: sender.id, receiver: receiver.id })
-                setLike({ id: sender.id })
-                setModalVisible(response.data.match)
-            }
-        } catch (error) {
-            showToast('error', 'Oops!', 'Nomalum xatolik')
-        } finally {
-            setLikeLoading(false)
-        }
+    function onSwipe() {
+        setLikeLoading(true)
+        swiperRef.current.swipeRight()
+        setLikeLoading(false)
+        navigation.goBack()
     }
 
     if (loading) {
@@ -77,7 +64,7 @@ export default function ReceiverDetail({ route }) {
                 contentContainerStyle={styles.contentContainerStyle}
                 showsVerticalScrollIndicator={false}
                 scrollEventThrottle={16}>
-                <ReceiverHead receiver={receiver} isModalVisible={isModalVisible} />
+                <ReceiverHead receiver={receiver} />
                 <ReceiverBody receiver={receiver} />
             </ScrollView>
 
@@ -87,7 +74,7 @@ export default function ReceiverDetail({ route }) {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.iconContainer}
-                    onPress={like && !like.id ? onLike : null}
+                    onPress={like && !like.id ? onSwipe : null}
                     activeOpacity={1}>
                     <View style={{ marginTop: !likeLoading ? 3 : 0 }}>
                         {!likeLoading ? (
@@ -96,12 +83,6 @@ export default function ReceiverDetail({ route }) {
                     </View>
                 </TouchableOpacity>
             </View>
-
-            <MatchModal
-                isModalVisible={isModalVisible}
-                setModalVisible={setModalVisible}
-                sender={sender}
-                receiver={receiver} />
         </>
     )
 }

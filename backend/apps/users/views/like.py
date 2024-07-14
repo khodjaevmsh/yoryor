@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -29,9 +30,9 @@ class LikeDetailView(APIView):
         return Response(serializer.data, status=200)
 
 
-class NumOfLikesView(APIView):
+class CountOfLikesView(APIView):
     def get(self, request):
         receiver = request.query_params.get('receiver', None)
 
-        num = Like.objects.filter(receiver=receiver).count()
-        return Response({'num': num}, status=200)
+        count = Like.objects.filter(receiver=receiver).count()
+        return Response({'count': count}, status=200)

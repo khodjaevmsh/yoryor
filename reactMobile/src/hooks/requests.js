@@ -6,8 +6,8 @@ import { createNavigationContainerRef } from '@react-navigation/native'
 // const backendUrl = Config.BASE_URL
 // const wsUrl = Config.WEBSOCKET_URL
 
-const backendUrl = 'http://127.0.0.1:8000/'
-const wsUrl = 'ws://127.0.0.1:8000/ws/chat'
+const backendUrl = 'http://192.168.1.7:8000/'
+const wsUrl = 'ws://192.168.1.7:8000/ws/chat'
 
 export const domain = backendUrl.endsWith('/') ? backendUrl.substr(0, backendUrl.length - 1) : backendUrl
 export const wsDomain = wsUrl.endsWith('/') ? wsUrl.substr(0, wsUrl.length - 1) : wsUrl
@@ -45,20 +45,20 @@ baseAxios.interceptors.request.use(async (config) => {
 }, (error) => Promise.reject(error))
 
 // Interceptor to handle responses
-// baseAxios.interceptors.response.use(
-//     (response) => response,
-//     async (error) => {
-//         if (error.response === undefined) {
-//             console.log('400')
-//         } else if (error.response.status >= 500) {
-//             console.log('500')
-//         } else if (error.response && error.response.status === 401 && error.response.data.detail) {
-//             // eslint-disable-next-line no-unused-expressions
-//             typeof signOut === 'function' ? await signOut() : null
-//         }
-//         return Promise.reject(error)
-//     },
-// )
+baseAxios.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        if (error.response === undefined) {
+            console.log('400')
+        } else if (error.response.status >= 500) {
+            console.log('500')
+        } else if (error.response && error.response.status === 401 && error.response.data.detail) {
+            // eslint-disable-next-line no-unused-expressions
+            typeof signOut === 'function' ? await signOut() : null
+        }
+        return Promise.reject(error)
+    },
+)
 
 export const navigationRef = createNavigationContainerRef()
 async function signOut() {

@@ -14,6 +14,7 @@ import HeaderRight from '../components/common/HeaderRight'
 import { showToast } from '../components/common/Toast'
 import WantMoreLikes from '../components/WantMoreLikes'
 import SkeletonDiscover from '../components/SkeletonDiscover'
+import WantMoreReceivers from '../components/WantMoreReceivers'
 
 export default function Discover() {
     const { profile: sender } = useContext(GlobalContext)
@@ -100,7 +101,9 @@ export default function Discover() {
                 refreshControl={(
                     <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
                 )}
-                ListEmptyComponent={!loading && !refreshing ? <WantMoreLikes /> : null} />
+                ListEmptyComponent={!loading && !refreshing ? (
+                    <WantMoreReceivers setModalVisible={setModalVisible} />
+                ) : null} />
 
             <FilterModal
                 isModalVisible={isModalVisible}

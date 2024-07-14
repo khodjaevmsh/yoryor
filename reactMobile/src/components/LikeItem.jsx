@@ -14,7 +14,7 @@ export default function LikeItem({ item }) {
     return (
         <TouchableOpacity
             style={styles.item}
-            activeOpacity={0.96}
+            activeOpacity={1}
             onPress={() => navigation.navigate('ReceiverDetail', { receiverId: item.sender.id })}>
             <FastImage
                 style={styles.image}
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         padding: 4,
         position: 'relative',
         overflow: 'hidden',
-        borderRadius: 18,
+        borderRadius: 24,
     },
     image: {
         width: '100%',
@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
         bottom: 4.5,
         left: 4,
         right: 4,
-        borderRadius: 18,
+        borderRadius: 24,
     },
 })

@@ -9,6 +9,8 @@ import RoomItem from '../components/RoomItem'
 import { showToast } from '../components/common/Toast'
 import HeaderLeft from '../components/common/HeaderLeft'
 import SkeletonChat from '../components/SkeletonChat'
+import WantMoreReceivers from '../components/WantMoreReceivers'
+import EmptyChat from '../components/EmptyChat'
 
 export default function Chat() {
     const [loading, setLoading] = useState(true)
@@ -117,7 +119,9 @@ export default function Chat() {
                 contentContainerStyle={styles.contentContainer}
                 onEndReached={handleLoadMore}
                 onEndReachedThreshold={0.2}
-                showsVerticalScrollIndicator={false} />
+                showsVerticalScrollIndicator={false}
+                ListEmptyComponent={!loading ? <EmptyChat /> : null}
+            />
         </Container>
     )
 }
@@ -127,6 +131,7 @@ const styles = StyleSheet.create({
         marginTop: 0,
     },
     contentContainer: {
+        flexGrow: 1,
         marginTop: 10,
     },
 })

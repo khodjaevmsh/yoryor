@@ -18,7 +18,7 @@ export default function MatchModal({ isModalVisible, setModalVisible, receiver }
             style={styles.modal}>
             <View style={styles.childrenModal}>
                 <ImageBackground
-                    src={receiver ? `${domain + receiver.images[0].image}` : null}
+                    src={receiver && receiver.images ? `${domain + receiver.images[0].image}` : null}
                     resizeMode="cover"
                     style={styles.imageBackground}>
                     <LinearGradient

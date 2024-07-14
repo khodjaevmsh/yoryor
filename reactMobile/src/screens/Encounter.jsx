@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import EncounterCard from '../components/EncounterCard'
 import { baseAxios } from '../hooks/requests'
 import { PROFILES } from '../urls'
@@ -10,11 +9,10 @@ import FilterModal from '../components/FilterModal'
 import { GlobalContext } from '../context/GlobalContext'
 import HeaderLeft from '../components/common/HeaderLeft'
 import HeaderRight from '../components/common/HeaderRight'
-import { showToast } from '../components/common/Toast'
 import SkeletonEncounter from '../components/SkeletonEncounter'
 
 export default function Encounter() {
-    const { profile: sender, signOut } = useContext(GlobalContext)
+    const { profile: sender } = useContext(GlobalContext)
     const initialGender = sender.gender?.value === 'male' ? 'female' : 'male'
 
     const [loading, setLoading] = useState(true)
@@ -49,7 +47,7 @@ export default function Encounter() {
                 setApplyFilter(false)
                 setTimeout(() => {
                     setLoading(false)
-                }, 500)
+                }, 100)
             }
         }
         fetchReceivers()
