@@ -13,7 +13,7 @@ import AgreementModal from '../../components/AgreementModal'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import SecureTextEntryIcon from '../../components/common/SecureTextEntryIcon'
 
-export default function CheckConfirmationCode({ route }) {
+export default function SetPassword({ route }) {
     const [serverError, setServerError] = useState()
     const [loading, setLoading] = useState(false)
     const [isModalVisible, setModalVisible] = useState(false)
@@ -39,85 +39,78 @@ export default function CheckConfirmationCode({ route }) {
     }
 
     return (
-        <KeyboardAvoiding>
-            <Container>
-                <View>
-                    <Text style={styles.title}>Parol</Text>
-                    <Text style={styles.subTitle}>
-                        Iltimos, akkauntingiz uchun parol o'ylab toping.
-                        Parolingiz 8 tadan ortiq harflardan va sonlardan iborat bo'lishi lozim!
-                    </Text>
-                </View>
-
-                <View style={{ flex: 1 }}>
-                    <Formik
-                        initialValues={{ password: 'helloWorld1001$', password2: 'helloWorld1001$' }}
-                        validationSchema={validationSchema}
-                        onSubmit={onSubmit}>
-                        {({ handleSubmit, errors }) => (
-                            <>
-                                <Input
-                                    name="password"
-                                    keyboardType="default"
-                                    right={(
-                                        <SecureTextEntryIcon
-                                            secureTextEntry={secureTextEntry}
-                                            setSecureTextEntry={() => setSecureTextEntry(!secureTextEntry)} />
-                                    )}
-                                    rightStyle={{ bottom: normalize(14) }}
+        <Container>
+            <View>
+                <Text style={styles.title}>Parol o'rnating</Text>
+                <Text style={styles.subTitle}>
+                    Akkauntingiz uchun yangi parol o'ylab toping va uni tasdiqlang.
+                    Parolingiz 8 tadan ortiq harflardan va sonlardan iborat bo'lishi lozim!
+                </Text>
+            </View>
+            <Formik
+                initialValues={{ password: 'helloWorld1001$', password2: 'helloWorld1001$' }}
+                validationSchema={validationSchema}
+                onSubmit={onSubmit}>
+                {({ handleSubmit }) => (
+                    <>
+                        <Input
+                            name="password"
+                            keyboardType="default"
+                            right={(
+                                <SecureTextEntryIcon
                                     secureTextEntry={secureTextEntry}
-                                    placeholder="Parol" />
+                                    setSecureTextEntry={() => setSecureTextEntry(!secureTextEntry)} />
+                            )}
+                            secureTextEntry={secureTextEntry}
+                            placeholder="Parol" />
 
-                                <Input
-                                    name="password2"
-                                    keyboardType="default"
-                                    placeholder="Parolni tasdiqlang"
-                                    right={(
-                                        <SecureTextEntryIcon
-                                            secureTextEntry={secureTextEntrySecond}
-                                            /* eslint-disable-next-line max-len */
-                                            setSecureTextEntry={() => setSecureTextEntrySecond(!secureTextEntrySecond)} />
-                                    )}
-                                    rightStyle={{ bottom: normalize(14) }}
+                        <Input
+                            name="password2"
+                            keyboardType="default"
+                            placeholder="Parolni tasdiqlang"
+                            right={(
+                                <SecureTextEntryIcon
                                     secureTextEntry={secureTextEntrySecond}
-                                    inputStyle={{ marginTop: errors.password ? 13 : 18 }} />
+                                    /* eslint-disable-next-line max-len */
+                                    setSecureTextEntry={() => setSecureTextEntrySecond(!secureTextEntrySecond)} />
+                            )}
+                            secureTextEntry={secureTextEntrySecond}
+                            inputWrapperStyle={{ marginTop: 12 }} />
 
-                                <ServerError error={serverError} />
+                        <ServerError error={serverError} />
 
-                                <View style={styles.buttonWrapper}>
-                                    <Button title="Davom etish"
-                                        onPress={handleSubmit}
-                                        buttonStyle={styles.button}
-                                        loading={loading} />
-                                </View>
+                        <View style={styles.bottomWrapper}>
+                            <Button title="Davom etish"
+                                onPress={handleSubmit}
+                                buttonStyle={styles.button}
+                                loading={loading} />
+                        </View>
 
-                                <AgreementModal
-                                    isModalVisible={isModalVisible}
-                                    setModalVisible={setModalVisible}
-                                    phoneNumber={phoneNumber}
-                                    setServerError={setServerError} />
-                            </>
-                        )}
-                    </Formik>
-                </View>
-            </Container>
-        </KeyboardAvoiding>
+                        <AgreementModal
+                            isModalVisible={isModalVisible}
+                            setModalVisible={setModalVisible}
+                            phoneNumber={phoneNumber}
+                            setServerError={setServerError} />
+                    </>
+                )}
+            </Formik>
+        </Container>
     )
 }
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
         marginTop: 7,
-        marginBottom: 30,
-        lineHeight: 19.5,
+        marginBottom: 20,
         fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
-    buttonWrapper: {
+    bottomWrapper: {
         flex: 1,
         justifyContent: 'flex-end',
     },

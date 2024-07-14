@@ -12,7 +12,7 @@ export async function requestUserPermission() {
             || authStatus === messaging.AuthorizationStatus.PROVISIONAL
 
         if (enabled) {
-            console.log('FCM auth status:', authStatus)
+            // Do something...
         }
     } else if (Platform.OS === 'android') {
         await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS)

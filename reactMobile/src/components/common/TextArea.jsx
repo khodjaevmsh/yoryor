@@ -6,12 +6,11 @@ import { COLOR } from '../../utils/colors'
 import TextError from './TextError'
 import { fontSize } from '../../utils/fontSizes'
 
-export default function Input({
+export default function TextArea({
     safeArea,
     label,
     labelStyle,
     name,
-    inputWrapperStyle,
     inputStyle,
     keyboardType,
     placeholder,
@@ -19,8 +18,6 @@ export default function Input({
     secureTextEntry,
     wrapperErrorStyle,
     textErrorStyle,
-    right,
-    rightStyle,
     ...attributes
 }) {
     const Component = safeArea ? SafeAreaView : View
@@ -28,10 +25,9 @@ export default function Input({
     return (
         <Component>
             {label ? <Text style={[styles.label, labelStyle]}>{label}</Text> : null}
-
-            <View style={[styles.inputWrapper, inputWrapperStyle, { paddingRight: right ? 55 : 20 }]}>
-                <Field name={name}>
-                    {({ field, form }) => (
+            <Field name={name}>
+                {({ field, form }) => (
+                    <View style={styles.inputWrapper}>
                         <TextInput
                             style={[styles.input, inputStyle]}
                             keyboardType={keyboardType}
@@ -41,11 +37,9 @@ export default function Input({
                             value={String(field.value)}
                             secureTextEntry={secureTextEntry}
                             {...attributes} />
-                    )}
-                </Field>
-                {right ? <View style={[styles.right, rightStyle]}>{right}</View> : null}
-            </View>
-
+                    </View>
+                )}
+            </Field>
             <ErrorMessage
                 name={name}
                 component={TextError}
@@ -65,21 +59,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         position: 'relative',
-        borderWidth: 1.5,
-        borderColor: COLOR.lightGrey,
-        borderRadius: 55,
-        marginVertical: 5,
-        paddingLeft: 20,
-        paddingRight: 20,
     },
     input: {
         width: '100%',
-        height: normalize(46),
+        height: normalize(50),
+        paddingHorizontal: 20,
+        borderWidth: 1.5,
+        borderColor: COLOR.lightGrey,
+        borderRadius: 15,
         fontSize: normalize(16),
-    },
-    right: {
-        position: 'absolute',
-        top: 9,
-        right: 18,
     },
 })

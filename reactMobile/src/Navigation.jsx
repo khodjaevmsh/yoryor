@@ -48,6 +48,10 @@ import { ChatRounded, EncounterI, Heart, UserRounded, Widget4 } from './componen
 import Profile from './screens/Profile'
 import ReceiverDetail from './screens/discover/ReceiverDetail'
 import ChatDetail from './screens/chat/ChatDetail'
+import ForgotYourPassword from './screens/auth/ForgotYourPassword'
+import SetNewPassword from './screens/auth/SetNewPassword'
+import SetEducation from './screens/auth/SetEducation'
+import SetJob from './screens/auth/SetJob'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -84,23 +88,35 @@ export default function Navigation() {
                 ) : null),
             })}>
                 <Stack.Screen name="TabScreen" component={TabScreen} options={{ headerShown: false }} />
-                {/* eslint-disable-next-line max-len */}
-                <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false, gestureEnabled: false }} />
+                <Stack.Screen name="Splash" component={Splash} options={{
+                    headerShown: false, gestureEnabled: false,
+                }} />
 
                 {/*  AUTH  */}
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: true }} />
-                {/* eslint-disable-next-line max-len */}
-                <Stack.Screen name="CheckConfirmationCode" component={CheckConfirmationCode} options={{ headerShown: true }} />
-                {/* eslint-disable-next-line max-len */}
-                <Stack.Screen name="SetPassword" component={SetPassword} options={() => ({ headerShown: true, gestureEnabled: false })} />
-                {/* eslint-disable-next-line max-len */}
-                <Stack.Screen name="SetName" component={SetName} options={() => ({ headerShown: true, gestureEnabled: false })} />
+                <Stack.Screen name="CheckConfirmationCode" component={CheckConfirmationCode} options={{
+                    headerShown: true,
+                }} />
+                <Stack.Screen name="SetPassword" component={SetPassword} options={() => ({
+                    headerShown: true, gestureEnabled: false,
+                })} />
+                <Stack.Screen name="SetName" component={SetName} options={() => ({
+                    headerShown: true, gestureEnabled: false,
+                })} />
                 <Stack.Screen name="SetBirthDate" component={SetBirthDate} options={{ headerShown: true }} />
                 <Stack.Screen name="SetGender" component={SetGender} options={{ headerShown: true }} />
                 <Stack.Screen name="SetCity" component={SetCity} options={{ headerShown: true }} />
+                <Stack.Screen name="SetEducation" component={SetEducation} options={{ headerShown: true }} />
+                <Stack.Screen name="SetJob" component={SetJob} options={{ headerShown: true }} />
                 <Stack.Screen name="SetGoal" component={SetGoal} options={{ headerShown: true }} />
                 <Stack.Screen name="SetProfileImage" component={SetProfileImage} options={{ headerShown: true }} />
                 <Stack.Screen name="SignIn" component={SignIn} options={{ headerShown: true }} />
+                <Stack.Screen name="ForgotYourPassword" component={ForgotYourPassword} options={{
+                    headerShown: true,
+                }} />
+                <Stack.Screen name="SetNewPassword" component={SetNewPassword} options={() => ({
+                    headerShown: true, gestureEnabled: false,
+                })} />
 
                 {/*  PROFILE  */}
                 <Stack.Screen name="Settings" component={Settings} options={{ headerShown: true }} />

@@ -30,6 +30,7 @@ export default function ReceiverDetail({ route }) {
             headerLeft: () => <ProfileHeaderLeft name={receiver?.name} birthdate={receiver?.birthdate} />,
             headerRight: () => <ProfileHeaderRight onPress={() => navigation.goBack()} />,
             animation: 'fade_from_bottom',
+            animationDuration: 170,
         })
     }, [navigation, receiver])
 
@@ -43,7 +44,7 @@ export default function ReceiverDetail({ route }) {
                 const likeResponse = await baseAxios.get(LIKE.replace('{id}', receiverId))
                 setLike(likeResponse.data)
             } catch (error) {
-                console.log(error.response)
+                console.log(error.response.data)
             } finally {
                 setLoading(false)
             }
@@ -90,15 +91,16 @@ export default function ReceiverDetail({ route }) {
                 scrollEventThrottle={16}>
                 <ReceiverHead receiver={receiver} isModalVisible={isModalVisible} />
                 <ReceiverBody receiver={receiver} />
+
             </Animated.ScrollView>
             <Animated.View style={[styles.bottomIcons, { opacity: iconOpacity }]}>
-                <TouchableOpacity style={styles.iconContainer} activeOpacity={0.9}>
+                <TouchableOpacity style={styles.iconContainer} activeOpacity={1}>
                     <ChatRounded width={38} height={38} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.iconContainer}
                     onPress={like && !like.id ? onLike : null}
-                    activeOpacity={0.9}>
+                    activeOpacity={1}>
                     <View style={{ marginTop: 3 }}>
                         <Heart width={38} height={38} color={like && like.id ? COLOR.red : COLOR.black} />
                     </View>
@@ -116,9 +118,8 @@ export default function ReceiverDetail({ route }) {
 
 const styles = StyleSheet.create({
     contentContainerStyle: {
-        paddingTop: 22,
-        paddingHorizontal: 10,
-        paddingBottom: 90,
+        paddingTop: 10,
+        paddingBottom: 135,
     },
     bottomIcons: {
         width: '100%',

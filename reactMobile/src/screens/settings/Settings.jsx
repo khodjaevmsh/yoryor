@@ -11,7 +11,6 @@ import Button from '../../components/common/Button'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
 import ConfirmModal from '../../components/ConfirmModal'
-import { SmilingFace } from '../../components/common/Svgs'
 
 const cardData = [
     { title: 'Email', maxLength: 10, screen: 'ConfirmEmail', icon: <Mail color={COLOR.black} /> },
@@ -28,7 +27,7 @@ export default function Settings() {
     const { signOut } = useContext(GlobalContext)
     const navigation = useNavigation()
 
-    async function onSingOut() {
+    async function onSignOut() {
         try {
             setLoading(true)
             await baseAxios.delete(SIGN_OUT)
@@ -36,11 +35,6 @@ export default function Settings() {
             setModalConfirm(false)
             navigation.navigate('Splash')
         } catch (error) {
-            if (error) {
-                await signOut()
-                setModalConfirm(false)
-                navigation.navigate('Splash')
-            }
             setServerError(error.response)
         } finally {
             setLoading(false)
@@ -79,7 +73,7 @@ export default function Settings() {
                 icon={null}
                 isModalConfirm={isModalConfirm}
                 setModalConfirm={setModalConfirm}
-                cancel={() => onSingOut()} />
+                cancel={() => onSignOut()} />
         </Container>
     )
 }

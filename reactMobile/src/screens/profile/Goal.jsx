@@ -37,8 +37,8 @@ export default function Goal({ route }) {
 
     return (
         <Container>
-            <Text style={styles.title}>Maqsadingiz?</Text>
-            <Text style={styles.subTitle}>Maqsadingizni belgilang.</Text>
+            <Text style={styles.title}>Maqsadingizni beliglang</Text>
+            <Text style={styles.subTitle}>Sizning tanishishdan maqsadingiz nima ekanligini beliglang.</Text>
             <View style={styles.goalWrapper}>
                 {Object.entries(goalsWithIcon).map(([key, value]) => (
                     <TouchableOpacity
@@ -51,7 +51,7 @@ export default function Goal({ route }) {
                     </TouchableOpacity>
                 ))}
             </View>
-            <View style={styles.buttonWrapper}>
+            <View style={styles.bottomWrapper}>
                 <Button title="Davom etish" onPress={onSubmit} buttonStyle={styles.button} loading={loading} />
             </View>
         </Container>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: COLOR.primary,
     },
-    buttonWrapper: {
+    bottomWrapper: {
         flex: 1,
         justifyContent: 'flex-end',
     },

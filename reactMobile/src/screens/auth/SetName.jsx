@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import * as Yup from 'yup'
 import { ChevronLeft } from 'react-native-feather'
+import normalize from 'react-native-normalize/src/index'
 import Input from '../../components/common/Input'
 import Button from '../../components/common/Button'
 import Container from '../../components/common/Container'
@@ -20,15 +21,15 @@ export default function SetName({ route }) {
 
     const validationSchema = Yup.object().shape({
         name: Yup.string()
-            .matches(/^[a-zA-Z\s]*$/, 'Faqat harflardan iborat bo\'lishi lozim')
-            .min(4, 'Ismingiz kamida 4 ta harfdan iborat bo\'lishi kerak')
-            .max(28, 'Ismingiz 28 ta harfdan oshmasligi kerak')
+            .matches(/^[a-zA-Z\s]*$/, "Faqat harflardan iborat bo'lishi lozim")
+            .min(4, "Ismingiz kamida 4 ta harfdan iborat bo'lishi kerak")
+            .max(28, 'Ismingiz 20 ta harfdan oshmasligi kerak')
             .required('Majburiy maydon'),
     })
 
     async function onSubmit(data) {
+        setLoading(true)
         if (data.name.length >= 4) {
-            setLoading(true)
             navigation.navigate('SetBirthDate', { phoneNumber, password, name: data.name })
         }
         setLoading(false)
@@ -37,32 +38,29 @@ export default function SetName({ route }) {
     return (
         <KeyboardAvoiding>
             <Container>
-                <View style={{ flex: 1 }}>
-                    <Text style={styles.title}>Ismingiz</Text>
-                    <Text style={styles.subTitle}>
-                        Ismingizni kiriting. Familiyani kiritish xoxishiy!
-                        Keyinchalik ismingizni o'zgartirish imkoni bo'lmaydi!
-                    </Text>
+                <Text style={styles.title}>Ismingiz</Text>
+                <Text style={styles.subTitle}>
+                    Ismingizni kiriting.
+                    Keyinchalik ismingizni o'zgartirish imkoniyati bo'lmaydi!
+                </Text>
+                <Formik
+                    initialValues={{ name: '' }}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}>
+                    {({ handleSubmit }) => (
+                        <>
+                            <Input name="name" keyboardType="default" placeholder="Maksudbek" />
 
-                    <Formik
-                        initialValues={{ name: 'Timur' }}
-                        validationSchema={validationSchema}
-                        onSubmit={onSubmit}>
-                        {({ handleSubmit }) => (
-                            <>
-                                <Input name="name" keyboardType="default" placeholder="Maksudbek" />
-
-                                <View style={styles.buttonWrapper}>
-                                    <Button
-                                        title="Davom etish"
-                                        onPress={handleSubmit}
-                                        buttonStyle={styles.button}
-                                        loading={loading} />
-                                </View>
-                            </>
-                        )}
-                    </Formik>
-                </View>
+                            <View style={styles.bottomWrapper}>
+                                <Button
+                                    title="Davom etish"
+                                    onPress={handleSubmit}
+                                    buttonStyle={styles.button}
+                                    loading={loading} />
+                            </View>
+                        </>
+                    )}
+                </Formik>
                 <ConfirmModal
                     title="Bekor qilmoqchimisiz?"
                     subTitle="Diqqat, siz kiritgan ma'lumotlarning barchasi bekor bo'ladi!"
@@ -77,17 +75,17 @@ export default function SetName({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
         marginTop: 7,
-        marginBottom: 30,
-        lineHeight: 19.5,
+        marginBottom: 10,
         fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
-    buttonWrapper: {
+    bottomWrapper: {
         flex: 1,
         justifyContent: 'flex-end',
     },

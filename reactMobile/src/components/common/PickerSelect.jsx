@@ -25,7 +25,7 @@ export default function PickerSelect({
                 useNativeAndroidPickerStyle={false}
                 items={items}
                 style={{ ...pickerSelectStyles, ...style }}
-                Icon={() => <ChevronDown width={24} height={24} color={COLOR.black} />}
+                Icon={() => <ChevronDown width={26} height={26} color={COLOR.black} />}
                 {...props} />
         </View>
     )
@@ -42,8 +42,9 @@ const styles = StyleSheet.create({
 
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
+        flexGrow: 1,
         width: '100%',
-        height: normalize(52),
+        height: normalize(48),
         fontSize: normalize(16),
         color: 'black',
         borderWidth: 1,
@@ -51,27 +52,26 @@ const pickerSelectStyles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 18,
         borderColor: '#F2F2F2',
-        flexGrow: 1,
         marginBottom: normalize(16),
         backgroundColor: COLOR.extraLightGrey,
     },
     inputAndroid: {
+        flexGrow: 1,
         width: '100%',
-        height: normalize(52),
+        height: normalize(48),
         fontSize: normalize(16),
         color: 'black',
         borderWidth: 1,
         borderRadius: 55,
-        paddingHorizontal: 15,
+        paddingHorizontal: 20,
         paddingVertical: 18,
         borderColor: '#F2F2F2',
         overflow: 'hidden',
-        flexGrow: 1,
         marginBottom: normalize(16),
         backgroundColor: COLOR.extraLightGrey,
     },
     iconContainer: {
-        top: 15,
+        top: 14,
         right: 20,
     },
     placeholder: {

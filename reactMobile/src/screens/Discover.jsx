@@ -53,11 +53,13 @@ export default function Discover() {
             }
             setTotalPages(response.data.totalPages)
         } catch (error) {
-            showToast('warning', 'Oops!', 'Internet mavjudligini tekshiring')
+            console.log(error.response.data)
         } finally {
-            setRefreshing(false)
-            setLoading(false)
             setApplyFilter(false)
+            setTimeout(() => {
+                setRefreshing(false)
+                setLoading(false)
+            }, 500)
         }
     }
 

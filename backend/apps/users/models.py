@@ -7,12 +7,10 @@ from users.managers import UserManager
 
 
 class User(AbstractUser):
-    # country_code = models.CharField(default=998)
+    country_code = models.CharField(default='998')
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     email = models.EmailField(unique=True, null=True, blank=True)
     username = models.CharField(unique=True, null=True, blank=True)
-    online = models.BooleanField(default=False)
-    last_seen = models.DateTimeField(null=True, blank=True)
 
     objects = UserManager()
 
@@ -21,6 +19,7 @@ class User(AbstractUser):
 
 
 class ConfirmationCode(models.Model):
+    country_code = models.CharField(default='998')
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     confirmation_code = models.CharField(max_length=6, null=True, blank=True)
 

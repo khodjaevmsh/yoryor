@@ -5,24 +5,11 @@ import requests
 from django.conf import settings
 
 
-def generate_verification_code(length=6):
+def generate_confirmation_code(length=5):
     characters = string.digits
     verification_code = ''.join(random.choice(characters) for _ in range(length))
     return verification_code
 
-
-# def send_verification_code(phone_number, verification_code):
-#     print(verification_code)
-#     account_sid = 'ACdf4c9811c0a76963f07a5bf7d06807ba'  # Replace with your Twilio account SID
-#     auth_token = '4d70efbadcec535ff9613528f82cba96'  # Replace with your Twilio auth token
-#     twilio_phone_number = '+19288336012'  # Replace with your Twilio phone number
-#
-#     client = Client(account_sid, auth_token)
-#     message = client.messages.create(
-#         body=f'Your verification code is: {verification_code}',
-#         from_=twilio_phone_number,
-#         to=phone_number
-#     )
 
 def get_token(email, password):
     url = "https://notify.eskiz.uz/api/auth/login"
@@ -43,19 +30,26 @@ def get_token(email, password):
         return None
 
 
-def send_verification_code(phone_number, verification_code):
-    token = get_token(settings.ESKIZ_EMAIL, settings.ESKIZ_PASSWORD)
-    url = "https://notify.eskiz.uz/api/message/sms/send"
-    payload = {
-        'mobile_phone': phone_number,
-        'message': 'This is test from Eskiz',  # f'Your verification code is: {verification_code}'
-        'from': '4546',
-    }
-    headers = {
-        'Authorization': f'Bearer {token}'
-    }
-    response = requests.request("POST", url, headers=headers, data=payload)
-    print(response.text)
+def send_verification_code(country_code, phone_number, verification_code):
+    try:
+        token = get_token(settings.ESKIZ_EMAIL, settings.ESKIZ_PASSWORD)
+        url = "https://notify.eskiz.uz/api/message/sms/send"
+        payload = {
+            'mobile_phone': f'{country_code}{phone_number}',
+            'message': 'This is test from Eskiz',  # f'Your verification code is: {verification_code}'
+            'from': '4546',
+        }
+        headers = {
+            'Authorization': f'Bearer {token}'
+        }
+        response = requests.request("POST", url, headers=headers, data=payload)
+        print(response.text)
+    except ConnectionError as e:
+        print(f"Connection error occurred: {e}")
+        # Handle the connection error (e.g., retry logic, logging, etc.)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        # Handle other exceptions
 
 
 def integers_only(text) -> str:

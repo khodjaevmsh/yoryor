@@ -1,10 +1,15 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import normalize from 'react-native-normalize'
+import FastImage from 'react-native-fast-image'
 import RoundedTagWithIcon from './RoundedTagWithIcon'
 import { COLOR } from '../utils/colors'
 import { AcademicCap, CaseRound, Dollar, Heart, Ruler, Stars, Weigher } from './common/Svgs'
 import { levels, maritalStatus, incomeLevels, zodiacs } from '../utils/choices'
+import { domain } from '../hooks/requests'
+
+const { height: screenHeight } = Dimensions.get('window')
+const imageHeight = screenHeight * 0.66
 
 export default function ReceiverBody({ receiver }) {
     const fields = [
@@ -20,8 +25,27 @@ export default function ReceiverBody({ receiver }) {
         { icon: <Stars width={20} height={20} />, text: zodiacs[receiver.zodiac] },
     ]
 
+    const renderFastImages = () => {
+        if (!receiver || !receiver.images) return null
+
+        return receiver.images.slice(1, 6).map((imageObj, index) => (
+            imageObj ? (
+                <FastImage
+                    key={index}
+                    style={[styles.image, { marginTop: index === 0 ? 38 : 0 }]}
+                    source={{
+                        uri: `${domain + imageObj.image}`,
+                        priority: FastImage.priority.normal,
+                        cache: FastImage.cacheControl.web,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover}
+                />
+            ) : null
+        ))
+    }
+
     return (
-        <View style={styles.container}>
+        <View>
             {receiver.bio ? (
                 <View style={styles.informationWrapper}>
                     <Text style={[styles.informationTitle]}>O'zi haqida</Text>
@@ -76,17 +100,19 @@ export default function ReceiverBody({ receiver }) {
                     <Text style={styles.informationSubTitle}>{receiver.jobCompany}</Text>
                 </View>
             ) : null}
+
+            <View>
+                {renderFastImages()}
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginHorizontal: 5,
-    },
     informationWrapper: {
         flex: 1,
-        marginTop: 28,
+        marginTop: 24,
+        marginHorizontal: 15,
     },
     informationTitle: {
         fontSize: normalize(16),
@@ -102,5 +128,10 @@ const styles = StyleSheet.create({
     tagsWrapper: {
         flexDirection: 'row',
         flexWrap: 'wrap',
+    },
+    image: {
+        width: '100%',
+        height: imageHeight,
+        borderRadius: 0,
     },
 })

@@ -43,7 +43,7 @@ export default function Gender({ route }) {
                 faqat qarama-qarshi jinsdagi foydalanuvchilar ko'rsatiladi.
             </Text>
 
-            <View style={{ marginTop: 22 }}>
+            <View style={styles.genderWrapper}>
                 {Object.entries(genders).map(([key, value]) => (
                     <TouchableOpacity
                         key={key}
@@ -55,7 +55,7 @@ export default function Gender({ route }) {
                     </TouchableOpacity>
                 ))}
             </View>
-            <View style={styles.buttonWrapper}>
+            <View style={styles.bottomWrapper}>
                 <Button
                     title="Davom etish"
                     onPress={onSubmit}
@@ -77,6 +77,9 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         fontSize: fontSize.small,
         lineHeight: 19.5,
+    },
+    genderWrapper: {
+        marginTop: 22,
     },
     gender: {
         width: '100%',
@@ -112,7 +115,7 @@ const styles = StyleSheet.create({
     validationError: {
         color: COLOR.primary,
     },
-    buttonWrapper: {
+    bottomWrapper: {
         flex: 1,
         justifyContent: 'flex-end',
     },

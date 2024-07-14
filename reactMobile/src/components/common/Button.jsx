@@ -14,7 +14,7 @@ export default function Button({ title = 'Enter own title', onPress, buttonStyle
 const styles = StyleSheet.create({
     button: {
         width: '100%',
-        height: normalize(52),
+        height: normalize(46),
         justifyContent: 'center',
         backgroundColor: COLOR.primary,
         padding: 8,
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#ffffff',
-        fontWeight: '600',
-        fontSize: normalize(16),
+        fontWeight: '500',
+        fontSize: normalize(15),
     },
 })

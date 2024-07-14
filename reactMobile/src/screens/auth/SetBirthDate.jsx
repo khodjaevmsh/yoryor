@@ -9,6 +9,7 @@ import Button from '../../components/common/Button'
 import Container from '../../components/common/Container'
 import { COLOR } from '../../utils/colors'
 import { fontSize } from '../../utils/fontSizes'
+import ValidationError from '../../components/common/ValidationError'
 
 export default function SetBirthDate({ route }) {
     const [loading, setLoading] = useState(false)
@@ -32,7 +33,7 @@ export default function SetBirthDate({ route }) {
                 birthdate: moment(date).format('YYYY-MM-DD'),
             })
         } else if (age <= 17) {
-            setValidationError('* Yoshingiz 18 dan katta bo\'lishi kerak')
+            setValidationError("Yoshingiz 17 dan katta bo'lishi lozim")
         }
         setLoading(false)
     }
@@ -77,7 +78,7 @@ export default function SetBirthDate({ route }) {
                             }}
                             onCancel={() => setDatePickerVisibility(false)} />
                     )}
-                    {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
+                    <ValidationError validationError={validationError} />
                 </View>
             </View>
 
@@ -94,15 +95,15 @@ export default function SetBirthDate({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
         marginTop: 7,
-        marginBottom: 30,
-        lineHeight: 19.5,
+        marginBottom: 20,
         fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
     buttonWrapper: {
         flex: 1,

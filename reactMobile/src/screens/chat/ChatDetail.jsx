@@ -42,7 +42,7 @@ export default function ChatDetail({ route }) {
             }
 
             ws.onerror = () => {
-                showToast('error', 'Oops!', 'Internet mavjudligini tekshiring')
+                console.log('WebSocket error...')
             }
 
             ws.onclose = () => {
@@ -58,7 +58,7 @@ export default function ChatDetail({ route }) {
                     connectWebSocket()
                 }, reconnectInterval)
             } else {
-                showToast('error', 'Oops!', 'Internet mavjudligini tekshiring')
+                console.log('WebSocket reconnect error...')
             }
         }
 
@@ -85,7 +85,7 @@ export default function ChatDetail({ route }) {
                 setMessages((prevMessages) => GiftedChat.prepend(prevMessages, messageResponse))
                 setTotalPages(response.data.totalPages)
             } catch (error) {
-                showToast('error', 'Oops!', 'Nomalum xatolik')
+                console.log(error.response.data)
             } finally {
                 setLoading(false)
             }
@@ -104,7 +104,7 @@ export default function ChatDetail({ route }) {
         if (webSocket && webSocket.readyState === WebSocket.OPEN) {
             webSocket.send(JSON.stringify(newMessageData))
         } else {
-            showToast('error', 'Oops!', 'Internet mavjudligini tekshiring')
+            showToast('warning', 'Oops!', 'Internet mavjudligini tekshiring')
         }
     }, [room, receiver, webSocket])
 

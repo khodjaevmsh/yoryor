@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import EncounterCard from '../components/EncounterCard'
 import { baseAxios } from '../hooks/requests'
 import { PROFILES } from '../urls'
@@ -13,7 +14,7 @@ import { showToast } from '../components/common/Toast'
 import SkeletonEncounter from '../components/SkeletonEncounter'
 
 export default function Encounter() {
-    const { profile: sender } = useContext(GlobalContext)
+    const { profile: sender, signOut } = useContext(GlobalContext)
     const initialGender = sender.gender?.value === 'male' ? 'female' : 'male'
 
     const [loading, setLoading] = useState(true)
@@ -43,10 +44,12 @@ export default function Encounter() {
                 const response = await baseAxios.get(PROFILES, { params: { encounter: true, country, region, gender } })
                 setReceivers(response.data.results)
             } catch (error) {
-                showToast('warning', 'Oops!', 'Internet mavjudligini tekshiring')
+                console.log(error.response.data)
             } finally {
-                setLoading(false)
                 setApplyFilter(false)
+                setTimeout(() => {
+                    setLoading(false)
+                }, 500)
             }
         }
         fetchReceivers()

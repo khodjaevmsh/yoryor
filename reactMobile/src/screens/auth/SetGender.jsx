@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import normalize from 'react-native-normalize/src/index'
+import normalize from 'react-native-normalize'
 import Container from '../../components/common/Container'
 import Button from '../../components/common/Button'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
+import ValidationError from '../../components/common/ValidationError'
+import { genders } from '../../utils/choices'
 
 export default function SetGender({ route }) {
     const [loading, setLoading] = useState(false)
@@ -20,7 +22,7 @@ export default function SetGender({ route }) {
 
     async function onSubmit() {
         if (!gender) {
-            setValidationError('* Jinsigzini tanlang')
+            setValidationError('Jinsigzini tanlang')
         } else {
             setLoading(true)
             navigation.navigate('SetCity', { phoneNumber, password, name, birthdate, gender })
@@ -30,27 +32,24 @@ export default function SetGender({ route }) {
 
     return (
         <Container>
-            <View style={{ flex: 1 }}>
-                <Text style={styles.title}>Jinsingiz?</Text>
-                <Text style={styles.subTitle}>Jinsingizni keyinchalik o'zgartirish imkoniyati bo'lmaydi!</Text>
 
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() => setGender('male')}
-                    style={[styles.gender, gender === 'male' && styles.activeGender]}>
-                    <Text style={styles.genderText}>Erkar</Text>
-                    <View style={[styles.radio, gender === 'male' && styles.activeRadio]} />
-                </TouchableOpacity>
+            <Text style={styles.title}>Jinsingiz tanlang</Text>
+            <Text style={styles.subTitle}>Jinsingizni keyinchalik o'zgartirish imkoniyati bo'lmaydi!</Text>
 
-                <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() => setGender('female')}
-                    style={[styles.gender, gender === 'female' && styles.activeGender]}>
-                    <Text style={styles.genderText}>Ayol</Text>
-                    <View style={[styles.radio, gender === 'female' && styles.activeRadio]} />
-                </TouchableOpacity>
-                {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
+            <View style={styles.genderWrapper}>
+                {Object.entries(genders).map(([key, value]) => (
+                    <TouchableOpacity
+                        key={key}
+                        activeOpacity={0.7}
+                        onPress={() => setGender(key)}
+                        style={[styles.gender, gender === key && styles.activeGender]}>
+                        <Text style={styles.genderText}>{value}</Text>
+                        <View style={[styles.radio, gender === key && styles.activeRadio]} />
+                    </TouchableOpacity>
+                ))}
             </View>
+
+            <ValidationError validationError={validationError} />
 
             <View style={styles.buttonWrapper}>
                 <Button
@@ -65,15 +64,15 @@ export default function SetGender({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
         marginTop: 7,
-        marginBottom: 30,
-        lineHeight: 19.5,
+        marginBottom: 20,
         fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
     gender: {
         width: '100%',

@@ -8,6 +8,7 @@ export const SET_PASSWORD = '/users/set-password'
 export const SIGN_UP = '/users/sign-up'
 export const SIGN_IN = '/users/sign-in'
 export const SIGN_OUT = '/users/sign-out'
+export const FORGOT_PASSWORD = '/users/forgot-password'
 export const CHANGE_PASSWORD = '/users/change-password'
 
 export const COUNTRY = '/users/country'
