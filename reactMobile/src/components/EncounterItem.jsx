@@ -37,7 +37,7 @@ export default function EncounterItem({ swiperRef, receiver }) {
                 </View>
             </LinearGradient>
             <TouchableOpacity
-                onPress={() => navigation.navigate('ReceiverDetail', { receiverId: receiver.id, swiperRef })}
+                onPress={() => navigation.navigate('EncounterDetail', { receiverId: receiver.id, swiperRef })}
                 style={styles.touchable}
                 activeOpacity={1}>
                 <FastImage
@@ -56,13 +56,13 @@ export default function EncounterItem({ swiperRef, receiver }) {
                 style={styles.bottomLinearGradient}>
                 <TouchableOpacity
                     style={styles.iconWrapper}
-                    activeOpacity={0.7}
+                    activeOpacity={1}
                     onPress={() => swiperRef.current.swipeLeft()}>
                     <X height={38} width={38} color={COLOR.black} strokeWidth={4} />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.iconWrapper, { paddingTop: 12, paddingBottom: 9 }]}
-                    activeOpacity={0.7}
+                    activeOpacity={1}
                     onPress={() => swiperRef.current.swipeRight()}>
                     <Heart height={38} width={38} color={COLOR.black} />
                 </TouchableOpacity>

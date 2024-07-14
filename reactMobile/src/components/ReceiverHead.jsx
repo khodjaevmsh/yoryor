@@ -5,7 +5,6 @@ import normalize from 'react-native-normalize'
 import LinearGradient from 'react-native-linear-gradient'
 import { domain } from '../hooks/requests'
 import { Goal, MapPoint } from './common/Svgs'
-import ProfileImagesPreview from './ProfileImagesPreview'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import { goals } from '../utils/choices'
@@ -27,7 +26,7 @@ export default function ReceiverHead({ receiver }) {
                 </View>
                 <View style={styles.topTagWrapper}>
                     <MapPoint width={15} height={15} color={COLOR.white} />
-                    <Text style={styles.topTag}>{receiver.region.title}</Text>
+                    <Text style={styles.topTag}>{receiver.region?.title}</Text>
                 </View>
             </LinearGradient>
             <FastImage

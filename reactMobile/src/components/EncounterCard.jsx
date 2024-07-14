@@ -15,7 +15,7 @@ import ActivityIndicator from './common/ActivityIndicator'
 export default function EncounterCard({ receivers, setModalVisible }) {
     const [loading, setLoading] = useState(false)
     const [isMModalVisible, setMModalVisible] = useState(false)
-    const [receiver, setReceiver] = useState(null)
+    const [receiver, setReceiver] = useState({})
     const [room, setRoom] = useState(null)
     const [onSwipedAll, setOnSwipedAll] = useState(false)
     const { profile: sender } = useContext(GlobalContext)
@@ -24,7 +24,7 @@ export default function EncounterCard({ receivers, setModalVisible }) {
     async function handleSwipedRight(cardIndex) {
         try {
             setLoading(true)
-            if (receivers[cardIndex].id) {
+            if (receivers && receivers[cardIndex].id) {
                 const response = await baseAxios.post(LIKES, {
                     sender: sender.id,
                     receiver: receivers[cardIndex].id,
@@ -67,7 +67,6 @@ export default function EncounterCard({ receivers, setModalVisible }) {
                     onSwipedLeft={handleSwipedLeft}
                     cardIndex={0}
                     stackSize={3}
-                    // onTapCard={(index) => console.log(index)}
                     verticalSwipe={false}
                     onSwipedAll={() => setOnSwipedAll(true)}
                     backgroundColor={COLOR.white}

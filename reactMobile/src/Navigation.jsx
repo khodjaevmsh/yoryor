@@ -52,6 +52,7 @@ import ForgotYourPassword from './screens/auth/ForgotYourPassword'
 import SetNewPassword from './screens/auth/SetNewPassword'
 import SetEducation from './screens/auth/SetEducation'
 import SetJob from './screens/auth/SetJob'
+import EncounterDetail from './screens/encounter/EncounterDetail'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -144,6 +145,12 @@ export default function Navigation() {
 
                 {/*  DISCOVER  */}
                 <Stack.Screen name="ReceiverDetail" component={ReceiverDetail} options={{
+                    headerShown: true,
+                    gestureEnabled: true,
+                }} />
+
+                {/*  ENCOUNTER  */}
+                <Stack.Screen name="EncounterDetail" component={EncounterDetail} options={{
                     headerShown: true,
                     gestureEnabled: true,
                 }} />

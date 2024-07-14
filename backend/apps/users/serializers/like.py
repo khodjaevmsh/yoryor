@@ -30,11 +30,13 @@ class LikeSerializer(serializers.ModelSerializer):
         if match:
             instance.match = True
             instance.save()
-            send_notification(
-                device_tokens=[sender_device.token, receiver_device.token],
-                title='Bu match! \U0001F4AC',
-                body='Sizga yangi xabar keldi'
-            )
+
+            if sender_device and receiver_device:
+                send_notification(
+                    device_tokens=[sender_device.token, receiver_device.token],
+                    title='Bu match! \U0001F4AC',
+                    body='Sizga yangi xabar keldi'
+                )
 
             # Используем транзакцию, чтобы гарантировать целостность данных
             with transaction.atomic():
@@ -45,10 +47,11 @@ class LikeSerializer(serializers.ModelSerializer):
                 else:
                     room.participants.add(instance.receiver)
 
-        send_notification(
-            device_tokens=receiver_device.token,
-            title=instance.sender.name,
-            body='Sizga like qoydi \U00002764\uFE0F'
-        )
+        if receiver_device:
+            send_notification(
+                device_tokens=receiver_device.token,
+                title=instance.sender.name,
+                body='Sizga like qoydi \U00002764\uFE0F'
+            )
 
         return instance

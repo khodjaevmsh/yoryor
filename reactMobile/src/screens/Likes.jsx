@@ -4,10 +4,9 @@ import normalize from 'react-native-normalize'
 import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
 import { baseAxios } from '../hooks/requests'
-import { LIKES } from '../urls'
+import { LIKES, COUNT_OF_LIKES } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 import LikeItem from '../components/LikeItem'
-import { showToast } from '../components/common/Toast'
 import WantMoreLikes from '../components/WantMoreLikes'
 import HeaderLeft from '../components/common/HeaderLeft'
 import SkeletonLikes from '../components/SkeletonLikes'
@@ -15,9 +14,10 @@ import SkeletonLikes from '../components/SkeletonLikes'
 export default function Likes() {
     const [loading, setLoading] = useState(false)
     const [likes, setLikes] = useState([])
+    const [count, setCount] = useState(0)
     const [totalPages, setTotalPages] = useState(1)
     const [page, setPage] = useState(1)
-    const { profile: receiver, numOfLikes } = useContext(GlobalContext)
+    const { profile: receiver } = useContext(GlobalContext)
     const navigation = useNavigation()
     const isFocused = useIsFocused()
 
@@ -34,6 +34,9 @@ export default function Likes() {
                 const response = await baseAxios.get(LIKES, { params: { receiver: receiver.id, page } })
                 setLikes(response.data.results)
                 setTotalPages(response.data.totalPages)
+
+                const countResponse = await baseAxios.get(COUNT_OF_LIKES, { params: { receiver: receiver.id } })
+                setCount(countResponse.data.count)
             } catch (error) {
                 console.log(error.response.data)
             } finally {
@@ -43,7 +46,7 @@ export default function Likes() {
             }
         }
         fetchLikes()
-    }, [isFocused, page])
+    }, [receiver.id, isFocused, page])
 
     const handleLoadMore = () => {
         if (!loading && page < totalPages) {
@@ -58,7 +61,7 @@ export default function Likes() {
     return (
         <>
             <View style={styles.likesCount}>
-                <Text style={styles.likes}>{numOfLikes} likes</Text>
+                <Text style={styles.likes}>{count} likes</Text>
             </View>
             <FlatList
                 data={likes}

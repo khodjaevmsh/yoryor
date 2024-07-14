@@ -25,7 +25,7 @@ export const LIKES = '/users/likes'
 export const LIKE = '/users/like/{id}'
 export const DISLIKES = '/users/dislikes'
 export const DISLIKE = '/users/dislike/{id}'
-export const NUM_OF_LIKES = '/users/num-of-likes'
+export const COUNT_OF_LIKES = '/users/count-of-likes'
 
 export const DEVICE_TOKEN = '/users/device-token'
 

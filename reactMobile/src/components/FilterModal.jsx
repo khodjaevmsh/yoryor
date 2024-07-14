@@ -11,7 +11,6 @@ import PickerSelect from './common/PickerSelect'
 import Button from './common/Button'
 import { fontSize } from '../utils/fontSizes'
 import GenderFilter from './GenderFilter'
-import { showToast } from './common/Toast'
 
 export default function FilterModal({
     isModalVisible,
@@ -92,11 +91,13 @@ export default function FilterModal({
                     </View>
                 </Container>
 
-                <Button title="Qo'llash" onPress={() => {
-                    setPage(setPage)
-                    setApplyFilter(true)
-                    setModalVisible(false)
-                }} />
+                <View style={styles.bottomWrapper}>
+                    <Button title="Qo'llash" onPress={() => {
+                        setPage(setPage)
+                        setApplyFilter(true)
+                        setModalVisible(false)
+                    }} />
+                </View>
             </RNModal>
         </View>
     )
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         paddingTop: Platform.OS === 'ios' ? 42 : null,
-        paddingBottom: Platform.OS === 'ios' ? 25 : null,
+        paddingBottom: Platform.OS === 'ios' ? 20 : null,
         marginHorizontal: 10,
     },
     header: {
@@ -132,9 +133,13 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     containerStyle: {
-        paddingHorizontal: 6,
+        paddingTop: 25,
+        paddingHorizontal: 10,
     },
     pickerSelect: {
         flex: 1,
+    },
+    bottomWrapper: {
+        paddingHorizontal: 10,
     },
 })

@@ -9,6 +9,7 @@ import { GlobalContext } from '../context/GlobalContext'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import { PROFILE } from '../urls'
+import { shortenText } from '../utils/string'
 
 export default function RoomItem({ room }) {
     const { profile } = useContext(GlobalContext)
@@ -57,7 +58,7 @@ export default function RoomItem({ room }) {
                 </View>
                 <View style={[styles.createdAtWrapper, { marginTop: 4 }]}>
                     <Text style={styles.receiverMsgContent}>
-                        {room.message?.text || room.lastMessage.content}
+                        {shortenText(room.message?.text || room.lastMessage.content, 25) || 'Bu match!' }
                     </Text>
                     {unSeen ? (
                         <View style={styles.tagWrapper}>

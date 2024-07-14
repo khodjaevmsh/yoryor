@@ -28,7 +28,7 @@ export default function ChatDetailHeader({ receiver }) {
 
             <TouchableOpacity
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('ReceiverDetail', { receiver })}>
+                onPress={() => navigation.navigate('ReceiverDetail', { receiverId: receiver.id })}>
                 <Text style={styles.profileName}>{receiver.name}</Text>
             </TouchableOpacity>
         </View>
