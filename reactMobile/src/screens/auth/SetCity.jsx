@@ -9,12 +9,13 @@ import { COLOR } from '../../utils/colors'
 import PickerSelect from '../../components/common/PickerSelect'
 import { baseAxios } from '../../hooks/requests'
 import { COUNTRY, REGION } from '../../urls'
+import { showToast } from '../../components/common/Toast'
+import ValidationError from '../../components/common/ValidationError'
 
 export default function SetCity({ route }) {
     const [loading, setLoading] = useState(false)
     const [countryData, setCountryData] = useState([])
     const [country, setCountry] = useState('')
-
     const [regionData, setRegionData] = useState([])
     const [region, setRegion] = useState('')
     const [validationError, setValidationError] = useState('')
@@ -22,13 +23,14 @@ export default function SetCity({ route }) {
     const navigation = useNavigation()
 
     function onSubmit() {
-        setValidationError(null)
-
+        setLoading(true)
+        setValidationError('')
         if (!country || !region) {
-            setValidationError('* Majburiy maydon')
+            setValidationError("Barcha maydonlar to'ldirilishi shart")
         } else {
-            navigation.navigate('SetGoal', { phoneNumber, password, name, birthdate, gender, region })
+            navigation.navigate('SetEducation', { phoneNumber, password, name, birthdate, gender, region })
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -37,9 +39,7 @@ export default function SetCity({ route }) {
                 const response = await baseAxios.get(COUNTRY)
                 setCountryData(response.data)
             } catch (error) {
-                setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
-            } finally {
-                setLoading(false)
+                showToast('error', 'Oops!', error.response.data)
             }
         }
         fetchCountryData()
@@ -49,9 +49,7 @@ export default function SetCity({ route }) {
                 const response = await baseAxios.get(REGION, { params: { country } })
                 setRegionData(response.data)
             } catch (error) {
-                setValidationError('* Nomalum xatolik, qaytib urinib ko\'ring')
-            } finally {
-                setLoading(false)
+                showToast('error', 'Oops!', error.response.data)
             }
         }
         fetchRegionData()
@@ -60,30 +58,28 @@ export default function SetCity({ route }) {
     return (
         <Container>
             <Text style={styles.title}>Qayerdan siz?</Text>
-            <Text style={styles.subTitle}>Tug'ilgan joyingiz</Text>
-            <View style={{ flex: 1 }}>
-                <PickerSelect
-                    placeholder={{ label: 'Davlatni tanlang', value: '' }}
-                    items={countryData && Array.isArray(countryData) ? (
-                        countryData.map((item) => ({ label: item.title, value: `${item.id}` }))
-                    ) : []}
-                    value={country}
-                    onValueChange={(value) => setCountry(value)} />
+            <Text style={styles.subTitle}>Qaysi shahardan ekanligizni tanlang.</Text>
 
-                <PickerSelect
-                    placeholder={{ label: 'Shaharni tanlang', value: '' }}
-                    items={regionData && Array.isArray(regionData) ? (
-                        regionData.map((item) => ({ label: item.title, value: `${item.id}` }))
-                    ) : []}
-                    value={region}
-                    style={pickerSelectStyles}
-                    onValueChange={(value) => setRegion(value)} />
+            <PickerSelect
+                placeholder={{ label: 'Davlatni tanlang', value: '' }}
+                items={countryData && Array.isArray(countryData) ? (
+                    countryData.map((item) => ({ label: item.title, value: `${item.id}` }))
+                ) : []}
+                value={country}
+                onValueChange={(value) => setCountry(value)} />
 
-                {!country || !region ? <Text style={styles.validationError}>{validationError}</Text> : null}
+            <PickerSelect
+                placeholder={{ label: 'Shaharni tanlang', value: '' }}
+                items={regionData && Array.isArray(regionData) ? (
+                    regionData.map((item) => ({ label: item.title, value: `${item.id}` }))
+                ) : []}
+                value={region}
+                style={pickerSelectStyles}
+                onValueChange={(value) => setRegion(value)} />
 
-            </View>
+            <ValidationError validationError={validationError} wrapperStyle={styles.validationError} />
 
-            <View style={styles.buttonWrapper}>
+            <View style={styles.bottomWrapper}>
                 <Button
                     title="Davom etish"
                     onPress={onSubmit}
@@ -96,40 +92,20 @@ export default function SetCity({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
         marginTop: 7,
-        marginBottom: 30,
-        lineHeight: 19.5,
+        marginBottom: 20,
         fontSize: fontSize.small,
-    },
-    gender: {
-        width: '100%',
-        height: normalize(46),
-        backgroundColor: COLOR.extraLightGrey,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 12,
-        marginVertical: 6,
-    },
-    genderText: {
-        fontSize: fontSize.medium,
-        color: COLOR.black,
-        fontWeight: '500',
-    },
-    activeGender: {
-        borderColor: COLOR.primary,
-        borderWidth: 1.2,
+        lineHeight: 19.5,
     },
     validationError: {
-        color: COLOR.primary,
-        marginLeft: 4,
-        marginTop: 8,
+        marginTop: 15,
     },
-    buttonWrapper: {
+    bottomWrapper: {
         flex: 1,
         justifyContent: 'flex-end',
     },
@@ -138,12 +114,12 @@ const styles = StyleSheet.create({
 const pickerSelectStyles = StyleSheet.create({
     inputIOS: {
         width: '100%',
-        height: 52,
+        height: normalize(48),
         fontSize: normalize(16),
         color: 'black',
         borderWidth: 1,
         borderRadius: 55,
-        paddingHorizontal: 15,
+        paddingHorizontal: 20,
         paddingVertical: 18,
         borderColor: '#F2F2F2',
         flexGrow: 1,
@@ -151,12 +127,12 @@ const pickerSelectStyles = StyleSheet.create({
     },
     inputAndroid: {
         width: '100%',
-        height: 52,
+        height: normalize(48),
         fontSize: normalize(16),
         color: 'black',
         borderWidth: 1,
         borderRadius: 55,
-        paddingHorizontal: 15,
+        paddingHorizontal: 20,
         paddingVertical: 18,
         borderColor: '#F2F2F2',
         overflow: 'hidden',

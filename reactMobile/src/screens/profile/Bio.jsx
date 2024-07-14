@@ -14,6 +14,7 @@ import { PROFILE } from '../../urls'
 import { GlobalContext } from '../../context/GlobalContext'
 import Button from '../../components/common/Button'
 import { showToast } from '../../components/common/Toast'
+import TextArea from '../../components/common/TextArea'
 
 export default function Bio({ route }) {
     const [loading, setLoading] = useState(false)
@@ -57,15 +58,14 @@ export default function Bio({ route }) {
                         onSubmit={onSubmit}>
                         {({ handleSubmit }) => (
                             <>
-                                <Input
+                                <TextArea
                                     name="bio"
                                     keyboardType="default"
-                                    style={styles.input}
+                                    inputStyle={styles.input}
                                     multiline
                                     numberOfLines={4}
                                     placeholder="Masalan: Men doimiy optimist.
-                                     Kulishni va hayotdan bahramand boʼlishni yaxshi koʼradigan inson qidiryapman..."
-                                />
+                                     Kulishni va hayotdan bahramand boʼlishni yaxshi koʼradigan inson qidiryapman..." />
                                 <View style={styles.buttonWrapper}>
                                     <Button title="Qo'shish" onPress={handleSubmit} loading={loading} />
                                 </View>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         textAlignVertical: 'top',
         fontSize: fontSize.medium,
-        marginTop: 22,
+        marginTop: 20,
         borderRadius: 19,
         borderWidth: 2,
         borderColor: COLOR.lightGrey,

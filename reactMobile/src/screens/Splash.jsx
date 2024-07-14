@@ -32,7 +32,6 @@ export default function Splash() {
                     buttonStyle={styles.button}
                     onPress={() => navigation.navigate('SignIn')} />
             </View>
-
         </Container>
     )
 }
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         backgroundColor: COLOR.primary,
         paddingBottom: 32,
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
     },
     logoWrapper: {
         flex: 2,
@@ -57,12 +56,13 @@ const styles = StyleSheet.create({
     },
     button: {
         borderWidth: 0,
-        marginTop: 6,
+        marginTop: 7,
         backgroundColor: COLOR.white,
     },
     policyAndTermsWrapper: {
         flex: 2,
         justifyContent: 'flex-end',
+        paddingHorizontal: 15,
     },
     policyAndTerms: {
         fontSize: normalize(12),
@@ -71,6 +71,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: COLOR.white,
         marginBottom: 20,
-        paddingHorizontal: 20,
     },
 })

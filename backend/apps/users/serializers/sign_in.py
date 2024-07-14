@@ -8,17 +8,22 @@ from users.models import User
 
 
 class SignInSerializer(serializers.ModelSerializer):
+    country_code = serializers.CharField(required=True, trim_whitespace=True)
     phone_number = serializers.CharField(required=True, trim_whitespace=True)
     password = serializers.CharField(required=True, trim_whitespace=False)
 
     def validate(self, attrs):
         sign_in = authenticate(
             request=self.context.get('request'),
+            country_code=attrs.get('country_code'),
             username=attrs.get('phone_number'),
             password=attrs.get('password')
         )
 
-        user = User.objects.filter(phone_number=attrs.get('phone_number')).first()
+        user = User.objects.filter(
+            country_code=attrs.get('country_code'),
+            phone_number=attrs.get('phone_number')
+        ).first()
         token = Token.objects.filter(user=user).first()
 
         # Check if the user has an existing token and revoke it
@@ -36,4 +41,4 @@ class SignInSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', 'phone_number', 'password']
+        fields = ['id', 'country_code', 'phone_number', 'password']

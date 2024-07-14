@@ -9,21 +9,20 @@ import Container from '../../components/common/Container'
 import { COLOR } from '../../utils/colors'
 import { fontSize } from '../../utils/fontSizes'
 import Button from '../../components/common/Button'
-import ServerError from '../../components/common/ServerError'
 import { GlobalContext } from '../../context/GlobalContext'
 import { SIGN_UP } from '../../urls'
 import { domain } from '../../hooks/requests'
 import { getToken } from '../../hooks/usePushNotification'
+import ValidationError from '../../components/common/ValidationError'
 
 export default function SetProfileImage({ route }) {
     const [images, setImages] = useState(Array(6).fill(null))
     const [imageLoading, setImageLoading] = useState(Array(6).fill(false))
     const [loading, setLoading] = useState(false)
-    const [serverError, setServerError] = useState('')
     const [validationError, setValidationError] = useState('')
     const [buttonNumbers, setButtonNumbers] = useState([])
 
-    const { phoneNumber, password, name, birthdate, gender, region, goal } = route.params || {}
+    const { phoneNumber, password, name, birthdate, gender, region, education, job, goal } = route.params
     const { auth } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -33,7 +32,7 @@ export default function SetProfileImage({ route }) {
             mediaType: 'photo',
             maxWidth: 840,
             maxHeight: 640,
-            quality: 0.8,
+            quality: 0.7,
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
@@ -64,22 +63,22 @@ export default function SetProfileImage({ route }) {
 
     async function onSubmit() {
         const formData = new FormData()
-        const deviceToken = await getToken()
-
+        formData.append('country_code', '998')
         formData.append('phone_number', phoneNumber)
         formData.append('password', password)
         formData.append('profile.name', name)
-        formData.append('profile.region', region)
         formData.append('profile.birthdate', birthdate)
         formData.append('profile.gender', gender)
+        formData.append('profile.region', region)
+        formData.append('profile.education_level', education.level)
+        formData.append('profile.education_school', education.school)
+        formData.append('profile.job_title', job.title)
+        formData.append('profile.job_company', job.company)
         formData.append('profile.goal', goal)
-        buttonNumbers.forEach((number) => {
-            formData.append('button_numbers', number)
-        })
-        formData.append('device', deviceToken)
 
+        buttonNumbers.forEach((buttonNumber) => formData.append('button_numbers', buttonNumber))
         if (images.filter((image) => image !== null).length < 2) {
-            setValidationError('* Kamida 2 ta rasm qo\'shing')
+            setValidationError("Kamida 2 ta rasm qo'shing")
         } else {
             images.forEach((image) => {
                 if (image) {
@@ -93,21 +92,19 @@ export default function SetProfileImage({ route }) {
         }
 
         try {
-            setServerError('')
-            setValidationError('')
             setLoading(true)
 
             const response = await axios.post(`${domain}/api/v1${SIGN_UP}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             })
-
             auth(response.data.token, response.data.user, response.data.profile)
-            navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
+
             navigation.navigate('TabScreen')
+            navigation.reset({ index: 0, routes: [{ name: 'TabScreen' }] })
+
             await getToken()
         } catch (error) {
             console.log(error.response.data)
-            setServerError(error.response)
         } finally {
             setLoading(false)
         }
@@ -116,30 +113,27 @@ export default function SetProfileImage({ route }) {
     return (
         <Container>
             <View>
-                <Text style={styles.title}>Rasmingiz ...</Text>
-                <Text style={styles.subTitle}>Kamida 2 ta rasm yuklashingiz lozim!</Text>
+                <Text style={styles.title}>Rasmingizni qo'shing</Text>
+                <Text style={styles.subTitle}>
+                    Foydalanuvchilarni jalb qilish maqsadida ikki va
+                    undan ortiq rasm joylashtirishingiz tavsiya etiladi.
+                </Text>
             </View>
 
             <View style={styles.imageButtonWrapper}>
-
                 {images.map((image, index) => (
+
                     <TouchableOpacity
-                        /* eslint-disable-next-line react/no-array-index-key */
                         key={index}
-                        activeOpacity={0.3}
+                        activeOpacity={1}
                         onPress={() => pickImage(index)}
                         disabled={index > 0 && images[index - 1] === null}
                         style={styles.imageButton}>
-
-                        {/* eslint-disable-next-line no-nested-ternary */}
-                        {imageLoading[index] ? (
-                            <ActivityIndicator size="small" color={COLOR.primary} />
-                        ) : (
-                            image && image[0].uri !== '' ? (
-                                <Image source={{ uri: image[0].uri }} style={styles.imageButton} />
-                            ) : null
-
-                        )}
+                        {!imageLoading[index] ? (
+                            <Image
+                                source={{ uri: image && image[0].uri !== '' ? image[0].uri : null }}
+                                style={styles.imageButton} />
+                        ) : <ActivityIndicator size="small" color={COLOR.primary} />}
 
                         <View style={styles.addIcon}>
                             {!image ? (
@@ -151,11 +145,10 @@ export default function SetProfileImage({ route }) {
                     </TouchableOpacity>
                 ))}
             </View>
-
-            {validationError ? <Text style={styles.validationError}>{validationError}</Text> : null}
-            <ServerError error={serverError} style={styles.serverError} />
-
-            <View style={styles.buttonWrapper}>
+            <View style={styles.errorsWrapper}>
+                <ValidationError validationError={validationError} />
+            </View>
+            <View style={styles.bottomWrapper}>
                 <Button title="Davom etish" onPress={onSubmit} loading={loading} />
             </View>
         </Container>
@@ -164,15 +157,15 @@ export default function SetProfileImage({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
-        marginTop: 4,
-        marginBottom: 30,
-        lineHeight: 19.5,
+        marginTop: 7,
+        marginBottom: 20,
         fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
     imageButtonWrapper: {
         flex: 1,
@@ -202,15 +195,10 @@ const styles = StyleSheet.create({
         bottom: -5,
         right: -5,
     },
-    serverError: {
-        position: 'absolute',
-        top: 12,
+    errorsWrapper: {
+        marginTop: 68,
     },
-    validationError: {
-        color: COLOR.primary,
-        marginTop: 6,
-    },
-    buttonWrapper: {
+    bottomWrapper: {
         flex: 1,
         justifyContent: 'flex-end',
     },

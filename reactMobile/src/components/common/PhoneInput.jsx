@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Text, TextInput, View, StyleSheet, SafeAreaView } from 'react-native'
 import { Field, ErrorMessage } from 'formik'
 import normalize from 'react-native-normalize'
+import CountryPicker from 'react-native-country-picker-modal'
 import { COLOR } from '../../utils/colors'
 import TextError from './TextError'
 import { fontSize } from '../../utils/fontSizes'
 
-export default function Input({
+export default function PhoneInput({
     safeArea,
     label,
     labelStyle,
@@ -19,17 +20,34 @@ export default function Input({
     secureTextEntry,
     wrapperErrorStyle,
     textErrorStyle,
-    right,
-    rightStyle,
+    setCallingCode,
     ...attributes
 }) {
     const Component = safeArea ? SafeAreaView : View
+    const [countryCode, setCountryCode] = useState('UZ')
 
     return (
         <Component>
             {label ? <Text style={[styles.label, labelStyle]}>{label}</Text> : null}
 
-            <View style={[styles.inputWrapper, inputWrapperStyle, { paddingRight: right ? 55 : 20 }]}>
+            <View style={[styles.inputWrapper, inputWrapperStyle]}>
+                <CountryPicker
+                    countryCode={countryCode}
+                    withFilter
+                    withFlag
+                    withCallingCode
+                    withCallingCodeButton
+                    withAlphaFilter
+                    withEmoji
+                    visible={false}
+                    onSelect={(country) => {
+                        setCountryCode(country.cca2)
+                        setCallingCode(country.callingCode[0])
+                    }}
+                    theme={styles.theme}
+                    containerButtonStyle={styles.containerButtonStyle}
+                    closeButtonImageStyle={styles.closeButtonImageStyle} />
+
                 <Field name={name}>
                     {({ field, form }) => (
                         <TextInput
@@ -43,7 +61,7 @@ export default function Input({
                             {...attributes} />
                     )}
                 </Field>
-                {right ? <View style={[styles.right, rightStyle]}>{right}</View> : null}
+
             </View>
 
             <ErrorMessage
@@ -61,6 +79,21 @@ const styles = StyleSheet.create({
         marginLeft: 4,
         fontSize: fontSize.medium,
     },
+    theme: {
+        flagSizeButton: normalize(26),
+        flagSize: normalize(28),
+        fontSize: normalize(16),
+    },
+    containerButtonStyle: {
+        paddingLeft: 20,
+        paddingRight: 12,
+        borderRightWidth: 1.5,
+        borderColor: COLOR.lightGrey,
+    },
+    closeButtonImageStyle: {
+        width: normalize(48),
+        height: normalize(48),
+    },
     inputWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -68,18 +101,14 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderColor: COLOR.lightGrey,
         borderRadius: 55,
+        overflow: 'hidden',
         marginVertical: 5,
-        paddingLeft: 20,
-        paddingRight: 20,
     },
     input: {
         width: '100%',
         height: normalize(46),
+        paddingLeft: 15,
+        paddingRight: 100,
         fontSize: normalize(16),
-    },
-    right: {
-        position: 'absolute',
-        top: 9,
-        right: 18,
     },
 })

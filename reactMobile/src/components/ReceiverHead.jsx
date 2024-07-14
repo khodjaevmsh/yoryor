@@ -14,10 +14,8 @@ const { height: screenHeight } = Dimensions.get('window')
 const imageHeight = screenHeight * 0.66
 
 export default function ReceiverHead({ receiver }) {
-    const [previewModal, setPreviewModal] = useState(false)
-
     return (
-        <TouchableOpacity onPress={() => setPreviewModal(true)} activeOpacity={1}>
+        <View>
             <LinearGradient
                 colors={['rgba(0, 0, 0, 0.50)', 'transparent']}
                 start={{ x: 0.5, y: 0.0 }}
@@ -40,8 +38,7 @@ export default function ReceiverHead({ receiver }) {
                     cache: FastImage.cacheControl.web,
                 }}
                 resizeMode={FastImage.resizeMode.cover} />
-            <ProfileImagesPreview previewModal={previewModal} setPreviewModal={setPreviewModal} receiver={receiver} />
-        </TouchableOpacity>
+        </View>
     )
 }
 
@@ -54,7 +51,6 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         top: 0,
         zIndex: 1,
-        borderRadius: 32,
     },
     topTag: {
         fontSize: normalize(12),
@@ -83,6 +79,5 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: imageHeight,
-        borderRadius: 32,
     },
 })

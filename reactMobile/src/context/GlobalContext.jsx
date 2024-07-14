@@ -65,7 +65,7 @@ export default function GlobalProvider({ children }) {
         } else {
             setNumOfLikes(0)
         }
-    }, [])
+    }, [profile])
 
     return (
         // eslint-disable-next-line react/jsx-no-constructed-context-values

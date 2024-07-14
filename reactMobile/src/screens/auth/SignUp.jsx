@@ -3,6 +3,7 @@ import { Text, StyleSheet, View, Keyboard } from 'react-native'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import { useNavigation } from '@react-navigation/native'
+import normalize from 'react-native-normalize/src/index'
 import Container from '../../components/common/Container'
 import Button from '../../components/common/Button'
 import { COLOR } from '../../utils/colors'
@@ -12,27 +13,27 @@ import { SEND_CODE } from '../../urls'
 import ServerError from '../../components/common/ServerError'
 import { fontSize } from '../../utils/fontSizes'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
+import PhoneInput from '../../components/common/PhoneInput'
 
 export default function SignUp() {
-    const [serverError, setServerError] = useState(null)
+    const [serverError, setServerError] = useState('')
+    const [callingCode, setCallingCode] = useState('998')
     const [loading, setLoading] = useState(false)
 
     const navigation = useNavigation()
 
     const validationSchema = Yup.object().shape({
         phoneNumber: Yup.string()
-            .matches(/^\+?[0-9]{12}$/, 'Raqamingiz 12 ta raqamdan iborat bo\'lishi kerak')
+            .matches(/^\+?[0-9]{9}$/, 'Telefon raqamingiz formati xato kiritilgan')
             .required('Majburiy maydon'),
     })
 
     async function onSubmit(data) {
         try {
             setLoading(true)
-            await baseAxios.post(SEND_CODE, {
-                phoneNumber: data.phoneNumber,
-            })
+            await baseAxios.post(SEND_CODE, { countryCode: callingCode, phoneNumber: data.phoneNumber })
             navigation.navigate('CheckConfirmationCode', { phoneNumber: data.phoneNumber })
-            setServerError(null)
+            setServerError('')
         } catch (error) {
             setServerError(error.response)
         } finally {
@@ -43,44 +44,40 @@ export default function SignUp() {
     return (
         <KeyboardAvoiding>
             <Container>
-                <View style={{ flex: 1 }}>
-                    <Text style={styles.title}>Telefon raqamingiz</Text>
-                    <Text style={styles.subTitle}>
-                        Iltimos, shaxsiy telefon raqamingizni kiriting.
-                        Akkauntingizni tasdiqlash uchun sizga 6 xonali kod yuboramiz.
-                    </Text>
+                <Text style={styles.title}>Ro'yxatdan o'tish</Text>
+                <Text style={styles.subTitle}>
+                    Shaxsiy telefon raqamingizni kiriting.
+                    Akkauntingizni tasdiqlash uchun sizga 5 xonali kod yuboramiz.
+                </Text>
 
-                    <Formik
-                        initialValues={{ phoneNumber: '+998906351005' }}
-                        validationSchema={validationSchema}
-                        onSubmit={onSubmit}>
-                        {({ handleSubmit, errors }) => (
-                            <>
-                                <View style={{ flex: 1 }}>
-                                    <Input
-                                        name="phoneNumber"
-                                        keyboardType="numeric"
-                                        placeholder="+9989 90 635 10 01" />
+                <Formik
+                    initialValues={{ phoneNumber: '906351001' }}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}>
+                    {({ handleSubmit }) => (
+                        <>
 
-                                    <ServerError
-                                        error={serverError}
-                                        style={[styles.serverError, { marginTop: errors.phoneNumber ? 4 : 8 }]} />
-                                </View>
+                            <PhoneInput
+                                name="phoneNumber"
+                                keyboardType="numeric"
+                                placeholder="90 635 10 01"
+                                setCallingCode={setCallingCode} />
 
-                                <View style={styles.buttonWrapper}>
-                                    <Button
-                                        title="Davom etish"
-                                        onPress={() => {
-                                            handleSubmit()
-                                            Keyboard.dismiss()
-                                        }}
-                                        buttonStyle={styles.button}
-                                        loading={loading} />
-                                </View>
-                            </>
-                        )}
-                    </Formik>
-                </View>
+                            <ServerError error={serverError} />
+
+                            <View style={styles.buttonWrapper}>
+                                <Button
+                                    title="Davom etish"
+                                    onPress={() => {
+                                        handleSubmit()
+                                        Keyboard.dismiss()
+                                    }}
+                                    buttonStyle={styles.button}
+                                    loading={loading} />
+                            </View>
+                        </>
+                    )}
+                </Formik>
             </Container>
         </KeyboardAvoiding>
     )
@@ -88,15 +85,15 @@ export default function SignUp() {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
     subTitle: {
         color: COLOR.grey,
         marginTop: 7,
-        marginBottom: 30,
-        lineHeight: 19.5,
+        marginBottom: 15,
         fontSize: fontSize.small,
+        lineHeight: 19.5,
     },
     serverError: {
         position: 'absolute',

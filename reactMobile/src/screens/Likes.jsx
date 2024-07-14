@@ -35,9 +35,11 @@ export default function Likes() {
                 setLikes(response.data.results)
                 setTotalPages(response.data.totalPages)
             } catch (error) {
-                showToast('error', 'Oops!', 'Nomalum xatolik')
+                console.log(error.response.data)
             } finally {
-                setLoading(false)
+                setTimeout(() => {
+                    setLoading(false)
+                }, 500)
             }
         }
         fetchLikes()

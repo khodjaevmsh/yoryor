@@ -33,7 +33,7 @@ export default function AddProfileImage({ route }) {
             const response = await baseAxios.get(PROFILE_IMAGES, { params: { profile } })
             setFetchedImages(response.data)
         } catch (error) {
-            showToast('error', 'Oops!', 'Nomalum xatolik')
+            console.log(error.response.data)
             setValidationError('Nomalum xatolik, qaytib urinib ko\'ring')
         } finally {
             setLoading(false)

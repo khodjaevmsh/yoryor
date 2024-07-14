@@ -35,7 +35,9 @@ export default function Chat() {
             } catch (error) {
                 console.log(error.response.data)
             } finally {
-                setLoading(false)
+                setTimeout(() => {
+                    setLoading(false)
+                }, 500)
             }
         }
         fetchRooms()
@@ -67,7 +69,7 @@ export default function Chat() {
             }
 
             ws.onerror = () => {
-                showToast('error', 'Oops!', 'Internet mavjudligini tekshiring')
+                console.log('WebSocket error...')
             }
 
             ws.onclose = () => {
@@ -83,7 +85,7 @@ export default function Chat() {
                     connectWebSocket()
                 }, reconnectInterval)
             } else {
-                showToast('error', 'Oops!', 'Internet mavjudligini tekshiring')
+                console.log('WebSocket reconnect error...')
             }
         }
 

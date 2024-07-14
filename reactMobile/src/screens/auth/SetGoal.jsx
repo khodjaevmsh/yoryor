@@ -1,30 +1,24 @@
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import normalize from 'react-native-normalize'
 import Container from '../../components/common/Container'
 import Button from '../../components/common/Button'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
-import { ClinkingGlasses, FaceWithHeart, HeartWithArrow, WavingHand } from '../../components/common/Svgs'
-
-const goals = [
-    { id: 1, type: 'match', title: 'Juftlik topish', icon: <HeartWithArrow /> },
-    { id: 2, type: 'friendship', title: 'Do\'st ortirish', icon: <WavingHand /> },
-    { id: 3, type: 'long_term_dating', title: 'Uzoq muddatli tanishuv', icon: <FaceWithHeart /> },
-    { id: 4, type: 'short_term_dating', title: 'Qisqa muddatli tanishuv', icon: <ClinkingGlasses /> },
-]
+import ValidationError from '../../components/common/ValidationError'
+import { goalsWithIcon } from '../../utils/choices'
 
 export default function SetGoal({ route }) {
     const [loading, setLoading] = useState(false)
     const [validationError, setValidationError] = useState('')
     const [goal, setGoal] = useState(null)
     const navigation = useNavigation()
-    const { phoneNumber, password, name, birthdate, gender, region } = route.params
+    const { phoneNumber, password, name, birthdate, gender, region, education, job } = route.params
 
     function onSubmit() {
+        setLoading(true)
         if (goal) {
-            setLoading(true)
             setValidationError('')
             navigation.navigate('SetProfileImage', {
                 phoneNumber,
@@ -33,6 +27,8 @@ export default function SetGoal({ route }) {
                 birthdate,
                 gender,
                 region,
+                education,
+                job,
                 goal,
             })
         } else {
@@ -41,43 +37,25 @@ export default function SetGoal({ route }) {
         setLoading(false)
     }
 
-    const renderItem = ({ item }) => (
-        <View>
-            <TouchableOpacity
-                key={item.id}
-                activeOpacity={1}
-                onPress={() => setGoal(item.type)}
-                style={[styles.goal, goal === item.type && styles.selected]}>
-
-                <View>{item.icon}</View>
-                <Text style={styles.goalText}>{item.title}</Text>
-
-            </TouchableOpacity>
-        </View>
-    )
-
     return (
         <Container>
-            <View>
-                <Text style={styles.title}>Maqsadim ...</Text>
-
-                <FlatList
-                    data={goals}
-                    numColumns={3}
-                    keyExtractor={(item) => item.id}
-                    style={styles.container}
-                    columnWrapperStyle={styles.goals}
-                    renderItem={renderItem} />
-
+            <Text style={styles.title}>Maqsadingizni beliglang</Text>
+            <Text style={styles.subTitle}>Sizning tanishishdan maqsadingiz nima ekanligini beliglang.</Text>
+            <View style={styles.goalWrapper}>
+                {Object.entries(goalsWithIcon).map(([key, value]) => (
+                    <TouchableOpacity
+                        key={key}
+                        activeOpacity={1}
+                        onPress={() => setGoal(key)}
+                        style={[styles.goal, goal === key && styles.selected]}>
+                        <View>{value.icon}</View>
+                        <Text style={styles.goalText}>{value.title}</Text>
+                    </TouchableOpacity>
+                ))}
             </View>
-
-            <View style={styles.buttonWrapper}>
-                {validationError && !goal ? <Text style={styles.validationError}>* {validationError}</Text> : null}
-                <Button
-                    title="Davom etish"
-                    onPress={onSubmit}
-                    buttonStyle={styles.button}
-                    loading={loading} />
+            <ValidationError validationError={validationError} wrapperStyle={styles.validationError} />
+            <View style={styles.bottomWrapper}>
+                <Button title="Davom etish" onPress={onSubmit} buttonStyle={styles.button} loading={loading} />
             </View>
         </Container>
     )
@@ -85,25 +63,34 @@ export default function SetGoal({ route }) {
 
 const styles = StyleSheet.create({
     title: {
-        fontSize: fontSize.extraLarge,
-        fontWeight: '500',
-        marginBottom: 18,
+        fontSize: normalize(28),
+        fontWeight: '600',
     },
-    goals: {
+    subTitle: {
+        color: COLOR.grey,
+        marginTop: 7,
+        marginBottom: 20,
+        fontSize: fontSize.small,
+        lineHeight: 19.5,
+    },
+    goalWrapper: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
+        marginBottom: 54,
     },
     goal: {
         width: normalize(103),
         height: normalize(135),
         paddingVertical: 14,
         paddingHorizontal: 10,
-        backgroundColor: COLOR.extraLightGrey,
-        borderWidth: 1.2,
+        borderWidth: 2,
         borderColor: COLOR.extraLightGrey,
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
-        borderRadius: 22,
+        borderRadius: 15,
         marginVertical: 6,
     },
     goalText: {
@@ -112,15 +99,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     selected: {
-        borderWidth: 1.2,
+        borderWidth: 2,
         borderColor: COLOR.primary,
     },
-    validationError: {
-        color: COLOR.primary,
-        marginBottom: 18,
-        marginLeft: 3,
-    },
-    buttonWrapper: {
+    bottomWrapper: {
         flex: 1,
         justifyContent: 'flex-end',
     },

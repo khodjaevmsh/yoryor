@@ -1,15 +1,13 @@
 import axios from 'axios'
 import humps from 'humps'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import Config from 'react-native-config'
+import { createNavigationContainerRef } from '@react-navigation/native'
 
 // const backendUrl = Config.BASE_URL
 // const wsUrl = Config.WEBSOCKET_URL
 
-console.log(Config)
-
-const backendUrl = 'http://192.168.1.5:8000/'
-const wsUrl = 'ws://192.168.1.5:8000/ws/chat'
+const backendUrl = 'http://127.0.0.1:8000/'
+const wsUrl = 'ws://127.0.0.1:8000/ws/chat'
 
 export const domain = backendUrl.endsWith('/') ? backendUrl.substr(0, backendUrl.length - 1) : backendUrl
 export const wsDomain = wsUrl.endsWith('/') ? wsUrl.substr(0, wsUrl.length - 1) : wsUrl
@@ -45,3 +43,33 @@ baseAxios.interceptors.request.use(async (config) => {
         return Promise.reject(error)
     }
 }, (error) => Promise.reject(error))
+
+// Interceptor to handle responses
+// baseAxios.interceptors.response.use(
+//     (response) => response,
+//     async (error) => {
+//         if (error.response === undefined) {
+//             console.log('400')
+//         } else if (error.response.status >= 500) {
+//             console.log('500')
+//         } else if (error.response && error.response.status === 401 && error.response.data.detail) {
+//             // eslint-disable-next-line no-unused-expressions
+//             typeof signOut === 'function' ? await signOut() : null
+//         }
+//         return Promise.reject(error)
+//     },
+// )
+
+export const navigationRef = createNavigationContainerRef()
+async function signOut() {
+    try {
+        await AsyncStorage.removeItem('token')
+        await AsyncStorage.removeItem('user')
+        await AsyncStorage.removeItem('profile')
+        if (navigationRef.isReady()) {
+            navigationRef.reset({ index: 0, routes: [{ name: 'Splash' }] })
+        }
+    } catch (e) {
+        console.error('Failed to sign out', e)
+    }
+}

@@ -60,13 +60,15 @@ export default function Profile() {
                 const response = await baseAxios.get(SINGLE_PROFILE_IMAGE, { params: { profile: profile.id } })
                 setMyProfileImage(response.data)
             } catch (error) {
-                console.log(error.response)
+                console.log(error.response.data)
             } finally {
-                setLoading(false)
+                setTimeout(() => {
+                    setLoading(false)
+                }, 500)
             }
         }
         fetchMyProfile()
-    }, [profile.id])
+    }, [])
 
     if (loading) {
         return <SkeletonMyProfile />

@@ -24,6 +24,6 @@ class ChangePasswordSerializer(serializers.Serializer): # noqa
 
     def create(self, validated_data):
         user = self.context['request'].user
-        user.set_password(validated_data['new_password'])
+        user.set_password(validated_data.get('new_password'))
         user.save()
         return user

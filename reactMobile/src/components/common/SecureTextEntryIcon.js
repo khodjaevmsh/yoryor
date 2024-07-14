@@ -5,7 +5,7 @@ import { MonkeyHearNo, MonkeySeeNo } from './Svgs'
 export default function SecureTextEntryIcon({ secureTextEntry, setSecureTextEntry }) {
     return (
         <TouchableOpacity
-            activeOpacity={0.4}
+            activeOpacity={1}
             onPress={() => setSecureTextEntry(secureTextEntry)}>
             {secureTextEntry ? (
                 <MonkeySeeNo width={24} height={24} />

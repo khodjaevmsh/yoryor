@@ -37,7 +37,7 @@ export default function FilterModal({
                 const regionResponse = await baseAxios.get(REGION, { params: { country } })
                 setRegionData(regionResponse.data)
             } catch (error) {
-                showToast('error', 'Oops!', 'Nomalum xatolik')
+                console.log(error.response.data)
             }
         }
         fetchCountryRegionData()

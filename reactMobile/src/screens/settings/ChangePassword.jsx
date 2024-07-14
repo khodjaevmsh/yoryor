@@ -8,7 +8,6 @@ import Container from '../../components/common/Container'
 import Input from '../../components/common/Input'
 import ServerError from '../../components/common/ServerError'
 import Button from '../../components/common/Button'
-import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import { COLOR } from '../../utils/colors'
 import { baseAxios } from '../../hooks/requests'
 import { CHANGE_PASSWORD } from '../../urls'
@@ -42,8 +41,6 @@ export default function ChangePassword() {
             } finally {
                 setLoading(false)
             }
-        } else {
-            navigation.goBack()
         }
     }
 
@@ -56,41 +53,39 @@ export default function ChangePassword() {
                 onSubmit={onSubmit}>
                 {({ handleSubmit }) => (
                     <>
-                        <View style={{ flex: 1 }}>
+                        <Input
+                            name="oldPassword"
+                            keyboardType="default"
+                            placeholder="12345678"
+                            label="Eski parolingiz"
+                            inputStyle={styles.input}
+                            labelStyle={{
+                                color: COLOR.black,
+                                fontWeight: '500',
+                            }} />
+
+                        <View style={styles.newPasswords}>
                             <Input
-                                name="oldPassword"
+                                name="newPassword"
                                 keyboardType="default"
-                                placeholder="12345678"
-                                label="Eski parolingiz"
-                                inputStyle={styles.input}
+                                label="Yangi parol o'ylab toping"
                                 labelStyle={{
                                     color: COLOR.black,
                                     fontWeight: '500',
-                                }} />
+                                }}
+                                inputStyle={styles.input}
+                                placeholder="********" />
 
-                            <View style={styles.newPasswords}>
-                                <Input
-                                    name="newPassword"
-                                    keyboardType="default"
-                                    label="Yangi parol o'ylab toping"
-                                    labelStyle={{
-                                        color: COLOR.black,
-                                        fontWeight: '500',
-                                    }}
-                                    inputStyle={styles.input}
-                                    placeholder="********" />
-
-                                <Input
-                                    name="confirmPassword"
-                                    keyboardType="default"
-                                    inputStyle={styles.input}
-                                    placeholder="********" />
-                            </View>
-
-                            <ServerError error={serverError} style={styles.serverError} />
+                            <Input
+                                name="confirmPassword"
+                                keyboardType="default"
+                                inputWrapperStyle={{ marginTop: 12 }}
+                                placeholder="********" />
                         </View>
 
-                        <View style={styles.buttonWrapper}>
+                        <ServerError error={serverError} style={styles.serverError} />
+
+                        <View style={styles.bottomWrapper}>
                             <Button
                                 title="Tasdiqlash"
                                 buttonStyle={styles.button}
@@ -116,7 +111,8 @@ const styles = StyleSheet.create({
     newPasswords: {
         marginTop: 22,
     },
-    input: {
-        marginVertical: 8,
+    bottomWrapper: {
+        flex: 1,
+        justifyContent: 'flex-end',
     },
 })
