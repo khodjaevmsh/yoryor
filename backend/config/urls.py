@@ -27,7 +27,9 @@ urlpatterns = [
     path('api/v1/', include([
         path('core/', include(('core.urls', 'core'), namespace='core')),
         path('users/', include(('users.urls', 'users'), namespace='users')),
+        path('main/', include(('main.urls', 'main'), namespace='main')),
         path('chat/', include(('chat.urls', 'chat'), namespace='chat')),
+        path('payment/', include(('payment.urls', 'payment'), namespace='payment')),
     ])),
 ]
 

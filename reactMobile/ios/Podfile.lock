@@ -395,10 +395,10 @@ PODS:
     - react-native-config/App (= 1.5.2)
   - react-native-config/App (1.5.2):
     - React-Core
-  - react-native-image-picker (7.1.0):
+  - react-native-image-picker (7.1.2):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - react-native-safe-area-context (4.8.2):
+  - react-native-safe-area-context (4.10.8):
     - React-Core
   - React-NativeModulesApple (0.72.4):
     - hermes-engine
@@ -510,15 +510,15 @@ PODS:
     - React-jsi (= 0.72.4)
     - React-logger (= 0.72.4)
     - React-perflogger (= 0.72.4)
-  - RNCAsyncStorage (1.21.0):
+  - RNCAsyncStorage (1.24.0):
     - React-Core
   - RNCMaskedView (0.3.1):
     - React-Core
-  - RNCPicker (2.6.1):
+  - RNCPicker (2.7.7):
     - React-Core
   - RNCPushNotificationIOS (1.11.0):
     - React-Core
-  - RNDateTimePicker (7.6.2):
+  - RNDateTimePicker (7.7.0):
     - React-Core
   - RNFastImage (8.6.3):
     - React-Core
@@ -532,17 +532,14 @@ PODS:
     - FirebaseCoreExtension
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.15.0):
+  - RNGestureHandler (2.17.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - RNReanimated (3.13.0):
+  - RNScreens (3.32.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - ReactCommon/turbomodule/core
-  - RNScreens (3.29.0):
-    - RCT-Folly (= 2021.07.22.00)
-    - React-Core
-  - RNSVG (14.1.0):
+    - React-RCTImage
+  - RNSVG (14.2.0):
     - React-Core
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
@@ -607,7 +604,6 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
-  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -735,8 +731,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
-  RNReanimated:
-    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -781,8 +775,8 @@ SPEC CHECKSUMS:
   React-jsinspector: aaed4cf551c4a1c98092436518c2d267b13a673f
   React-logger: da1ebe05ae06eb6db4b162202faeafac4b435e77
   react-native-config: d7d8a0c65f7fa523197879f6b777997abbfc987e
-  react-native-image-picker: be000cd54f1b1bd71dba9677b36847827f9cc012
-  react-native-safe-area-context: 0ee144a6170530ccc37a0fd9388e28d06f516a89
+  react-native-image-picker: eac5eafa73e1f314c2f4288ae573ee4fc57cad10
+  react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
   React-NativeModulesApple: 02d7d67befda7bc29672f5651e3fc603321e77ec
   React-perflogger: 496a1a3dc6737f964107cb3ddae7f9e265ddda58
   React-RCTActionSheet: 02904b932b50e680f4e26e7a686b33ebf7ef3c00
@@ -800,18 +794,17 @@ SPEC CHECKSUMS:
   React-runtimescheduler: b8b56f9574dfdfee4c25b7fae239a85534e4885b
   React-utils: 56240746e2dca064849f8d0eb164bb921f29e043
   ReactCommon: 911fc67808f579f9998c709f391337dcd1fda940
-  RNCAsyncStorage: 618d03a5f52fbccb3d7010076bc54712844c18ef
+  RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
-  RNCPicker: b18aaf30df596e9b1738e7c1f9ee55402a229dca
+  RNCPicker: b7873ba797dc586bfaf3307d737cbdc620a9ff3e
   RNCPushNotificationIOS: 64218f3c776c03d7408284a819b2abfda1834bc8
-  RNDateTimePicker: fc2e4f2795877d45e84d85659bebe627eba5c931
+  RNDateTimePicker: 4f3c4dbd4f908be32ec8c93f086e8924bd4a2e07
   RNFastImage: 5c9c9fed9c076e521b3f509fe79e790418a544e8
   RNFBApp: 1ae7462cddf74a49df206d3418bc0170f8fa53e5
   RNFBMessaging: 85f661b9f16e2b081e6809ef63d3daa4458b9042
-  RNGestureHandler: 6a0bca5c5b2fb62211e9a75d5f4ed877817c4412
-  RNReanimated: 154a06fd9bbb7eeeffa8a14e17087be54cd0a12d
-  RNScreens: 1c2444658fbb696a094272d946708167b1f63409
-  RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
+  RNGestureHandler: 972ca9d35b54c108637dd07055f718446b9276d4
+  RNScreens: 835807a1f3c74c8ea0d0b9e089bf14333141f17f
+  RNSVG: 963a95f1f5d512a13d11ffd50d351c87fb5c6890
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17

@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from users.models import Dislike
-from users.serializers.profile import SimpleProfileSerializer
+from main.models import Dislike
+from main.serializers.profile import SimpleProfileSerializer
 
 
 class DislikeSerializer(serializers.ModelSerializer):

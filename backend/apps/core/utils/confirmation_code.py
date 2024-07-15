@@ -50,11 +50,3 @@ def send_verification_code(country_code, phone_number, verification_code):
     except Exception as e:
         print(f"An error occurred: {e}")
         # Handle other exceptions
-
-
-def integers_only(text) -> str:
-    """
-    Removes all symbols except integers
-    ex: +998(91) 333 33 33 -> 998913333333
-    """
-    return ''.join(x for x in text if x.isdigit())

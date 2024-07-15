@@ -2,8 +2,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.models import Country
-from users.serializers.country import CountrySerializer
+from main.models import Country
+from main.serializers.country import CountrySerializer
 
 
 class CountryListView(APIView):

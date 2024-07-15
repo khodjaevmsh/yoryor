@@ -2,8 +2,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.utils.pagination import PageNumPagination
-from users.models import Dislike
-from users.serializers.dislike import DislikeSerializer
+from main.models import Dislike
+from main.serializers.dislike import DislikeSerializer
 
 
 class DislikeListView(APIView, PageNumPagination):

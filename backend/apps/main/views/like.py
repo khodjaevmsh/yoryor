@@ -1,10 +1,9 @@
-from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.utils.pagination import PageNumPagination
-from users.models import Like
-from users.serializers.like import LikeSerializer
+from main.models import Like
+from main.serializers.like import LikeSerializer
 
 
 class LikeListView(APIView, PageNumPagination):

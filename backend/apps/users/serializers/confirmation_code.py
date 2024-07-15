@@ -2,8 +2,9 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
+from core.utils.confirmation_code import generate_confirmation_code, send_verification_code
+from core.utils.integers_only import integers_only
 from users.models import User, ConfirmationCode
-from users.utils import integers_only, send_verification_code, generate_confirmation_code
 
 
 class SendConfirmationCodeSerializer(serializers.ModelSerializer):

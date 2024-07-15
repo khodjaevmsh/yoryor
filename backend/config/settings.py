@@ -50,7 +50,9 @@ INSTALLED_APPS = [
 
     'core',
     'users',
-    'chat'
+    'main',
+    'chat',
+    'payment'
 ]
 
 MIDDLEWARE = [

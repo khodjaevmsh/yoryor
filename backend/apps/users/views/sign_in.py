@@ -3,8 +3,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.models import User, Profile
-from users.serializers.profile import ProfileSerializer
+from main.models import Profile
+from users.models import User
+from main.serializers.profile import ProfileSerializer
 from users.serializers.sign_in import SignInSerializer
 from users.serializers.users import UserSerializer
 
