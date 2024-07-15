@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.utils.pagination import PageNumPagination
-from users.models import Profile, Like, Dislike
-from users.serializers.profile import ProfileSerializer, SimpleProfileSerializer
+from main.models import Profile, Like, Dislike
+from main.serializers.profile import ProfileSerializer, SimpleProfileSerializer
 
 
 class ProfileListView(APIView, PageNumPagination):

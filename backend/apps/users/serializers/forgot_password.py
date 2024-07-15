@@ -1,8 +1,8 @@
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
+from core.utils.integers_only import integers_only
 from users.models import User
-from users.utils import integers_only
 
 
 class ForgotPasswordSerializer(serializers.Serializer):  # noqa

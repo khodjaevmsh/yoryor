@@ -1,10 +1,11 @@
 from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
-from users.models import User, Profile, ProfileImage
-from users.serializers.profile import ProfileSerializer
-from users.serializers.profile_image import ProfileImageSerializer
-from users.utils import integers_only
+from core.utils.integers_only import integers_only
+from main.models import Profile, ProfileImage
+from main.serializers.profile import ProfileSerializer
+from main.serializers.profile_image import ProfileImageSerializer
+from users.models import User
 
 
 class SignUpSerializer(serializers.ModelSerializer):

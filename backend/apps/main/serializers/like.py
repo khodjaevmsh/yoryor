@@ -5,8 +5,9 @@ from rest_framework import serializers
 
 from chat.models import Room
 from core.views.send_notification import send_notification
-from users.models import Like, Device
-from users.serializers.profile import SimpleProfileSerializer
+from main.models import Like
+from main.serializers.profile import SimpleProfileSerializer
+from users.models import Device
 
 
 class LikeSerializer(serializers.ModelSerializer):
@@ -31,9 +32,9 @@ class LikeSerializer(serializers.ModelSerializer):
             instance.match = True
             instance.save()
 
-            if sender_device and receiver_device:
+            if receiver_device:
                 send_notification(
-                    device_tokens=[sender_device.token, receiver_device.token],
+                    device_tokens=[receiver_device.token],
                     title='Bu match! \U0001F4AC',
                     body='Sizga yangi xabar keldi'
                 )

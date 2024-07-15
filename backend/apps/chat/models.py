@@ -3,7 +3,7 @@ from django.db import models
 
 class Room(models.Model):
     name = models.CharField(max_length=255)
-    participants = models.ManyToManyField('users.Profile', related_name='rooms')
+    participants = models.ManyToManyField('main.Profile', related_name='rooms')
     updated_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
@@ -12,7 +12,7 @@ class Room(models.Model):
 
 class Message(models.Model):
     room = models.ForeignKey('chat.Room', on_delete=models.CASCADE, related_name='messages')
-    user = models.ForeignKey('users.Profile', on_delete=models.CASCADE, related_name='sender')
+    user = models.ForeignKey('main.Profile', on_delete=models.CASCADE, related_name='sender')
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     seen = models.BooleanField(default=False)

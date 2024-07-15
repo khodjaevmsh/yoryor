@@ -2,8 +2,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from users.models import ProfileImage
-from users.serializers.profile_image import ProfileImageSerializer, ChangeProfileImageSerializer
+from main.models import ProfileImage
+from main.serializers.profile_image import ProfileImageSerializer, ChangeProfileImageSerializer
 
 
 class ProfileImageListView(APIView):

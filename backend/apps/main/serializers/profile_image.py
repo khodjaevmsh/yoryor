@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from users.models import ProfileImage
+from main.models import ProfileImage
 
 
 class ProfileImageSerializer(serializers.ModelSerializer):

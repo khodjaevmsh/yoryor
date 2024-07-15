@@ -1,9 +1,9 @@
 from django.db.models import Prefetch
 from rest_framework import serializers
 
-from users.models import Profile, ProfileImage
-from users.serializers.profile_image import ProfileImageSerializer
-from users.serializers.region import RegionSerializer
+from main.models import ProfileImage, Profile
+from main.serializers.profile_image import ProfileImageSerializer
+from main.serializers.region import RegionSerializer
 
 
 class ProfileSerializer(serializers.ModelSerializer):
