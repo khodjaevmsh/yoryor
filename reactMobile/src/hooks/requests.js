@@ -2,12 +2,10 @@ import axios from 'axios'
 import humps from 'humps'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createNavigationContainerRef } from '@react-navigation/native'
+import Config from 'react-native-config'
 
-// const backendUrl = Config.BASE_URL
-// const wsUrl = Config.WEBSOCKET_URL
-
-const backendUrl = 'http://127.0.0.1:8000/'
-const wsUrl = 'ws://127.0.0.1:8000/ws/chat'
+const backendUrl = Config.API_URL
+const wsUrl = Config.WEBSOCKET_URL
 
 export const domain = backendUrl.endsWith('/') ? backendUrl.substr(0, backendUrl.length - 1) : backendUrl
 export const wsDomain = wsUrl.endsWith('/') ? wsUrl.substr(0, wsUrl.length - 1) : wsUrl

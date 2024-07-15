@@ -29,10 +29,10 @@ end
 target 'reactMobile' do
   config = use_native_modules!
 
-  pod 'react-native-config', :path => '../node_modules/react-native-config' # <- Add this line
-
   # Flags change depending on the env values.
   flags = get_default_flags()
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config' # <- Add this line
 
   use_frameworks! :linkage => :static # <- Add this line
 

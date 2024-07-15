@@ -21,6 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 ios/.xcode.env.local
+ios/tmp.xcconfig
 
 # Android/IntelliJ
 #
@@ -64,3 +65,8 @@ yarn-error.log
 
 # testing
 /coverage
+
+.env
+.env.development
+.env.production
+.env.staging

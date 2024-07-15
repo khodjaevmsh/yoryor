@@ -1,6 +1,5 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // <- Add this line
 
 project.ext.react = [
     enableHermes: true,  // <- Add this line to enable Hermes
@@ -10,11 +9,13 @@ project.ext.react = [
 project.ext.envConfigFiles = [
     productiondebug: ".env.production",
     productionrelease: ".env.production",
-    developmentrelease: ".env.local",
-    developmentdebug: ".env.local",
+    developmentrelease: ".env.development",
+    developmentdebug: ".env.development",
     stagingrelease: ".env.staging",
     stagingdebug: ".env.staging"
 ]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle" // <- Add this line
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -107,6 +108,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            matchingFallbacks = ['debug', 'release'] // <-- Add this line
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
@@ -116,14 +118,24 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+
+    // <-- Add this line
+    flavorDimensions "default"
+    productFlavors {
+        production {}
+        staging {
+            // We can have build-specific configurations here. Like using applicationIdSuffix to create different package name (ex. ".staging")
+        }
+        development {}
+    }
 }
 
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
+    implementation project(':react-native-config') // <- Add this line
     implementation 'com.google.firebase:firebase-analytics:17.3.0'
     implementation("com.facebook.react:hermes-engine:+") // <- Add this line
-    implementation project(':react-native-config') // <- Add this line
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
     debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
