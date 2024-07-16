@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "346522567672",
-    "project_id": "sovchi-3d60c",
-    "storage_bucket": "sovchi-3d60c.appspot.com"
+    "project_number": "956891943414",
+    "project_id": "sovchi-3896f",
+    "storage_bucket": "sovchi-3896f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:346522567672:android:2e2a0be6524d65272ccc0d",
+        "mobilesdk_app_id": "1:956891943414:android:9643cfd719d8fd400777d7",
         "android_client_info": {
-          "package_name": "com.reactmobile"
+          "package_name": "com.sovchi"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAdNo1HjI-2q7e9WIVMuHAn4kJ2Q7OYu40"
+          "current_key": "AIzaSyC7mYo6P3Kr1QgztXqcJdte2amrd_4HW4U"
         }
       ],
       "services": {
