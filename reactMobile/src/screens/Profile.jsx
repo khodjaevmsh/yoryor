@@ -62,13 +62,11 @@ export default function Profile() {
             } catch (error) {
                 console.log(error.response.data)
             } finally {
-                setTimeout(() => {
-                    setLoading(false)
-                }, 500)
+                setLoading(false)
             }
         }
         fetchMyProfile()
-    }, [])
+    }, [profile.id])
 
     if (loading) {
         return <SkeletonMyProfile />

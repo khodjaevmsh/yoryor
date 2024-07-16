@@ -57,10 +57,8 @@ export default function Discover() {
             console.log(error.response.data)
         } finally {
             setApplyFilter(false)
-            setTimeout(() => {
-                setRefreshing(false)
-                setLoading(false)
-            }, 500)
+            setRefreshing(false)
+            setLoading(false)
         }
     }
 

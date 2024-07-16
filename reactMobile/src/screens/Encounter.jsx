@@ -45,9 +45,7 @@ export default function Encounter() {
                 console.log(error.response.data)
             } finally {
                 setApplyFilter(false)
-                setTimeout(() => {
-                    setLoading(false)
-                }, 100)
+                setLoading(false)
             }
         }
         fetchReceivers()
