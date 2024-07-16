@@ -5,8 +5,8 @@ project.ext.react = [
     enableHermes: true,  // <- Add this line to enable Hermes
 ]
 
-// <- Add this lines
-project.ext.envConfigFiles = [
+
+project.ext.envConfigFiles = [ // <- Add this lines
     productiondebug: ".env.production",
     productionrelease: ".env.production",
     developmentrelease: ".env.development",
@@ -89,15 +89,23 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.reactmobile"
+    namespace "com.sovchi"
     defaultConfig {
-        applicationId "com.reactmobile"
+        applicationId "com.sovchi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.0"
     }
     signingConfigs {
+        release { // <-- Add this line
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        } // <-- Add this line
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -113,14 +121,14 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            // signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release // debug is changed to release value
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
 
-    // <-- Add this line
-    flavorDimensions "default"
+    flavorDimensions "default"  // <-- Add this line
     productFlavors {
         production {}
         staging {
