@@ -40,9 +40,7 @@ export default function Likes() {
             } catch (error) {
                 console.log(error.response.data)
             } finally {
-                setTimeout(() => {
-                    setLoading(false)
-                }, 500)
+                setLoading(false)
             }
         }
         fetchLikes()

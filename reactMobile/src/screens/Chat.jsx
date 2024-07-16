@@ -9,7 +9,6 @@ import RoomItem from '../components/RoomItem'
 import { showToast } from '../components/common/Toast'
 import HeaderLeft from '../components/common/HeaderLeft'
 import SkeletonChat from '../components/SkeletonChat'
-import WantMoreReceivers from '../components/WantMoreReceivers'
 import EmptyChat from '../components/EmptyChat'
 
 export default function Chat() {
@@ -37,9 +36,7 @@ export default function Chat() {
             } catch (error) {
                 console.log(error.response.data)
             } finally {
-                setTimeout(() => {
-                    setLoading(false)
-                }, 500)
+                setLoading(false)
             }
         }
         fetchRooms()
@@ -104,10 +101,6 @@ export default function Chat() {
         if (!loading && page < totalPages) {
             setPage(page + 1)
         }
-    }
-
-    if (loading) {
-        return <SkeletonChat />
     }
 
     return (

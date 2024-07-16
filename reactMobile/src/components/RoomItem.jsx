@@ -10,11 +10,13 @@ import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import { PROFILE } from '../urls'
 import { shortenText } from '../utils/string'
+import SkeletonChat from './SkeletonChat'
 
 export default function RoomItem({ room }) {
-    const { profile } = useContext(GlobalContext)
+    const [loading, setLoading] = useState(true)
     const [sender, setSender] = useState({})
     const [receiver, setReceiver] = useState({})
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     const senderId = room.participants?.find((participant) => participant === profile.id)
@@ -24,6 +26,7 @@ export default function RoomItem({ room }) {
     useEffect(() => {
         async function fetchReceiver() {
             try {
+                setLoading(true)
                 const senderResponse = await baseAxios.get(PROFILE.replace('{id}', senderId))
                 setSender(senderResponse.data)
 
@@ -31,10 +34,16 @@ export default function RoomItem({ room }) {
                 setReceiver(receiverResponse.data)
             } catch (error) {
                 console.log(error.response.data)
+            } finally {
+                setLoading(false)
             }
         }
         fetchReceiver()
     }, [senderId, receiverId])
+
+    if (loading) {
+        return <SkeletonChat />
+    }
 
     return (
         <TouchableOpacity
