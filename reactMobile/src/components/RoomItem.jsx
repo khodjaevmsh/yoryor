@@ -117,17 +117,19 @@ const styles = StyleSheet.create({
         color: COLOR.grey,
     },
     tagWrapper: {
+        position: 'absolute',
+        right: 0,
         backgroundColor: COLOR.primary,
         borderRadius: 55,
         paddingHorizontal: 7,
-        paddingVertical: 4.5,
+        paddingVertical: 4,
         justifyContent: 'center',
         alignItems: 'center',
         minWidth: normalize(23),
     },
     tag: {
         color: COLOR.white,
-        fontSize: 12,
-        fontWeight: '700',
+        fontSize: normalize(12),
+        fontWeight: '600',
     },
 })

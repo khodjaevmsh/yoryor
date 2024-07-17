@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
-import { useIsFocused, useNavigation } from '@react-navigation/native'
-import Container from '../components/common/Container'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { baseAxios, wsDomain } from '../hooks/requests'
 import { ROOMS } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 import RoomItem from '../components/RoomItem'
 import { showToast } from '../components/common/Toast'
 import HeaderLeft from '../components/common/HeaderLeft'
-import SkeletonChat from '../components/SkeletonChat'
 import EmptyChat from '../components/EmptyChat'
+import SkeletonChat from '../components/SkeletonChat'
 
 export default function Chat() {
     const [loading, setLoading] = useState(true)
@@ -18,7 +17,6 @@ export default function Chat() {
     const [totalPages, setTotalPages] = useState(1)
     const navigation = useNavigation()
     const { token } = useContext(GlobalContext)
-    const isFocused = useIsFocused()
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -26,21 +24,23 @@ export default function Chat() {
         })
     }, [navigation])
 
-    useEffect(() => {
-        async function fetchRooms() {
-            try {
-                setLoading(true)
-                const response = await baseAxios.get(ROOMS, { params: { page } })
-                setRooms(response.data.results)
-                setTotalPages(response.data.totalPages)
-            } catch (error) {
-                console.log(error.response.data)
-            } finally {
-                setLoading(false)
+    useFocusEffect(
+        useCallback(() => {
+            async function fetchRooms() {
+                try {
+                    setLoading(true)
+                    const response = await baseAxios.get(ROOMS, { params: { page } })
+                    setRooms((prevData) => [...prevData, ...response.data.results])
+                    setTotalPages(response.data.totalPages)
+                } catch (error) {
+                    console.log(error.response.data)
+                } finally {
+                    setLoading(false)
+                }
             }
-        }
-        fetchRooms()
-    }, [isFocused, page])
+            fetchRooms()
+        }, [page]),
+    )
 
     useEffect(() => {
         let ws
@@ -104,27 +104,22 @@ export default function Chat() {
     }
 
     return (
-        <Container containerStyle={styles.container}>
-            <FlatList
-                data={rooms}
-                renderItem={({ item }) => <RoomItem room={item} />}
-                keyExtractor={(item, index) => index.toString()}
-                contentContainerStyle={styles.contentContainer}
-                onEndReached={handleLoadMore}
-                onEndReachedThreshold={0.2}
-                showsVerticalScrollIndicator={false}
-                ListEmptyComponent={!loading ? <EmptyChat /> : null}
-            />
-        </Container>
+        <FlatList
+            data={rooms}
+            renderItem={({ item }) => <RoomItem room={item} />}
+            keyExtractor={(item, index) => index.toString()}
+            contentContainerStyle={styles.contentContainer}
+            onEndReached={handleLoadMore}
+            onEndReachedThreshold={0.2}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={!loading ? <EmptyChat /> : <SkeletonChat />} />
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: 0,
-    },
     contentContainer: {
         flexGrow: 1,
-        marginTop: 10,
+        paddingVertical: 10,
+        marginHorizontal: 16,
     },
 })

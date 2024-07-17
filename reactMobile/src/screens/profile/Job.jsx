@@ -17,7 +17,7 @@ import { fontSize } from '../../utils/fontSizes'
 export default function Job({ route }) {
     const { props } = route.params
     const [loading, setLoading] = useState(false)
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit(data) {
@@ -29,7 +29,6 @@ export default function Job({ route }) {
             })
             navigation.goBack()
             if (props.job?.jobTitle !== data.jobTitle || props.job?.jobCompany !== data.jobCompany) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Ish joyingiz o\'zgartirildi')
             }
         } catch (error) {

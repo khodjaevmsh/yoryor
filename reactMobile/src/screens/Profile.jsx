@@ -66,7 +66,7 @@ export default function Profile() {
             }
         }
         fetchMyProfile()
-    }, [profile.id])
+    }, [])
 
     if (loading) {
         return <SkeletonMyProfile />

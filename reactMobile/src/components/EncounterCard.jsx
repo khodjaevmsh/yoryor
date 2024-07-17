@@ -18,8 +18,7 @@ export default function EncounterCard({ receivers, setModalVisible }) {
     const [receiver, setReceiver] = useState({})
     const [room, setRoom] = useState(null)
     const [onSwipedAll, setOnSwipedAll] = useState(false)
-    const { profile: sender } = useContext(GlobalContext)
-    const swiperRef = useRef(null)
+    const { profile: sender, swiperRef } = useContext(GlobalContext)
 
     async function handleSwipedRight(cardIndex) {
         try {

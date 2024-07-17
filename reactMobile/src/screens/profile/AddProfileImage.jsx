@@ -21,7 +21,7 @@ export default function AddProfileImage({ route }) {
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState('')
     const [validationError, setValidationError] = useState('')
-    const { setRender, token } = useContext(GlobalContext)
+    const { token } = useContext(GlobalContext)
     const [buttonNumbers, setButtonNumbers] = useState([])
     const [selectedImageIndex, setSelectedImageIndex] = useState(null)
     const [isModalVisible, setModalVisible] = useState(false)
@@ -56,7 +56,6 @@ export default function AddProfileImage({ route }) {
             setImageLoading(updatedImageLoading)
 
             setModalVisible(false)
-            setRender(true)
             showToast('error', 'Oh!', "Rasm o'chirildi")
 
             fetchProfileImages()
@@ -126,7 +125,6 @@ export default function AddProfileImage({ route }) {
             await axios.post(`${domain}/api/v1${CHANGE_PROFILE_IMAGES}`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data', Authorization: `Token ${token}` },
             })
-            setRender(true)
             showToast('success', 'Woohoo!', 'Rasmlar o\'zgartirildi')
         } catch (error) {
             showToast('warning', 'Oops!', "Yangi rasm qo'shish talab etiladi")

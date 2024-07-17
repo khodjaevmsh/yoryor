@@ -20,10 +20,12 @@ export default function ChatDetailHeader({ receiver }) {
                 activeOpacity={0.8}
                 onPress={() => navigation.navigate('ReceiverDetail', { receiverId: receiver.id })}>
                 <FastImage
-                    style={styles.profileImage} source={{
+                    style={styles.profileImage}
+                    source={{
                         uri: receiver && receiver.images ? `${domain + receiver.images[0].image}` : null,
-                        priority: FastImage.priority.high,
-                    }} resizeMode={FastImage.resizeMode.cover} />
+                        priority: FastImage.priority.normal,
+                    }}
+                    resizeMode={FastImage.resizeMode.cover} />
             </TouchableOpacity>
 
             <TouchableOpacity

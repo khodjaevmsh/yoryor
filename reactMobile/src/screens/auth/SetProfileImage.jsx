@@ -12,7 +12,7 @@ import Button from '../../components/common/Button'
 import { GlobalContext } from '../../context/GlobalContext'
 import { SIGN_UP } from '../../urls'
 import { domain } from '../../hooks/requests'
-import { getToken } from '../../hooks/usePushNotification'
+import { getToken } from '../../hooks/PushNotification'
 import ValidationError from '../../components/common/ValidationError'
 
 export default function SetProfileImage({ route }) {

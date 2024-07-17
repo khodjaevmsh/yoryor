@@ -17,7 +17,7 @@ export default function Zodiac({ route }) {
     const { props } = route.params
     const [zodiac, setZodiac] = useState(props.key)
     const [loading, setLoading] = useState(false)
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit() {
@@ -26,7 +26,6 @@ export default function Zodiac({ route }) {
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { zodiac })
             navigation.goBack()
             if (props.key !== zodiac) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Burjingiz o\'zgartirildi')
             }
         } catch (error) {

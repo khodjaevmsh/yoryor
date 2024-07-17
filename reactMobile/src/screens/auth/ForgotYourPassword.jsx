@@ -7,30 +7,33 @@ import { useNavigation } from '@react-navigation/native'
 import Container from '../../components/common/Container'
 import { COLOR } from '../../utils/colors'
 import { fontSize } from '../../utils/fontSizes'
-import Input from '../../components/common/Input'
 import Button from '../../components/common/Button'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import { baseAxios } from '../../hooks/requests'
 import { SEND_CODE } from '../../urls'
 import ServerError from '../../components/common/ServerError'
+import PhoneInput from '../../components/common/PhoneInput'
 
 export default function ForgotYourPassword({ route }) {
     const [loading, setLoading] = useState(false)
+    const [callingCode, setCallingCode] = useState('998')
     const [serverError, setServerError] = useState('')
     const navigation = useNavigation()
     const { phoneNumber } = route.params
 
     const validationSchema = Yup.object().shape({
         phoneNumber: Yup.string()
-            .matches(/^\+?[0-9]{9}$/, 'Telefon raqamingiz formati xato')
-            .required('Majburiy maydon'),
+            .matches(/^\d+$/, 'Telefon raqamingiz formati xato')
+            .required('Majburiy maydon')
+            .min(9, 'Telefon raqamingiz formati xato')
+            .max(15, 'Telefon raqamingiz formati xato'),
     })
 
     async function onSubmit() {
         try {
             setLoading(true)
             await baseAxios.post(SEND_CODE, {
-                countryCode: '998',
+                countryCode: callingCode,
                 phoneNumber,
                 forgotPasswordScreen: true,
             })
@@ -57,10 +60,11 @@ export default function ForgotYourPassword({ route }) {
                     onSubmit={onSubmit}>
                     {({ handleSubmit }) => (
                         <>
-                            <Input
+                            <PhoneInput
                                 name="phoneNumber"
                                 keyboardType="numeric"
-                                placeholder="90 635 10 01" />
+                                placeholder="90 635 10 01"
+                                setCallingCode={setCallingCode} />
 
                             <ServerError error={serverError} />
 

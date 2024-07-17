@@ -1,25 +1,21 @@
 import React, { useContext, useState } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Formik } from 'formik'
 import { useNavigation } from '@react-navigation/native'
 import normalize from 'react-native-normalize'
 import * as Yup from 'yup'
-import CountryPicker from 'react-native-country-picker-modal'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Container from '../../components/common/Container'
 import Input from '../../components/common/Input'
 import Button from '../../components/common/Button'
 import { COLOR } from '../../utils/colors'
 import { fontSize } from '../../utils/fontSizes'
-// import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import SecureTextEntryIcon from '../../components/common/SecureTextEntryIcon'
 import { baseAxios } from '../../hooks/requests'
 import { SIGN_IN } from '../../urls'
 import { GlobalContext } from '../../context/GlobalContext'
-import { getToken } from '../../hooks/usePushNotification'
+import { getToken } from '../../hooks/PushNotification'
 import ServerError from '../../components/common/ServerError'
 import PhoneInput from '../../components/common/PhoneInput'
-import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 
 export default function SignIn() {
     const [loading, setLoading] = useState(false)
@@ -64,7 +60,7 @@ export default function SignIn() {
         <Container>
             <Text style={styles.title}>Kirish</Text>
             <Text style={styles.subTitle}>
-                Iltimos, akkauntingizga kirish uchun telefon raqamingiz va parolingizni kiriting.
+                Akkauntingizga kirish uchun telefon raqamingiz va parolingizni kiriting.
             </Text>
 
             <Formik

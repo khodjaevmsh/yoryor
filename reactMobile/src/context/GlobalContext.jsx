@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useRef, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import { usePersistState } from '../utils/state'
@@ -13,6 +13,7 @@ export default function GlobalProvider({ children }) {
     const [language, setLanguage] = usePersistState('language', 'uz')
     const [isLoaded, setIsLoaded] = useState(false)
     const [render, setRender] = useState(false)
+    const swiperRef = useRef(null)
 
     useEffect(() => {
         AsyncStorage.getItem('token').then(async (value) => {
@@ -59,6 +60,7 @@ export default function GlobalProvider({ children }) {
             setLanguage,
             render,
             setRender,
+            swiperRef,
         }}>
             {isLoaded ? children : null}
             <Toast config={toastConfig} />

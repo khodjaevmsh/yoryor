@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View, Platform, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import normalize from 'react-native-normalize'
@@ -11,14 +11,16 @@ import ProfileHeaderRight from '../../components/ProfileHeaderRight'
 import { ChatRounded, Heart } from '../../components/common/Svgs'
 import { COLOR } from '../../utils/colors'
 import ReceiverBody from '../../components/ReceiverBody'
+import { GlobalContext } from '../../context/GlobalContext'
 
 export default function EncounterDetail({ route }) {
-    const { receiverId, swiperRef } = route.params
+    const { receiverId } = route.params
     const [loading, setLoading] = useState(true)
     const [likeLoading, setLikeLoading] = useState(false)
     const [receiver, seReceiver] = useState({})
     const [like, setLike] = useState({})
     const navigation = useNavigation()
+    const { swiperRef } = useContext(GlobalContext)
 
     useLayoutEffect(() => {
         navigation.setOptions({

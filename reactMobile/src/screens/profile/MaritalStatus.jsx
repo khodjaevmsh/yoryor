@@ -16,7 +16,7 @@ export default function MaritalStatus({ route }) {
     const { props } = route.params
     const [status, setStatus] = useState(props.key)
     const [loading, setLoading] = useState(false)
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit() {
@@ -25,7 +25,6 @@ export default function MaritalStatus({ route }) {
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { maritalStatus: status })
             navigation.goBack()
             if (props.key !== status) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Oilaviy ahvolingiz o\'zgartirildi')
             }
         } catch (error) {

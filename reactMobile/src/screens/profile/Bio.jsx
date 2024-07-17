@@ -7,7 +7,6 @@ import * as Yup from 'yup'
 import Container from '../../components/common/Container'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
-import Input from '../../components/common/Input'
 import KeyboardAvoiding from '../../components/common/KeyboardAvoiding'
 import { baseAxios } from '../../hooks/requests'
 import { PROFILE } from '../../urls'
@@ -19,7 +18,6 @@ import TextArea from '../../components/common/TextArea'
 export default function Bio({ route }) {
     const [loading, setLoading] = useState(false)
     const { fetchedProfile } = route.params
-    const { setRender } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     const validationSchema = Yup.object().shape({
@@ -33,7 +31,6 @@ export default function Bio({ route }) {
             await baseAxios.put(PROFILE.replace('{id}', fetchedProfile?.id), { bio: data.bio })
             navigation.goBack()
             if ((fetchedProfile && fetchedProfile.bio) !== data.bio) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Bio o\'zgartirildi')
             }
         } catch (error) {
