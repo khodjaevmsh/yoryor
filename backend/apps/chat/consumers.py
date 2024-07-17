@@ -104,15 +104,20 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
         # Update the room's updated_at field
-        room = await sync_to_async(Room.objects.get)(id=room['id'])
-        room.updated_at = timezone.now()
-        await sync_to_async(room.save)()
+        r = await sync_to_async(Room.objects.get)(id=room['id'])
+        r.updated_at = timezone.now()
+        await sync_to_async(r.save)()
 
         # Filter Device objects for the receiver
         receiver_device = await sync_to_async(Device.objects.filter(user=receiver['user']).first)()
 
         if receiver_device:
-            send_notification(device_tokens=[receiver_device.token], title=sender['name'], body=message['text'])
+            send_notification(
+                device_tokens=[receiver_device.token],
+                title=sender['name'],
+                body=message['text'],
+                data={'screen': 'Chats'}
+            )
 
     async def chat_message(self, event):
         message = event['message']

@@ -7,10 +7,12 @@ from main.serializers.like import LikeSerializer
 
 
 class LikeListView(APIView, PageNumPagination):
+    page_size = 6
+
     def get(self, request):
         receiver = request.query_params.get('receiver', None)
 
-        likes = Like.objects.select_related('sender', 'receiver').filter(receiver=receiver)
+        likes = Like.objects.select_related('sender', 'receiver').filter(receiver=receiver, match=False)
         results = self.paginate_queryset(likes, request, view=self)
         serializer = LikeSerializer(results, many=True)
         return self.get_paginated_response(serializer.data)
@@ -33,5 +35,5 @@ class CountOfLikesView(APIView):
     def get(self, request):
         receiver = request.query_params.get('receiver', None)
 
-        count = Like.objects.filter(receiver=receiver).count()
+        count = Like.objects.filter(receiver=receiver, match=False).count()
         return Response({'count': count}, status=200)

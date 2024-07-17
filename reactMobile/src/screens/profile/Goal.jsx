@@ -16,7 +16,7 @@ export default function Goal({ route }) {
     const { props } = route.params
     const [goal, setGoal] = useState(props.key)
     const [loading, setLoading] = useState(false)
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit() {
@@ -25,7 +25,6 @@ export default function Goal({ route }) {
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { goal })
             navigation.goBack()
             if (props.key !== goal) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Maqsadingiz o\'zgartirildi')
             }
         } catch (error) {

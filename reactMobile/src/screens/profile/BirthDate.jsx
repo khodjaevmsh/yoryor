@@ -17,7 +17,7 @@ import { showToast } from '../../components/common/Toast'
 
 export default function BirthDate({ route }) {
     const { props } = route.params
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const [validationError, setValidationError] = useState('')
     const [date, setDate] = useState(new Date(profile.birthdate))
@@ -35,7 +35,6 @@ export default function BirthDate({ route }) {
                     birthdate: moment(date).format('YYYY-MM-DD'),
                 })
                 if (props.value !== birthdate) {
-                    setRender(true)
                     showToast('success', 'Woohoo!', 'Tug\'ilgan yil o\'zgartirildi')
                 }
                 navigation.goBack()

@@ -98,7 +98,7 @@ export default function ChatDetail({ route }) {
         const newMessageData = {
             message: newMessage[0],
             room: { id: room.id, name: room.name },
-            receiver: { id: receiver.id, name: receiver.name, user: receiver.user },
+            receiver: { id: receiver.id, name: receiver.name, user: receiver.user, avatar: receiver.images[0].image },
         }
 
         if (webSocket && webSocket.readyState === WebSocket.OPEN) {
@@ -121,7 +121,7 @@ export default function ChatDetail({ route }) {
                 <GiftedChat
                     messages={messages}
                     onSend={(newMessages) => onSend(newMessages)}
-                    user={{ _id: sender.id, name: sender.name }}
+                    user={{ _id: sender.id, name: sender.name, avatar: sender.avatar || sender.images[0].image }}
                     timeFormat="HH:mm"
                     dateFormat="DD MMMM YYYY"
                     renderAvatar={null}

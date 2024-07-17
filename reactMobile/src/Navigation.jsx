@@ -3,8 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React, { useContext } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import normalize from 'react-native-normalize'
 import { ChevronLeft } from 'react-native-feather'
 import { COLOR } from './utils/colors'
 import Likes from './screens/Likes'
@@ -53,6 +51,7 @@ import SetNewPassword from './screens/auth/SetNewPassword'
 import SetEducation from './screens/auth/SetEducation'
 import SetJob from './screens/auth/SetJob'
 import EncounterDetail from './screens/encounter/EncounterDetail'
+import { navigationRef } from './hooks/RootNavigation'
 
 const Stack = createNativeStackNavigator()
 const Tab = createBottomTabNavigator()
@@ -60,13 +59,6 @@ const Tab = createBottomTabNavigator()
 export default function Navigation() {
     const { token } = useContext(GlobalContext)
     const initial = token ? 'TabScreen' : 'Splash'
-
-    // async function rmToken() {
-    //     await AsyncStorage.removeItem('token')
-    //     await AsyncStorage.removeItem('user')
-    //     await AsyncStorage.removeItem('profile')
-    // }
-    // rmToken()
 
     const MyTheme = {
         ...DefaultTheme,
@@ -77,7 +69,7 @@ export default function Navigation() {
     }
 
     return (
-        <NavigationContainer theme={MyTheme}>
+        <NavigationContainer theme={MyTheme} ref={navigationRef}>
             <Stack.Navigator initialRouteName={initial} screenOptions={({ navigation }) => ({
                 headerTitle: () => false,
                 headerShadowVisible: false,
@@ -164,7 +156,6 @@ export default function Navigation() {
 }
 
 function TabScreen() {
-    const { numOfLikes, numOfUnseenMessages } = useContext(GlobalContext)
     return (
         <Tab.Navigator initialRouteName="Encounter" screenOptions={{
             headerTitle: () => false,

@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import LocalNotification from '../utils/localNotification'
 import { baseAxios } from './requests'
 import { DEVICE_TOKEN } from '../urls'
+import { showToast } from '../components/common/Toast'
+import * as RootNavigation from './RootNavigation'
 
 export async function requestUserPermission() {
     if (Platform.OS === 'ios') {
@@ -39,8 +41,8 @@ async function saveDeviceToken(deviceToken) {
     try {
         const token = AsyncStorage.getItem('token')
         if (token) {
-            const response = await baseAxios.post(DEVICE_TOKEN, { token: deviceToken })
-            console.log('Token saved successfully:', response.data)
+            await baseAxios.post(DEVICE_TOKEN, { token: deviceToken })
+            console.log('Token saved successfully')
         }
     } catch (error) {
         console.error('Error saving token:', error.response.data)
@@ -49,27 +51,27 @@ async function saveDeviceToken(deviceToken) {
 
 // Settings of notification listener
 export function setupNotificationListeners() {
-    // Обработка уведомлений на переднем плане
+    // Обработка уведомлений на переднем плане когда приложение открыто
     messaging().onMessage(async (remoteMessage) => {
-        console.log('A new FCM message arrived!', JSON.stringify(remoteMessage))
-        LocalNotification.showLocalNotification(remoteMessage)
+        const { notification } = remoteMessage
+        showToast('message', notification.title, notification.body, { screen: remoteMessage.data.screen })
     })
 
     // Обработка уведомлений на заднем плане
     messaging().setBackgroundMessageHandler(async (remoteMessage) => {
-        console.log('Message handled in the background!', remoteMessage)
         LocalNotification.showLocalNotification(remoteMessage)
+        RootNavigation.navigate(remoteMessage.data.screen)
     })
 
     // Обработка уведомлений при открытии приложения из состояния background
     messaging().onNotificationOpenedApp((remoteMessage) => {
-        console.log('Notification caused app to open from background state:', remoteMessage.notification)
+        RootNavigation.navigate(remoteMessage.data.screen)
     })
 
     // Обработка уведомлений при открытии приложения из состояния quit
     messaging().getInitialNotification().then((remoteMessage) => {
         if (remoteMessage) {
-            console.log('Notification caused app to open from quit state:', remoteMessage.notification)
+            RootNavigation.navigate(remoteMessage.data.screen)
         }
     })
 }

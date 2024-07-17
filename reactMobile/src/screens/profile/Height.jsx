@@ -18,7 +18,7 @@ export default function Height({ route }) {
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState(null)
     const [height, setHeight] = useState(props.value)
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     const heightArray = []
@@ -34,7 +34,6 @@ export default function Height({ route }) {
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { height })
             navigation.goBack()
             if (props.value !== height) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Bo\'yingiz o\'zgartirildi')
             }
         } catch (error) {

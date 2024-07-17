@@ -19,7 +19,7 @@ export default function Weight({ route }) {
     const [loading, setLoading] = useState(false)
     const [serverError, setServerError] = useState(null)
     const [weight, setWeight] = useState(props.value)
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     const weightArray = []
@@ -34,7 +34,6 @@ export default function Weight({ route }) {
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { weight })
             navigation.goBack()
             if (props.value !== weight) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Vazningiz o\'zgartirildi')
             }
         } catch (error) {

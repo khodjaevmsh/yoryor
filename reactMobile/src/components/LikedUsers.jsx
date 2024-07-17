@@ -27,15 +27,13 @@ export default function LikedUsers({ likedUsers }) {
     )
 
     return (
-        <View>
-            <FlatList
-                data={likedUsers && likedUsers.length > 0 ? likedUsers : []}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id}
-                contentContainerStyle={{ paddingHorizontal: 20 }}
-                horizontal
-                showsHorizontalScrollIndicator={false} />
-        </View>
+        <FlatList
+            data={likedUsers && likedUsers.length > 0 ? likedUsers : []}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={{ paddingHorizontal: 20 }}
+            horizontal
+            showsHorizontalScrollIndicator={false} />
     )
 }
 

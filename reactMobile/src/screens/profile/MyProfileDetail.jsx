@@ -1,6 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ScrollView, Text, View, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
+import { useFocusEffect } from '@react-navigation/core'
 import { COLOR } from '../../utils/colors'
 import ProfileDetailHeader from '../../components/ProfileDetailHeader'
 import ProfileDescription from '../../components/ProfileDescription'
@@ -15,27 +16,28 @@ export default function MyProfileDetail() {
     const [loading, setLoading] = useState(false)
     const [myProfile, setMyProfile] = useState()
     const [myProfileImages, setMyProfileImages] = useState([])
-    const { profile, render, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const { info, additionalInfo } = MyProfileInfo(myProfile)
 
-    useEffect(() => {
-        async function fetchMyProfile() {
-            try {
-                setLoading(true)
-                const profileResponse = await baseAxios.get(PROFILE.replace('{id}', profile.id))
-                setMyProfile(profileResponse.data)
+    useFocusEffect(
+        useCallback(() => {
+            async function fetchMyProfile() {
+                try {
+                    setLoading(true)
+                    const profileResponse = await baseAxios.get(PROFILE.replace('{id}', profile.id))
+                    setMyProfile(profileResponse.data)
 
-                const imagesResponse = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
-                setMyProfileImages(imagesResponse.data)
-            } catch (error) {
-                console(error.response)
-            } finally {
-                setLoading(false)
-                setRender(false)
+                    const imagesResponse = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
+                    setMyProfileImages(imagesResponse.data)
+                } catch (error) {
+                    console.error(error.response)
+                } finally {
+                    setLoading(false)
+                }
             }
-        }
-        fetchMyProfile()
-    }, [profile.id, render])
+            fetchMyProfile()
+        }, [profile.id]),
+    )
 
     if (loading) {
         return <ActivityIndicator />

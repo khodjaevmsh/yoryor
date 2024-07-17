@@ -11,8 +11,6 @@ import { GlobalContext } from '../context/GlobalContext'
 import ActivityIndicator from '../components/common/ActivityIndicator'
 import HeaderLeft from '../components/common/HeaderLeft'
 import HeaderRight from '../components/common/HeaderRight'
-import { showToast } from '../components/common/Toast'
-import WantMoreLikes from '../components/WantMoreLikes'
 import SkeletonDiscover from '../components/SkeletonDiscover'
 import WantMoreReceivers from '../components/WantMoreReceivers'
 
@@ -80,10 +78,6 @@ export default function Discover() {
         fetchReceivers()
     }
 
-    if (loading) {
-        return <SkeletonDiscover />
-    }
-
     return (
         <>
             <FlatList
@@ -101,7 +95,7 @@ export default function Discover() {
                 )}
                 ListEmptyComponent={!loading && !refreshing ? (
                     <WantMoreReceivers setModalVisible={setModalVisible} />
-                ) : null} />
+                ) : <SkeletonDiscover />} />
 
             <FilterModal
                 isModalVisible={isModalVisible}

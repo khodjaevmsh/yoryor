@@ -20,7 +20,7 @@ export default function Education({ route }) {
     const { props } = route.params
     const [level, setLevel] = useState(props.level)
     const [loading, setLoading] = useState(false)
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit(data) {
@@ -32,11 +32,10 @@ export default function Education({ route }) {
             })
             navigation.goBack()
             if (props.level !== level || props.school !== data.school) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Ma\'lumotingiz o\'zgartirildi')
             }
         } catch (error) {
-            console.log(error.response)
+            console.log(error.response.data)
         } finally {
             setLoading(false)
         }

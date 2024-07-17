@@ -16,7 +16,7 @@ export default function Gender({ route }) {
     const { props } = route.params
     const [gender, setGender] = useState(props.key)
     const [loading, setLoading] = useState(false)
-    const { profile, setRender } = useContext(GlobalContext)
+    const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit() {
@@ -25,7 +25,6 @@ export default function Gender({ route }) {
             await baseAxios.put(PROFILE.replace('{id}', profile.id), { gender })
             navigation.goBack()
             if (gender !== props.gender) {
-                setRender(true)
                 showToast('success', 'Woohoo!', 'Jinsingiz o\'zgartirildi')
             }
         } catch (error) {

@@ -1,8 +1,11 @@
 import Toast from 'react-native-toast-message'
-import { Text, View, StyleSheet, Platform } from 'react-native'
+import { Text, View, StyleSheet, Platform, TouchableOpacity } from 'react-native'
 import normalize from 'react-native-normalize'
+import React from 'react'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
+import * as RootNavigation from '../../hooks/RootNavigation'
+import { ChatRounded, Heart } from './Svgs'
 
 export const toastConfig = {
     success: ({ text1, text2 }) => (
@@ -34,14 +37,34 @@ export const toastConfig = {
             </View>
         </View>
     ),
+
+    message: ({ text1, text2, props }) => (
+        <TouchableOpacity
+            activeOpacity={1}
+            style={[styles.wrapper, { backgroundColor: COLOR.white, paddingHorizontal: 20 }]}
+            onPress={() => {
+                Toast.hide()
+                RootNavigation.navigate(props.screen)
+            }}>
+            <View style={styles.messageLeftSide}>
+                {props.screen === 'Chats' ? <ChatRounded width={32} height={32} /> : <Heart width={32} height={32} />}
+            </View>
+            <View style={styles.messageTxtWrapper}>
+                <Text style={styles.messageText1}>{text1}</Text>
+                <Text style={styles.messageText2}>{text2}</Text>
+            </View>
+        </TouchableOpacity>
+    )
+    ,
 }
 
-export function showToast(type, text1, text2) {
+export function showToast(type, text1, text2, props) {
     Toast.show({
         type,
         text1,
         text2,
-        topOffset: Platform.OS === 'ios' ? normalize(50) : null,
+        props,
+        topOffset: Platform.OS === 'ios' ? normalize(55) : null,
         autoHide: true,
     })
 }
@@ -49,17 +72,17 @@ export function showToast(type, text1, text2) {
 const styles = StyleSheet.create({
     wrapper: {
         width: '95%',
-        height: normalize(80),
+        height: normalize(75),
         backgroundColor: '#495057',
         borderRadius: 15,
         padding: 12,
         flexDirection: 'row',
         alignItems: 'center',
         elevation: 4,
-        shadowColor: 'rgba(0, 0, 0, 0.3)',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.8,
-        shadowRadius: 5,
+        shadowColor: 'rgba(0, 0, 0, 0.5)',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 7,
     },
     leftSide: {
         width: normalize(18),
@@ -75,13 +98,32 @@ const styles = StyleSheet.create({
         paddingRight: 16,
     },
     text1: {
-        fontSize: fontSize.small,
+        fontSize: fontSize.medium,
         fontWeight: '600',
         color: COLOR.white,
     },
     text2: {
-        fontSize: fontSize.small,
+        fontSize: fontSize.medium,
         color: COLOR.white,
+        marginTop: 2,
+    },
+
+    messageLeftSide: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    messageTxtWrapper: {
+        flex: 1,
+        paddingHorizontal: 14,
+    },
+    messageText1: {
+        fontSize: fontSize.medium,
+        fontWeight: '600',
+        color: COLOR.black,
+    },
+    messageText2: {
+        fontSize: fontSize.medium,
+        color: COLOR.darkGrey,
         marginTop: 2,
     },
 })

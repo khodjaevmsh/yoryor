@@ -37,7 +37,7 @@ export default function EncounterItem({ swiperRef, receiver }) {
                 </View>
             </LinearGradient>
             <TouchableOpacity
-                onPress={() => navigation.navigate('EncounterDetail', { receiverId: receiver.id, swiperRef })}
+                onPress={() => navigation.navigate('EncounterDetail', { receiverId: receiver.id })}
                 style={styles.touchable}
                 activeOpacity={1}>
                 <FastImage

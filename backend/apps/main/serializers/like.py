@@ -32,11 +32,16 @@ class LikeSerializer(serializers.ModelSerializer):
             instance.match = True
             instance.save()
 
+            like = Like.objects.filter(sender=instance.receiver, receiver=instance.sender).first()
+            like.match = True
+            like.save()
+
             if receiver_device:
                 send_notification(
                     device_tokens=[receiver_device.token],
-                    title='Bu match! \U0001F4AC',
-                    body='Sizga yangi xabar keldi'
+                    title='Bu match!',
+                    body='Sizga yangi xabar keldi',
+                    data={'screen': 'Chats'}
                 )
 
             # Используем транзакцию, чтобы гарантировать целостность данных
@@ -48,11 +53,12 @@ class LikeSerializer(serializers.ModelSerializer):
                 else:
                     room.participants.add(instance.receiver)
 
-        if receiver_device:
+        if receiver_device and not match:
             send_notification(
-                device_tokens=receiver_device.token,
+                device_tokens=[receiver_device.token],
                 title=instance.sender.name,
-                body='Sizga like qoydi \U00002764\uFE0F'
+                body='Sizni yoqtirib qoldi',
+                data={'screen': 'Likes'}
             )
 
         return instance

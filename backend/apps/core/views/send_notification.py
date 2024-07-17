@@ -40,7 +40,7 @@ firebase_admin.initialize_app(cred)
 #         return {"success": False, "error": str(e)}
 
 
-def send_notification(device_tokens, title, body, sound='default'):
+def send_notification(device_tokens, title, body, data=None, sound='default'):
     # Ensure `device_tokens` is a list, even if it contains a single token
     if not isinstance(device_tokens, list):
         device_tokens = [device_tokens]
@@ -54,6 +54,7 @@ def send_notification(device_tokens, title, body, sound='default'):
                 title=title,
                 body=body,
             ),
+            data=data,
             android=messaging.AndroidConfig(
                 notification=messaging.AndroidNotification(
                     sound=sound,
