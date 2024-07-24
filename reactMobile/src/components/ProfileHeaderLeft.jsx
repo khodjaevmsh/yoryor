@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native'
 import moment from 'moment'
 import normalize from 'react-native-normalize'
 
-export default function ProfileHeaderLeft({ name, birthdate }) {
+export default function ProfileHeaderLeft({ name, birthdate, status }) {
     return (
         <View style={styles.wrapper}>
             <Text style={styles.text}>{name},</Text>

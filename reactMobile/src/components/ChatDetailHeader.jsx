@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { ChevronLeft } from 'react-native-feather'
 import React from 'react'
 import normalize from 'react-native-normalize'
@@ -7,6 +7,7 @@ import FastImage from 'react-native-fast-image'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
 import { domain } from '../hooks/requests'
+import ReceiverName from './ReceiverName'
 
 export default function ChatDetailHeader({ receiver }) {
     const navigation = useNavigation()
@@ -29,9 +30,9 @@ export default function ChatDetailHeader({ receiver }) {
             </TouchableOpacity>
 
             <TouchableOpacity
-                activeOpacity={0.8}
+                activeOpacity={1}
                 onPress={() => navigation.navigate('ReceiverDetail', { receiverId: receiver.id })}>
-                <Text style={styles.profileName}>{receiver.name}</Text>
+                <ReceiverName item={receiver} hideAge nameStyle={styles.name} />
             </TouchableOpacity>
         </View>
     )
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
         marginLeft: 14,
         marginRight: 12,
     },
-    profileName: {
+    name: {
         fontSize: fontSize.large,
         fontWeight: '500',
     },

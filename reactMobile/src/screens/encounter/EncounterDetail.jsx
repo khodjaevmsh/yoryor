@@ -12,6 +12,7 @@ import { ChatRounded, Heart } from '../../components/common/Svgs'
 import { COLOR } from '../../utils/colors'
 import ReceiverBody from '../../components/ReceiverBody'
 import { GlobalContext } from '../../context/GlobalContext'
+import ReceiverName from '../../components/ReceiverName'
 
 export default function EncounterDetail({ route }) {
     const { receiverId } = route.params
@@ -24,12 +25,14 @@ export default function EncounterDetail({ route }) {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => <ProfileHeaderLeft name={receiver?.name} birthdate={receiver?.birthdate} />,
+            headerLeft: () => (
+                !loading && <ReceiverName item={receiver} nameStyle={styles.name} ageStyle={styles.age} />
+            ),
             headerRight: () => <ProfileHeaderRight onPress={() => navigation.goBack()} />,
             animation: 'fade_from_bottom',
             animationDuration: 170,
         })
-    }, [navigation, receiver])
+    }, [navigation, receiver, loading])
 
     useEffect(() => {
         async function fetchReceiver() {
@@ -90,6 +93,14 @@ export default function EncounterDetail({ route }) {
 }
 
 const styles = StyleSheet.create({
+    name: {
+        fontSize: normalize(22),
+        fontWeight: '600',
+    },
+    age: {
+        fontSize: normalize(22),
+        fontWeight: '400',
+    },
     contentContainerStyle: {
         paddingTop: 10,
         paddingBottom: 135,
