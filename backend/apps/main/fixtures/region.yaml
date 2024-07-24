@@ -1,0 +1,17 @@
+- model: main.Region
+  pk: 1
+  fields:
+    country: 1
+    title: 'Toshkent'
+
+- model: main.Region
+  pk: 2
+  fields:
+    country: 1
+    title: 'Buxoro'
+
+- model: main.Region
+  pk: 2
+  fields:
+    country: 1
+    title: 'Samarqand'

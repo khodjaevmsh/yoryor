@@ -86,13 +86,13 @@ const styles = StyleSheet.create({
         flex: 1,
         borderBottomColor: COLOR.lightGrey,
         borderBottomWidth: 0.3,
-        paddingVertical: 14,
+        paddingVertical: 16,
         flexDirection: 'row',
         alignItems: 'center',
     },
     receiverImage: {
-        width: normalize(58),
-        height: normalize(58),
+        width: normalize(60),
+        height: normalize(60),
         borderRadius: 100,
     },
     receiverMsg: {

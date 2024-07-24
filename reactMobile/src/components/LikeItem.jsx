@@ -7,9 +7,11 @@ import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import { domain } from '../hooks/requests'
 import { COLOR } from '../utils/colors'
+import { shortenText } from '../utils/string'
 
 export default function LikeItem({ item }) {
     const navigation = useNavigation()
+    const age = new Date().getFullYear() - moment(item.sender.birthdate).format('YYYY')
 
     return (
         <TouchableOpacity
@@ -28,9 +30,7 @@ export default function LikeItem({ item }) {
                 colors={['transparent', 'rgba(0, 0, 0, 0.6)']}
                 start={{ x: 0.5, y: 0.0 }}
                 style={styles.linearGradient}>
-                <Text style={styles.bottomText}>
-                    {item.sender.name}, {new Date().getFullYear() - moment(item.sender.birthdate).format('YYYY')}
-                </Text>
+                <Text style={styles.bottomText}>{shortenText(item.sender.name, 15)}, {age}</Text>
             </LinearGradient>
         </TouchableOpacity>
     )

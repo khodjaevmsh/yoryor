@@ -8,11 +8,11 @@ import { COLOR } from '../utils/colors'
 import FilterModal from '../components/FilterModal'
 import DiscoverItem from '../components/DiscoverItem'
 import { GlobalContext } from '../context/GlobalContext'
-import ActivityIndicator from '../components/common/ActivityIndicator'
 import HeaderLeft from '../components/common/HeaderLeft'
 import HeaderRight from '../components/common/HeaderRight'
 import SkeletonDiscover from '../components/SkeletonDiscover'
 import WantMoreReceivers from '../components/WantMoreReceivers'
+import ActivityIndicator from '../components/common/ActivityIndicator'
 
 export default function Discover() {
     const { profile: sender } = useContext(GlobalContext)
@@ -25,7 +25,7 @@ export default function Discover() {
     const [isModalVisible, setModalVisible] = useState(false)
     const [applyFilter, setApplyFilter] = useState(false)
     const [onLoadMore, setOnLoadMore] = useState(false)
-    const [totalPages, setTotalPages] = useState(1)
+    const [hasMore, setHasMore] = useState(false)
     const [page, setPage] = useState(1)
     const navigation = useNavigation()
 
@@ -44,13 +44,13 @@ export default function Discover() {
         try {
             setLoading(true)
             const response = await baseAxios.get(PROFILES, { params: { page, country, region, gender } })
-            if (onLoadMore) {
+            if (!onLoadMore) {
+                setReceivers(response.data.results)
+            } else {
                 setReceivers((prevData) => [...prevData, ...response.data.results])
                 setOnLoadMore(false)
-            } else {
-                setReceivers(response.data.results)
             }
-            setTotalPages(response.data.totalPages)
+            setHasMore(response.data.next !== null)
         } catch (error) {
             console.log(error.response.data)
         } finally {
@@ -65,9 +65,9 @@ export default function Discover() {
     }, [page, applyFilter])
 
     function handleLoadMore() {
-        if (!loading && !refreshing && page < totalPages) {
+        if (!loading && !refreshing && hasMore) {
             setOnLoadMore(true)
-            setPage(page + 1)
+            setPage((prevPage) => prevPage + 1)
         }
     }
 
@@ -83,16 +83,18 @@ export default function Discover() {
             <FlatList
                 data={receivers}
                 renderItem={({ item }) => <DiscoverItem item={item} />}
-                keyExtractor={(item, index) => index.toString()}
+                keyExtractor={(item) => item.id.toString()}
                 numColumns={3}
                 contentContainerStyle={styles.contentContainerStyle}
                 onEndReached={handleLoadMore}
                 showsVerticalScrollIndicator={false}
-                onEndReachedThreshold={0.2}
-                ListFooterComponent={() => (onLoadMore && !refreshing ? <ActivityIndicator padding /> : null)}
+                onEndReachedThreshold={0.1}
                 refreshControl={(
                     <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
                 )}
+                ListFooterComponent={() => (loading && refreshing ? (
+                    <ActivityIndicator padding />
+                ) : null)}
                 ListEmptyComponent={!loading && !refreshing ? (
                     <WantMoreReceivers setModalVisible={setModalVisible} />
                 ) : <SkeletonDiscover />} />

@@ -9,12 +9,13 @@ import { showToast } from '../components/common/Toast'
 import HeaderLeft from '../components/common/HeaderLeft'
 import EmptyChat from '../components/EmptyChat'
 import SkeletonChat from '../components/SkeletonChat'
+import ActivityIndicator from '../components/common/ActivityIndicator'
 
 export default function Chat() {
     const [loading, setLoading] = useState(true)
     const [rooms, setRooms] = useState([])
     const [page, setPage] = useState(1)
-    const [totalPages, setTotalPages] = useState(1)
+    const [hasMore, setHasMore] = useState(false)
     const navigation = useNavigation()
     const { token } = useContext(GlobalContext)
 
@@ -30,8 +31,13 @@ export default function Chat() {
                 try {
                     setLoading(true)
                     const response = await baseAxios.get(ROOMS, { params: { page } })
-                    setRooms((prevData) => [...prevData, ...response.data.results])
-                    setTotalPages(response.data.totalPages)
+                    setRooms((prevRooms) => {
+                        const newRooms = response.data.results.filter(
+                            (newRoom) => !prevRooms.some((prevRoom) => prevRoom.id === newRoom.id),
+                        )
+                        return [...prevRooms, ...newRooms]
+                    })
+                    setHasMore(response.data.next !== null)
                 } catch (error) {
                     console.log(error.response.data)
                 } finally {
@@ -98,8 +104,8 @@ export default function Chat() {
     }, [token])
 
     function handleLoadMore() {
-        if (!loading && page < totalPages) {
-            setPage(page + 1)
+        if (!loading && hasMore) {
+            setPage((prevPage) => prevPage + 1)
         }
     }
 
@@ -107,11 +113,12 @@ export default function Chat() {
         <FlatList
             data={rooms}
             renderItem={({ item }) => <RoomItem room={item} />}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={styles.contentContainer}
             onEndReached={handleLoadMore}
-            onEndReachedThreshold={0.2}
+            onEndReachedThreshold={0.1}
             showsVerticalScrollIndicator={false}
+            ListFooterComponent={loading ? <ActivityIndicator padding /> : null}
             ListEmptyComponent={!loading ? <EmptyChat /> : <SkeletonChat />} />
     )
 }

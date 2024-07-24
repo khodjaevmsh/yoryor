@@ -1,0 +1,180 @@
+# USERS
+- model: users.User
+  pk: 1
+  fields:
+    country_code: '998'
+    phone_number: '906351001'
+    email: 'user1@example.com'
+    username: '906351001'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 2
+  fields:
+    country_code: '998'
+    phone_number: '906351002'
+    email: 'user2@example.com'
+    username: '906351002'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 3
+  fields:
+    country_code: '998'
+    phone_number: '906351003'
+    email: 'user3@example.com'
+    username: '906351003'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 4
+  fields:
+    country_code: '998'
+    phone_number: '906351004'
+    email: 'user4@example.com'
+    username: '906351004'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 5
+  fields:
+    country_code: '998'
+    phone_number: '906351005'
+    email: 'user5@example.com'
+    username: '906351005'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 6
+  fields:
+    country_code: '998'
+    phone_number: '906351006'
+    email: 'user6@example.com'
+    username: '906351006'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 7
+  fields:
+    country_code: '998'
+    phone_number: '906351007'
+    email: 'user7@example.com'
+    username: '906351007'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 8
+  fields:
+    country_code: '998'
+    phone_number: '906351008'
+    email: 'user8@example.com'
+    username: '906351008'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 9
+  fields:
+    country_code: '998'
+    phone_number: '906351009'
+    email: 'user9@example.com'
+    username: '906351009'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 10
+  fields:
+    country_code: '998'
+    phone_number: '906351010'
+    email: 'user10@example.com'
+    username: '906351010'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 11
+  fields:
+    country_code: '998'
+    phone_number: '906351011'
+    email: 'user11@example.com'
+    username: '906351011'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 12
+  fields:
+    country_code: '998'
+    phone_number: '906351012'
+    email: 'user12@example.com'
+    username: '906351012'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 13
+  fields:
+    country_code: '998'
+    phone_number: '906351013'
+    email: 'user13@example.com'
+    username: '906351013'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 14
+  fields:
+    country_code: '998'
+    phone_number: '906351014'
+    email: 'user14@example.com'
+    username: '906351014'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 15
+  fields:
+    country_code: '998'
+    phone_number: '906351015'
+    email: 'user15@example.com'
+    username: '906351015'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 16
+  fields:
+    country_code: '998'
+    phone_number: '906351016'
+    email: 'user16@example.com'
+    username: '906351016'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 17
+  fields:
+    country_code: '998'
+    phone_number: '906351017'
+    email: 'user17@example.com'
+    username: '906351017'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 18
+  fields:
+    country_code: '998'
+    phone_number: '906351018'
+    email: 'user18@example.com'
+    username: '906351018'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 19
+  fields:
+    country_code: '998'
+    phone_number: '906351019'
+    email: 'user19@example.com'
+    username: '906351019'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
+
+- model: users.User
+  pk: 20
+  fields:
+    country_code: '998'
+    phone_number: '906351020'
+    email: 'user20@example.com'
+    username: '906351020'
+    password: 'pbkdf2_sha256$720000$5vdWH43OgBiGkltCXTEfoc$J2sP8y0/UXtUD9co7jycHLV7BFnf0trSFScMZd8GK90='
