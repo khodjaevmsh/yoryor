@@ -48,8 +48,8 @@ const styles = StyleSheet.create({
         borderColor: COLOR.extraLightGrey,
     },
     profileImage: {
-        width: normalize(40),
-        height: normalize(40),
+        width: normalize(42),
+        height: normalize(42),
         borderRadius: 100,
         marginLeft: 14,
         marginRight: 12,

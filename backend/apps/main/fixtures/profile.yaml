@@ -1,0 +1,399 @@
+- model: main.Profile
+  fields:
+    id: 1
+    user: 1
+    name: 'User 1'
+    birthdate: '1990-01-01'
+    gender: 'male'
+    region: 1
+    goal: 'match'
+    bio: 'Bio of user 1'
+    height: '180'
+    weight: '75'
+    education_level: 'bachelors_degree'
+    education_school: 'University 1'
+    job_title: 'Software Engineer'
+    job_company: 'Company 1'
+    marital_status: 'single'
+    income_level: 'moderate'
+    zodiac: 'aries'
+
+- model: main.Profile
+  fields:
+    id: 2
+    user: 2
+    name: 'User 2'
+    birthdate: '1991-02-02'
+    gender: 'female'
+    region: 1
+    goal: 'friendship'
+    bio: 'Bio of user 2'
+    height: '165'
+    weight: '60'
+    education_level: 'masters_degree'
+    education_school: 'University 2'
+    job_title: 'Data Analyst'
+    job_company: 'Company 2'
+    marital_status: 'single'
+    income_level: 'high'
+    zodiac: 'taurus'
+
+- model: main.Profile
+  fields:
+    id: 3
+    user: 3
+    name: 'User 3'
+    birthdate: '1988-03-03'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 3'
+    height: '175'
+    weight: '80'
+    education_level: 'bachelors_degree'
+    education_school: 'University 3'
+    job_title: 'Product Manager'
+    job_company: 'Company 3'
+    marital_status: 'divorced'
+    income_level: 'moderate'
+    zodiac: 'gemini'
+
+- model: main.Profile
+  fields:
+    id: 4
+    user: 4
+    name: 'User 4'
+    birthdate: '1992-04-04'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 4'
+    height: '170'
+    weight: '65'
+    education_level: 'phd'
+    education_school: 'University 4'
+    job_title: 'Research Scientist'
+    job_company: 'Company 4'
+    marital_status: 'married'
+    income_level: 'high'
+    zodiac: 'cancer'
+
+- model: main.Profile
+  fields:
+    id: 5
+    user: 5
+    name: 'User 5'
+    birthdate: '1993-05-05'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 5'
+    height: '185'
+    weight: '85'
+    education_level: 'bachelors_degree'
+    education_school: 'University 5'
+    job_title: 'Marketing Specialist'
+    job_company: 'Company 5'
+    marital_status: 'single'
+    income_level: 'low'
+    zodiac: 'leo'
+
+- model: main.Profile
+  fields:
+    id: 6
+    user: 6
+    name: 'User 6'
+    birthdate: '1994-06-06'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 6'
+    height: '160'
+    weight: '55'
+    education_level: 'masters_degree'
+    education_school: 'University 6'
+    job_title: 'Graphic Designer'
+    job_company: 'Company 6'
+    marital_status: 'single'
+    income_level: 'moderate'
+    zodiac: 'virgo'
+
+- model: main.Profile
+  fields:
+    id: 7
+    user: 7
+    name: 'User 7'
+    birthdate: '1995-07-07'
+    gender: 'female'
+    region: 1
+    goal: 'match'
+    bio: 'Bio of user 7'
+    height: '190'
+    weight: '90'
+    education_level: 'bachelors_degree'
+    education_school: 'University 7'
+    job_title: 'Sales Manager'
+    job_company: 'Company 7'
+    marital_status: 'single'
+    income_level: 'high'
+    zodiac: 'libra'
+
+- model: main.Profile
+  fields:
+    id: 8
+    user: 8
+    name: 'User 8'
+    birthdate: '1996-08-08'
+    gender: 'female'
+    region: 1
+    goal: 'dating'
+    bio: 'Bio of user 8'
+    height: '175'
+    weight: '70'
+    education_level: 'phd'
+    education_school: 'University 8'
+    job_title: 'Financial Analyst'
+    job_company: 'Company 8'
+    marital_status: 'single'
+    income_level: 'moderate'
+    zodiac: 'scorpio'
+
+- model: main.Profile
+  fields:
+    id: 9
+    user: 9
+    name: 'User 9'
+    birthdate: '1997-09-09'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 9'
+    height: '165'
+    weight: '68'
+    education_level: 'bachelors_degree'
+    education_school: 'University 9'
+    job_title: 'Consultant'
+    job_company: 'Company 9'
+    marital_status: 'single'
+    income_level: 'low'
+    zodiac: 'sagittarius'
+
+- model: main.Profile
+  fields:
+    id: 10
+    user: 10
+    name: 'User 10'
+    birthdate: '1998-10-10'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 10'
+    height: '180'
+    weight: '75'
+    education_level: 'masters_degree'
+    education_school: 'University 10'
+    job_title: 'Software Engineer'
+    job_company: 'Company 10'
+    marital_status: 'single'
+    income_level: 'high'
+    zodiac: 'capricorn'
+
+- model: main.Profile
+  fields:
+    id: 11
+    user: 11
+    name: 'User 11'
+    birthdate: '1990-11-11'
+    gender: 'female'
+    region: 1
+    goal: 'friendship'
+    bio: 'Bio of user 11'
+    height: '175'
+    weight: '70'
+    education_level: 'bachelors_degree'
+    education_school: 'University 11'
+    job_title: 'Data Scientist'
+    job_company: 'Company 11'
+    marital_status: 'single'
+    income_level: 'moderate'
+    zodiac: 'aquarius'
+
+- model: main.Profile
+  fields:
+    id: 12
+    user: 12
+    name: 'User 12'
+    birthdate: '1991-12-12'
+    gender: 'female'
+    region: 1
+    goal: 'match'
+    bio: 'Bio of user 12'
+    height: '170'
+    weight: '60'
+    education_level: 'phd'
+    education_school: 'University 12'
+    job_title: 'Professor'
+    job_company: 'Company 12'
+    marital_status: 'single'
+    income_level: 'high'
+    zodiac: 'pisces'
+
+- model: main.Profile
+  fields:
+    id: 13
+    user: 13
+    name: 'User 13'
+    birthdate: '1989-01-13'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 13'
+    height: '180'
+    weight: '75'
+    education_level: 'bachelors_degree'
+    education_school: 'University 13'
+    job_title: 'Engineer'
+    job_company: 'Company 13'
+    marital_status: 'divorced'
+    income_level: 'moderate'
+    zodiac: 'aries'
+
+- model: main.Profile
+  fields:
+    id: 14
+    user: 14
+    name: 'User 14'
+    birthdate: '1992-02-14'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 14'
+    height: '165'
+    weight: '65'
+    education_level: 'masters_degree'
+    education_school: 'University 14'
+    job_title: 'Doctor'
+    job_company: 'Company 14'
+    marital_status: 'married'
+    income_level: 'high'
+    zodiac: 'taurus'
+
+- model: main.Profile
+  fields:
+    id: 15
+    user: 15
+    name: 'User 15'
+    birthdate: '1994-03-15'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 15'
+    height: '185'
+    weight: '80'
+    education_level: 'bachelors_degree'
+    education_school: 'University 15'
+    job_title: 'Teacher'
+    job_company: 'Company 15'
+    marital_status: 'single'
+    income_level: 'low'
+    zodiac: 'gemini'
+
+- model: main.Profile
+  fields:
+    id: 16
+    user: 16
+    name: 'User 16'
+    birthdate: '1996-04-16'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 16'
+    height: '160'
+    weight: '55'
+    education_level: 'phd'
+    education_school: 'University 16'
+    job_title: 'Architect'
+    job_company: 'Company 16'
+    marital_status: 'single'
+    income_level: 'moderate'
+    zodiac: 'cancer'
+
+- model: main.Profile
+  fields:
+    id: 17
+    user: 17
+    name: 'User 17'
+    birthdate: '1997-05-17'
+    gender: 'female'
+    region: 1
+    goal: 'match'
+    bio: 'Bio of user 17'
+    height: '190'
+    weight: '85'
+    education_level: 'bachelors_degree'
+    education_school: 'University 17'
+    job_title: 'Developer'
+    job_company: 'Company 17'
+    marital_status: 'single'
+    income_level: 'high'
+    zodiac: 'leo'
+
+- model: main.Profile
+  fields:
+    id: 18
+    user: 18
+    name: 'User 18'
+    birthdate: '1998-06-18'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 18'
+    height: '175'
+    weight: '70'
+    education_level: 'masters_degree'
+    education_school: 'University 18'
+    job_title: 'Nurse'
+    job_company: 'Company 18'
+    marital_status: 'single'
+    income_level: 'moderate'
+    zodiac: 'virgo'
+
+- model: main.Profile
+  fields:
+    id: 19
+    user: 19
+    name: 'User 19'
+    birthdate: '1990-07-19'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 19'
+    height: '165'
+    weight: '68'
+    education_level: 'bachelors_degree'
+    education_school: 'University 19'
+    job_title: 'Mechanic'
+    job_company: 'Company 19'
+    marital_status: 'single'
+    income_level: 'low'
+    zodiac: 'libra'
+
+- model: main.Profile
+  fields:
+    id: 20
+    user: 20
+    name: 'User 20'
+    birthdate: '1991-08-20'
+    gender: 'female'
+    region: 1
+    goal: 'long_term_dating'
+    bio: 'Bio of user 20'
+    height: '170'
+    weight: '60'
+    education_level: 'phd'
+    education_school: 'University 20'
+    job_title: 'Lawyer'
+    job_company: 'Company 20'
+    marital_status: 'single'
+    income_level: 'high'
+    zodiac: 'scorpio'

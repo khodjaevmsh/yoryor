@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ScrollView, Text, View, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
-import { useFocusEffect } from '@react-navigation/core'
+import { useFocusEffect } from '@react-navigation/native'
 import { COLOR } from '../../utils/colors'
 import ProfileDetailHeader from '../../components/ProfileDetailHeader'
 import ProfileDescription from '../../components/ProfileDescription'
@@ -9,11 +9,10 @@ import ProfileInfo from '../../components/ProfileInfo'
 import { GlobalContext } from '../../context/GlobalContext'
 import { baseAxios } from '../../hooks/requests'
 import { PROFILE, PROFILE_IMAGES } from '../../urls'
-import ActivityIndicator from '../../components/common/ActivityIndicator'
 import MyProfileInfo from '../../components/MyProfileInfo'
 
 export default function MyProfileDetail() {
-    const [loading, setLoading] = useState(false)
+    const [, setLoading] = useState(false)
     const [myProfile, setMyProfile] = useState()
     const [myProfileImages, setMyProfileImages] = useState([])
     const { profile } = useContext(GlobalContext)
@@ -38,10 +37,6 @@ export default function MyProfileDetail() {
             fetchMyProfile()
         }, [profile.id]),
     )
-
-    if (loading) {
-        return <ActivityIndicator />
-    }
 
     return (
         <ScrollView contentContainerStyle={styles.container}>

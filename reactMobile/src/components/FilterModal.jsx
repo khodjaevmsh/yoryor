@@ -93,7 +93,7 @@ export default function FilterModal({
 
                 <View style={styles.bottomWrapper}>
                     <Button title="Qo'llash" onPress={() => {
-                        setPage(setPage)
+                        setPage(1)
                         setApplyFilter(true)
                         setModalVisible(false)
                     }} />
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         paddingTop: Platform.OS === 'ios' ? 42 : null,
-        paddingBottom: Platform.OS === 'ios' ? 20 : null,
+        paddingBottom: Platform.OS === 'ios' ? 15 : null,
         marginHorizontal: 10,
     },
     header: {

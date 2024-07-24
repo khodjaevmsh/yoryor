@@ -10,6 +10,7 @@ import { shortenText } from '../utils/string'
 
 const DiscoverItem = memo(({ item }) => {
     const navigation = useNavigation()
+    const age = new Date().getFullYear() - moment(item.birthdate).format('YYYY')
 
     return (
         <TouchableOpacity
@@ -25,9 +26,7 @@ const DiscoverItem = memo(({ item }) => {
                     cache: FastImage.cacheControl.web,
                 }} />
             <View style={styles.profileInfo}>
-                <Text style={styles.name}>
-                    {shortenText(item.name, 15)}, {new Date().getFullYear() - moment(item.birthdate).format('YYYY')}
-                </Text>
+                <Text style={styles.name}>{shortenText(item.name, 15)}, {age}</Text>
             </View>
         </TouchableOpacity>
     )

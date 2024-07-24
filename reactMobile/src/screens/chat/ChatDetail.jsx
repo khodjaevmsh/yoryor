@@ -47,7 +47,6 @@ export default function ChatDetail({ route }) {
 
             ws.onclose = () => {
                 reconnectWebSocket()
-                // showToast('success', 'Woohoo!', 'Internet qayta tiklandi')
             }
         }
 
