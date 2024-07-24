@@ -6,7 +6,6 @@ import ReceiverHead from '../../components/ReceiverHead'
 import { baseAxios } from '../../hooks/requests'
 import { LIKE, LIKES, PROFILE } from '../../urls'
 import ActivityIndicator from '../../components/common/ActivityIndicator'
-import ProfileHeaderLeft from '../../components/ProfileHeaderLeft'
 import ProfileHeaderRight from '../../components/ProfileHeaderRight'
 import { ChatRounded, Heart } from '../../components/common/Svgs'
 import { COLOR } from '../../utils/colors'
@@ -14,12 +13,13 @@ import ReceiverBody from '../../components/ReceiverBody'
 import { showToast } from '../../components/common/Toast'
 import MatchModal from '../../components/MatchModal'
 import { GlobalContext } from '../../context/GlobalContext'
+import ReceiverName from '../../components/ReceiverName'
 
 export default function ReceiverDetail({ route }) {
     const { receiverId } = route.params
     const [loading, setLoading] = useState(true)
     const [likeLoading, setLikeLoading] = useState(false)
-    const [receiver, seReceiver] = useState({})
+    const [receiver, setReceiver] = useState({})
     const [like, setLike] = useState({})
     const [isModalVisible, setModalVisible] = useState(false)
     const { profile: sender } = useContext(GlobalContext)
@@ -27,19 +27,21 @@ export default function ReceiverDetail({ route }) {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => <ProfileHeaderLeft name={receiver?.name} birthdate={receiver?.birthdate} />,
+            headerLeft: () => (
+                !loading && <ReceiverName item={receiver} nameStyle={styles.name} ageStyle={styles.age} />
+            ),
             headerRight: () => <ProfileHeaderRight onPress={() => navigation.goBack()} />,
             animation: 'fade_from_bottom',
             animationDuration: 170,
         })
-    }, [navigation, receiver])
+    }, [navigation, receiver, loading])
 
     useEffect(() => {
         async function fetchReceiver() {
             try {
                 setLoading(true)
                 const response = await baseAxios.get(PROFILE.replace('{id}', receiverId))
-                seReceiver(response.data)
+                setReceiver(response.data)
 
                 const likeResponse = await baseAxios.get(LIKE.replace('{id}', receiverId))
                 setLike(likeResponse.data)
@@ -107,6 +109,14 @@ export default function ReceiverDetail({ route }) {
 }
 
 const styles = StyleSheet.create({
+    name: {
+        fontSize: normalize(22),
+        fontWeight: '600',
+    },
+    age: {
+        fontSize: normalize(22),
+        fontWeight: '400',
+    },
     contentContainerStyle: {
         paddingTop: 10,
         paddingBottom: 135,

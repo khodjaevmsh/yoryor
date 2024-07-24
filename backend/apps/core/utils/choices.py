@@ -51,3 +51,8 @@ ZODIAC_CHOICES = [
     ('aquarius', 'Qovg\'a'),
     ('pisces', 'Baliqlar'),
 ]
+
+CONNECTION_STATUSES = [
+    ('online', 'Online'),
+    ('offline', 'Offline'),
+]

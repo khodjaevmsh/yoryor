@@ -1,7 +1,6 @@
 import React from 'react'
 import LinearGradient from 'react-native-linear-gradient'
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import moment from 'moment'
 import FastImage from 'react-native-fast-image'
 import normalize from 'react-native-normalize'
 import { X } from 'react-native-feather'
@@ -10,6 +9,7 @@ import { domain } from '../hooks/requests'
 import { Goal, Heart, MapPoint } from './common/Svgs'
 import { COLOR } from '../utils/colors'
 import { goals } from '../utils/choices'
+import ReceiverName from './ReceiverName'
 
 const { height: screenHeight } = Dimensions.get('window')
 const imageHeight = screenHeight * 0.76 // Например, чтобы изображение занимало 75% высоты экрана
@@ -24,9 +24,7 @@ export default function EncounterItem({ swiperRef, receiver }) {
                 start={{ x: 0.5, y: 0.0 }}
                 end={{ x: 0.5, y: 0.75 }}
                 style={styles.topLinearGradient}>
-                <Text style={styles.name}>
-                    {receiver?.name}, {new Date().getFullYear() - moment(receiver?.birthdate).format('YYYY')}
-                </Text>
+                <ReceiverName item={receiver} nameStyle={styles.name} ageStyle={styles.age} />
                 <View style={[styles.topTagWrapper, { backgroundColor: COLOR.white }]}>
                     <Goal width={15} height={15} />
                     <Text style={[styles.topTag, { color: COLOR.black }]}>{goals[receiver.goal]}</Text>
@@ -113,13 +111,19 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     name: {
-        fontSize: normalize(26),
+        fontSize: normalize(22),
+        fontWeight: '600',
+        color: COLOR.white,
+        marginBottom: 2,
+    },
+    age: {
+        fontSize: normalize(22),
         fontWeight: '600',
         color: COLOR.white,
         marginBottom: 2,
     },
     topTag: {
-        fontSize: normalize(12),
+        fontSize: normalize(11),
         color: COLOR.white,
         marginLeft: 4,
     },
@@ -129,10 +133,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'flex-start',
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        paddingVertical: 5,
-        paddingHorizontal: 8,
+        paddingVertical: 4,
+        paddingHorizontal: 7,
         borderRadius: 55,
-        marginVertical: 4,
+        marginVertical: 3,
     },
     iconWrapper: {
         width: normalize(60),

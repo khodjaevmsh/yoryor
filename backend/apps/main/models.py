@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 from core.utils.choices import GENDER_CHOICES, GOAL_CHOICES, LEVEL_CHOICES, MARITAL_STATUS_CHOICES, \
-    INCOME_LEVEL_CHOICES, ZODIAC_CHOICES
+    INCOME_LEVEL_CHOICES, ZODIAC_CHOICES, CONNECTION_STATUSES
 
 
 class Country(models.Model):
@@ -37,6 +37,7 @@ class Profile(models.Model):
     marital_status = models.CharField(max_length=20, choices=MARITAL_STATUS_CHOICES, null=True, blank=True)
     income_level = models.CharField(max_length=20, choices=INCOME_LEVEL_CHOICES, null=True, blank=True)
     zodiac = models.CharField(max_length=20, choices=ZODIAC_CHOICES, null=True, blank=True)
+    online = models.CharField(max_length=20, choices=CONNECTION_STATUSES, null=True, blank=True)
 
     def __str__(self):
         return self.name

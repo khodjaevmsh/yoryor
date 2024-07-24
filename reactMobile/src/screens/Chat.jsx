@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { FlatList, StyleSheet } from 'react-native'
-import { useFocusEffect, useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native'
 import { baseAxios, wsDomain } from '../hooks/requests'
 import { ROOMS } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
@@ -56,8 +56,7 @@ export default function Chat() {
             ws = new WebSocket(`${wsDomain}/rooms/?token=${token}`)
 
             ws.onopen = () => {
-                console.log('WebSocket connected for room')
-                reconnectInterval = 1000 // Reset reconnect interval on successful connection
+                reconnectInterval = 1000
             }
 
             ws.onmessage = (event) => {
@@ -73,12 +72,9 @@ export default function Chat() {
                 }
             }
 
-            ws.onerror = () => {
-                console.log('WebSocket error...')
-            }
+            ws.onerror = () => {}
 
             ws.onclose = () => {
-                console.log('WebSocket disconnected for room')
                 reconnectWebSocket()
             }
         }

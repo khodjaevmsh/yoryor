@@ -13,7 +13,7 @@ import { shortenText } from '../utils/string'
 import SkeletonChat from './SkeletonChat'
 
 export default function RoomItem({ room }) {
-    const [loading, setLoading] = useState(true)
+    const [, setLoading] = useState(true)
     const [sender, setSender] = useState({})
     const [receiver, setReceiver] = useState({})
     const { profile } = useContext(GlobalContext)
@@ -41,12 +41,13 @@ export default function RoomItem({ room }) {
         fetchReceiver()
     }, [senderId, receiverId])
 
-    if (loading) {
-        return <SkeletonChat />
-    }
+    // if (loading) {
+    //     return <SkeletonChat />
+    // }
 
     return (
         <TouchableOpacity
+            activeOpacity={0.8}
             onPress={() => navigation.navigate('ChatDetail', { room, sender, receiver })}
             style={styles.roomItemWrapper}>
             <FastImage
@@ -60,7 +61,10 @@ export default function RoomItem({ room }) {
 
             <View style={styles.receiverMsg}>
                 <View style={styles.createdAtWrapper}>
-                    <Text style={styles.receiverName}>{receiver.name}</Text>
+                    <View style={styles.nameWrapper}>
+                        <Text style={styles.receiverName}>{receiver.name}</Text>
+                        {receiver.online === 'online' ? <View style={styles.status} /> : null}
+                    </View>
                     <Text style={styles.createdAt}>
                         {moment(room.message?.createdAt || room.lastMessage.createdAt).format('HH:mm')}
                     </Text>
@@ -81,7 +85,6 @@ export default function RoomItem({ room }) {
 }
 
 const styles = StyleSheet.create({
-    //    ROOM ITEM
     roomItemWrapper: {
         flex: 1,
         borderBottomColor: COLOR.lightGrey,
@@ -98,6 +101,17 @@ const styles = StyleSheet.create({
     receiverMsg: {
         flex: 1,
         paddingHorizontal: 14,
+    },
+    nameWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    status: {
+        width: normalize(8),
+        height: normalize(8),
+        borderRadius: 100,
+        backgroundColor: COLOR.green,
+        marginLeft: 6,
     },
     createdAtWrapper: {
         flexDirection: 'row',

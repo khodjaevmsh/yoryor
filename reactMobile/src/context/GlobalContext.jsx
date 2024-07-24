@@ -48,6 +48,18 @@ export default function GlobalProvider({ children }) {
         await AsyncStorage.removeItem('profile')
     }
 
+    useEffect(() => {
+        const ws = new WebSocket(`ws://192.168.1.7:8000/ws/main/profile-status/?token=${token}`)
+
+        ws.onopen = () => {}
+
+        ws.onmessage = () => {}
+
+        ws.onclose = () => {}
+
+        return () => ws.close()
+    }, [token])
+
     return (
         // eslint-disable-next-line react/jsx-no-constructed-context-values
         <GlobalContext.Provider value={{
@@ -58,8 +70,6 @@ export default function GlobalProvider({ children }) {
             signOut,
             language,
             setLanguage,
-            render,
-            setRender,
             swiperRef,
         }}>
             {isLoaded ? children : null}

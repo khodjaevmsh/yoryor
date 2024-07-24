@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import FastImage from 'react-native-fast-image'
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 import normalize from 'react-native-normalize'
 import LinearGradient from 'react-native-linear-gradient'
 import { domain } from '../hooks/requests'
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     topTag: {
-        fontSize: normalize(12),
+        fontSize: normalize(11),
         color: COLOR.white,
         marginLeft: 4,
     },
@@ -62,10 +62,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'flex-start',
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        paddingVertical: 5,
-        paddingHorizontal: 8,
+        paddingVertical: 4,
+        paddingHorizontal: 7,
         borderRadius: 55,
-        marginVertical: 4,
+        marginVertical: 3,
     },
     city: {
         fontSize: fontSize.small,
