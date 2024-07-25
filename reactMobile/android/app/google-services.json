@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "956891943414",
-    "project_id": "sovchi-3896f",
-    "storage_bucket": "sovchi-3896f.appspot.com"
+    "project_number": "366080468163",
+    "project_id": "yor-yor-23e39",
+    "storage_bucket": "yor-yor-23e39.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:956891943414:android:9643cfd719d8fd400777d7",
+        "mobilesdk_app_id": "1:366080468163:android:330a60be6cf6fb2fcbee76",
         "android_client_info": {
-          "package_name": "com.sovchi"
+          "package_name": "com.yoryor"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC7mYo6P3Kr1QgztXqcJdte2amrd_4HW4U"
+          "current_key": "AIzaSyBIMEPiz9nzqWdkN4dNNocJXpzFoI3YQ10"
         }
       ],
       "services": {

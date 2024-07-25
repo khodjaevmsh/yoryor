@@ -10,14 +10,14 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "cp &quot;${PROJECT_DIR}/../.env.development&quot; &quot;${PROJECT_DIR}/../.env&quot;  &#10;">
+               scriptText = "cp &quot;${PROJECT_DIR}/../.env.staging&quot; &quot;${PROJECT_DIR}/../.env&quot;&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-                     BuildableName = "Sovchi.app"
-                     BlueprintName = "Sovchi"
-                     ReferencedContainer = "container:Sovchi.xcodeproj">
+                     BuildableName = "YorYor.app"
+                     BlueprintName = "YorYor"
+                     ReferencedContainer = "container:YorYor.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
             </ActionContent>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "Sovchi.app"
-               BlueprintName = "Sovchi"
-               ReferencedContainer = "container:Sovchi.xcodeproj">
+               BuildableName = "YorYor.app"
+               BlueprintName = "YorYor"
+               ReferencedContainer = "container:YorYor.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -51,9 +51,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "SovchiTests.xctest"
-               BlueprintName = "SovchiTests"
-               ReferencedContainer = "container:Sovchi.xcodeproj">
+               BuildableName = "YorYorTests.xctest"
+               BlueprintName = "YorYorTests"
+               ReferencedContainer = "container:YorYor.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -73,9 +73,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Sovchi.app"
-            BlueprintName = "Sovchi"
-            ReferencedContainer = "container:Sovchi.xcodeproj">
+            BuildableName = "YorYor.app"
+            BlueprintName = "YorYor"
+            ReferencedContainer = "container:YorYor.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -90,9 +90,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "Sovchi.app"
-            BlueprintName = "Sovchi"
-            ReferencedContainer = "container:Sovchi.xcodeproj">
+            BuildableName = "YorYor.app"
+            BlueprintName = "YorYor"
+            ReferencedContainer = "container:YorYor.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
