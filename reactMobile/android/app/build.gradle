@@ -96,16 +96,17 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
         versionName "1.0.0"
+        missingDimensionStrategy 'store', 'play'
     }
     signingConfigs {
-        release { // <-- Add this line
-            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) { // <-- Add this line
                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
                 storePassword MYAPP_UPLOAD_STORE_PASSWORD
                 keyAlias MYAPP_UPLOAD_KEY_ALIAS
                 keyPassword MYAPP_UPLOAD_KEY_PASSWORD
             }
-        } // <-- Add this line
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -131,9 +132,7 @@ android {
     flavorDimensions "default"  // <-- Add this line
     productFlavors {
         production {}
-        staging {
-            // We can have build-specific configurations here. Like using applicationIdSuffix to create different package name (ex. ".staging")
-        }
+        staging {}
         development {}
     }
 }
@@ -142,7 +141,7 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
     implementation project(':react-native-config') // <- Add this line
-    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    implementation('com.google.firebase:firebase-analytics:17.3.0') // <- Add this line
     implementation("com.facebook.react:hermes-engine:+") // <- Add this line
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
