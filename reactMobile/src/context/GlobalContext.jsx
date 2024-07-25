@@ -49,7 +49,7 @@ export default function GlobalProvider({ children }) {
     }
 
     useEffect(() => {
-        const ws = new WebSocket(`ws://192.168.1.7:8000/ws/main/profile-status/?token=${token}`)
+        const ws = new WebSocket(`ws://127.0.0.1:8000/ws/main/profile-status/?token=${token}`)
 
         ws.onopen = () => {}
 
