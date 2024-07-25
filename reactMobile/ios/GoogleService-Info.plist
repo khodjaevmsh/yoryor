@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyCFmIoKnxDB4RBbNaS2d174F-ni5_UKVmk</string>
+	<string>AIzaSyDD8S7eBLLkAca5YBWA6n6vj56KcW4P5x4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>956891943414</string>
+	<string>366080468163</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.sovchi</string>
+	<string>com.yoryor</string>
 	<key>PROJECT_ID</key>
-	<string>sovchi-3896f</string>
+	<string>yor-yor-23e39</string>
 	<key>STORAGE_BUCKET</key>
-	<string>sovchi-3896f.appspot.com</string>
+	<string>yor-yor-23e39.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:956891943414:ios:f4b18dee4d8b8be70777d7</string>
+	<string>1:366080468163:ios:4f7ad4f2bb2c7baecbee76</string>
 </dict>
 </plist>

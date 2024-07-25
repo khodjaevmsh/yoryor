@@ -7,15 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* SovchiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* SovchiTests.m */; };
+		00E356F31AD99517003FC87E /* YorYorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* YorYorTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		38366D052C525CFD00063DD7 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38366D042C525CFD00063DD7 /* StoreKit.framework */; };
-		385B5DF82C469C00003E443A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 385B5DF72C469C00003E443A /* GoogleService-Info.plist */; };
+		38D5B8A92C5277E900555034 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38D5B8A82C5277E900555034 /* GoogleService-Info.plist */; };
+		56FE232B06B77794C45BC806 /* Pods_YorYor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2D831C83EB9CD5EBC7EC864 /* Pods_YorYor.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		9F9BD214405889A46B8E3739 /* Pods_Sovchi_SovchiTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D1D965D8B5BF506FECBE26 /* Pods_Sovchi_SovchiTests.framework */; };
-		AE954F09E99B1E82EF075743 /* Pods_Sovchi.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09C6A9B80EF8B2B2211EF125 /* Pods_Sovchi.framework */; };
+		F46481B671CD83FBD68DBD58 /* Pods_YorYor_YorYorTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD3D6F42BF3A275E6A0ED742 /* Pods_YorYor_YorYorTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,34 +24,34 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = Sovchi;
+			remoteInfo = YorYor;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* SovchiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SovchiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* YorYorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YorYorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* SovchiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SovchiTests.m; sourceTree = "<group>"; };
-		09C6A9B80EF8B2B2211EF125 /* Pods_Sovchi.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sovchi.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07F961A680F5B00A75B9A /* Sovchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sovchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Sovchi/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Sovchi/AppDelegate.mm; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Sovchi/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Sovchi/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Sovchi/main.m; sourceTree = "<group>"; };
-		18A131A4750B920EAA2F8AD0 /* Pods-Sovchi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sovchi.debug.xcconfig"; path = "Target Support Files/Pods-Sovchi/Pods-Sovchi.debug.xcconfig"; sourceTree = "<group>"; };
-		313BAE5F9B42C388002644B7 /* Pods-Sovchi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sovchi.release.xcconfig"; path = "Target Support Files/Pods-Sovchi/Pods-Sovchi.release.xcconfig"; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* YorYorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YorYorTests.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* YorYor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YorYor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = YorYor/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = YorYor/AppDelegate.mm; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = YorYor/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = YorYor/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = YorYor/main.m; sourceTree = "<group>"; };
+		18A131A4750B920EAA2F8AD0 /* Pods-YorYor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YorYor.debug.xcconfig"; path = "Target Support Files/Pods-YorYor/Pods-YorYor.debug.xcconfig"; sourceTree = "<group>"; };
+		313BAE5F9B42C388002644B7 /* Pods-YorYor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YorYor.release.xcconfig"; path = "Target Support Files/Pods-YorYor/Pods-YorYor.release.xcconfig"; sourceTree = "<group>"; };
 		3658DC11A9FD4E21885D767F /* Gilroy-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Bold.ttf"; path = "../src/assets/fonts/Gilroy-Bold.ttf"; sourceTree = "<group>"; };
 		38366D042C525CFD00063DD7 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		385B5DF72C469C00003E443A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		3867BD602C2732A400CD3E05 /* Sovchi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Sovchi.entitlements; path = Sovchi/Sovchi.entitlements; sourceTree = "<group>"; };
-		3AEA26240162E7BD81BD17A2 /* Pods-Sovchi-SovchiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sovchi-SovchiTests.release.xcconfig"; path = "Target Support Files/Pods-Sovchi-SovchiTests/Pods-Sovchi-SovchiTests.release.xcconfig"; sourceTree = "<group>"; };
-		4C531643C65F9EC80F2EF119 /* Pods-Sovchi-SovchiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sovchi-SovchiTests.debug.xcconfig"; path = "Target Support Files/Pods-Sovchi-SovchiTests/Pods-Sovchi-SovchiTests.debug.xcconfig"; sourceTree = "<group>"; };
-		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Sovchi/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3867BD602C2732A400CD3E05 /* YorYor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = YorYor.entitlements; path = YorYor/YorYor.entitlements; sourceTree = "<group>"; };
+		38D5B8A82C5277E900555034 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3AEA26240162E7BD81BD17A2 /* Pods-YorYor-YorYorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YorYor-YorYorTests.release.xcconfig"; path = "Target Support Files/Pods-YorYor-YorYorTests/Pods-YorYor-YorYorTests.release.xcconfig"; sourceTree = "<group>"; };
+		4C531643C65F9EC80F2EF119 /* Pods-YorYor-YorYorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YorYor-YorYorTests.debug.xcconfig"; path = "Target Support Files/Pods-YorYor-YorYorTests/Pods-YorYor-YorYorTests.debug.xcconfig"; sourceTree = "<group>"; };
+		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = YorYor/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97FDAF00B1104BA6BDE522A2 /* Gilroy-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Regular.ttf"; path = "../src/assets/fonts/Gilroy-Regular.ttf"; sourceTree = "<group>"; };
+		A2D831C83EB9CD5EBC7EC864 /* Pods_YorYor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YorYor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD3D6F42BF3A275E6A0ED742 /* Pods_YorYor_YorYorTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YorYor_YorYorTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9562C55114B4AFF84C2A71F /* Gilroy-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Light.ttf"; path = "../src/assets/fonts/Gilroy-Light.ttf"; sourceTree = "<group>"; };
 		C573843C1BAB488099D2C77D /* Gilroy-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gilroy-Medium.ttf"; path = "../src/assets/fonts/Gilroy-Medium.ttf"; sourceTree = "<group>"; };
-		D3D1D965D8B5BF506FECBE26 /* Pods_Sovchi_SovchiTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Sovchi_SovchiTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -60,7 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9F9BD214405889A46B8E3739 /* Pods_Sovchi_SovchiTests.framework in Frameworks */,
+				F46481B671CD83FBD68DBD58 /* Pods_YorYor_YorYorTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,21 +68,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE954F09E99B1E82EF075743 /* Pods_Sovchi.framework in Frameworks */,
 				38366D052C525CFD00063DD7 /* StoreKit.framework in Frameworks */,
+				56FE232B06B77794C45BC806 /* Pods_YorYor.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* SovchiTests */ = {
+		00E356EF1AD99517003FC87E /* YorYorTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* SovchiTests.m */,
+				00E356F21AD99517003FC87E /* YorYorTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = SovchiTests;
+			path = YorYorTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -93,10 +93,10 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* Sovchi */ = {
+		13B07FAE1A68108700A75B9A /* YorYor */ = {
 			isa = PBXGroup;
 			children = (
-				3867BD602C2732A400CD3E05 /* Sovchi.entitlements */,
+				3867BD602C2732A400CD3E05 /* YorYor.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -104,7 +104,7 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = Sovchi;
+			name = YorYor;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -112,8 +112,8 @@
 			children = (
 				38366D042C525CFD00063DD7 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				09C6A9B80EF8B2B2211EF125 /* Pods_Sovchi.framework */,
-				D3D1D965D8B5BF506FECBE26 /* Pods_Sovchi_SovchiTests.framework */,
+				A2D831C83EB9CD5EBC7EC864 /* Pods_YorYor.framework */,
+				AD3D6F42BF3A275E6A0ED742 /* Pods_YorYor_YorYorTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -128,10 +128,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				385B5DF72C469C00003E443A /* GoogleService-Info.plist */,
-				13B07FAE1A68108700A75B9A /* Sovchi */,
+				38D5B8A82C5277E900555034 /* GoogleService-Info.plist */,
+				13B07FAE1A68108700A75B9A /* YorYor */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* SovchiTests */,
+				00E356EF1AD99517003FC87E /* YorYorTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
@@ -145,8 +145,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Sovchi.app */,
-				00E356EE1AD99517003FC87E /* SovchiTests.xctest */,
+				13B07F961A680F5B00A75B9A /* YorYor.app */,
+				00E356EE1AD99517003FC87E /* YorYorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -154,10 +154,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				18A131A4750B920EAA2F8AD0 /* Pods-Sovchi.debug.xcconfig */,
-				313BAE5F9B42C388002644B7 /* Pods-Sovchi.release.xcconfig */,
-				4C531643C65F9EC80F2EF119 /* Pods-Sovchi-SovchiTests.debug.xcconfig */,
-				3AEA26240162E7BD81BD17A2 /* Pods-Sovchi-SovchiTests.release.xcconfig */,
+				18A131A4750B920EAA2F8AD0 /* Pods-YorYor.debug.xcconfig */,
+				313BAE5F9B42C388002644B7 /* Pods-YorYor.release.xcconfig */,
+				4C531643C65F9EC80F2EF119 /* Pods-YorYor-YorYorTests.debug.xcconfig */,
+				3AEA26240162E7BD81BD17A2 /* Pods-YorYor-YorYorTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -176,9 +176,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* SovchiTests */ = {
+		00E356ED1AD99517003FC87E /* YorYorTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SovchiTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "YorYorTests" */;
 			buildPhases = (
 				3F3C7684FD39CD9D8BA9B1F2 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -192,14 +192,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = SovchiTests;
-			productName = SovchiTests;
-			productReference = 00E356EE1AD99517003FC87E /* SovchiTests.xctest */;
+			name = YorYorTests;
+			productName = YorYorTests;
+			productReference = 00E356EE1AD99517003FC87E /* YorYorTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Sovchi */ = {
+		13B07F861A680F5B00A75B9A /* YorYor */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Sovchi" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "YorYor" */;
 			buildPhases = (
 				CCCF8E19E78B3B86821282F8 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -215,9 +215,9 @@
 			);
 			dependencies = (
 			);
-			name = Sovchi;
-			productName = Sovchi;
-			productReference = 13B07F961A680F5B00A75B9A /* Sovchi.app */;
+			name = YorYor;
+			productName = YorYor;
+			productReference = 13B07F961A680F5B00A75B9A /* YorYor.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -237,7 +237,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Sovchi" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "YorYor" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -250,8 +250,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Sovchi */,
-				00E356ED1AD99517003FC87E /* SovchiTests */,
+				13B07F861A680F5B00A75B9A /* YorYor */,
+				00E356ED1AD99517003FC87E /* YorYorTests */,
 			);
 		};
 /* End PBXProject section */
@@ -270,7 +270,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				385B5DF82C469C00003E443A /* GoogleService-Info.plist in Resources */,
+				38D5B8A92C5277E900555034 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,15 +299,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sovchi/Pods-Sovchi-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-YorYor/Pods-YorYor-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sovchi/Pods-Sovchi-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-YorYor/Pods-YorYor-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sovchi/Pods-Sovchi-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YorYor/Pods-YorYor-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		3F3C7684FD39CD9D8BA9B1F2 /* [CP] Check Pods Manifest.lock */ = {
@@ -325,7 +325,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Sovchi-SovchiTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-YorYor-YorYorTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -338,15 +338,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sovchi/Pods-Sovchi-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-YorYor/Pods-YorYor-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sovchi/Pods-Sovchi-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-YorYor/Pods-YorYor-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sovchi/Pods-Sovchi-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YorYor/Pods-YorYor-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		7C36471107F681DE436D414F /* [CP-User] [RNFB] Core Configuration */ = {
@@ -368,15 +368,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sovchi-SovchiTests/Pods-Sovchi-SovchiTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-YorYor-YorYorTests/Pods-YorYor-YorYorTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sovchi-SovchiTests/Pods-Sovchi-SovchiTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-YorYor-YorYorTests/Pods-YorYor-YorYorTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sovchi-SovchiTests/Pods-Sovchi-SovchiTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YorYor-YorYorTests/Pods-YorYor-YorYorTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CCCF8E19E78B3B86821282F8 /* [CP] Check Pods Manifest.lock */ = {
@@ -394,7 +394,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Sovchi-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-YorYor-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -407,15 +407,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sovchi-SovchiTests/Pods-Sovchi-SovchiTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-YorYor-YorYorTests/Pods-YorYor-YorYorTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Sovchi-SovchiTests/Pods-Sovchi-SovchiTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-YorYor-YorYorTests/Pods-YorYor-YorYorTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Sovchi-SovchiTests/Pods-Sovchi-SovchiTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YorYor-YorYorTests/Pods-YorYor-YorYorTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -444,7 +444,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* SovchiTests.m in Sources */,
+				00E356F31AD99517003FC87E /* YorYorTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,7 +462,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Sovchi */;
+			target = 13B07F861A680F5B00A75B9A /* YorYor */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -470,7 +470,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C531643C65F9EC80F2EF119 /* Pods-Sovchi-SovchiTests.debug.xcconfig */;
+			baseConfigurationReference = 4C531643C65F9EC80F2EF119 /* Pods-YorYor-YorYorTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = KBMUQ39LRM;
@@ -478,7 +478,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = SovchiTests/Info.plist;
+				INFOPLIST_FILE = YorYorTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -490,20 +490,20 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sovchi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoryor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sovchi.app/Sovchi";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YorYor.app/YorYor";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3AEA26240162E7BD81BD17A2 /* Pods-Sovchi-SovchiTests.release.xcconfig */;
+			baseConfigurationReference = 3AEA26240162E7BD81BD17A2 /* Pods-YorYor-YorYorTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = KBMUQ39LRM;
-				INFOPLIST_FILE = SovchiTests/Info.plist;
+				INFOPLIST_FILE = YorYorTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -515,26 +515,26 @@
 					"-lc++",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sovchi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoryor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sovchi.app/Sovchi";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YorYor.app/YorYor";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 18A131A4750B920EAA2F8AD0 /* Pods-Sovchi.debug.xcconfig */;
+			baseConfigurationReference = 18A131A4750B920EAA2F8AD0 /* Pods-YorYor.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Sovchi/Sovchi.entitlements;
+				CODE_SIGN_ENTITLEMENTS = YorYor/YorYor.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KBMUQ39LRM;
 				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = Sovchi/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Sovchi;
+				INFOPLIST_FILE = YorYor/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = YorYor;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -546,8 +546,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sovchi;
-				PRODUCT_NAME = Sovchi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoryor;
+				PRODUCT_NAME = YorYor;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -557,17 +557,17 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 313BAE5F9B42C388002644B7 /* Pods-Sovchi.release.xcconfig */;
+			baseConfigurationReference = 313BAE5F9B42C388002644B7 /* Pods-YorYor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Sovchi/Sovchi.entitlements;
+				CODE_SIGN_ENTITLEMENTS = YorYor/YorYor.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = KBMUQ39LRM;
-				INFOPLIST_FILE = Sovchi/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Sovchi;
+				INFOPLIST_FILE = YorYor/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = YorYor;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -579,8 +579,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sovchi;
-				PRODUCT_NAME = Sovchi;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yoryor;
+				PRODUCT_NAME = YorYor;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -745,7 +745,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "SovchiTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "YorYorTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -754,7 +754,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Sovchi" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "YorYor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -763,7 +763,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Sovchi" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "YorYor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

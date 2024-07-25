@@ -89,9 +89,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.sovchi"
+    namespace "com.yoryor"
     defaultConfig {
-        applicationId "com.sovchi"
+        applicationId "com.yoryor"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
