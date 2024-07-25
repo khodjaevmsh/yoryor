@@ -7045,6 +7045,11 @@ react-native-gifted-chat@^2.4.0:
     use-memo-one "1.1.3"
     uuid "3.4.0"
 
+react-native-iap@^12.15.1:
+  version "12.15.1"
+  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-12.15.1.tgz#0eae574e950be3b5c2d5be1cde1712ccd5f86b53"
+  integrity sha512-NhGqXJb76BnDbbtXIsnRcal/4IWcfXn7sNjoqXoDXfZQkLHPw0WYG1E4S8U0kIV3khw0MZcUcNQbH0UzPVjokQ==
+
 react-native-image-picker@^7.1.0:
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-7.1.2.tgz#383849d1953caf4578874a1f5e5dd11c737bd5cd"

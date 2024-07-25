@@ -535,6 +535,8 @@ PODS:
   - RNGestureHandler (2.17.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
+  - RNIap (12.15.1):
+    - React-Core
   - RNScreens (3.32.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -604,6 +606,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNIap (from `../node_modules/react-native-iap`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -731,6 +734,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/messaging"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNIap:
+    :path: "../node_modules/react-native-iap"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
@@ -768,7 +773,7 @@ SPEC CHECKSUMS:
   React-Core: 34da8c952844e21f5a69bf46438fb6bf063900d0
   React-CoreModules: 621243df8863055ff30f3bb2ff71573ffa7b16c8
   React-cxxreact: 4ad1cc861e32fb533dad6ff7a4ea25680fa1c994
-  React-debug: 81c06be8eca27edd71495d023dd460a6b6277c5c
+  React-debug: feff8489c301ac87211b8f1db48371e4ad4e3cf5
   React-hermes: 37377d0a56aa0cf55c65248271866ce3268cde3f
   React-jsi: 6de8b0ccc6b765b58e4eee9ee38049dbeaf5c221
   React-jsiexecutor: c7f826e40fa9cab5d37cab6130b1af237332b594
@@ -777,7 +782,7 @@ SPEC CHECKSUMS:
   react-native-config: d7d8a0c65f7fa523197879f6b777997abbfc987e
   react-native-image-picker: eac5eafa73e1f314c2f4288ae573ee4fc57cad10
   react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
-  React-NativeModulesApple: 02d7d67befda7bc29672f5651e3fc603321e77ec
+  React-NativeModulesApple: dd4d2abd0a49aaaf7ee988438fe4d53e402be9e0
   React-perflogger: 496a1a3dc6737f964107cb3ddae7f9e265ddda58
   React-RCTActionSheet: 02904b932b50e680f4e26e7a686b33ebf7ef3c00
   React-RCTAnimation: e44fe5053708c5be762943087c78dc5a6a3c645c
@@ -791,9 +796,9 @@ SPEC CHECKSUMS:
   React-RCTVibration: 35eec7201c8ffdaccdd908a5ec874b7055f975f3
   React-rncore: 46133d523155fc84572338bd6a7c461c1d873efc
   React-runtimeexecutor: d465ba0c47ef3ed8281143f59605cacc2244d5c7
-  React-runtimescheduler: b8b56f9574dfdfee4c25b7fae239a85534e4885b
-  React-utils: 56240746e2dca064849f8d0eb164bb921f29e043
-  ReactCommon: 911fc67808f579f9998c709f391337dcd1fda940
+  React-runtimescheduler: fd5fb7755183ca51e8bbeda1ad79719bb3202d3d
+  React-utils: 0466ea35f50297bb49cca34e8865be78f7b0d4e9
+  ReactCommon: 6fc7d4f66f9bfd09b7874bc3c5f5c244f0992a70
   RNCAsyncStorage: ec53e44dc3e75b44aa2a9f37618a49c3bc080a7a
   RNCMaskedView: 090213d32d8b3bb83a4dcb7d12c18f0152591906
   RNCPicker: b7873ba797dc586bfaf3307d737cbdc620a9ff3e
@@ -803,6 +808,7 @@ SPEC CHECKSUMS:
   RNFBApp: 1ae7462cddf74a49df206d3418bc0170f8fa53e5
   RNFBMessaging: 85f661b9f16e2b081e6809ef63d3daa4458b9042
   RNGestureHandler: 972ca9d35b54c108637dd07055f718446b9276d4
+  RNIap: 17583f958d35788a87948e94072ff6edd3580497
   RNScreens: 835807a1f3c74c8ea0d0b9e089bf14333141f17f
   RNSVG: 963a95f1f5d512a13d11ffd50d351c87fb5c6890
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
