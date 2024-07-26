@@ -3,7 +3,7 @@
 *.pyc
 /static
 media
-config/settings_dev.py
+config/settings_dev-archive.py
 config/settings_prod.py
 .DS_Store
 .vscode/settings.json
@@ -13,6 +13,9 @@ pytest.ini
 data
 uploads
 .env
+.env.development
+.env.staging
+.env.production
 vandelay-py.js
 .envrc
 files
