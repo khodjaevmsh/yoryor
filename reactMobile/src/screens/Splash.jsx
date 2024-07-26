@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, StyleSheet, View } from 'react-native'
+import { Text, StyleSheet, View, Linking, TouchableOpacity } from 'react-native'
 import normalize from 'react-native-normalize'
 import { useNavigation } from '@react-navigation/native'
 import Container from '../components/common/Container'
@@ -8,17 +8,29 @@ import ButtonOutline from '../components/common/ButtonOutline'
 
 export default function Splash() {
     const navigation = useNavigation()
+
+    async function openURL() {
+        const url = 'https://www.privacypolicies.com/live/d9ca7230-885b-40c7-a5e2-0465c1a06990'
+        try {
+            await Linking.openURL(url)
+        } catch (error) {
+            console.error('An error occurred', error)
+        }
+    }
+
     return (
         <Container containerStyle={styles.containerStyle}>
             <View style={styles.logoWrapper}>
-                <Text style={{ fontSize: 82, color: COLOR.white, fontWeight: '400' }}>sovcHi</Text>
+                <Text style={{ fontSize: 82, color: COLOR.white, fontWeight: '400' }}>YOR YOR</Text>
             </View>
             <View style={styles.policyAndTermsWrapper}>
-                <Text style={styles.policyAndTerms}>
-                    “Ro‘yxatdan o‘tish” tugmasini bosish orqali siz Shartlarimizga rozilik bildirasiz.
-                    Maʼlumotlaringizni qanday qayta ishlatishimizni Maxfiylik va Cookie siyosatlarimizdan
-                    bilib oling.
-                </Text>
+                <TouchableOpacity activeOpacity={1} onPress={openURL}>
+                    <Text style={styles.policyAndTerms}>
+                        “Ro‘yxatdan o‘tish” tugmasini bosish orqali siz Shartlarimizga rozilik bildirasiz.
+                        Maʼlumotlaringizni qanday qayta ishlatishimizni Maxfiylik va Cookie siyosatlarimizdan
+                        bilib oling.
+                    </Text>
+                </TouchableOpacity>
 
                 <ButtonOutline
                     title="Ro'yxatdan o'tish"
