@@ -19,3 +19,9 @@ uploads
 vandelay-py.js
 .envrc
 files
+nginx
+logfile
+certbot
+certificates
+www
+certs
