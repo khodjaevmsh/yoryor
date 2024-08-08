@@ -93,7 +93,7 @@ TEMPLATES = [
 ]
 
 ASGI_APPLICATION = 'config.asgi.application'
-WSGI_APPLICATION = 'config.wsgi.application'
+# WSGI_APPLICATION = 'config.wsgi.application'
 
 CHANNEL_LAYERS = {
     "default": {
