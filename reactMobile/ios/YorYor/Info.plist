@@ -35,14 +35,11 @@
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
 				<true/>
 			</dict>
-			<key>gapgap.uz</key>
+			<key>yoryor.app</key>
             <dict>
                 <key>NSIncludesSubdomains</key>
                 <true/>
-                <key>NSExceptionAllowsInsecureHTTPLoads</key>
-                <true/>
             </dict>
-
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>

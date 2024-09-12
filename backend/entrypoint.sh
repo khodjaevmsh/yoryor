@@ -16,5 +16,10 @@ echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
 # Start Gunicorn
-echo "Starting Gunicorn..."
-exec gunicorn --config gunicorn_config.py config.wsgi:application
+# echo "Starting Gunicorn..."
+# exec gunicorn --config gunicorn_config.py config.wsgi:application
+
+
+# Start Daphne for WebSocket and HTTP handling
+echo "Starting Daphne (ASGI server)..."
+exec daphne -b 0.0.0.0 -p 8000 config.asgi:application
