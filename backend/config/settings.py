@@ -67,6 +67,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://*.yoryor.app']
+
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1',
     'http://localhost:3000',
