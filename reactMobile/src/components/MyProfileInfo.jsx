@@ -14,7 +14,6 @@ import { AcademicCap,
 import { genders, goals, incomeLevels, maritalStatus as familyStatus, zodiacs } from '../utils/choices'
 
 const MyProfileInfo = (myProfile) => {
-    console.log(myProfile)
     const {
         birthdate,
         gender,

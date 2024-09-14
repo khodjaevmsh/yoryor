@@ -11,6 +11,7 @@ export const SIGN_OUT = '/users/sign-out'
 export const FORGOT_PASSWORD = '/users/forgot-password'
 export const CHANGE_PASSWORD = '/users/change-password'
 export const DEVICE_TOKEN = '/users/device-token'
+export const USER = '/users/user/{id}'
 // USER
 
 // MAIN

@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'users',
     'main',
     'chat',
-    'payment'
+    'payment',
+    'web'
 ]
 
 MIDDLEWARE = [
@@ -67,7 +68,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://*.yoryor.app']
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
 
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1',

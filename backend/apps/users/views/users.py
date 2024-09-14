@@ -10,3 +10,10 @@ class UserAllListView(APIView):
         queryset = User.objects.all()
         serializer = UserSerializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class UserDetailView(APIView):
+    def delete(self, request, pk):
+        user = User.objects.get(pk=pk)
+        user.delete()
+        return Response({}, status=204)

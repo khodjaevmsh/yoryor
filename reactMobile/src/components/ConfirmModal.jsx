@@ -6,7 +6,16 @@ import RNModal from 'react-native-modal'
 import { fontSize } from '../utils/fontSizes'
 import { COLOR } from '../utils/colors'
 
-export default function ConfirmModal({ title, subTitle, icon, isModalConfirm, setModalConfirm, cancel, cancelTitle }) {
+export default function ConfirmModal({
+    title,
+    subTitle,
+    icon,
+    isModalConfirm,
+    setModalConfirm,
+    cancel,
+    cancelTitle,
+    modalStyle,
+}) {
     return (
         <RNModal
             isVisible={isModalConfirm}
@@ -18,7 +27,7 @@ export default function ConfirmModal({ title, subTitle, icon, isModalConfirm, se
             hasBackdrop
             backdropOpacity={0.3}
             style={styles.modal}>
-            <View style={styles.modalChildren}>
+            <View style={[styles.modalChildren, { ...modalStyle }]}>
                 <View style={styles.content}>
                     <AlertCircle width={34} height={34} color={COLOR.primary} />
                     <Text style={styles.title}>{title}</Text>
@@ -33,7 +42,9 @@ export default function ConfirmModal({ title, subTitle, icon, isModalConfirm, se
                         <Text style={styles.buttonTitle}>{cancelTitle || 'Bekor qilish'}</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => setModalConfirm(false)} style={[styles.button, { backgroundColor: COLOR.white, borderWidth: 2, borderColor: COLOR.lightGrey }]}>
+                    <TouchableOpacity
+                        onPress={() => setModalConfirm(false)}
+                        style={[styles.button, { backgroundColor: COLOR.white, borderWidth: 2, borderColor: COLOR.lightGrey }]}>
                         <Text style={[styles.buttonTitle, { color: COLOR.black }]}>Ortga</Text>
                     </TouchableOpacity>
                 </View>
@@ -67,6 +78,7 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         marginTop: 10,
         marginBottom: 5,
+        textAlign: 'center',
     },
     subTitle: {
         fontSize: fontSize.small,

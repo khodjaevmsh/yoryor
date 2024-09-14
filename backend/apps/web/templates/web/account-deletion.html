@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovchi - Tanishuvlar ilovasi</title>
+    <link rel="stylesheet" href="{% static 'web/css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/styles.css' %}">
+</head>
+<body>
+<section class="hero is-fullheight is-fullwidth">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-4">
+                    <p class="title is-3 is-danger">Yor Yor</p>
+                    <p class="subtitle is-6">Akkauntingizni butunlay o'chirish!</p>
+                    <div>
+                        <form action="">
+                            <label class="label">Telefon raqamingiz</label>
+                            <input
+                                    class="input is-normal mb-4"
+                                    type="text"
+                                    placeholder="+998 90 635-10-01"
+                            />
+
+                            <label class="label">Nima uchun o'chirmoqchisiz?</label>
+                            <div class="field">
+                                <div class="control">
+                                    <textarea
+                                            class="textarea"
+                                            placeholder="Men o'z baxtimni topdim, shu sababadan ilovani tark etmoqchiman"></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="button is-fullwidth is-danger mt-3">Yuborish</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
