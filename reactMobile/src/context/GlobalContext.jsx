@@ -12,7 +12,6 @@ export default function GlobalProvider({ children }) {
     const [profile, setProfile] = useState(null)
     const [language, setLanguage] = usePersistState('language', 'uz')
     const [isLoaded, setIsLoaded] = useState(false)
-    const [render, setRender] = useState(false)
     const swiperRef = useRef(null)
 
     useEffect(() => {

@@ -7,10 +7,11 @@ from users.views.forgot_password import ForgotPasswordView
 from users.views.sign_in import SignInView
 from users.views.sign_out import SignOutView
 from users.views.sign_up import SignUpView
-from users.views.users import UserAllListView
+from users.views.users import UserAllListView, UserDetailView
 
 urlpatterns = [
     path('users', UserAllListView.as_view(), name='users'),
+    path('user/<int:pk>', UserDetailView.as_view(), name='user'),
     path('send-confirmation-code', SendConfirmationCodeView.as_view(), name='send-confirmation-code'),
     path('check-confirmation-code', CheckConfirmationCodeView.as_view(), name='check-confirmation-code'),
     path('sign-up', SignUpView.as_view(), name='sign-up'),

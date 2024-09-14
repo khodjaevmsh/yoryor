@@ -5,12 +5,13 @@ import { ChevronRight, Mail, Lock, Globe, AlertCircle, HelpCircle } from 'react-
 import normalize from 'react-native-normalize'
 import Container from '../../components/common/Container'
 import { baseAxios } from '../../hooks/requests'
-import { SIGN_OUT } from '../../urls'
+import { SIGN_OUT, USER } from '../../urls'
 import { GlobalContext } from '../../context/GlobalContext'
 import Button from '../../components/common/Button'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
 import ConfirmModal from '../../components/ConfirmModal'
+import ButtonOutline from '../../components/common/ButtonOutline'
 
 const cardData = [
     { title: 'Email', maxLength: 10, screen: 'ConfirmEmail', icon: <Mail color={COLOR.black} /> },
@@ -22,9 +23,11 @@ const cardData = [
 
 export default function Settings() {
     const [loading, setLoading] = useState(false)
+    const [deletionLoading, setDeletionLoading] = useState(false)
     const [, setServerError] = useState(false)
+    const [isDeletionModal, setDeletionModal] = useState(false)
     const [isModalConfirm, setModalConfirm] = useState(false)
-    const { signOut } = useContext(GlobalContext)
+    const { signOut, user } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSignOut() {
@@ -38,6 +41,20 @@ export default function Settings() {
             setServerError(error.response)
         } finally {
             setLoading(false)
+        }
+    }
+
+    async function onDeleteProfile() {
+        try {
+            setDeletionLoading(true)
+            await baseAxios.delete(USER.replace('{id}', user.id))
+            await signOut()
+            setDeletionModal(false)
+            navigation.navigate('Splash')
+        } catch (error) {
+            setServerError(error.response)
+        } finally {
+            setDeletionLoading(false)
         }
     }
 
@@ -63,8 +80,27 @@ export default function Settings() {
             </View>
 
             <View>
-                <Button title="Chiqish" onPress={() => setModalConfirm(true)} loading={loading} />
+                <ButtonOutline
+                    title="Akkauntni o'chirish"
+                    onPress={() => setDeletionModal(true)}
+                    loading={deletionLoading}
+                    buttonStyle={{ marginBottom: 12 }} />
+
+                <Button
+                    title="Chiqish"
+                    onPress={() => setModalConfirm(true)}
+                    loading={loading} />
             </View>
+
+            <ConfirmModal
+                title="Akkauntingizni butunlay o'chirmoqchimisiz?"
+                subTitle="Barcha ma'lumotlaringiz hamda yozishmalaringiz butunlay o'chib ketadi!"
+                cancelTitle="O'chirish"
+                icon={null}
+                isModalConfirm={isDeletionModal}
+                setModalConfirm={setDeletionModal}
+                modalStyle={{ height: 250 }}
+                cancel={() => onDeleteProfile()} />
 
             <ConfirmModal
                 title="Akkauntdan chiqmoqchimisiz?"
