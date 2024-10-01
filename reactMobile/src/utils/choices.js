@@ -61,3 +61,31 @@ export const zodiacs = {
     aquarius: "Qovg'a",
     pisces: 'Baliqlar',
 }
+
+export const subscriptionFields = {
+    gold: {
+        id: 1,
+        background: ['#ffe38e', '#ffdf8e', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'],
+        border: '#DAA520',
+        description: [
+            { label: 'Gold ikonkasini ozingizga biriktiring' },
+            { label: 'Kim sizga like qoyganini biling' },
+            { label: 'Cheksiz like qoyish imkoniyati' },
+            { label: 'Reklamasiz ilova' },
+            { label: "Qo'shimcha imkoniyatlar" },
+        ],
+    },
+    platinum: {
+        id: 2,
+        background: ['#a4a49e', '#e9e8e8', '#FFFFFF', '#FFFFFF', '#FFFFFF'],
+        border: '#000000',
+        description: [
+            { label: 'Platinum ikonkasini ozingizga biriktiring' },
+            { label: 'Kim sizga like qoyganini biling' },
+            { label: 'Cheksiz like qoyish imkoniyati' },
+            { label: 'Reklamasiz ilova' },
+            { label: "To'g'ridan to'g'ri xabar yozish" },
+            { label: "Qo'shimcha imkoniyatlar" },
+        ],
+    },
+}

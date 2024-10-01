@@ -10,6 +10,8 @@ const wsUrl = Config.WEBSOCKET_URL
 export const domain = backendUrl.endsWith('/') ? backendUrl.substr(0, backendUrl.length - 1) : backendUrl
 export const wsDomain = wsUrl.endsWith('/') ? wsUrl.substr(0, wsUrl.length - 1) : wsUrl
 
+console.log(wsDomain)
+
 export const baseAxios = axios.create({
     baseURL: `${domain}/api/v1/`, // Базовый URL для всех запросов
     transformRequest: [humps.decamelizeKeys, ...axios.defaults.transformRequest], // Конвертируем camelCase в snake_case

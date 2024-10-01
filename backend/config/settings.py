@@ -190,8 +190,10 @@ REST_FRAMEWORK = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ESKIZ_EMAIL = 'khodjaevmsh@gmail.com'
-ESKIZ_PASSWORD = '1aJP1s7Xm2kj4l1LRhP0WqgFGumt7YuO16TMefNE'
+ESKIZ_EMAIL = os.environ.get('ESKIZ_EMAIL')
+ESKIZ_PASSWORD = os.environ.get('ESKIZ_PASSWORD')
+
+APPSTORE_SECRET = os.environ.get('APPSTORE_SECRET')
 
 try:
     from .settings_dev import *

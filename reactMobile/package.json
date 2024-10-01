@@ -16,7 +16,8 @@
     "android:prod-release": "react-native run-android --mode=productionrelease",
     "ios:dev": "react-native run-ios --scheme AppDevelopment",
     "ios:prod": "react-native run-ios --scheme AppProduction",
-    "ios:staging": "react-native run-ios --scheme AppStaging"
+    "ios:staging": "react-native run-ios --scheme AppStaging",
+    "prestart": "rm -f node_modules/react-native-config/ios/ReactNativeConfig/GeneratedDotEnv.m node_modules/react-native-config/android/build/generated/source/buildConfig/debug/com/lugg/RNCConfig/BuildConfig.java node_modules/react-native-config/android/build/generated/source/buildConfig/release/com/lugg/RNCConfig/BuildConfig.java"
   },
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^2.2.2",

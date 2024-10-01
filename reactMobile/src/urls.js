@@ -36,3 +36,7 @@ export const ROOM = '/chat/room/{id}'
 export const MESSAGES = '/chat/messages'
 export const UNSEEN_MESSAGES = '/chat/unseen-messages'
 // CHAT
+
+// PAYMENT
+export const SUBSCRIPTION = '/payment/subscription'
+// PAYMENT

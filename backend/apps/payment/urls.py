@@ -1,7 +1,7 @@
 from django.urls import path
 
-from core.views.configurations import ConfigurationsView
+from payment.views.subscription import SubscriptionListView
 
 urlpatterns = [
-    path('', ConfigurationsView.as_view(), name='configurations'),
+    path('subscription', SubscriptionListView.as_view(), name='subscription_create'),
 ]
