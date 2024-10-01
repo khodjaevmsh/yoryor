@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import LinearGradient from 'react-native-linear-gradient'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import normalize from 'react-native-normalize'
+import { Check } from 'react-native-feather'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
+import { SubscriptionContext } from '../context/SubscriptionContext'
 
-export default function SubscriptionCard({ item }) {
+export default function SubscriptionCard({ item, handlePurchase, buttonLoading }) {
+    const { subscription } = useContext(SubscriptionContext)
+
     return (
         <TouchableOpacity activeOpacity={1}>
             <LinearGradient
@@ -14,18 +18,40 @@ export default function SubscriptionCard({ item }) {
                 colors={item.background}
                 style={[styles.carouselItem, { borderColor: item.border }]}>
                 <View style={styles.subscriptionHeader}>
-                    <Text style={[styles.subscriptionName, { color: item.id === 3 && COLOR.white }]}>
-                        {item.name}
-                    </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        {subscription.isActive && item.productId === subscription.type && (
+                            <View style={{ marginRight: 5 }}>
+                                <Check width={28} height={28} color={COLOR.black} strokeWidth={2.5} />
+                            </View>
+                        )}
+                        <Text style={[styles.subscriptionName, { color: item.id === 3 && COLOR.white }]}>
+                            {item.title}
+                        </Text>
+                    </View>
                     <Text style={[styles.subscriptionPrice, { color: item.id === 3 && COLOR.white }]}>
-                        {item.price}
+                        ${item.price}/oy
                     </Text>
                 </View>
-                <Text style={[styles.subscriptionDescription, { color: item.id === 3 && COLOR.white }]}>
-                    {item.description}
-                </Text>
-                <TouchableOpacity style={styles.activateButton}>
-                    <Text style={styles.activateTitle}>Aktivlashtirish</Text>
+                <View style={styles.descriptionWrapper}>
+                    {item.description.map((desc, index) => (
+                        // eslint-disable-next-line react/no-array-index-key
+                        <View style={styles.subDescWrapper} key={index}>
+                            <Check color={COLOR.primary} width={17} height={17} strokeWidth={3} />
+                            <Text style={[styles.subscriptionDescription, { color: item.id === 3 && COLOR.white }]}>
+                                {desc.label}
+                            </Text>
+                        </View>
+                    ))}
+                </View>
+                <TouchableOpacity
+                    style={[styles.activateButton, { opacity: item.productId === subscription.type ? 0.7 : 1 }]}
+                    onPress={() => handlePurchase(item.productId)}
+                    disabled={item.productId === subscription.type}>
+                    {!buttonLoading ? (
+                        <Text style={styles.activateTitle}>
+                            {item.productId === subscription.type ? 'Xarid qilingan' : 'Aktivlashtirish'}
+                        </Text>
+                    ) : <ActivityIndicator />}
                 </TouchableOpacity>
             </LinearGradient>
         </TouchableOpacity>
@@ -56,9 +82,20 @@ const styles = StyleSheet.create({
         fontSize: fontSize.large,
         fontWeight: '600',
     },
+    descriptionWrapper: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+    },
+    subDescWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
     subscriptionDescription: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         color: COLOR.darkGrey,
+        fontWeight: '500',
+        marginVertical: 7,
+        marginLeft: 5,
     },
     activateButton: {
         width: '100%',

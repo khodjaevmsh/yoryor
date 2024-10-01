@@ -31,7 +31,7 @@ export default function Discover() {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => <HeaderLeft title="Sovchi" titleColor={COLOR.primary} />,
+            headerLeft: () => <HeaderLeft title="YorYor" titleColor={COLOR.primary} />,
             headerRight: () => (
                 <HeaderRight
                     onPress={() => setModalVisible(true)}

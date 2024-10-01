@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
         paddingRight: 16,
     },
     text1: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         fontWeight: '600',
         color: COLOR.white,
     },
     text2: {
-        fontSize: fontSize.medium,
+        fontSize: fontSize.small,
         color: COLOR.white,
         marginTop: 2,
     },
