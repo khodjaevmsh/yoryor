@@ -29,15 +29,19 @@ export default function ForgotYourPassword({ route }) {
             .max(15, 'Telefon raqamingiz formati xato'),
     })
 
-    async function onSubmit() {
+    async function onSubmit(data) {
         try {
             setLoading(true)
             await baseAxios.post(SEND_CODE, {
                 countryCode: callingCode,
-                phoneNumber,
+                phoneNumber: data.phoneNumber,
                 forgotPasswordScreen: true,
             })
-            navigation.navigate('CheckConfirmationCode', { phoneNumber, forgotPasswordScreen: true })
+            navigation.navigate('CheckConfirmationCode', {
+                countryCode: callingCode,
+                phoneNumber: data.phoneNumber,
+                forgotPasswordScreen: true,
+            })
         } catch (error) {
             setServerError(error.response)
         } finally {

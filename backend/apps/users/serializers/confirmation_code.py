@@ -35,7 +35,7 @@ class SendConfirmationCodeSerializer(serializers.ModelSerializer):
         confirmation_code_entry = ConfirmationCode.objects.create(
             country_code=country_code,
             phone_number=phone_number,
-            confirmation_code='00000'  # verification_code variable must be here
+            confirmation_code=str(generated_confirmation_code)  # verification_code variable must be here
         )
 
         send_verification_code(country_code, phone_number, generated_confirmation_code)

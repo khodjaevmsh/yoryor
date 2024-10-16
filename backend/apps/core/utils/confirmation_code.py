@@ -36,7 +36,7 @@ def send_verification_code(country_code, phone_number, verification_code):
         url = "https://notify.eskiz.uz/api/message/sms/send"
         payload = {
             'mobile_phone': f'{country_code}{phone_number}',
-            'message': 'This is test from Eskiz',  # f'Your verification code is: {verification_code}'
+            'message': f'YORYOR mobil ilovasida ro‘yxatdan o‘tish uchun tasdiqlash kodi: {verification_code}',  # f'Your verification code is: {verification_code}'
             'from': '4546',
         }
         headers = {
