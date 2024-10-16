@@ -52,7 +52,7 @@ export default function AgreementModal({ isModalVisible, setModalVisible, phoneN
                         <X width={34} height={34} color={COLOR.grey} />
                     </TouchableOpacity>
                     <View>
-                        <Text style={styles.welcome}>Welcome to Sovchi</Text>
+                        <Text style={styles.welcome}>Welcome to YORYOR</Text>
                         <Text style={styles.please}>Iltimos ushbu qoidalarga rioya qiling.</Text>
                     </View>
                 </View>

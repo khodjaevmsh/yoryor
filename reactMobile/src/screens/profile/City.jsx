@@ -19,13 +19,14 @@ export default function City({ route }) {
     const [regionData, setRegionData] = useState([])
     const [region, setRegion] = useState(props.region.id.toString())
     const [loading, setLoading] = useState(false)
-    const { profile } = useContext(GlobalContext)
+    const { profile, updateProfileStorage } = useContext(GlobalContext)
     const navigation = useNavigation()
 
     async function onSubmit() {
         try {
             setLoading(true)
-            await baseAxios.put(PROFILE.replace('{id}', profile.id), { region })
+            const response = await baseAxios.put(PROFILE.replace('{id}', profile.id), { region })
+            await updateProfileStorage(response.data)
             navigation.goBack()
             if (props.region.country.toString() !== country || props.region.id.toString() !== region) {
                 showToast('success', 'Woohoo!', 'Yashash joyingiz o\'zgartirildi')

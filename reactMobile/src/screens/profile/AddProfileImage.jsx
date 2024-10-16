@@ -19,7 +19,7 @@ export default function AddProfileImage({ route }) {
     const [images, setImages] = useState(Array(6).fill(null))
     const [imageLoading, setImageLoading] = useState(Array(6).fill(false))
     const [loading, setLoading] = useState(false)
-    const [serverError, setServerError] = useState('')
+    const [, setServerError] = useState('')
     const [validationError, setValidationError] = useState('')
     const { token } = useContext(GlobalContext)
     const [buttonNumbers, setButtonNumbers] = useState([])

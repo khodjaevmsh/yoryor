@@ -2,8 +2,3 @@
   pk: 1
   fields:
     title: "O'zbekiston"
-
-- model: main.Country
-  pk: 2
-  fields:
-    title: 'Tojikiston'

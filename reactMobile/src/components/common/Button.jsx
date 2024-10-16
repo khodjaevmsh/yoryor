@@ -3,9 +3,9 @@ import normalize from 'react-native-normalize'
 import { COLOR } from '../../utils/colors'
 import Loader from './Loader'
 
-export default function Button({ title = 'Enter own title', onPress, buttonStyle, textStyle, loading }) {
+export default function Button({ title = 'Enter own title', onPress, buttonStyle, textStyle, loading, disabled }) {
     return (
-        <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress} disabled={loading}>
+        <TouchableOpacity style={[styles.button, buttonStyle]} onPress={onPress} disabled={loading || disabled}>
             {loading ? <Loader color="white" /> : <Text style={[styles.text, textStyle]}>{title}</Text>}
         </TouchableOpacity>
     )
@@ -14,7 +14,7 @@ export default function Button({ title = 'Enter own title', onPress, buttonStyle
 const styles = StyleSheet.create({
     button: {
         width: '100%',
-        height: normalize(46),
+        height: normalize(50),
         justifyContent: 'center',
         backgroundColor: COLOR.primary,
         padding: 8,

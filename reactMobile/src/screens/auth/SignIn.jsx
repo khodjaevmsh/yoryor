@@ -64,7 +64,7 @@ export default function SignIn() {
             </Text>
 
             <Formik
-                initialValues={{ phoneNumber: '906351001', password: 'helloWorld1001$' }}
+                initialValues={{ phoneNumber: '', password: '' }}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}>
                 {({ handleSubmit, values }) => (

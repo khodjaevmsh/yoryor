@@ -14,7 +14,7 @@ export default function ButtonOutline({ title = 'Text', onPress, buttonStyle, te
 const styles = StyleSheet.create({
     button: {
         width: '100%',
-        height: normalize(46),
+        height: normalize(50),
         justifyContent: 'center',
         backgroundColor: COLOR.white,
         padding: 8,

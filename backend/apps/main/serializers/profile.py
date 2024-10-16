@@ -35,7 +35,9 @@ class SimpleProfileSerializer(serializers.ModelSerializer):
         instance = Profile.objects.prefetch_related(
             Prefetch('profileimage_set', queryset=instance.profileimage_set.order_by('button_number'))
         ).get(pk=instance.pk)
+
         data = super().to_representation(instance)
+
         data['region'] = RegionSerializer(instance.region).data
         data['images'] = ProfileImageSerializer(instance.profileimage_set.all(), many=True).data
         return data

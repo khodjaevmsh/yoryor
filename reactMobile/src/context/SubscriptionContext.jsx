@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
+import { ActivityIndicator } from 'react-native'
 import { baseAxios } from '../hooks/requests'
 import { GlobalContext } from './GlobalContext'
 import { SUBSCRIPTION } from '../urls'
-import ActivityIndicator from '../components/common/ActivityIndicator'
-import SkeletonEncounter from '../components/SkeletonEncounter'
 
 export const SubscriptionContext = createContext()
 

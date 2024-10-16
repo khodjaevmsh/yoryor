@@ -16,6 +16,4 @@ class Command(BaseCommand):
             'profile_image',
             'country',
             'region',
-            'room',
-            'like'
         )

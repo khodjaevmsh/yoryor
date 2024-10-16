@@ -32,7 +32,7 @@ export default function SignUp() {
         try {
             setLoading(true)
             await baseAxios.post(SEND_CODE, { countryCode: callingCode, phoneNumber: data.phoneNumber })
-            navigation.navigate('CheckConfirmationCode', { phoneNumber: data.phoneNumber })
+            navigation.navigate('CheckConfirmationCode', { countryCode: callingCode, phoneNumber: data.phoneNumber })
             setServerError('')
         } catch (error) {
             setServerError(error.response)
@@ -51,7 +51,7 @@ export default function SignUp() {
                 </Text>
 
                 <Formik
-                    initialValues={{ phoneNumber: '906351001' }}
+                    initialValues={{ phoneNumber: '' }}
                     validationSchema={validationSchema}
                     onSubmit={onSubmit}>
                     {({ handleSubmit }) => (

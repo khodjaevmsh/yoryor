@@ -38,6 +38,11 @@ export default function GlobalProvider({ children }) {
         await AsyncStorage.setItem('profile', JSON.stringify(newProfile))
     }
 
+    async function updateProfileStorage(updatedProfile) {
+        setProfile(updatedProfile)
+        await AsyncStorage.setItem('profile', JSON.stringify(updatedProfile))
+    }
+
     async function signOut() {
         setToken(null)
         setUser({})
@@ -66,6 +71,7 @@ export default function GlobalProvider({ children }) {
             user,
             profile,
             auth,
+            updateProfileStorage,
             signOut,
             language,
             setLanguage,

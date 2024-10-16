@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { ScrollView, Text, View, StyleSheet } from 'react-native'
 import normalize from 'react-native-normalize'
 import { useFocusEffect } from '@react-navigation/native'
@@ -12,9 +12,9 @@ import { PROFILE, PROFILE_IMAGES } from '../../urls'
 import MyProfileInfo from '../../components/MyProfileInfo'
 
 export default function MyProfileDetail() {
-    const [, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [myProfile, setMyProfile] = useState()
-    const [myProfileImages, setMyProfileImages] = useState([])
+    const [profileImages, setProfileImages] = useState([])
     const { profile } = useContext(GlobalContext)
     const { info, additionalInfo } = MyProfileInfo(myProfile)
 
@@ -27,7 +27,7 @@ export default function MyProfileDetail() {
                     setMyProfile(profileResponse.data)
 
                     const imagesResponse = await baseAxios.get(PROFILE_IMAGES, { params: { profile: profile.id } })
-                    setMyProfileImages(imagesResponse.data)
+                    setProfileImages(imagesResponse.data)
                 } catch (error) {
                     console.error(error.response)
                 } finally {
@@ -41,7 +41,7 @@ export default function MyProfileDetail() {
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <View style={styles.profileHead}>
-                <ProfileDetailHeader myProfileImages={myProfileImages} />
+                <ProfileDetailHeader profileImages={profileImages} loading={loading} />
             </View>
             <View style={styles.profileDesc}>
                 <ProfileDescription fetchedProfile={myProfile} />

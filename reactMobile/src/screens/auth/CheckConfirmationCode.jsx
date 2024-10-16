@@ -21,7 +21,7 @@ export default function CheckConfirmationCode({ route }) {
     const [serverError, setServerError] = useState('')
     const [loading, setLoading] = useState(false)
     const [showTimer, setShowTimer] = useState(false)
-    const { phoneNumber, forgotPasswordScreen } = route.params || {}
+    const { countryCode, phoneNumber, forgotPasswordScreen } = route.params || {}
     const navigation = useNavigation()
 
     const ref = useBlurOnFulfill({ value, cellCount: 5 })
@@ -32,12 +32,12 @@ export default function CheckConfirmationCode({ route }) {
             setShowTimer(true)
             // setTimer(60)
             await baseAxios.post(SEND_CODE, {
-                countryCode: '998',
+                countryCode: countryCode,
                 phoneNumber,
                 forgotPasswordScreen: true,
             })
         } catch (error) {
-            setServerError(error.response)
+            setServerError(error.response.data)
         }
     }
 
