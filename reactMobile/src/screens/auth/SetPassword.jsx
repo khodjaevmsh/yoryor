@@ -48,7 +48,7 @@ export default function SetPassword({ route }) {
                 </Text>
             </View>
             <Formik
-                initialValues={{ password: 'helloWorld1001$', password2: 'helloWorld1001$' }}
+                initialValues={{ password: '', password2: '' }}
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}>
                 {({ handleSubmit }) => (

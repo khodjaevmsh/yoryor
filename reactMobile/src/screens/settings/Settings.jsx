@@ -10,8 +10,8 @@ import { GlobalContext } from '../../context/GlobalContext'
 import Button from '../../components/common/Button'
 import { fontSize } from '../../utils/fontSizes'
 import { COLOR } from '../../utils/colors'
-import ConfirmModal from '../../components/ConfirmModal'
 import ButtonOutline from '../../components/common/ButtonOutline'
+import CenteredModal from '../../components/CenteredModal'
 
 const cardData = [
     { title: 'Email', maxLength: 10, screen: 'ConfirmEmail', icon: <Mail color={COLOR.black} /> },
@@ -26,7 +26,7 @@ export default function Settings() {
     const [deletionLoading, setDeletionLoading] = useState(false)
     const [, setServerError] = useState(false)
     const [isDeletionModal, setDeletionModal] = useState(false)
-    const [isModalConfirm, setModalConfirm] = useState(false)
+    const [isModalVisible, setModalVisible] = useState(false)
     const { signOut, user } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -35,7 +35,7 @@ export default function Settings() {
             setLoading(true)
             await baseAxios.delete(SIGN_OUT)
             await signOut()
-            setModalConfirm(false)
+            setModalVisible(false)
             navigation.navigate('Splash')
         } catch (error) {
             setServerError(error.response)
@@ -88,28 +88,27 @@ export default function Settings() {
 
                 <Button
                     title="Chiqish"
-                    onPress={() => setModalConfirm(true)}
+                    onPress={() => setModalVisible(true)}
                     loading={loading} />
             </View>
 
-            <ConfirmModal
-                title="Akkauntingizni butunlay o'chirmoqchimisiz?"
-                subTitle="Barcha ma'lumotlaringiz hamda yozishmalaringiz butunlay o'chib ketadi!"
-                cancelTitle="O'chirish"
-                icon={null}
-                isModalConfirm={isDeletionModal}
-                setModalConfirm={setDeletionModal}
-                modalStyle={{ height: 250 }}
-                cancel={() => onDeleteProfile()} />
+            <CenteredModal isModalVisible={isDeletionModal} setModalVisible={setDeletionModal}>
+                <Text style={styles.modalText}>
+                    Akkauntingizni butunlay o'chirmoqchimisiz?
+                </Text>
+                <Text style={styles.modalSubText}>
+                    Barcha ma'lumotlaringiz hamda yozishmalaringiz butunlay o'chib ketadi!
+                </Text>
+                <Button title="Ha, o'chirmoqchi" buttonStyle={styles.modalButtonStyle} onPress={onDeleteProfile} />
+                <ButtonOutline title="Otrga qaytish" buttonStyle={styles.modalButtonStyle} onPress={() => setDeletionModal(false)} />
+            </CenteredModal>
 
-            <ConfirmModal
-                title="Akkauntdan chiqmoqchimisiz?"
-                subTitle="Qaytib keling, Sizni kutamiz!"
-                cancelTitle="Chiqish"
-                icon={null}
-                isModalConfirm={isModalConfirm}
-                setModalConfirm={setModalConfirm}
-                cancel={() => onSignOut()} />
+            <CenteredModal isModalVisible={isModalVisible} setModalVisible={setModalVisible}>
+                <Text style={styles.modalText}>Akkauntdan chiqmoqchimisiz?</Text>
+                <Text style={styles.modalSubText}>Qaytib keling, Sizni kutamiz!</Text>
+                <Button title="Ha, chiqmoqchiman" buttonStyle={styles.modalButtonStyle} onPress={onSignOut} />
+                <ButtonOutline title="Otrga qaytish" buttonStyle={styles.modalButtonStyle} onPress={() => setModalVisible(false)} />
+            </CenteredModal>
         </Container>
     )
 }
@@ -154,5 +153,26 @@ const styles = StyleSheet.create({
         fontSize: fontSize.medium,
         color: COLOR.grey,
         marginRight: 2,
+    },
+
+    modalText: {
+        fontSize: normalize(15),
+        textAlign: 'center',
+        fontWeight: '600',
+        color: COLOR.darkGrey,
+        lineHeight: 22,
+        marginBottom: 10,
+    },
+    modalSubText: {
+        fontSize: normalize(15),
+        textAlign: 'center',
+        fontWeight: '300',
+        color: COLOR.darkGrey,
+        lineHeight: 22,
+        marginBottom: 22,
+    },
+    modalButtonStyle: {
+        height: normalize(44),
+        marginVertical: 8,
     },
 })

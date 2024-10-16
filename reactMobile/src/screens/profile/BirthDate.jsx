@@ -17,7 +17,7 @@ import { showToast } from '../../components/common/Toast'
 
 export default function BirthDate({ route }) {
     const { props } = route.params
-    const { profile } = useContext(GlobalContext)
+    const { profile, updateProfileStorage } = useContext(GlobalContext)
     const [loading, setLoading] = useState(false)
     const [validationError, setValidationError] = useState('')
     const [date, setDate] = useState(new Date(profile.birthdate))
@@ -31,12 +31,13 @@ export default function BirthDate({ route }) {
         if (ageCheck >= 18) {
             try {
                 setLoading(true)
-                await baseAxios.put(PROFILE.replace('{id}', profile.id), {
+                const response = await baseAxios.put(PROFILE.replace('{id}', profile.id), {
                     birthdate: moment(date).format('YYYY-MM-DD'),
                 })
                 if (props.value !== birthdate) {
                     showToast('success', 'Woohoo!', 'Tug\'ilgan yil o\'zgartirildi')
                 }
+                await updateProfileStorage(response.data)
                 navigation.goBack()
             } catch (error) {
                 console.log(error.response)

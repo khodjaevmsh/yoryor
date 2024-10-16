@@ -1,15 +1,14 @@
-import React, { useCallback, useContext, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useContext, useLayoutEffect, useState } from 'react'
 import { StyleSheet, FlatList, View, Text } from 'react-native'
 import normalize from 'react-native-normalize'
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { COLOR } from '../utils/colors'
 import { baseAxios } from '../hooks/requests'
 import { LIKES, COUNT_OF_LIKES } from '../urls'
 import { GlobalContext } from '../context/GlobalContext'
 import LikeItem from '../components/LikeItem'
-import WantMoreLikes from '../components/WantMoreLikes'
+import EmptyLikes from '../components/EmptyLikes'
 import HeaderLeft from '../components/common/HeaderLeft'
-import SkeletonLikes from '../components/SkeletonLikes'
 import ActivityIndicator from '../components/common/ActivityIndicator'
 
 export default function Likes() {
@@ -65,7 +64,6 @@ export default function Likes() {
             <View style={styles.headerWrapper}>
                 <Text style={styles.count}>{count} likes</Text>
             </View>
-
             <FlatList
                 data={likes}
                 renderItem={({ item }) => <LikeItem item={item} />}
@@ -73,10 +71,10 @@ export default function Likes() {
                 numColumns={2}
                 onEndReached={handleLoadMore}
                 contentContainerStyle={styles.contentContainerStyle}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.2}
                 showsVerticalScrollIndicator={false}
                 ListFooterComponent={loading ? <ActivityIndicator padding /> : null}
-                ListEmptyComponent={!loading ? <WantMoreLikes /> : <SkeletonLikes />} />
+                ListEmptyComponent={!loading ? <EmptyLikes /> : null} />
         </>
     )
 }

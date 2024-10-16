@@ -2,7 +2,7 @@
   pk: 1
   fields:
     country: 1
-    title: 'Toshkent'
+    title: "Toshkent"
 
 - model: main.Region
   pk: 2
@@ -11,7 +11,55 @@
     title: 'Buxoro'
 
 - model: main.Region
-  pk: 2
+  pk: 3
   fields:
     country: 1
-    title: 'Samarqand'
+    title: "Samarqand"
+
+- model: main.Region
+  pk: 4
+  fields:
+    country: 1
+    title: 'Andijon'
+
+- model: main.Region
+  pk: 5
+  fields:
+    country: 1
+    title: "Farg'ona"
+
+- model: main.Region
+  pk: 6
+  fields:
+    country: 1
+    title: "Jizzax"
+
+- model: main.Region
+  pk: 7
+  fields:
+    country: 1
+    title: "Xorazm"
+
+- model: main.Region
+  pk: 8
+  fields:
+    country: 1
+    title: "Namangan"
+
+- model: main.Region
+  pk: 9
+  fields:
+    country: 1
+    title: "Qashqadaryo"
+
+- model: main.Region
+  pk: 10
+  fields:
+    country: 1
+    title: "Sirdaryo"
+
+- model: main.Region
+  pk: 11
+  fields:
+    country: 1
+    title: "Surxandaryo"

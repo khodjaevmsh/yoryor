@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import Swiper from 'react-native-deck-swiper'
 import { COLOR } from '../utils/colors'
@@ -8,9 +8,9 @@ import { DISLIKES, LIKES } from '../urls'
 import { showToast } from './common/Toast'
 import { GlobalContext } from '../context/GlobalContext'
 import MatchModal from './MatchModal'
-import WantMore from './WantMore'
 import { overlayLabels } from '../utils/swiperOverlayLabes'
 import ActivityIndicator from './common/ActivityIndicator'
+import EmptyEncounter from './EmptyEncounter'
 
 export default function EncounterCard({ receivers, setModalVisible }) {
     const [loading, setLoading] = useState(false)
@@ -49,6 +49,7 @@ export default function EncounterCard({ receivers, setModalVisible }) {
                 await baseAxios.post(DISLIKES, { sender: sender.id, receiver: receivers[cardIndex].id })
             }
         } catch (error) {
+            console.log(error.response.data)
             showToast('error', 'Oops!', 'Nomalum xatolik')
         } finally {
             setLoading(false)
@@ -73,7 +74,7 @@ export default function EncounterCard({ receivers, setModalVisible }) {
                     cardHorizontalMargin={5}
                     stackAnimationFriction={10}
                     overlayLabels={overlayLabels} />
-            ) : <WantMore setModalVisible={setModalVisible} />}
+            ) : <EmptyEncounter setModalVisible={setModalVisible} />}
 
             <MatchModal
                 isModalVisible={isMModalVisible}

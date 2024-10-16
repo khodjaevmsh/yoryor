@@ -4,18 +4,18 @@ import normalize from 'react-native-normalize'
 import Carousel from 'react-native-snap-carousel'
 import { Edit2 } from 'react-native-feather'
 import { useNavigation } from '@react-navigation/native'
-import FastImage from 'react-native-fast-image'
-import moment from 'moment'
 import { COLOR } from '../utils/colors'
 import { fontSize } from '../utils/fontSizes'
-import { CheckMarkBlue } from './common/Svgs'
-import { domain } from '../hooks/requests'
 import { GlobalContext } from '../context/GlobalContext'
-import { determineFontSize } from '../utils/string'
+import ActivityIndicator from './common/ActivityIndicator'
+import CheckMarks from './CheckMarks'
+import NameWithAge from './NameWithAge'
+import ProfileImage from './ProfileImage'
 
+const { width } = Dimensions.get('window')
 const itemWidth = Dimensions.get('window').width * 0.94
 
-export default function ProfileDetailHeader({ myProfileImages }) {
+export default function ProfileDetailHeader({ profileImages, loading }) {
     const { profile } = useContext(GlobalContext)
     const navigation = useNavigation()
 
@@ -23,20 +23,13 @@ export default function ProfileDetailHeader({ myProfileImages }) {
         <TouchableOpacity
             activeOpacity={1}
             style={styles.carouselItem}
-            onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id, myProfileImages })}>
-            <FastImage
-                style={styles.carouselImage}
-                resizeMode={FastImage.resizeMode.cover}
-                source={{
-                    uri: `${domain + item.image}`,
-                    priority: FastImage.priority.normal,
-                    cache: FastImage.cacheControl.web,
-                }} />
+            onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id })}>
+            <ProfileImage image={item} imageStyle={styles.carouselImage} />
             {index === 0 && (
                 <TouchableOpacity
                     activeOpacity={0.5}
                     style={styles.updateButton}
-                    onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id, myProfileImages })}>
+                    onPress={() => navigation.navigate('AddProfileImage', { profile: profile.id })}>
                     <Edit2 width={16} height={16} color={COLOR.white} />
                     <Text style={styles.updateText}>O'zgartirish</Text>
                 </TouchableOpacity>
@@ -46,36 +39,44 @@ export default function ProfileDetailHeader({ myProfileImages }) {
 
     return (
         <View>
-            <View style={styles.nameWrapper}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={[styles.name, { fontSize: determineFontSize(profile.name, 24) }]}>
-                        {profile.name}, {new Date().getFullYear() - moment(profile.birthdate).format('YYYY')}
-                    </Text>
-                    <CheckMarkBlue width={22} height={22} />
+            <View style={styles.header}>
+                <View style={styles.nameWrapper}>
+                    <NameWithAge textStyle={styles.name} />
+                    <CheckMarks />
                 </View>
                 <Text style={styles.region}>{profile.region.title}</Text>
             </View>
 
-            <View style={styles.sliderWrapper}>
-                <Carousel
-                    layout="default"
-                    data={myProfileImages}
-                    renderItem={renderItem}
-                    sliderWidth={Dimensions.get('window').width}
-                    itemWidth={itemWidth}
-                    inactiveSlideScale={0.98}
-                    inactiveSlideOpacity={0.8} />
-            </View>
+            {!loading && profileImages ? (
+                <View style={styles.sliderWrapper}>
+                    <Carousel
+                        layout="default"
+                        data={profileImages}
+                        renderItem={renderItem}
+                        sliderWidth={width}
+                        itemWidth={itemWidth}
+                        inactiveSlideScale={0.98}
+                        inactiveSlideOpacity={0.8} />
+                </View>
+            ) : (
+                <View style={[styles.loadingWrapper, { width: itemWidth, height: normalize(475) }]}>
+                    <ActivityIndicator />
+                </View>
+            )}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    nameWrapper: {
+    header: {
         flex: 1,
         flexDirection: 'column',
         marginTop: 12,
         paddingHorizontal: 10,
+    },
+    nameWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     name: {
         fontWeight: '600',
@@ -87,7 +88,6 @@ const styles = StyleSheet.create({
         marginLeft: 1,
         color: COLOR.grey,
     },
-
     sliderWrapper: {
         flex: 1,
         justifyContent: 'center',
@@ -108,7 +108,14 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
         borderRadius: 30,
     },
-
+    loadingWrapper: {
+        backgroundColor: COLOR.extraLightGrey,
+        borderRadius: 30,
+        marginTop: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        overflow: 'hidden',
+    },
     updateButton: {
         position: 'absolute',
         top: 18,
@@ -129,7 +136,7 @@ const styles = StyleSheet.create({
     emptyImage: {
         position: 'relative',
         width: itemWidth,
-        height: normalize(380), // Adjust the height as needed
+        height: normalize(380),
         borderRadius: 16,
         overflow: 'hidden',
         backgroundColor: COLOR.extraLightGrey,

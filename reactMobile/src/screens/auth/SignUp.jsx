@@ -51,7 +51,7 @@ export default function SignUp() {
                 </Text>
 
                 <Formik
-                    initialValues={{ phoneNumber: '906351001' }}
+                    initialValues={{ phoneNumber: '' }}
                     validationSchema={validationSchema}
                     onSubmit={onSubmit}>
                     {({ handleSubmit }) => (

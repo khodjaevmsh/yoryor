@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-06_&!m5=4$5%#%5ga948cl)c-2vd==ek3+8tre3c+$lum5cg6v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', False)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://www.yoryor.app', 'https://yoryor.app', '*']
 
 # Append module dir
 sys.path.append(os.path.join(BASE_DIR, 'apps'))
@@ -68,7 +68,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
+CSRF_TRUSTED_ORIGINS = ['https://www.yoryor.app', 'https://yoryor.app']
 
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1',

@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native'
 import Container from '../components/common/Container'
 import { COLOR } from '../utils/colors'
 import ButtonOutline from '../components/common/ButtonOutline'
+import { AppLogo } from '../components/common/Svgs'
 
 export default function Splash() {
     const navigation = useNavigation()
@@ -21,7 +22,7 @@ export default function Splash() {
     return (
         <Container containerStyle={styles.containerStyle}>
             <View style={styles.logoWrapper}>
-                <Text style={{ fontSize: 82, color: COLOR.white, fontWeight: '400' }}>YOR YOR</Text>
+                <AppLogo />
             </View>
             <View style={styles.policyAndTermsWrapper}>
                 <TouchableOpacity activeOpacity={1} onPress={openURL}>

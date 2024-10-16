@@ -10,8 +10,7 @@ import DiscoverItem from '../components/DiscoverItem'
 import { GlobalContext } from '../context/GlobalContext'
 import HeaderLeft from '../components/common/HeaderLeft'
 import HeaderRight from '../components/common/HeaderRight'
-import SkeletonDiscover from '../components/SkeletonDiscover'
-import WantMoreReceivers from '../components/WantMoreReceivers'
+import EmptyDiscover from '../components/EmptyDiscover'
 import ActivityIndicator from '../components/common/ActivityIndicator'
 
 export default function Discover() {
@@ -31,7 +30,7 @@ export default function Discover() {
 
     useLayoutEffect(() => {
         navigation.setOptions({
-            headerLeft: () => <HeaderLeft title="YorYor" titleColor={COLOR.primary} />,
+            headerLeft: () => <HeaderLeft title="YORYOR" titleColor={COLOR.primary} />,
             headerRight: () => (
                 <HeaderRight
                     onPress={() => setModalVisible(true)}
@@ -88,16 +87,14 @@ export default function Discover() {
                 contentContainerStyle={styles.contentContainerStyle}
                 onEndReached={handleLoadMore}
                 showsVerticalScrollIndicator={false}
-                onEndReachedThreshold={0.1}
+                onEndReachedThreshold={0.2}
                 refreshControl={(
                     <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} tintColor={COLOR.lightGrey} />
                 )}
-                ListFooterComponent={() => (loading && refreshing ? (
-                    <ActivityIndicator padding />
-                ) : null)}
+                ListFooterComponent={() => (loading && !refreshing ? <ActivityIndicator padding /> : null)}
                 ListEmptyComponent={!loading && !refreshing ? (
-                    <WantMoreReceivers setModalVisible={setModalVisible} />
-                ) : <SkeletonDiscover />} />
+                    <EmptyDiscover setModalVisible={setModalVisible} />
+                ) : null} />
 
             <FilterModal
                 isModalVisible={isModalVisible}

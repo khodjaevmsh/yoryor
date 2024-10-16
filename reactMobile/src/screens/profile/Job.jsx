@@ -55,12 +55,10 @@ export default function Job({ route }) {
                                 <Input
                                     name="jobTitle"
                                     keyboardType="default"
-                                    inputStyle={styles.input}
                                     placeholder="Prokuror" />
                                 <Input
                                     name="jobCompany"
                                     keyboardType="default"
-                                    inputStyle={styles.input}
                                     placeholder="Toshkent shahar prokuraturasi" />
                                 <View style={styles.buttonWrapper}>
                                     <Button
@@ -94,9 +92,6 @@ const styles = StyleSheet.create({
     inputWrapper: {
         flex: 1,
         marginTop: 18,
-    },
-    input: {
-        marginVertical: 8,
     },
     buttonWrapper: {
         flex: 1,

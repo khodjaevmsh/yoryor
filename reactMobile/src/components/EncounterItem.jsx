@@ -27,15 +27,15 @@ export default function EncounterItem({ swiperRef, receiver }) {
                 <ReceiverName item={receiver} nameStyle={styles.name} ageStyle={styles.age} />
                 <View style={[styles.topTagWrapper, { backgroundColor: COLOR.white }]}>
                     <Goal width={15} height={15} />
-                    <Text style={[styles.topTag, { color: COLOR.black }]}>{goals[receiver.goal]}</Text>
+                    <Text style={[styles.topTag, { color: COLOR.black }]}>{goals[receiver?.goal]}</Text>
                 </View>
                 <View style={styles.topTagWrapper}>
                     <MapPoint width={15} height={15} color={COLOR.white} />
-                    <Text style={styles.topTag}>{receiver.region.title}</Text>
+                    <Text style={styles.topTag}>{receiver?.region.title}</Text>
                 </View>
             </LinearGradient>
             <TouchableOpacity
-                onPress={() => navigation.navigate('EncounterDetail', { receiverId: receiver.id })}
+                onPress={() => navigation.navigate('EncounterDetail', { receiverId: receiver?.id })}
                 style={styles.touchable}
                 activeOpacity={1}>
                 <FastImage
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     topLinearGradient: {
         position: 'absolute',
         width: '100%',
-        height: '20%',
+        height: '30%',
         justifyContent: 'flex-start',
         paddingHorizontal: 22,
         paddingVertical: 20,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
         marginBottom: 2,
     },
     topTag: {
-        fontSize: normalize(11),
+        fontSize: normalize(12),
         color: COLOR.white,
         marginLeft: 4,
     },
@@ -133,8 +133,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'flex-start',
         backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        paddingVertical: 4,
-        paddingHorizontal: 7,
+        paddingVertical: 6,
+        paddingHorizontal: 10,
         borderRadius: 55,
         marginVertical: 3,
     },
