@@ -195,6 +195,8 @@ ESKIZ_PASSWORD = os.environ.get('ESKIZ_PASSWORD')
 
 APPSTORE_SECRET = os.environ.get('APPSTORE_SECRET')
 
+print(APPSTORE_SECRET)
+
 try:
     from .settings_dev import *
 except ImportError:
